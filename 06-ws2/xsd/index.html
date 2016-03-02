@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css">
+
+    <link href="../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../_prettify/prettify.js"></script>
+
+    <title>XSD</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../../index.html">Labs SD</a> &gt;
+        <a href="../index.html">Web Services</a>
+    </p>
+</div>
+
+
+        <div class="titulo">
+            <h1>XSD</h1>
+        </div>
+
+        <div class="indice">
+        	<ul>
+                <li><a href="#documentosValidos">Documentos válidos</a></li>
+                <li><a href="#vocabularios">Vocabulários XML</a></li>
+		    </ul>
+        </div>
+
+        <hr />
+
+        <div class="corpo">
+            <h2 id="xsd">XSD</h2>
+
+            <h3 id="documentosValidos">Documentos válidos</h3>
+            <p>
+Um documento XML diz-se válido se, além de ser bem-formado,
+respeita também as restrições impostas por um esquema XSD (XML Schema Definition).
+            </p>
+<pre class="prettyprint lang-xml">&lt;mensagem xmlns="urn:empresa.pt:mensagem"
+          id="49532"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="urn:empresa.pt:mensagem mensagem.xsd"&gt;
+    &lt;de&gt;Manuel&lt;/de&gt;
+    &lt;para&gt;Francisco&lt;/para&gt;
+    &lt;assunto&gt;Almoço&lt;/assunto&gt;
+    &lt;texto&gt;Que tal um almoço na sexta?&lt;/texto&gt;
+&lt;/mensagem&gt;</pre>
+            <p>
+A linha xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" indica
+que o documento deve ser validado usando XSD.<br />
+A linha xsi:schemaLocation="urn:empresa.pt:mensagem mensagem.xsd"
+especifica onde o esquema reside (neste caso, estará na mesma directoria
+do ficheiro).<br />
+Existe também a variante xsi:noNamespaceSchemaLocation quando o
+documento a validar não está num espaço de nomes.
+            </p>
+<pre class="prettyprint lang-xml">&lt;xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:empresa.pt:mensagem"
+            xmlns:tns="urn:empresa.pt:mensagem"
+            elementFormDefault="qualified"&gt;
+    &lt;xsd:complexType name="MensagemType"&gt;
+        &lt;xsd:sequence&gt;
+            &lt;xsd:element name="de" type="xsd:string"/&gt;
+            &lt;xsd:element name="para" type="xsd:string"/&gt;
+            &lt;xsd:element name="assunto" type="xsd:string"/&gt;
+            &lt;xsd:element name="texto" type="xsd:string"/&gt;
+        &lt;/xsd:sequence&gt;
+        &lt;xsd:attribute name="id" type="xsd:string" use="required"/&gt;
+    &lt;/xsd:complexType&gt;
+    &lt;xsd:element name="mensagem" type="tns:MensagemType"/&gt;
+&lt;/xsd:schema&gt;</pre>
+            <p>
+A própria linguagem XSD é definida em XML! O elemento raíz chama-se 'schema'.
+            </p>
+            <p>
+O exemplo apresentado é típico em vários aspectos:
+            </p>
+            <ul>
+                <li>
+A definição dos tipos compostos (complexType) é
+separada da definição dos elementos (element),
+para garantir uma boa estruturação e ao
+mesmo tempo permitir maior reutilização.
+                </li>
+                <li>
+Os <b>elementos simples</b> são definidos recorrendo a tipos pré-definidos,
+nomeadamente, xsd:string. Outros tipos pré-definidos comuns são
+xsd:integer e xsd:date, mas existem muitos outros.
+                </li>
+                <li>
+Os <b>elementos compostos</b> são sequências de elementos,
+definidas num tipo complexo.
+                </li>
+            </ul>
+            <p>
+Existem outros aspectos a salientar:
+            </p>
+            <ul>
+                <li>
+A cardinalidade (número de elementos filhos) é definida pelos
+atributos 'minOccurs' e 'maxOccurs'.
+Os valores por omissão são 1 e 1, o elementos deve aparecer no mínimo uma vez
+e no máximo uma vez, ou seja, exactamente uma vez!
+                </li>
+                <li>
+Os atributos são opcionais por omissão, mas o atributo 'id' é obrigatório devido
+a ter sido definido: use="required".
+                </li>
+            </ul>
+
+            <h3 id="vocabularios">Vocabulários XML</h3>
+            <p>
+Um esquema XSD especifica um vocabulário XML, que define:
+            <ul>
+                <li>Os elementos que podem aparecer num documento</li>
+                <li>Os atributos que podem aparecer num documento</li>
+                <li>Que elementos são elementos filhos</li>
+                <li>Qual a ordem dos elementos filhos</li>
+                <li>Qual o número de elementos filhos</li>
+                <li>Se um elemento é vazio ou pode conter texto</li>
+                <li>Tipos de dados para elementos e atributos</li>
+                <li>Valores fixos ou por omissão para elementos e atributos</li>
+                <li>Restrições aos valores possíveis para um elemento ou atributo</li>
+            </ul>
+            <p>
+A principal utilidade do XSD é permitir validar automaticamente documentos XML,
+sem necessidade de escrever um programa para o efeito.
+            </p>
+        </div>
+
+        <hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+Última actualização em 11 de Março de 2014 por Miguel Pardal
+</p>
+</div>
+
+	</body>
+</html>

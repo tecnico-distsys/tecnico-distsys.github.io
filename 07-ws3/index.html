@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>Web Services III</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo" id="1">
+    <h1>Web Services Tests</h1>
+</div>
+
+<div class="objectivos">
+
+    <h2>Objectivos</h2>
+    <ul>
+        <li>Desenvolver testes de Web Services</li>
+    </ul>
+
+    <h2>No laboratório:</h2>
+    <ul>
+        <li>Esclarecer dúvidas</li>
+        <li>Terminar o exercício</li>
+    </ul>
+</div>
+
+<div class="indice">
+<p>&nbsp;</p>
+</div>
+
+<div class="corpo">
+
+<h1>Testes de Web Services</h1>
+
+<p>
+	<b>É fortemente recomendado que os diretórios que contêm o código não contenham espaços no seu caminho.</b>
+</p>
+
+<p>
+Os Web Services são programas distribuídos por diversos módulos.<br />
+Para garantir a qualidade do código,
+é necessário produzir testes que incidem sobre diferentes módulos e aspectos:
+
+<ul>
+<li>
+Testes de <b>impl</b>ementação do servidor -
+são testes "tradicionais" que fazem parte do código do servidor e
+verificam o comportamento das classes de implementação do serviço.
+</li>
+
+<li>
+Testes de <b>contrato</b> (WSDL) do servidor -
+são testes realizados por um cliente do servidor,
+que invoca apenas operações remotas definidas no WSDL.
+Estes testes não conseguem inspecionar o estado interno do serviço,
+apenas conseguem ver se o retorno é o esperado dados os argumentos,
+ou se os efeitos são os esperados,
+chamando outras operações em seguida.
+</li>
+
+<li>
+Testes de <b>com</b>unicação e de servidores de apoio -
+são testes de falhas de comunicação,
+falha silenciosa do serviço ou
+falha do servidor de UDDI.
+</li>
+
+</ul>
+
+<p>
+O exercício desta aula incide sobretudo sobre os <b>testes de contrato WSDL do servidor</b>.<br />
+Vamos construir um cliente de testes para um Web Service usando a biblioteca <b>JUnit</b>.<br />
+Vamos também demonstrar a utilização do JMockit para simular o servidor.
+</p>
+
+<h2 id="junit">JUnit</h2>
+
+<p>
+O <a href="http://junit.org/">JUnit</a> é uma biblioteca Java para escrever testes unitários ao código.
+</p>
+Mais informação:
+<ul>
+<li><a href="https://www.l2f.inesc-id.pt/~david/w/pt/T%C3%B3picos_sobre_escrita_de_testes_com_JUnit">Escrita de testes com JUnit (PO)</a></li>
+<li><a href="http://www.vogella.com/tutorials/JUnit/article.html">Tutorial</a>.</li>
+</ul>
+
+<h2>JMockit</h2>
+
+<p>
+O <a href="http://jmockit.org/">JMockit</a> é uma biblioteca Java para 
+gerar objectos <i>mock</i> para testes
+(<i>mock</i> pode-se traduzir por fictício ou simulado).<br />
+Os objectos <i>mock</i> têm um comportamento pré-determinado e
+substituem objectos reais que são muito "caros" de obter ou 
+configurar para determinadas situações.
+Por exemplo,
+os objectos <i>mock</i> podem ser usados para simular o servidor UDDI ou
+para lançar erros de Web Services que são difíceis de causar na prática.
+</p>
+Mais informação:
+<ul>
+    <!--li><a href="http://abhinandanmk.blogspot.pt/2012/06/jmockit-tutoriallearn-it-today-with.html">tutorial introdutório</a></li-->
+    <li><a href="http://jmockit.org/tutorial.html">JMockit tutorial</a></li>
+    <ul>
+        <li><a href="http://jmockit.org/tutorial/Introduction.html#mocks">Testing with mock objects</a></li>
+        <li><a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#mocked">Mocked types and instances</a></li>
+        <li><a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#model">The record-replay-verify model</a></li>
+    </ul>
+    <li><a href="https://fenix.tecnico.ulisboa.pt/disciplinas/ESof964511/2014-2015/2-semestre/6-aula---25-31-de-marco">Realização de testes de software com JMockit (ES)</a></li>
+</ul>
+
+<hr/>
+
+<h2>Exemplos de código</h2>
+
+<ul>
+    <li>
+        <a href="../02-tools/junit-app.zip">Aplicação Java simples com testes JUnit</i>
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        - observar dependências do <tt>pom.xml</tt> e
+        a classe de testes em <tt>src/test/java</tt>
+    </li>
+    <li>
+        <a href="jmockit-app.zip">Código Java com teste que usa JMockit</i>
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        - observar dependências do <tt>pom.xml</tt> e
+        a classe de testes em <tt>src/test/java</tt>
+    </li>
+</ul>
+<ul>
+    <li>
+        <a href="calc-ws_wsdl.zip">Web Service da Calculadora (<i>contract-first</i>)
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        - solução do exercício proposto na aula passada
+    </li>
+    <li>
+        <a href="calc-ws-cli.zip">Web Service client da Calculadora
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        - ainda sem testes
+    </li>
+</ul>
+<ul>
+    <li>
+        <a href="calc-ws-cli_jmockit.zip">Web Service client da Calculadora com testes JMockit
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        - com testes usando JMockit para simular o servidor
+    </li>
+</ul>
+<ul>
+    <li>
+        <a href="calc-ws_wsdl_testcontrol.zip">Web Service da Calculadora (<i>contract-first</i>) com Test Control
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        <span style="color:red;font-size:90%">[novo]</span>
+        - com <i>endpoint</i> adicional que permite reiniciar o estado do servidor
+    </li>
+    <li>
+        <a href="calc-ws-cli_junit_testcontrol.zip">Web Service client da Calculadora com Test Control
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        <span style="color:red;font-size:90%">[novo]</span>
+        - que usa mensagens SOAP para reiniciar o estado do servidor, usando o <i>endpoint</i> adicional
+    </li>
+</ul>
+
+<hr/>
+
+<h2>Guia de laboratório</h2>
+
+<p>
+O objectivo é construir um cliente de testes JUnit para um Web Service.
+O enunciado que se segue aplica-se à Calculadora,
+mas também poderá ser seguido para os testes do projeto,
+fazendo-se as necessárias adaptações.
+</p>
+
+<ol>
+<li>
+O Maven já vem preparado para executar testes,
+na fase <b>test</b> do ciclo de vida.<br />
+Apesar disso,
+é necessário adicionar a dependência para a biblioteca JUnit da forma ilustrada abaixo,
+e depois colocar classes JUnit na pasta <tt>calc-ws-cli/src/test/java</tt>
+</li>
+
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;!-- JUnit --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+</pre>
+
+<li>
+Construa as seguintes classes de teste para o cliente da Calculadora
+(uma classe para cada operação):<br />
+<tt>SumTest</tt>, <tt>SubTest</tt>, <tt>MultTest</tt> e <tt>IntDivTest</tt>.<br />
+<br />
+Poderá basear as suas classes no código seguinte.
+</p>
+<pre class="prettyprint lang-java">
+package example.test;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+
+/**
+ *  Test suite
+ */
+public class ExampleTest {
+
+    // static members
+
+
+    // one-time initialization and clean-up
+
+    @BeforeClass
+    public static void oneTimeSetUp() {
+
+    }
+
+    @AfterClass
+    public static void oneTimeTearDown() {
+
+    }
+
+
+    // members
+
+
+    // initialization and clean-up for each test
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() {
+    }
+
+
+    // tests
+
+    @Test
+    public void test() {
+
+        // assertEquals(expected, actual);
+        // if the assert fails, the test fails
+    }
+
+}
+</pre>
+
+<p>
+No JUnit 4 são utilizadas anotações para definir qual o papel dos métodos.
+Os métodos anotados com <tt>@Test</tt> são testes individuais.<br />
+<tt>@Before</tt> e <tt>@After</tt> são executados antes e depois de cada teste.
+<tt>@BeforeClass</tt> e <tt>@AfterClass</tt> são executados apenas uma vez para o conjunto de testes da classe.
+</p>
+<p>
+As funções de <a href="http://junit.sourceforge.net/javadoc/org/junit/Assert.html">assert</a>
+permitem verificar o resultado do teste:
+<tt>assertEquals(expected, actual);</tt>
+<tt>expected</tt> é o valor esperado, <tt>actual</tt> é o valor que resultou da execução
+</p>
+
+<li>
+Vamos criar um <i>Stub</i> de invocação do serviço ao qual chamaremos <tt>port</tt>.
+Este objecto,
+dado que é um membro da classe,
+estará acessível em todos os métodos de teste.
+</li>
+
+<pre class="prettyprint lang-java">
+    ...
+
+    // static members
+
+    private static CalcPortType port;
+
+
+    // one-time initialization and clean-up
+
+    @BeforeClass
+    public static void oneTimeSetUp() {
+        CalcService service = new CalcService();
+        port = service.getCalcPort();
+    }
+
+    @AfterClass
+    public static void oneTimeTearDown() {
+        port = null;
+    }
+
+    ...
+
+    @Test
+    public void test() {
+        final int result= port.mult(7, 8);
+        assertEquals(56, result);
+    }
+
+    ...
+</pre>
+
+<p>
+No exemplo acima o endereço do serviço (<i>endpoint address</i>)
+não é configurado explicitamente, por isso é usado o valor por omissão
+(URL definido no WSDL em <tt>definitions/service/port/soap:address/@location</tt>).<br />
+Este código poderá ser modificado para consultar o UDDI e
+obter o endereço de forma dinâmica.
+</p>
+
+<li>
+Implemente os testes da operação de divisão inteira (<tt>intdiv</tt>).
+Considere o caso da divisão por zero.
+Poderá usar uma das duas abordagens seguintes (com <tt>expected</tt> na anotação <tt>@Test</tt> ou não).
+</li>
+
+<pre class="prettyprint lang-java">
+    ...
+
+    @Test(expected=ExampleException.class)
+    public void testExceptionWithAnnotation() throws Exception {
+
+        // ... code that must throw an exception
+
+        // JUnit expects the exception declared in the annotation
+        // if it is not thrown, the test fails
+    }
+
+    ...
+
+    @Test
+    public void testExceptionWithAnnotation() throws Exception {
+        try {
+
+            // ... code that must throw an exception
+
+            fail();
+        } catch (Exception e) {
+            // expected
+            // check message of exception etc
+        }
+    }
+
+    ...
+</pre>
+
+<li>
+O plug-in de Maven que corre os testes chama-se
+<a href="http://maven.apache.org/surefire/maven-surefire-plugin/">Surefire</a>.<br />
+Os exemplos seguintes mostram como correr os testes e
+como controlar quais os testes a executar.
+</li>
+
+<pre class="prettyprint lang-sh">
+// to compile and execute all tests
+$ mvn test
+
+// to execute only a specific test class
+$ mvn test -Dtest=IntDivTest
+
+// to execute only a specific test
+$ mvn test -Dtest=IntDivTest#testDivideByZero
+
+// you can also use wildcards (the example below will match SumTest and SubTest)
+$ mvn test -Dtest=Su*
+
+</pre>
+<!--
+// to package the application skipping test execution
+$ mvn package -Dtest.skip=true
+-->
+
+<li>
+Que outros casos de <tt>intdiv</tt> se devem testar?
+<!-- divisão com e sem arredondamento -->
+E das restantes operações?
+</li>
+
+</ol>
+
+<p>
+Bons testes! :)
+</p>
+
+
+<hr />
+
+<h3>Testes do projeto</h3>
+
+<p>
+A mesma abordagem que foi seguida para a calculadora
+deve ser seguida para construir testes de contrato WSDL para o <tt>sd-id-cli</tt> e 
+<tt>sd-store-cli</tt>.
+</p>
+
+<p>
+Para testes de servidores de apoio (UDDI) e 
+de comunicação, 
+devem ter-se em consideração as  
+<a href="ws-exceptions.html">exceções dos Web Services</a>
+que são lançadas.
+</p>
+
+
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+Última actualização em 6 de maio de 2015 por Miguel Pardal
+</p>
+</div>
+
+</body></html>

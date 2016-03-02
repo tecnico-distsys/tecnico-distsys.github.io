@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css">
+
+        <link href="../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="../../_prettify/prettify.js"></script>
+
+        <title>WSDL</title>
+    </head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../../index.html">Labs SD</a> &gt;
+        <a href="../index.html">Web Services</a>
+    </p>
+</div>
+
+
+        <div class="titulo">
+            <h1>WSDL</h1>
+        </div>
+
+        <div class="indice">
+        	<ul>
+                <li><a href="#definicao">Definição</a></li>
+                <li><a href="#estrutura">Estrutura</a></li>
+                <li><a href="#exemplo">Exemplo</a></li>
+                <li><a href="#soapHttp">Vinculação a SOAP e HTTP</a></li>
+            </ul>
+        </div>
+
+        <hr />
+
+        <div class="corpo">
+            <h2 id="wsdl">WSDL</h2>
+            <h3 id="definicao">Definição</h3>
+            <p>
+A Web Services Definition Language (WSDL) (em tradução livre:
+linguagem de definição de Web Services)
+é um vocabulário XML para criar contratos de serviços.
+            </p>
+            <p>
+Cada Web Service é definido por um contrato WSDL.
+            </p>
+            <p>
+O contrato WSDL contém toda a informação necessária
+para criar um cliente capaz de comunicar com o Web Service.
+Existem várias ferramentas capazes de
+criar clientes de Web Services de forma automática,
+sendo o <a href="../../05-ws1/jaxws/index.html">JAX-WS</a> uma delas.
+            </p>
+            <p>
+O contrato WSDL indica quais as operações disponibilizadas
+pelo Web Service aos seus clientes.
+O conjunto das operações é designado por <b>interface</b>.
+Para cada operação são especificados
+os argumentos (inputs), os resultados (outputs)
+e os erros (faults).
+Os tipos de dados dos argumentos, resultados e erros
+são descritos com esquemas <a href="../xsd/index.html">XSD</a>.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="estrutura">Estrutura</h3>
+            <p>
+O contrato WSDL não é fácil de ler,
+não só porque é extenso,
+mas também porque a sua organização está
+invertida e tem múltiplas dependências.
+A figura seguinte resume a estrutura.
+            </p>
+            <img src="wsdl.png" width="477" height="487" alt="wsdl" />
+            <p>
+            <p>
+O primeiro aspecto a perceber
+é que existe uma separação entre
+<b>interface abstracta</b> e
+<b>interface concreta</b>.<br />
+A interface abstracta (<b>port type</b>) define as operações e mensagens.<br />
+A interface concreta (<b>port</b>) faz o vínculo de interface
+a um conjunto concreto de tecnologias.<br />
+Esta separação permite que um mesmo Web Service
+possa ser implementado com tecnologias alternativas.
+Na prática, a vinculação (<b>binding</b>)
+mais comum é com SOAP e HTTP.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="exemplo">Exemplo</h3>
+            <p>
+O exemplo seguinte é o contrato WSDL de um Web Service
+de "Hello World", que tem uma operação "sayHello", que
+recebe um nome e devolve uma saudação.
+            </p>
+<pre class="prettyprint lang-xml">01 &LT;?xml version="1.0" encoding="UTF-8"?&GT;
+02
+03 &LT;definitions name="Hello"
+04              targetNamespace="http://hello"
+05              xmlns:tns="http://hello"
+06              xmlns="http://schemas.xmlsoap.org/wsdl/"
+07              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+08              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"&GT;
+09 	&LT;types&GT;
+10         &LT;xsd:schema elementFormDefault="qualified"
+11                     targetNamespace="http://hello"&GT;
+12
+13             &LT;xsd:complexType name="sayHelloType"&GT;
+14                 &LT;xsd:sequence&GT;
+15                     &LT;xsd:element name="name" type="xsd:string" /&GT;
+16                 &LT;/xsd:sequence&GT;
+17             &LT;/xsd:complexType&GT;
+18             &LT;xsd:element name="sayHello" type="tns:sayHelloType" /&GT;
+19
+20             &LT;xsd:complexType name="sayHelloResponseType"&GT;
+21                 &LT;xsd:sequence&GT;
+22                     &LT;xsd:element name="return" type="xsd:string" /&GT;
+23                 &LT;/xsd:sequence&GT;
+24             &LT;/xsd:complexType&GT;
+25             &LT;xsd:element name="sayHelloResponse" type="tns:sayHelloResponseType" /&GT;
+26
+27         &LT;/xsd:schema&GT;
+28 	&LT;/types&GT;
+29
+30 	&LT;message name="sayHello"&GT;
+31             &LT;part name="parameters" element="tns:sayHello" /&GT;
+32 	&LT;/message&GT;
+33 	&LT;message name="sayHelloResponse"&GT;
+34             &LT;part name="result" element="tns:sayHelloResponse" /&GT;
+35 	&LT;/message&GT;
+36
+37 	&LT;portType name="HelloPortType"&GT;
+38         &LT;operation name="sayHello"&GT;
+39             &LT;input message="tns:sayHello" name="sayHello"/&GT;
+40             &LT;output message="tns:sayHelloResponse" name="sayHelloResponse"/&GT;
+41         &LT;/operation&GT;
+42 	&LT;/portType&GT;
+43
+44 	&LT;binding name="HelloBinding" type="tns:HelloPortType"&GT;
+45         &LT;soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /&GT;
+46         &LT;operation name="sayHello"&GT;
+47             &LT;soap:operation soapAction="" /&GT;
+48             &LT;input&GT;
+49                 &LT;soap:body use="literal" /&GT;
+50             &LT;/input&GT;
+51             &LT;output&GT;
+52                 &LT;soap:body use="literal" /&GT;
+53             &LT;/output&GT;
+54         &LT;/operation&GT;
+55 	&LT;/binding&GT;
+56
+57 	&LT;service name="HelloService"&GT;
+58         &LT;port name="HelloPort" binding="tns:HelloBinding"&GT;
+59             &LT;soap:address location="http://server:port/context/endpoint" /&GT;
+60         &LT;/port&GT;
+61 	&LT;/service&GT;
+62
+63 &LT;/definitions&GT;</pre>
+            <p>
+O 'service' define um 'port' (linhas 57-61 do exemplo)
+que é uma interface concreta de
+acesso ao serviço. O endereço de acesso é indicado na linha 59.<br />
+<br />
+O 'port' concretiza a interface abstracta do 'port type' (linhas 37-42),
+através do 'binding' (44-55).<br />
+<br />
+O 'port type' define a 'operation' "sayHello" (38-41),
+que tem como 'input' e 'output', respectivamente
+as 'message': "tns:sayHelloRequest" (30-32) e "tns:sayHelloResponse" (33-35).<br />
+<br />
+Cada 'message' tem pelo menos uma 'part'.
+Cada 'part' é definida por um tipo ou elemento XSD.
+Neste caso são usados os elementos "sayHello" (18) e
+"sayHelloResponse" (25).<br />
+<br />
+Os tipos são os 'complexTypes'
+"sayHelloType" (13-17) e "sayHelloResponseType" (20-24).<br />
+<br />
+Os espaços de nomes (3-8, 11) desempenham aqui um papel importante,
+pois permitem saber onde são definidos
+os vários elementos XML que são necessário no WSDL.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="soapHttp">Vinculação a SOAP e HTTP</h3>
+            <p>
+A vinculação (<b>binding</b>) do Web Service
+especifica que o serviço usa mensagens SOAP e que as mensagens
+devem ser transportadas usando o protocolo HTTP.
+            <p>
+<b>Exemplo</b> de pedido SOAP transportado por HTTP:
+            </p>
+<pre class="prettyprint lang-xml">POST /ExemploHelloWS/endpoint HTTP/1.1
+Host: www.server.com
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 322
+SOAPAction: ""
+
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns1="http://hello"&gt;
+
+    &lt;soapenv:Body&gt;
+        &lt;ns1:sayHello&gt;
+            &lt;ns1:name&gt;friend&lt;/ns1:name&gt;
+        &lt;/ns1:sayHello&gt;
+    &lt;/soapenv:Body&gt;
+
+&lt;/soapenv:Envelope&gt;</pre>
+            <p>
+<b>Exemplo</b> de resposta SOAP transportada por HTTP:
+            </p>
+<pre class="prettyprint lang-xml">HTTP/1.1 200 OK
+Content-Type: text/xml; charset="utf-8"
+Content-Length: 367
+
+&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ns1="http://hello"&gt;
+
+    &lt;soapenv:Body&gt;
+        &lt;ns1:sayHelloResponse&gt;
+            &lt;ns1:return&gt;Hello friend!&lt;/ns1:return&gt;
+        &lt;/ns1:sayHelloResponse&gt;
+    &lt;/soapenv:Body&gt;
+
+&lt;/soapenv:Envelope&gt;
+</pre>
+            <p>
+Existem variantes do SOAP binding, cujas diferenças
+são a forma como os dados são transportados
+no 'body'.<br />
+Se forem transportados em múltiplas 'part' dentro
+das 'message', especificadas por tipos XSD,
+então temos a variante 'RPC Literal'.<br />
+Se forem transportados numa única 'part' da 'message',
+especificadas por elementos XSD,
+então temos a variante 'Document Literal'.<br />
+Existe ainda uma terceira variante,
+designada por 'RPC encoded',
+onde os dados não são definidos por XSD,
+que está a ser progressivamente abandonada.
+            </p>
+
+        </div>
+
+        <hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+Última actualização em 11 de Março de 2014 por Miguel Pardal
+</p>
+</div>
+
+	</body>
+</html>

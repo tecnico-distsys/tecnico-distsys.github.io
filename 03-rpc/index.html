@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
 
-    <title>Invocação de procedimentos remotos com SUN RPC</title>
+    <title>InvocaÃ§Ã£o de procedimentos remotos com SUN RPC</title>
 </head>
 
 <body>
@@ -17,13 +17,13 @@
 </div>
 
 <div class="titulo" id="1">
-    <h1>Invocação de procedimentos remotos com SUN RPC</h1>
+    <h1>InvocaÃ§Ã£o de procedimentos remotos com SUN RPC</h1>
 </div>
 
 <div class="objectivos">
     <h2>Objectivos da semana</h2>
     <ul>
-        <li>Distribuir uma aplicação originalmente centralizada usando o SUN RPC</li>
+        <li>Distribuir uma aplicaÃ§Ã£o originalmente centralizada usando o SUN RPC</li>
         <li>Aprofundar os conhecimentos sobre RPC</li>
     </ul>
 </div>
@@ -32,129 +32,129 @@
 </div>
 
 <div class="corpo">
-    <h2 id="conteudos">Materiais de apoio à aula</h2>
+    <h2 id="conteudos">Materiais de apoio Ã  aula</h2>
 
     <p class="exemplos">
         <ul>
-            <li><a href="http://www.cdk4.net/wo/additional/rmi/Ed2/SunRPC.pdf">Capítulo sobre SUN RPC da 2ª Edição do livro &quot;Distributed Systems: Concepts and Design&quot;</a></li>
+            <li><a href="http://www.cdk4.net/wo/additional/rmi/Ed2/SunRPC.pdf">CapÃ­tulo sobre SUN RPC da 2Âª EdiÃ§Ã£o do livro &quot;Distributed Systems: Concepts and Design&quot;</a></li>
         </ul>
     </p>
 
     <p class="exercicios">
-    <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
+    <h2 id="guiao">ExercÃ­cio a resolver atÃ© ao fim da aula</h2>
 
     <ol>
-        <li>Numa máquina Linux/Unix, descarregue e descomprima o <a href="./ttt.zip">código fonte de um servidor do Jogo do Galo/Tic Tac Toe, baseado em Sun RPC</a>.<br />
-        Sugestões:</li>
+        <li>Numa mÃ¡quina Linux/Unix, descarregue e descomprima o <a href="./ttt.zip">cÃ³digo fonte de um servidor do Jogo do Galo/Tic Tac Toe, baseado em Sun RPC</a>.<br />
+        SugestÃµes:</li>
         <ul>
-            <li>Caso não disponha de máquina Unix/Linux,
+            <li>Caso nÃ£o disponha de mÃ¡quina Unix/Linux,
                 use a sua conta no <tt>sigma.tecnico.ulisboa.pt</tt>.<br />
-            Pode usar um dos vários editores de texto no terminal:
+            Pode usar um dos vÃ¡rios editores de texto no terminal:
             <tt>nano</tt>, <tt>vi</tt>, <tt>emacs</tt>, <tt>pico</tt>, <tt>joe</tt>, ...</li>
-            <li>Para evitar conflitos com outros RPC na mesma máquina
-            deverá editar o identificador do programa (<tt>ttt.x</tt>) e substituir os últimos
-            5 dígitos pelo seu número de aluno</li>
-            <li>Se quiser correr o laboratório no seu próprio computador
-            é necessário instalar os seguintes pacotes Linux
-            (os nomes exactos variam conforme a distribuição usada):
+            <li>Para evitar conflitos com outros RPC na mesma mÃ¡quina
+            deverÃ¡ editar o identificador do programa (<tt>ttt.x</tt>) e substituir os Ãºltimos
+            5 dÃ­gitos pelo seu nÃºmero de aluno</li>
+            <li>Se quiser correr o laboratÃ³rio no seu prÃ³prio computador
+            Ã© necessÃ¡rio instalar os seguintes pacotes Linux
+            (os nomes exactos variam conforme a distribuiÃ§Ã£o usada):
             <tt>rpcbind</tt> e <tt>nfs-kernel-server</tt>. <br />
-            Em algumas máquinas, que recorrem ao rpcbind,
-            pode ser necessário lancar esta aplicação usando <tt>rpcbind -wi</tt>
-            ou então usando privilégios de administração <tt>(sudo)</tt>
+            Em algumas mÃ¡quinas, que recorrem ao rpcbind,
+            pode ser necessÃ¡rio lancar esta aplicaÃ§Ã£o usando <tt>rpcbind -wi</tt>
+            ou entÃ£o usando privilÃ©gios de administraÃ§Ã£o <tt>(sudo)</tt>
             no caso de obter a seguinte mensagem de erro:
             <i>"Cannot register service: RPC: Authentication error; why = Client credential too weak"</i></li>
         </ul>
 
-        <li>Estude a interface remota deste servidor (ficheiro <tt>ttt.x</tt>) e explore a implementação do servidor para compreender como cada procedimento remoto está implementado (restantes ficheiros iniciados em <tt>ttt</tt>).</li>
+        <li>Estude a interface remota deste servidor (ficheiro <tt>ttt.x</tt>) e explore a implementaÃ§Ã£o do servidor para compreender como cada procedimento remoto estÃ¡ implementado (restantes ficheiros iniciados em <tt>ttt</tt>).</li>
         <ul>
             <li>Para que serve o <i>mutex</i> usado no ficheiro ttt_lib.c?</li>
         </ul>
 
         <li>Execute na consola:<br />
         <tt>&gt rpcgen ttt.x</tt><br />
-        para que o SUN RPC gere os vários ficheiros de suporte à aplicação distribuída.<br />
+        para que o SUN RPC gere os vÃ¡rios ficheiros de suporte Ã  aplicaÃ§Ã£o distribuÃ­da.<br />
         Depois execute: <br />
         <tt>&gt rpcgen -Sc ttt.x > ttt_client.c</tt><br />
         para gerar um exemplo de um cliente.
-        (existe também a opção <tt>-Ss</tt> para gerar um exemplo de servidor)
+        (existe tambÃ©m a opÃ§Ã£o <tt>-Ss</tt> para gerar um exemplo de servidor)
         <br />
         <br />
         </li>
 
         <li>Estude os ficheiros gerados.
             <ol type="a">
-                <li>Onde estão as rotinas de conversão de tipos de dados?</li>
-                <li>Onde é chamada a função <tt>clnt_call()</tt>?</li>
+                <li>Onde estÃ£o as rotinas de conversÃ£o de tipos de dados?</li>
+                <li>Onde Ã© chamada a funÃ§Ã£o <tt>clnt_call()</tt>?</li>
                 <li>Que ficheiros pertencem ao cliente, ao servidor, e a ambos?<br />
-                (consulte também a <tt>Makefile</tt>)</li>
-                <li>Que ficheiros estão incompletos e devem ser alterados pelo programador?</li>
+                (consulte tambÃ©m a <tt>Makefile</tt>)</li>
+                <li>Que ficheiros estÃ£o incompletos e devem ser alterados pelo programador?</li>
                 <li>Qual o protocolo que o cliente e servidor usam para comunicar?</li>
             </ol>
         <br />
         </li>
 
-        <li>Pretende-se também que haja um processo cliente
-        (que possivelmente corre em máquina diferente que o servidor)
+        <li>Pretende-se tambÃ©m que haja um processo cliente
+        (que possivelmente corre em mÃ¡quina diferente que o servidor)
         que interage com os jogadores e que
-        invoca as funções do servidor remotamente, via SUN RPC.<br />
+        invoca as funÃ§Ãµes do servidor remotamente, via SUN RPC.<br />
         <br />
-        A lógica desse cliente já está programada em <tt>local_main.c</tt>, mas esse ficheiro está feito assumindo chamadas locais.<br>
+        A lÃ³gica desse cliente jÃ¡ estÃ¡ programada em <tt>local_main.c</tt>, mas esse ficheiro estÃ¡ feito assumindo chamadas locais.<br>
         Com base no <tt>local_main.c</tt>, modifique o ficheiro <tt>ttt_client.c</tt>
         por forma a obter um cliente do servidor remoto. <br/>
         <br />
-        <i>Sugestão: 
-        i) copie o código da função main do <tt>local_main.c</tt> para dentro do método <tt>ttt_1</tt> de <tt>ttt_client.c</tt>; 
-        ii) procure as linhas onde existem chamadas locais às funções <tt>currentBoard</tt>, <tt>play</tt> e 
-        <tt>checkWinner</tt> e substitua essas chamadas pelos exemplos de chamadas remotas que já existem no ficheiro <tt>ttt_client.c</tt> gerado;</i> 
-        iii) Não se esqueça de verificar o retorno da chamada remota ao servidor e 
+        <i>SugestÃ£o: 
+        i) copie o cÃ³digo da funÃ§Ã£o main do <tt>local_main.c</tt> para dentro do mÃ©todo <tt>ttt_1</tt> de <tt>ttt_client.c</tt>; 
+        ii) procure as linhas onde existem chamadas locais Ã s funÃ§Ãµes <tt>currentBoard</tt>, <tt>play</tt> e 
+        <tt>checkWinner</tt> e substitua essas chamadas pelos exemplos de chamadas remotas que jÃ¡ existem no ficheiro <tt>ttt_client.c</tt> gerado;</i> 
+        iii) NÃ£o se esqueÃ§a de verificar o retorno da chamada remota ao servidor e 
         garantir o tratamento adequado em caso de erro.<br />
         Utilize o comando <tt>make</tt> para compilar.<br />
         <br />
         </li>
 
-        <li>Lance o servidor e experimente jogar remotamente através do cliente construído.<br />
+        <li>Lance o servidor e experimente jogar remotamente atravÃ©s do cliente construÃ­do.<br />
         Para tal, execute na consola:<br />
         <tt>&gt ./ttt_server &</tt><br />
-        (lança servidor em fundo - <i>background</i>)<br />
+        (lanÃ§a servidor em fundo - <i>background</i>)<br />
         <tt>&gt ./ttt_client localhost</tt><br />
-        (lança cliente para jogar em servidor registado na própria máquina (localhost)<br />
+        (lanÃ§a cliente para jogar em servidor registado na prÃ³pria mÃ¡quina (localhost)<br />
         <br />
         </li>
         
         <li>Pode consultar o estado dos processos com o comando <tt>ps</tt> e
-        terminar instâncias com o comando <tt>kill</tt>.</li>
+        terminar instÃ¢ncias com o comando <tt>kill</tt>.</li>
     </ol>
 
     <p>
-    O resto do enunciado será entregue na aula. O objectivo será estender a solução resultante do enunciado acima com mais procedimentos ou modificar alguns dos seus procedimentos actuais.
+    O resto do enunciado serÃ¡ entregue na aula. O objectivo serÃ¡ estender a soluÃ§Ã£o resultante do enunciado acima com mais procedimentos ou modificar alguns dos seus procedimentos actuais.
     </p>
 
 </div>
 
 <div class="objectivos">
-    <h2>Entrega da solução</h2>
+    <h2>Entrega da soluÃ§Ã£o</h2>
 
-    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 1 - Sun RPC</b></p>
+    <p>FÃ©nix, AvaliaÃ§Ã£o, Projetos, <b>mini ExercÃ­cio 1 - Sun RPC</b></p>
 
     <p>
-	A solução completa deverá ser submetida no Fénix
-    <b>antes do fim da sua aula de laboratório</b>.<br />
-	Trabalhos submetidos depois da hora de fim da aula não serão considerados.<br>
+	A soluÃ§Ã£o completa deverÃ¡ ser submetida no FÃ©nix
+    <b>antes do fim da sua aula de laboratÃ³rio</b>.<br />
+	Trabalhos submetidos depois da hora de fim da aula nÃ£o serÃ£o considerados.<br>
     </p>
     
     <p>
-	<b>Ter atenção ao seguinte:</b>
+	<b>Ter atenÃ§Ã£o ao seguinte:</b>
 	</p>
 	<ul>
-		<li>Só serão aceites trabalhos de estudantes que estiveram presentes no laboratório.</li>
-		<li>Assegure-se que a solução é enviada em formato ZIP e
-		    que não contém código compilado.<br />
-            (faça <tt>make clean</tt> antes de zipar)</li>
-        <li>Deverá incluir um ficheiro <tt>respostas.txt</tt> 
-        com as respostas às perguntas do enunciado do exercício.</li>
-        <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
+		<li>SÃ³ serÃ£o aceites trabalhos de estudantes que estiveram presentes no laboratÃ³rio.</li>
+		<li>Assegure-se que a soluÃ§Ã£o Ã© enviada em formato ZIP e
+		    que nÃ£o contÃ©m cÃ³digo compilado.<br />
+            (faÃ§a <tt>make clean</tt> antes de zipar)</li>
+        <li>DeverÃ¡ incluir um ficheiro <tt>respostas.txt</tt> 
+        com as respostas Ã s perguntas do enunciado do exercÃ­cio.</li>
+        <li>DeverÃ¡ tambÃ©m incluir um ficheiro <tt>instrucoes.txt</tt>
         com resumo da funcionalidade implementada e 
-        com instruções para colocar o programa a funcionar como esperado.<br />
+        com instruÃ§Ãµes para colocar o programa a funcionar como esperado.<br />
         Por exemplo:</li>
         <ul>
             <li>A funcionalidade pedida foi total/parcialmente implementada <b>...</b></li>
@@ -174,9 +174,9 @@
 <div class="rodape">
 <p>
 &copy; Docentes de Sistemas Distribu&iacute;dos,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-<a href="http://www.ist.eu">Técnico Lisboa</a><br />
-Última actualização em 22 de Fevereiro de 2016 por David R. Matos
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. InformÃ¡tica</a>,
+<a href="http://www.ist.eu">TÃ©cnico Lisboa</a><br />
+Ãšltima actualizaÃ§Ã£o em 22 de Fevereiro de 2016 por David R. Matos
 </p>
 </div>
 

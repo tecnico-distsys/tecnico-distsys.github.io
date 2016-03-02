@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
 
     <link href="../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
@@ -11,7 +11,7 @@
     <title>Exceptions</title>
 
     <meta name="Generator" content="UltraEdit">
-    <meta name="Author" content="Naércio Magaia">
+    <meta name="Author" content="NaÃ©rcio Magaia">
     <meta name="Keywords" content="Exception in Java, tutorial">
     <meta name="Description" content="">
 </head>
@@ -26,32 +26,32 @@
 </div>
 
 <div class="titulo">
-    <h1>Exceções</h1>
+    <h1>ExceÃ§Ãµes</h1>
 </div>
 
 <p>
 Os <i>outputs</i> seguintes foram produzidos usando o servidor <tt>java-sockets-server</tt> e 
-o cliente <tt>java-sockets-client</tt> e ilustram diversas situações.
+o cliente <tt>java-sockets-client</tt> e ilustram diversas situaÃ§Ãµes.
 </p>
 <p>
 <p>
-As linhas mais importantes dos <i>outputs</i> são as começadas por 
+As linhas mais importantes dos <i>outputs</i> sÃ£o as comeÃ§adas por 
 <b>"Caused by:"</b>.
-É aí que se podem encontrar as mensagens das exceções.<br />
-Dado que uma exceção pode ter outra exceção aninhada
+Ã‰ aÃ­ que se podem encontrar as mensagens das exceÃ§Ãµes.<br />
+Dado que uma exceÃ§Ã£o pode ter outra exceÃ§Ã£o aninhada
 (<i>cause</i>) 
-pode ser necessário consultar várias linhas para perceber o que causou a exceção de topo.
+pode ser necessÃ¡rio consultar vÃ¡rias linhas para perceber o que causou a exceÃ§Ã£o de topo.
 </p>
 <p>
-As linhas começadas por <b>"at"</b> indicam o contexto de execução.
-Observando estas linhas é possível ver o conteúdo da pilha de execução do programa,
-que diz que parte do código estava a chamar que outra parte.
+As linhas comeÃ§adas por <b>"at"</b> indicam o contexto de execuÃ§Ã£o.
+Observando estas linhas Ã© possÃ­vel ver o conteÃºdo da pilha de execuÃ§Ã£o do programa,
+que diz que parte do cÃ³digo estava a chamar que outra parte.
 </p>
 
 <hr />
 
 <p>
-Nesta situação o servidor tenta criar o socket com um porto fora do intervalo [0;65535].
+Nesta situaÃ§Ã£o o servidor tenta criar o socket com um porto fora do intervalo [0;65535].
 </p>
 
 <pre class="prettyprint lang-java">
@@ -70,7 +70,7 @@ Caused by: java.lang.IllegalArgumentException: Port value out of range: 65536
 </pre>
 
 <p>
-Nesta situação o cliente tenta ligar ao servidor por meio dum porto incorreto e não consegue.
+Nesta situaÃ§Ã£o o cliente tenta ligar ao servidor por meio dum porto incorreto e nÃ£o consegue.
 </p>
 
 <pre class="prettyprint lang-java">
@@ -100,27 +100,27 @@ Caused by: java.net.ConnectException: Connection refused: connect
 <hr />
 
 <p>
-As exceções são usadas na linguagem Java para assinalar que algo não correu como esperado.<br />
-São classes que herdam de <tt>java.lang.Exception</tt> e 
+As exceÃ§Ãµes sÃ£o usadas na linguagem Java para assinalar que algo nÃ£o correu como esperado.<br />
+SÃ£o classes que herdam de <tt>java.lang.Exception</tt> e 
 cujos objetos podem ser atirados (throw) e
 apanhados (caught).
 </p>
 <p>
-As exceções que herdam de <tt>java.lang.RuntimeException</tt> são chamadas <i>unchecked exceptions</i>.
-Neste caso, o compilador não obriga o programador a declarar se apanha ou se atira.
-Por este motivo, qualquer linha de código pode atirar uma exceção destas.
-A mais conhecida é a <tt>NullPointerException</tt> (NPE).
+As exceÃ§Ãµes que herdam de <tt>java.lang.RuntimeException</tt> sÃ£o chamadas <i>unchecked exceptions</i>.
+Neste caso, o compilador nÃ£o obriga o programador a declarar se apanha ou se atira.
+Por este motivo, qualquer linha de cÃ³digo pode atirar uma exceÃ§Ã£o destas.
+A mais conhecida Ã© a <tt>NullPointerException</tt> (NPE).
 </p>
 <p>
-As exceções que herdam de <tt>java.lang.Exception</tt> são chamadas <i>checked exceptions</i>,
-no sentido, em que a sua utilização é verificada pelo compilador.
-Nestes casos é preciso explicitar se se apanha a exceção (catch) ou se se lança (throws).
-Normalmente, se não se vai tentar recuperar a exceção, pode simplesmente dizer que se atira.
-É preferível atirar do que fazer um falso tratamento de exceção.
-O seguinte código mostra <b>maus</b> exemplos de tratamento de exceções.
+As exceÃ§Ãµes que herdam de <tt>java.lang.Exception</tt> sÃ£o chamadas <i>checked exceptions</i>,
+no sentido, em que a sua utilizaÃ§Ã£o Ã© verificada pelo compilador.
+Nestes casos Ã© preciso explicitar se se apanha a exceÃ§Ã£o (catch) ou se se lanÃ§a (throws).
+Normalmente, se nÃ£o se vai tentar recuperar a exceÃ§Ã£o, pode simplesmente dizer que se atira.
+Ã‰ preferÃ­vel atirar do que fazer um falso tratamento de exceÃ§Ã£o.
+O seguinte cÃ³digo mostra <b>maus</b> exemplos de tratamento de exceÃ§Ãµes.
 </p>
 <pre class="prettyprint lang-java">
-    // anti-padrão - A evitar! Ignorar a exceção sem dizer nada a ninguém.
+    // anti-padrÃ£o - A evitar! Ignorar a exceÃ§Ã£o sem dizer nada a ninguÃ©m.
     try {
         doSomething();
         
@@ -129,8 +129,8 @@ O seguinte código mostra <b>maus</b> exemplos de tratamento de exceções.
     
     ...
     
-    // anti-padrão 2 - A evitar também! Lá por imprimir o <i>stack trace</i>, não resolve nada.
-    //                 O programa vai "rebentar" mais à frente, onde será mais difícil perceber porquê.
+    // anti-padrÃ£o 2 - A evitar tambÃ©m! LÃ¡ por imprimir o <i>stack trace</i>, nÃ£o resolve nada.
+    //                 O programa vai "rebentar" mais Ã  frente, onde serÃ¡ mais difÃ­cil perceber porquÃª.
     try {
         doSomething();
         
@@ -139,23 +139,23 @@ O seguinte código mostra <b>maus</b> exemplos de tratamento de exceções.
     }
 </pre>
 <p>
-Nos (maus) exemplos acima, o efeito prático é ignorar a exceção,
-ou seja, tornar muito mais difícil a deteção e correção de erros no código!
+Nos (maus) exemplos acima, o efeito prÃ¡tico Ã© ignorar a exceÃ§Ã£o,
+ou seja, tornar muito mais difÃ­cil a deteÃ§Ã£o e correÃ§Ã£o de erros no cÃ³digo!
 </p>
 
 <p>
-Vamos então ilustrar alguns bons exemplos:
+Vamos entÃ£o ilustrar alguns bons exemplos:
 </p>
 <pre class="prettyprint lang-java">
 
-    // padrão 1 - se a exceção não vai ser tratada, mais vale lançá-la (throws)
+    // padrÃ£o 1 - se a exceÃ§Ã£o nÃ£o vai ser tratada, mais vale lanÃ§Ã¡-la (throws)
     public static void main(String[] args) throws Exception {
         doSomething();
     }
 
     ...
     
-    // padrão 2 - apanhar, registar e voltar a atirar
+    // padrÃ£o 2 - apanhar, registar e voltar a atirar
     
     try {
         doSomething();
@@ -167,7 +167,7 @@ Vamos então ilustrar alguns bons exemplos:
     }
     
     
-    // padrão 3 - apanhar exceção da camada inferior e envolver com mais contexto
+    // padrÃ£o 3 - apanhar exceÃ§Ã£o da camada inferior e envolver com mais contexto
     
     try {
         doSomething();
@@ -185,9 +185,9 @@ Vamos então ilustrar alguns bons exemplos:
 <div class="rodape">
 <p>
 &copy; Docentes de Sistemas Distribu&iacute;dos,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-<a href="http://www.ist.eu">Técnico Lisboa</a><br />
-Última actualização em 15 de fevereiro de 2016 por Miguel Pardal
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. InformÃ¡tica</a>,
+<a href="http://www.ist.eu">TÃ©cnico Lisboa</a><br />
+Ãšltima actualizaÃ§Ã£o em 15 de fevereiro de 2016 por Miguel Pardal
 </p>
 </div>
 

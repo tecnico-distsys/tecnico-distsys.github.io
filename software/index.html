@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <title>Software</title>
+</head>
+
+<body>
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo">
+    <h1>Software</h1>
+</div>
+
+<div class="corpo">
+
+<!--
+<span style="color:red;font-size:90%">[OLD]</span>
+-->
+
+<p>
+Para realizar os exercícios de laboratório e
+o projecto de SD é necessário instalar um conjunto de ferramentas e
+servidores. Todo o software listado abaixo está disponível em sistemas Windows,
+Linux e
+Mac.<br/>
+</p>
+
+<p>
+Nos caminhos de ficheiros (<i>paths</i>) em Windows usa-se a barra \ como separador;
+nos caminhos Linux e Mac usa-se /
+</p>
+
+<p>
+As instalações seguintes devem ser feitas numa pasta que <b>não</b> tenha espaços nem caracteres acentuados no nome,
+para evitar <i>bugs</i> existentes e ainda não resolvidos, sobretudo nas ferramentas Java em Windows.<br />
+Nome de pasta raíz recomendada: <b><tt>C:\Java</tt></b><br />
+Nomes de pastas a evitar: <tt>C:\Program Files</tt>, <tt>C:\Users\João</tt>
+</p>
+
+<p>
+A maior parte das ferramentas necessita de configurar <b>variáveis de ambiente</b>.<br />
+O procedimento para definir variáveis de ambiente depende do sistema operativo:
+<a href="http://superuser.com/questions/25037/change-environment-variables-as-standard-user-windows-7">Windows</a>,
+<a href="http://www.cyberciti.biz/faq/set-environment-variable-linux/">Linux</a> e
+<a href="http://www.mkyong.com/mac/how-to-set-environment-variables-on-mac-os-x/">Mac</a>.
+</p>
+
+<hr />
+
+<ol>
+    <li>
+    <b>Java Developer Kit, JDK</b> (que inclui o Java Runtime Environment, JRE)<br />
+    Ambiente para programação na linguagem Java</li>
+    <ul>
+        <li>Obter</li>
+        <ul>
+            <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8u72</a></li>
+        </ul>
+        <li>Instalar</li>
+        <li>Configurar</li>
+        <ul>
+            <li>Definir variável de ambiente JAVA_HOME com o caminho para a pasta de instalação do JDK</li>
+            <li>Acrescentar JAVA_HOME/bin à variável de ambiente PATH</li>
+            <li>Executar comando <tt>javac -version</tt> para confirmar</li>
+        </ul>
+    </ul>
+
+    <li>
+    <b>Apache Maven, MVN</b><br/>
+    Ferramenta de linha de comando para a gestão do ciclo de vida de uma aplicação,
+    incluindo a gestão de dependências de bibliotecas.</li>
+    <ul>
+        <li>Obter</li>
+        <ul>
+            <li><a href="http://maven.apache.org/download.cgi">MVN 3.3.3</a>
+            <small>(preferência por esta versão por ser a utilizada internamente no Eclipse Mars.1)</small></li>
+        </ul>
+        <li>Instalar</li>
+        <!--ul>
+            <li><a href="http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">Maven in 5 minutes</a></li>
+        </ul-->
+        <li>Configurar</li>
+        <ul>
+            <li>Definir variável de ambiente M2_HOME com o caminho para a pasta de instalação</li>
+            <li>Acrescentar M2_HOME/bin à PATH</li>
+            <li>Executar comando <tt>mvn --version</tt> para confirmar</li>
+        </ul>
+    </ul>
+
+    <li><b>Git</b><br />
+    Ferramenta de linha de comando para fazer controlo de versões.</li>
+    <ul>
+        <li>Obter</li>
+        <ul>
+            <li><a href="http://git-scm.com/download/">Git 2.x</a>
+            <small>(escolher a versão estável mais recente disponível para a plataforma)</small>
+            <!--li>Alternativa: <a href="https://desktop.github.com/">GitHub Desktop</a></li-->
+        </ul>
+        <li>Instalar</li>
+        <ul>
+            <li><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Installing Git</a></li>
+        </ul>
+        <li>Configurar</li>
+        <ul>
+            <li>Executar comando <tt>git --version</tt> para confirmar</li>
+        </ul>
+    </ul>
+
+    <li>
+    <b>Eclipse for Java Enterprise Edition, Eclipse JEE</b><br />
+    Ambiente integrado de desenvolvimento para a plataforma Java, versão empresarial</li>
+    <ul>
+        <li>Obter o arquivo que contém o executável de Eclipse Mars e ficheiros associados:</li>
+        <ul>
+            <li><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/mars1">Eclipse JEE 4.5.1 - Mars Service Release 1</a>
+			<small></small></li>
+			<ul>
+				<li>Atenção: se tem instalado no seu sistema operativo o JDK 32 bits, deve obter o Eclipse 32 bits; se instalou o JDK 64 bits, deve obter o Eclipse 64 bits.</li>
+				<li>Nota: o arquivo para Windows vem em formato <b>.zip</b>, para outros sistemas operativos vem em <b>.tar.gz</b>.</li>
+			</ul>
+        </ul>
+        <li>Instalar:</li>
+        <ul>
+           <!-- <li><a href="http://wiki.eclipse.org/Eclipse/Installation">Eclipse Installation</a>
+            <small>Atenção: se instalou o JDK 32 bits, deve instalar o Eclipse 32 bits;
+            se instalou o JDK 64 bits, deve instalar o Eclipse 64 bits.</small></li> -->
+			<li>Extrair o arquivo para um diretório com permissões de escrita.</li>
+			<small>Possível resultado: <tt>C:\Users\john\Documents\eclipse</tt> em Windows, ou <tt>/home/john/Documents/eclipse</tt> em Linux para um utilizador chamado <b>john</b></small>
+        </ul>
+        <li>Configurar:</li>
+        <ul>
+            <li>Especificar o JDK como Standard VM</li>
+			<b>Nota: só deverá ser necessário este passo em Windows.</b>
+			Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre
+            <ul>
+                <li>Window -> Preferences -> Java -> Installed JREs -> Add...</li>
+                <li>Indicar o caminho até ao diretório do JDK:
+                    ex. <tt>C:\Java\jdk1.8.0_72</tt></li>
+                <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
+            </ul>
+            <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
+            <li><b>Conectores m2e</b> (maven 2 eclipse)</li>
+            <ul>
+                <li>Window -> Preferences -> Maven -> Discovery e clicar em "Open catalog".</li>
+                <li>Seleccionar:</li>
+                <ul>
+                    <li>m2e connector for jaxws-maven-plugin</li>
+                    <li>m2e connector for maven-dependency-plugin</li>
+					<li>m2e connector for org.codehaus.mojo:jaxb2-maven-plugin and org.jvnet.jaxb2.maven2:maven-jaxb2-plugin</li>
+                    <li>m2e-apt</li>
+                    <li>m2e-egit</li>
+                </ul>
+            </ul>
+            <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.
+            Para instalar cada ir a:
+            Eclipse, Help, Install New Software..., Work with:<br />
+            preencher endereços de origem e escolher pacotes desejados</li-->
+        </ul>
+    </ul>
+
+    <li>
+    <b>Apache jUDDI</b><br />
+    Servidor de nomes para Web Services que segue a norma UDDI 
+    (Universal Description, Discovery, and Integration)</li>
+    <ul>
+        <li>Obter</li>
+        <ul>
+            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.2/">jUDDI 3.3.2 distro</a></li-->
+            <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2015-2016/download/juddi-3.3.2_tomcat-7.0.64_9090.zip">jUDDI 3.3.2</a> <small>(configured for port <b>9090</b>)</small></li>
+        </ul>
+        <li>Instalar</li>
+        <ul>
+            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.2/readme.txt">Instruções de instalação</a></li-->
+            <!--li>Definir variável de ambiente CATALINA_HOME com o caminho para a pasta de instalação terminada em /juddi-distro-3.3.2/juddi-tomcat-3.3.2</li>
+            <li>Acrescentar CATALINA_HOME/bin à variável de ambiente PATH</li-->
+            <li>Em Linux ou Mac,
+                tornar os <i>scripts</i> de lançamento executáveis:<br />
+                <tt>chmod +x juddi-3.3.2_tomcat-7.0.64_9090/bin/*.sh</tt>
+            <!--li><b>IMPORTANTE</b>: Configurar o jUDDI para escutar no porto <b>9090</b></li>
+            <ul>
+                <li>Abrir o ficheiro '...\juddi-distro-3.3.2\juddi-tomcat-3.3.2\conf\server.xml' e alterar a linha 71 para:<br>
+                <tt>&lt;Connector port="9090" protocol="HTTP/1.1"</tt></li>
+                <li>Substituir ocorrências de 8080 por 9090 nos ficheiros</li>
+                <ul>
+                    <li>juddi-3.3.2_tomcat-7.0.64_9090/webapps/juddiv3/WEB-INF/classes/juddiv3.xml</li>
+                    <li>juddi-3.3.2_tomcat-7.0.64_9090/webapps/juddiv3/WEB-INF/classes/META-INF/uddi.xml</li>
+                </ul>
+            </ul-->
+            <li>Para lançar o servidor,
+                basta executar o seguinte comando na pasta <tt>juddi-3.3.2_tomcat-7.0.64_9090/bin</tt>:</li>
+                <ul>
+                    <li><tt>startup.sh</tt> (Linux e Mac)</li>
+                    <li><tt>startup.bat</tt> (Windows)</li>
+                </ul>
+            <li>Para confirmar funcionamento,
+                aceder à página de índice do jUDDI, 
+                que dá também acesso à interface de administração<br />
+                <a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a>
+            </li>
+            <ul>
+                <li>utilizador:senha <tt>uddiadmin:da_password1</tt></li>
+            </ul>
+        </ul>
+    </ul>
+    
+</ol>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribu&iacute;dos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+Última actualização em 8 de fevereiro de 2016 por Miguel Pardal
+</p>
+</div>
+
+</body>
+</html>

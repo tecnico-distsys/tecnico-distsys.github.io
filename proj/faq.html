@@ -1,0 +1,1757 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>Laboratórios/Projecto: soluções para dúvidas frequentes</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a>
+    </p>
+</div>
+
+<div class="titulo">
+    <h1>Perguntas e respostas sobre os Laboratórios e o Projecto</h1>
+
+    <ul>
+        <!--li><a href="#proj2">Dúvidas 2ª Parte do Projecto</a></li>
+        <li><a href="#proj1">Dúvidas 1ª Parte do Projecto</a></li-->
+        <li><a href="#duvidasferramentas">Dúvidas Java/Maven/Eclipse</a></li>
+        <!--li><a href="#ws">Dúvidas Web Services</a></li>
+            <ul>
+            <li><a href="#ws-jax">Dúvidas JAX-WS</a></li>
+            <li><a href="#ws-uddi">Dúvidas UDDI</a></li>
+            <li><a href="#ws-soap">Dúvidas SOAP Handlers</a></li>
+            </ul-->
+            <!--li><a href="#mysql">Dúvidas JDBC/MySQL</a></li-->
+    </ul>
+</div>
+
+<!-- para assinalar novas soluções:
+<font color="red">[NOVA]</font> 
+-->
+
+<div class="FAQ">
+
+<hr>
+
+<!-- ********************************************************************** -->
+<!--h2 id="proj2">Dúvidas 2ª Parte do Projecto</h2>
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+É necessário replicar o UDDI?
+</p>
+<p><strong>Resposta:</strong>
+Pode-se considerar o UDDI como sendo 100% disponível,
+não sendo necessário efectuar a sua replicação.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como se podem representar dados binários em texto?
+</p>
+<p><strong>Resposta:</strong>
+Podem usar codificação de base 64 para transportar dados binários em texto.
+</p>
+<p>
+Sugerimos a utilização das seguintes funções:
+<pre class="prettyprint lang-java">
+
+import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
+import static javax.xml.bind.DatatypeConverter.printBase64Binary;
+
+</pre>
+</p>
+</li>
+<br/>
+
+<!--li>
+<p><strong><span style="color:red;font-size:90%">[novo]</span> Pergunta:</strong>
+Ao tentar cifrar usando cifra assimétrica, constato que as
+bibliotecas do Java impõem um limite de 117 bytes no bloco a cifrar.
+Como devo fazer?
+</p>
+<p><strong>Resposta:</strong>
+Diferentes soluções são possíveis para ultrapassar a limitação. Desde
+optar por cifra híbrida (pois o método de cifra por cifra simétrica não
+limita o tamanho do texto a cifrar) a implementar métodos de cifra
+contínua (CBC ou Stream Cipher). Fica ao critério de cada grupo escolher
+a melhor alternativa.</p>
+</li>
+<br/-->
+
+
+<!--li>
+<p><strong>Pergunta:</strong>
+De que forma se pode fazer uma <i>thread</i> esperar?
+</p>
+<p><strong>Resposta:</strong>
+Vejam a documentação sobre <tt>thread.sleep()</tt> e
+<tt>wait()</tt> <tt>notify()</tt>.
+</p>
+</li>
+<br/-->
+
+<!--li>
+<p><strong>Pergunta:</strong> 
+Que formato utilizar para os <i>tickets</i> e outras estruturas de dados do Kerberos?
+</p>
+<p><strong>Resposta:</strong>
+O formato é livre e 
+a escolha compete aos grupos.
+</p>
+<p>
+No entanto, fazem sentido as seguintes observações:
+<ul>
+<li>
+Dado que o formato vai ser usado para segurança de Web Services,
+o formato deverá ser independente da plataforma
+(ou seja, usar objectos <tt>java.io.Serializable</tt> seria uma má escolha)
+</li>
+<li>
+Dada a restante construção do software,
+faz sentido usar XML,
+que pode ser processado com a biblioteca DOM ou equivalente.
+</li>
+</ul>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong><font color="blue">[BOA PRÁTICA]</font>
+Como partilhar código do Kerberos / Documentos Seguros / Replicação ?
+</p>
+<p>
+O servidor e o cliente devem partilhar o mínimo de código possível.
+</p>
+<p>
+No entanto, 
+em alguns casos faz sentido partilhar código
+(ex. UDDINaming, Tickets Kerberos, Handlers, etc).
+</p>
+<p>
+Nestes casos a melhor prática é criar módulos Maven autónomos,
+com os respectivos testes,
+que podem depois ser publicados
+(<tt>mvn install</tt>) e
+usados como dependências através das coordenadas 
+(<i>groupId</i>, <i>artifactId</i>, e <i>version</i>).
+</p>
+<p>
+Esta separação em módulos promove também o desenvolvimento paralelo de código
+de diferentes componentes do projeto,
+dado que diferentes membros da equipa podem estar a trabalhar simultaneamente
+em diferentes partes do projeto.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong> 
+É necessário tornar seguras as operações createUser, renewPassword e removeUser do SD-ID?
+</p>
+<p><strong>Resposta:</strong>
+Por simplificação do trabalho 
+não é necessário proteger as invocações destas operações.
+</p>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong> 
+Como devem ser publicadas as réplicas do SD-STORE no UDDI?
+</p>
+<p><strong>Resposta:</strong>
+A alternativa mais correta seria modificar a biblioteca <tt>uddi-naming</tt>
+para que passasse a suportar a publicação de diversos <i>service bindings</i>
+(o modelo subjacente, da API JAX-R, já permite que um serviço tenha vários endereços).
+</p>
+<p>
+No entanto,
+por simplificação do trabalho,
+serão admitidas (e consideradas igualmente corretas) soluções
+em que as réplicas de SD-STORE são publicadas individualmente,
+recorrendo a um padrão de nomes, como por exemplo:
+SD-STORE-1, SD-STORE-2, ...
+</p>
+<br/>
+
+
+
+
+<li>
+<p><strong>Pergunta:</strong> 
+Em teoria, existem várias variantes de Message Authentication Codes (MAC). Qual devemos usar no requisito SD-Id.A ou 
+SD-Id.B para assegurar a integridade/autenticidade do pedido/conteúdos do documento (respetivamente)?
+</p>
+<p><strong>Resposta:</strong>
+Recomenda-se a solução descrita no livro e na <a href="../10-crypto/criptografia/index.html#mac">página dos laboratórios</a>, por ser simples de implementar. 
+<br/>No entanto, qualquer solução correta é aceitável, incluindo a solução de HMAC.
+</p>
+<br/>
+
+<li>
+<p><strong> Pergunta:</strong> 
+As réplicas precisam de saber os valores de N, RT e WT?
+</p>
+<p><strong>Resposta:</strong>
+Não,
+trata-se de uma gralha no enunciado.
+O que deveria dizer era:
+"Os parâmetros N, RT e WT são definidos no front-end 
+aquando do lançamento do sistema e 
+não mudam enquanto o sistema estiver em execução."
+</p>
+<br/>
+
+
+</ol>
+
+<!-- ********************************************************************** -->
+<!--h2 id="proj1">Dúvidas 1ª Parte do Projecto</h2>
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+Existem dados de teste obrigatórios?
+</p>
+<p><strong>Resposta:</strong>
+Sim, devem consultar a página <a href="test.html">dados de teste</a>
+para verificar que dados devem existir nos serviços para testes.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+É necessário entregar instruções de instalação?
+</p>
+<p><strong>Resposta:</strong>
+Sim, é necessário entregar instruções de instalação do projecto que possam ser seguidas nos laboratórios.
+Deverão escolher o sistema Windows ou Linux disponível no laboratório.
+<!--A visualização em máquina pessoal (portátil) implicará uma penalização na nota.-->
+<!--/p><p>
+Podem encontrar o <a href="README.md">formato de base para as instruções</a> na página dos laboratórios.
+Devem substituir todas as reticências (...) por valores concretos.
+</p><p>
+Estas instruções serão seguidas para efectuar a instalação e teste do projecto.
+Se estiverem erradas ou incompletas o trabalho não poderá ser avaliado na totalidade.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+O que se considera um <i>email</i> válido?
+</p>
+<p><strong>Resposta:</strong>
+A validação do <i>email</i> deve ser apenas estrutural,
+ou seja,
+devem verificar se o texto está correto,
+não é necessário verificar se o domínio e a conta existem de facto.
+</p>
+<p>
+Exemplo:
+o seguinte email será considerado válido: a@b.
+Os seguintes serão inválidos: a, @b, a@.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+A integração ES+SD será feita já na terceira entrega de ES e 
+na primeira entrega de SD?
+</p>
+<p><strong>Resposta:</strong>
+Não.
+Tal como é dito no terceiro enunciado de ES,
+a integração ES+SD será <b>preparada</b> nesta entrega
+mas só será <b>concretizada</b> na entrega seguinte.
+</p>
+<p>
+A preparação consiste,
+do lado de ES,
+através das classes IDRemoteServices e StoreRemoteServices
+que serão testadas usando <i>mocks</i> e,
+do lado de SD,
+através da concretização de um Client e 
+de todos os testes a realizar em sd-id-cli e sd-store-cli.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Que testes com <i>mocks</i> fazem sentido no código de SD?
+</p>
+<p><strong>Resposta:</strong>
+Na primeira entrega de SD
+o componente que está a ser desenvolvido e testado 
+é o serviço (sd-id e sd-store).
+<!--Os testes mais importantes são os testes feitos
+remotamente às operações definidas no contrato WSDL.-->
+<!--/p>
+<p>
+Dentro de cada serviço,
+faz sentido usar <i>mock</i> para testar as unidades de código que
+fazem a interação com o UDDI.
+</p>
+<!--p>
+Caso se esteja a concretizar um objecto Client
+para facilitar a interação com o serviço,
+também se usar <i>mock</i>
+para simular os erros de comunicação com o serviço respectivo.
+</p-->
+<!--/li>
+<br/>
+
+</ol>
+
+<!-- ********************************************************************** -->
+
+<!--h3 id="sd-id">Dúvidas na parte SD-ID</h3>
+
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+Que nome deve ser usado para publicar o serviço SD-ID no UDDI?
+</p>
+<p><strong>Resposta:</strong>
+SD-ID
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+O que deve a operação requestAuthentication retornar em caso de autenticação bem sucedida? 
+</p>
+<p><strong>Resposta:</strong>
+O enunciado diz que deve retornar um valor boleano, 
+com valor verdadeiro. 
+Como o retorno da operação é do tipo byte[], 
+deve ser retornado um array com 1 único byte, 
+com valor '(byte) 1'.
+No caso de autenticação mal sucedida (utilizador inexistente ou senha incorreta), 
+não há lugar a retorno, pois é lançada a exceção prevista no WSDL. 
+</p>
+<p>
+NOTA: o teste de avaliação da primeira entrega foi alterado para também considerar
+"1".getBytes() como um resultado correcto, apesar de neste caso se devolver 
+o código do caracter '1' e não o valor binário 1.
+</p>
+
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Em que situações deve a exceção "AuthReqFailed" do SD-ID ser lançada?
+</p>
+<p><strong>Resposta:</strong>
+Nos seguintes casos: i) pedido de autenticação com utilizador
+inexistente e ii) pedido de autenticação com password incorreta.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+No pedido de autenticação, em que campo do pedido deve ir a senha? 
+</p>
+<p><strong>Resposta:</strong>
+No campo "reserved", como array de bytes. 
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+No pedido de autenticação, a senha vai em claro ou é necessário cifrá-la? 
+</p>
+<p><strong>Resposta:</strong>
+Nesta etapa do projeto, a senha segue em claro, no campo "reserved".  
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+A senha é um número (como um PIN) ou é alfanumérica? 
+</p>
+<p><strong>Resposta:</strong>
+O projeto deve suportar senhas alfanuméricas, 
+que devem ser armazenadas em String. 
+No entanto, 
+a geração de novas senhas pode simplesmente gerar números e 
+depois convertê-los para representação decimal em String.
+Fica à liberdade dos grupos a escolha da dimensão do espaço de senhas.   
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+O que se considera um utilizador válido? 
+</p>
+<p><strong>Resposta:</strong>
+O enunciado não define a sintaxe do <i>username</i>, que apenas se espera que não seja nulo nem vazio.
+A exceção <tt>InvalidUser_Exception</tt> deve ser usada para assinalar estes dois casos.
+</p>
+</li>
+<br/>
+
+</ol>
+
+<!-- ********************************************************************** -->
+
+<!--h3 id="sd-id">Dúvidas na parte SD-STORE</h3>
+
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+Que nome deve ser usado para publicar o serviço SD-STORE no UDDI?
+</p>
+<p><strong>Resposta:</strong>
+SD-STORE
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Pode um utilizador ter um repositório vazio? 
+</p>
+<p><strong>Resposta:</strong>
+Como o repositório de um utilizador só é criado quando esse utilizador pede para criar um documento pela primeira vez, e 
+uma vez que não há operação para apagar documento, 
+cada repositório tem sempre pelo menos um documento.   
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Há limite ao número de documentos num repositório? 
+</p>
+<p><strong>Resposta:</strong>
+Não. 
+Apenas há limite à soma da dimensão dos documentos do repositório de um dado utilizador. 
+Documentos vazios contam como dimensão nula. 
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Porque é que a operação "createDoc" não gera um erro de utilizador inexistente?
+</p>
+<p><strong>Resposta:</strong>
+Porque, 
+tal como é dito no WSDL,
+quando a operação "createDoc" é invocada com um utilizador que não existe, 
+o repositório correspondente deve ser criado.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+O que sucede se o "createDoc" receber null ou vazio "" no id do documento ou no user?
+</p>
+<p><strong>Resposta:</strong>
+O servidor deve *ignorar* o pedido e não fazer nada.
+Neste caso, não será lançada nenhuma exceção. 
+O pedido simplesmente não faz nada.
+</p>
+<p>
+NOTA: como este esclarecimento só foi feito após a primeira entrega,
+os respectivos testes não serão contabilizados na avaliação da primeira entrega.
+</p>
+</li>
+<br/>
+
+
+</ol>
+
+
+<hr />
+<!-- ********************************************************************** -->
+<h2 id="duvidasferramentas">Dúvidas Java/Maven/Eclipse</h2>
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+Existe algum atalho para a página de laboratórios de SD?
+</p>
+<p><strong>Resposta:</strong>
+Sim, existe este: <a href="http://tinyurl.com/leic-sod">http://tinyurl.com/leic-sod</a>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Para onde devem ser enviadas as dúvidas sobre o projecto?
+</p>
+<p><strong>Resposta:</strong>
+As perguntas devem ser enviadas para o endereço correspondente ao curso do aluno:<br />
+leti-sod@disciplinas.tecnico.ulisboa.pt<br />
+leic-tagus-sod@disciplinas.tecnico.ulisboa.pt<br />
+leic-alameda-sod@disciplinas.tecnico.ulisboa.pt
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong><font color="red">[IMPORTANTE]</font>
+Existe alguma restrição sobre a directoria de instalação do software?
+</p>
+<p><strong>Resposta:</strong>
+Sim, infelizmente devido a diversos <i>bugs</i> em ferramentas,
+<b>o software não funciona corretamente em pastas cujo caminho tenha
+espaços e/ou caracteres acentuados</b> (sobretudo em Windows).<br />
+Exemplos de pastas problemáticas:
+<ul>
+<li><tt>C:\program files</tt></li>
+<li><tt>C:\users\André</tt></li>
+<li><tt>C:\users\Alice Silva</tt></li>
+</ul>
+</p>
+<p>
+Dado este problema a sugestão é instalar o software numa pasta
+como <tt>C:\java\</tt>.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Devem-se instalar <b>exatamente</b> as versões pedidas ou podem ser outras?
+</p>
+<p><strong>Resposta:</strong>
+Sim, devem procurar instalar as versões pedidas
+de forma a terem um ambiente igual (ou o mais parecido possível) com o ambiente de referência (dos laboratórios).<br />
+Se não for possível encontrar a versão exata, 
+podem instalar a versão mais próxima disponível.
+</p>
+<p>
+Existem riscos em ter diferenças mas,
+na maior parte dos casos, não deverão ser impeditivos da realização do projeto.<br />
+Em todo o caso, ao testar os exemplos das aulas será possível detetar se há ou não diferenças relevantes.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como confirmar se estou a usar as versões certas das ferramentas?
+</p>
+<p><strong>Resposta:</strong>
+Abrir uma consola e executar os seguintes comandos:
+<pre class="prettyprint lang-sh">
+$ java -version
+
+$ javac -version
+
+$ mvn -version
+</pre>
+
+Start <b>Eclipse</b>, go to "Help" menu, select "About Eclipse"
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como confirmar se o PATH está correcto?
+</p>
+<p><strong>Resposta:</strong>
+Abrir uma consola Linux e executar
+<pre class="prettyprint lang-sh">
+$ echo $PATH
+</pre>
+Abrir uma consola Windows e executar
+<pre class="prettyprint lang-sh">
+$ echo %PATH%
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Porque é que o meu Mac não reconhece o endereço <tt>localhost</tt>?
+</p>
+<p><strong>Resposta:</strong>
+As seguintes instruções poderão resolver o problema:<br />
+<a href="http://www.codepotato.co.uk/2012/07/25/enabling-localhost-on-os-x-mountain-lion/">http://www.codepotato.co.uk/2012/07/25/enabling-localhost-on-os-x-mountain-lion/</a><br />
+</p>
+</li>
+<br/>
+
+<!-- ********************************************************************** -->
+
+<li>
+<p><strong>Pergunta:</strong>
+O meu nome de utilizador tem acentos ou espaços e preciso de mudar a localização do repositório local Maven.
+Como se faz?
+</p>
+<p><strong>Resposta:</strong>
+O repositório local do Maven é a pasta onde 
+são guardadas todas as dependências obtidas pelo Maven.
+</p>
+<p>
+Por omissão,
+a localização do repositório local é:<br />
+<tt>~/.m2</tt> (Unix/Mac)<br />
+<tt>C:\Users\Username\.m2</tt> (Windows)<br />
+</p>
+<p>
+Para alterar a configuração,
+editar o ficheiro <tt>conf\setting.xml</tt>
+que está na pasta de instalação do Maven 
+(tipicamente apontada pela variável de ambiente M2_HOME).
+</p>
+<p>
+<a href="http://www.mkyong.com/maven/where-is-maven-local-repository/">Mais informação</a>
+</p>
+</li>
+<br/>
+
+
+<li>
+<p><strong>Pergunta:</strong>
+Como posso consultar o <i>effective</i> POM de um projeto Maven?
+</p>
+<p><strong>Resposta:</strong>
+O <i>effective</i> POM é o resultado da combinação do POM do projeto com os valores das propriedades por omissão.
+É útil para perceber todas as definições que são assumidas pela ferramenta,
+como valores de propriedades, por exemplo.
+</p>
+<p>
+Pode-se consulta através do seguinte comando:
+<pre class="prettyprint lang-sh">
+$ mvn help:effective-pom
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Existe forma de consultar a árvore de dependências de um projeto Maven?
+</p>
+<p><strong>Resposta:</strong>
+Sim, através do seguinte comando:
+<pre class="prettyprint lang-sh">
+$ mvn dependency:tree
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como remover o aviso de <i>character encoding</i> do Maven?
+</p>
+<p><strong>Resposta:</strong>
+Acrescentar a seguinte configuração ao pom.xml:
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;properties&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        ...
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como remover o aviso "Warning: killAfter is now deprecated" do Maven?
+</p>
+<p><strong>Resposta:</strong>
+Para remover este aviso (inofensivo) pode-se acrescentar a seguinte configuração ao pom.xml:
+<pre class="prettyprint lang-xml">
+    &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
+        ...
+          &lt;configuration&gt;
+            &lt;killAfter&gt;-1&lt;/killAfter&gt;
+            ...
+          &lt;/configuration&gt;
+      &lt;/plugin&gt;
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como definir a versão do Java considerada pelo Maven?
+</p>
+<p><strong>Resposta:</strong>
+Acrescentar a seguinte configuração ao pom.xml:
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        ...
+        &lt;configuration&gt;
+           &lt;source&gt;1.8&lt;/source&gt;
+           &lt;target&gt;1.8&lt;/target&gt;
+           ...
+        &lt;/configuration&gt;
+    &lt;/plugin&gt;
+</pre>
+Mais informação na seguinte página:
+<a href="http://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html">http://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html</a>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Qual a diferença entre exec:java e appassembler ?
+</p>
+<p><strong>Resposta:</strong> <tt>mvn exec:java</tt> corre dentro do maven e tem os argumentos definidos no pom.xml com bons valores por omissão (opção preferida para desenvolvimento).<br />
+<tt>mvn package appassembler:assemble</tt> corre de forma autónoma do Maven e necessita que sejam indicados os argumentos (opção preferida para demonstração)
+<pre>target/bin/appassembler/... .bat arg0 arg1 ...</pre>
+Via Eclipse também se pode correr, depois de compilado, definindo-se os argumentos nas "Run Configurations".
+</p>
+</li>
+<br/>
+
+
+<li>
+<p><strong>Pergunta:</strong><font color="blue">[BOA PRÁTICA]</font>
+É possível criar módulos Maven para partilha de código?
+</p>
+<p><strong>Resposta:</strong>
+Sim, é possível.
+</p>
+<p>
+Para o fazer,
+criar um projeto à parte (ex. <tt>my-library</tt>).<br />
+No <tt>pom.xml</tt>,
+definir as coordenadas <i>groupId</i> (ex. <tt>example</tt>),
+<i>artifactId</i> (ex. <tt>my-library</tt>) e
+<i>version</i> (ex. <tt>1.0-SNAPSHOT</tt>).
+</p>
+<p>
+Para disponibilizar o módulo no repositório Maven local (<tt>~/.m2</tt>),
+fazer: <tt>mvn install</tt>.
+</p>
+<p>
+Para usar o módulo noutro projeto,
+basta acrescentar a dependência,
+indicando as coordenadas <i>groupId</i>,
+<i>artifactId</i> e
+<i>version</i>
+tal como se faz em relação a módulos que estão no repositório Maven central
+(ex. <tt>junit</tt>, <tt>junit</tt>, <tt>4.12</tt>).
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como executar o programa Java directamente, sem ser através do Maven ou do Eclipse?
+</p>
+<p><strong>Resposta:</strong>
+Caso existam problemas no processamento de entradas e saídas de um programa
+(o que é comum acontecer com as aplicações de consola que são executadas a partir de outra ferramenta)
+sugere-se a seguinte solução, que passa por usar o plug-in <a href="http://mojo.codehaus.org/appassembler/appassembler-maven-plugin/">appassembler</a> para construir ficheiros de lançamento da aplicação,
+para Windows e Linux.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como executar o plug-in appassembler de forma automática na fase <i>install</i>?
+</p>
+<p><strong>Resposta:</strong>
+Acrescentar a seguinte configuração ao <tt>pom.xml</tt>:
+</p>
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.9&lt;/version&gt;
+        &lt;executions&gt;
+            &lt;execution&gt;
+                &lt;phase&gt;install&lt;/phase&gt;
+                &lt;goals&gt;
+                    &lt;goal&gt;assemble&lt;/goal&gt;
+                &lt;/goals&gt;
+            &lt;/execution&gt;
+        &lt;/executions&gt;
+        &lt;configuration&gt;
+</pre>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+É possível ter POMs hierárquicos? Como se usam?
+</p>
+<p><strong>Resposta:</strong>
+O Maven tem dois conceitos hierárquicos:
+<i>modules</i> e <i>parent</i>.
+</p>
+<pre class="prettyprint lang-xml">
+&lt;project ...&gt;
+    &lt;!-- the parent relation --&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;example&lt;/groupId&gt;
+        &lt;artifactId&gt;parent&lt;/artifactId&gt;
+        &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;artifactId&gt;module1&lt;/artifactId&gt;
+    &lt;!-- the modules --&gt;
+    &lt;modules&gt;
+        &lt;module&gt;submodule1&lt;/module&gt;
+        &lt;module&gt;submodule2&lt;/module&gt;
+    &lt;/modules&gt;
+&lt;/project&gt;
+</pre>
+<p>
+A relação <i>parent</i> indica que configurações
+de propriedades, repositórios e <i>plug-ins</i> devem
+ser herdadas do projeto pai.
+</p>
+<p>
+Um <i>module</i> indica que o subprojeto deve 
+ser incluído no processamento do ciclo de vida 
+do projeto de topo.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong> 
+Como executar testes de integração (classes terminadas em IT)?
+</p>
+<p><strong>Resposta:</strong>
+Caso não exista ainda a definição
+(definida no pom pai, por exemplo)
+será necessário adicionar a configuração do <i>plug-in</i> para testes de integração:
+</p>
+<pre class="prettyprint lang-xml">
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-failsafe-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.18.1&lt;/version&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;integration-test&lt;/goal&gt;
+                            &lt;goal&gt;verify&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+</pre>
+</li>
+<br/>
+
+<!-- ********************************************************************** -->
+
+<li>
+<p><strong>Pergunta:</strong>
+Como posso ler ficheiros (recursos) da aplicação?
+</p>
+<p><strong>Resposta:</strong>
+Colocar os ficheiros em <tt>src/main/resources</tt>
+(ou em <tt>src/test/resources</tt> para testes).<br />
+
+Fazer <tt>mvn process-resources</tt> e
+confirmar que ficheiros adicionados são processados e copiados
+para a pasta <tt>target</tt>.<br />
+
+Se se pretender copiar propriedades definidas no Maven
+para estes ficheiros é possível usar a opção
+<a href="http://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html">filter</a>.
+(usando a etiqueta <tt>project/build/resources</tt> ou
+<tt>project/build/testResources</tt> no <tt>pom.xml</tt>).
+<pre class="prettyprint lang-xml">
+&lt;project ...
+  ...
+  &lt;build&gt;
+    &lt;resources&gt;
+      &lt;resource&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+        &lt;filtering&gt;true&lt;/filtering&gt;
+      &lt;/resource&gt;
+    &lt;/resources&gt;
+    &lt;testResources&gt;
+      &lt;testResource&gt;
+        &lt;directory&gt;src/test/resources&lt;/directory&gt;
+        &lt;filtering&gt;true&lt;/filtering&gt;
+      &lt;/testResource&gt;
+    &lt;/testResources&gt;
+    ...
+</pre>
+
+<p>
+Depois de configurado o <tt>pom.xml</tt>, no código,
+é possível aceder a um <tt>java.io.InputStream</tt>
+para ler os dados binários.
+<pre class="prettyprint lang-java">
+    ...
+
+    InputStream is = this.getClass().getResourceAsStream("/file");
+
+    ...
+</pre>
+Adicionalmente,
+a classe <tt>java.io.ByteArrayOutputStream</tt> pode ajudar a 
+lidar com dados de tamanho variável.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como converter de <tt>java.util.Date</tt> para <tt>javax.xml.datatype.XMLGregorianCalendar</tt>?
+E ao contrário?
+</p>
+<p><strong>Resposta:</strong>
+De <tt>XMLGregorianCalendar</tt> para <tt>Date</tt>:<br/>
+<pre class="prettyprint lang-java">
+
+    Date d = xgc.toGregorianCalendar().getTime();
+
+</pre>
+De <tt>Date</tt> para <tt>XMLGregorianCalendar</tt>:<br/>
+<pre class="prettyprint lang-java">
+
+    GregorianCalendar gc = new GregorianCalendar();
+    gc.setTime(d);
+    XMLGregorianCalendar xgc = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
+
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como fazer cálculos com datas?
+</p>
+<p><strong>Resposta:</strong>
+Usando a classe <tt>Calendar</tt>, por exemplo.<br/>
+<pre class="prettyprint lang-java">
+
+    Date date = new Date();
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    cal.add(Calendar.MINUTE, 10);
+    Date newDate = cal.getTime();
+
+</pre>
+</p>
+</li>
+<br/>
+
+
+<li>
+<p><strong>Pergunta:</strong> Como resolver o seguinte problema na compilação:
+<pre>Exception in thread "main" java.lang.Error: Unresolved compilation problems</pre>
+</p>
+<p><strong>Resposta:</strong>
+As classes foram corrompidas por diferentes compiladores em simultâneo (por ex. Eclipse e Maven). <br />
+Para corrigir ir a Eclipse -> Menu 'Project', 'Clean', 'clean all projects". Depois, correr <tt>mvn clean</tt>.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>  
+Como posso gerar um <i>mock</i> que implementa duas interfaces em simultâneo
+(ex. MyPortType e BindingProvider) ?
+</p>
+<p><strong>Resposta:</strong>
+Consultar a seguinte página do tutorial de JMockit:
+<a href="http://jmockit.org/tutorial/Mocking.html#multipleInterfaces">Mocking multiple interfaces at the same time</a>.
+<!--<a href="http://jmockit.org/tutorial/BehaviorBasedTesting.html#multipleInterfaces">Mocking multiple interfaces at the same time</a>.-->
+</p>
+</li>
+<br/>
+
+
+<li>
+<p><strong>Pergunta:</strong>  
+Nos computadores dos laboratórios do Taguspark em Windows, pode ser necessário instalar mais algum plugin em Eclipse?
+</p>
+<p><strong>Resposta:</strong>
+Poderá ser necessária a instalação de plugins adicionais se não estiver a conseguir correr o código em Windows 10 nos computadores do Taguspark, para além do que é pedido no guia de software.
+<br>
+Se estiver a ter problemas, adicione e instale todos os <tt>Connectors</tt> do repositório <tt>bitstrings.org m2e Connectors</tt>.
+<br>
+- No Eclipse:
+<ul>
+	<li>
+		Help -> Install New Software... -> Botão "Add..."
+		<br>
+		Preencha com os seguintes valores: [Name: <b>m2e - Connectors</b>] e [Location: <b>http://bitstrings.github.com/m2e-connectors-p2/releases</b>]
+	</li>
+	<li>
+		Work with: <b>m2e - Connectors</b>
+		<br>
+		Instalar tudo desse repositório.
+	</li>
+	<li>
+		Window -> Preferences -> Maven -> Discovery -> Botão "Open Catalog"
+		<br>
+		Escolher e instalar os seguintes:
+		<ul>
+			<li><tt>m2e - Maven Integration for Eclipse</tt></li>
+			<li><tt>m2e - slf4j over logback logging</tt></li>
+			<li><tt>m2e axistools</tt></li>
+			<li><tt>m2e connector for maven-remote-resources-plugin</tt></li>
+			<li><tt>m2e extension for the org.basepom property-helper plugin</tt></li>
+			<li><tt>Maven Development Tools</tt></li>
+			<li><tt>Plexus Metadata Generation</tt></li>
+			<li><tt>Takari Build Lifecycle Support</tt></li>
+			<li><tt>Takari Usage Statistics Reporter</tt></li>
+		</ul>
+	</li>
+	<li>
+		Com estes plugins adicionais, já deverá conseguir compilar e executar corretamente os vários exercícios no Eclipse em Windows 10 nos laboratórios do Taguspark.
+	</li>
+</ul>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>  
+Consigo compilar e executar os exercícios de código com o Maven no terminal, mas como o faço dentro do Eclipse?
+</p>
+<p><strong>Resposta:</strong>
+O Eclipse, depois de instalado seguindo o guia, consegue invocar ações de Maven.
+<br>
+Para um projeto Maven no Eclipse, é necessário criar configurações de <tt>Maven Build</tt>, como é descrito em seguida:
+<br>
+<tt>Package Explorer: Right-click no nome do projeto -> Run As -> Run Configurations... -> Maven Build -> New launch configuration</tt>
+<br>
+<div>
+<img style="padding: 20px 0px 0px 0px" alt="Configuração de Maven goals em Eclipse" title="Configuração de Maven goals em Eclipse" src="faq-maven-eclipse.PNG"></img>
+</div>
+Especificando em <tt>Base directory:</tt> o caminho para o diretório do projeto e em <tt>Goals:</tt> a sequência de ações Maven a 
+desempenhar, pode clicar em <tt>Apply</tt> e a partir dai poderá executar com esta parametrização através do botão <tt>Run</tt>.
+<br>
+Neste exemplo específico, ao clicar em <tt>Run</tt> serão executados para o projeto <tt>hello-ws-cli_juddi</tt> os comandos:
+<ul>
+	<li><tt>mvn generate-sources</tt></li>
+	<li><tt>mvn compile</tt></li>
+	<li><tt>mvn exec:java</tt></li>
+</ul>
+</p>
+</li>
+
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>  
+Já segui todas as instruções no guia de software mas mesmo assim o Eclipse não consegue compilar código Java, o que poderá ser o problema?
+</p>
+<p><strong>Resposta:</strong>
+É possível que, apesar do JDK estar instalado, o Eclipse esteja a apontar para um módulo JRE (Java Runtime Environment), que apenas 
+permite executar programas Java mas não compilar.
+<br>
+Para resolver esta questão, por exemplo em Windows, é necessário seguir os seguintes passos:
+<br>
+Ir a <tt>Window -> Preferences -> Java -> Installed JREs -> Add...</tt>
+<br>
+Indicando o diretório do JDK instalado (seguindo o guia deverá chamar-se <tt>jdk1.8.0_72</tt>), deve obter o seguinte resultado:
+<div>
+<img style="padding: 20px 0px 0px 0px" alt="Adição do JDK aos Installed JREs" title="Adição do JDK aos Installed JREs" src="eclipse-jdk1.PNG"></img>
+</div>
+<br>
+Carregue em <tt>Apply, OK</tt>. A partir de agora, o Eclipse está configurado para invocar as ferramentas de compilação de Java, tais como o <tt>javac</tt>.
+</p>
+</li>
+
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>  
+Já configurei o Eclipse para usar o JDK 8, mas mesmo assim quando importo um projeto Maven, o Eclipse assume que é para usar J2SE5 ou outra qualquer versão <i>estranha</i>, como corrigir isto?
+</p>
+<p><strong>Resposta:</strong>
+Para assegurar que o projeto Maven funciona como esperado, recomenda-se dar uma indicação explícita da versão de JDK a usar para o projeto.
+<br>
+Para resolver esta questão, é necessário especificar a versão no <tt>pom.xml</tt> do projeto, inserindo as tags <tt>maven.compiler.source</tt> e <tt>maven.compiler.target</tt> aninhadas na tag <tt>properties</tt>.
+<br>
+Exemplo concreto, aplicado ao <tt>pom.xml</tt> do projeto <tt>hello-ws-cli_juddi</tt>:
+<br><br>
+<tt>
+...
+<br>
+&lt;/dependencies&gt;
+<br>
+<br>
+&lt;properties&gt;
+	<div style="padding-left: 20px; display: block;">
+    <span style="display: block;">&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span>
+    <span style="display: block;">&lt;mainclass&gt;example.cli.HelloClient&lt;/mainclass&gt;</span>
+
+	<br><b>
+	<span style="display: block;">&lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span>
+	<span style="display: block;">&lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span>
+	</b><br>
+
+    ...
+	</div>
+&lt;/properties&gt;
+<br>
+<br>
+&lt;build&gt;
+<br>
+...
+</tt>
+<br>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>  
+Ao executar o Maven no Ubuntu dá-me o seguinte erro:
+<br>
+<br>
+[INFO] Scanning for projects...
+<br>
+[INFO]
+<br>
+[INFO] ------------------------------------------------------------------------
+<br>
+[INFO] Building java-app 1.0-SNAPSHOT
+<br>
+[INFO] ------------------------------------------------------------------------
+<br>
+Downloading: https://repo.maven.apache.org/maven2/org/codehaus/mojo/exec-maven-plugin/1.4.0/exec-maven-plugin-1.4.0.pom
+<br>
+[INFO] ------------------------------------------------------------------------
+<br>
+[INFO] BUILD FAILURE
+<br>
+[INFO] ------------------------------------------------------------------------
+<br>
+[INFO] Total time: 0.629 s
+<br>
+[INFO] Finished at: 2016-02-24T11:30:56+00:00
+<br>
+[INFO] Final Memory:8M/110M
+<br>
+[INFO] ------------------------------------------------------------------------
+<br>
+[ERROR] Plugin org.codehaus.mojo:exec-maven-plugin:1.4.0 or one of its dependencies could not be resolved: Failed to read artifact descriptor for org.codehaus.mojo:exec-maven-plugin:jar:1.4.0: Could not transfer artifact org.codehaus.mojo:exec-maven-plugin:pom:1.4.0 from/to central (https://repo.maven.apache.org/maven2): java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty -> [Help 1]
+<br>
+[ERROR] 
+<br>
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+<br>
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+<br>
+[ERROR]
+<br>
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+<br>
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResolutionException
+<br>
+<br>
+Como resolvo este problema?
+</p>
+<p><strong>Resposta:</strong>
+Executando o seguinte comando na shell:
+<br>
+<pre>sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure</pre>
+</p>
+</li>
+
+</ol>
+
+
+<hr />
+<!-- ********************************************************************** -->
+<!--h2 id="ws">Dúvidas Web Services</h2>
+
+<h3 id="ws-jax">Dúvidas JAX-WS</h3>
+
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como validar um ficheiro WSDL no Eclipse? <br/>
+</p>
+<p><strong>Resposta:</strong>
+Na janela de 'Project explorer',
+carregar com o botão direito sobre o ficheiro WSDL.
+Escolher a opção <i>'validate'</i> e verifique o resultado em <i>'Markers'</i>.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+A ferramenta de geração de código a partir de WSDL não está a funcionar como esperado.
+</p>
+<p><strong>Resposta:</strong>
+O wsimport pode fornecer pouca informação sobre o erro no WSDL.
+</p>
+<p>
+Nesse caso, confirme:
+<ul>
+    <li>
+        Se todos os parâmetros passados ao wsimport estão correctos,
+        especialmente se a localização do WSDL é a correcta.
+    </li>
+    <li>
+        Usando a opção <i>"Validate"</i> do Eclipse,
+        assegure-se que nenhum erro nem warning é reportado.
+    </li>
+    <li>
+        Em alguns sistemas operativos,
+        o wsimport (quando chamado via ant) não interpreta correctamente pathnames com espaços;
+        assegure-se que o pathname do wsdl não tem espaços.
+    </li>
+    <li>
+        Assegure-se que, na secção binding do seu WSDL,
+        o atributo "name" das <i>fault</i> é idêntico
+        (incluindo correspondência maiúsculas/minúsculas) ao nome da <i>messages</i> definidas para as excepções de cada operação.
+        Este erro não é reportado pelo Eclipse, apesar de impedir a geração correcta dos stubs.
+    </li>
+    <li>
+        Execute o wsimport através da linha de comandos,
+        pois aí poderá receber uma mensagem mais detalhada sobre o error no WSDL.
+    </li>
+</ul>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Porque é que o código Java gerado para uma operação recebe uma classe de argumento em vez dos parâmetros simples?
+</p>
+<p><strong>Resposta:</strong>
+O JAX-WS tem diferentes estilos de geração de código Java a partir do WSDL.<br />
+Caso o nome da 'operation', 'message' e 'element' sejam iguais no WSDL,
+o código Java é gerado no <i>wrapper-style</i>,
+ou seja, os parâmetros surgem individualmente na operação.<br />
+Caso contrário,
+o código é gerado no <i>bare-style</i> e
+a operação recebe apenas um argumento,
+de uma classe gerada,
+que depois contém os argumentos que são lidos com <i>gets</i>.
+</p>
+</li>
+<br/>
+
+
+<li>
+<p><strong>Pergunta:</strong>
+Optámos por realizar contract-first no entanto o WSDL publicado é diferente daquele que foi criado por nós.<br/>
+</p>
+<p><strong>Resposta:</strong>
+<!--A documentação do <a href="../lab4/index.html">laboratório sobre contract-first</a> explica como resolver isso. O essencial é que-->
+<!--O atributo wsdlLocation deve estar correctamente definido e
+o WSDL deve ser incluído correctamente no pacote da aplicação.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Sempre que o servidor lança uma excepção,
+o cliente recebe uma excepção do tipo <tt>javax.xml.ws.soap.SOAPFault</tt> e não o tipo definido no WSDL<br/>
+</p>
+<p><strong>Resposta:</strong>
+A classe <i>stub</i> gerada para cada excepção definida no WSDL contém diferentes métodos construtores.
+No entanto, apenas um dos construtores permite que
+a excepção que é lançada remotamente seja recebida pelo cliente como uma excepção do tipo pretendido.<br />
+<pre class="prettyprint lang-java">
+    ...
+
+    public MyFault(String message, MyFaultType faultInfo)
+
+    ...
+</pre>
+A classe de excepção <tt>MyFault</tt> tem vários métodos construtores.
+No entanto, apenas o construtor apresentado acima serve para que o cliente
+possa correctamente interpretar a excepção como sendo do tipo MyFault.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+No cliente como se define o endereço do Web Service?
+</p>
+<p><strong>Resposta:</strong>
+Sim. O seguinte exemplo de código ilustra como:<br/>
+<pre class="prettyprint lang-java">
+    String endpointAddress = ...;
+
+    BindingProvider bindingProvider = (BindingProvider) port;
+    Map<String, Object> requestContext = bindingProvider.getRequestContext();
+
+    // retrieve old address
+    String oldEndpointAddress = (String) requestContext.get(ENDPOINT_ADDRESS_PROPERTY);
+
+    // set new address
+    requestContext.put(ENDPOINT_ADDRESS_PROPERTY, endpointAddress);
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Quando lanço o meu projeto Web Service e invoco operações a partir do cliente,
+os argumentos chegam sempre a <i>null</i> ao serviço.
+O que se passa de errado?
+</p>
+<p><strong>Resposta:</strong>
+Provavelmente a razão está no atributo <tt>endpointInterface</tt> da anotação @Webservice da classe que implementa o web service.
+Certifique-se que <tt>endpointInterface</tt> refere a interface que foi gerada pelo <i>wsimport</i> (normalmente essa interface
+tem o nome que foi atribuído ao <i>portType</i> no WSDL do serviço).
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+No eclipse, como remover o warning: <i>Access restriction: The type 'WebService' is not API (restriction on required library
+'C:\Program Files\Java\jre1.8.0_31\lib\rt.jar')</i> sobre a anotação <i>@WebService</i> da classe <tt>HelloImpl.java</tt>?
+</p>
+<p><strong>Resposta:</strong>
+É necessário atualizar a versão do <i>JRE System Library</i> associado ao projeto. No eclipse, deve-se proceder da seguinte forma:<br/>
+<ol>
+<li>Sobre as propriedades do projeto, selecionar <i>Java Build Path</i> e depois <i>Libraries</i>.</li>
+<li>Remover o <i>JRE System Library</i>.</li>
+<li>É necessário voltar a adicionar; Selecione <i>Add Library</i> e escolher <i>JRE System Library.</i></li>
+</ol>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong><font color="red">[IMPORTANTE]</font>
+Ao tentar executar o meu cliente de Web Service,
+a invocação remota falha com um erro <pre>Cannot load WSDL from http://localhost:8080/...</pre>
+</p>
+<p><strong>Resposta:</strong>
+Um cliente JAX-WS necessita de carregar o WSDL para criar um novo <tt>...Service</tt>.
+Podem consultar o código desta classe gerada para confirmar a dependência.
+</p>
+<p>
+Para minorar este problema,
+em vez de se ir buscar o WSDL diretamente ao servidor com HTTP,
+pode optar-se por aceder a um ficheiro.<br>
+No <tt>pom.xml</tt> do exemplo abaixo,
+vai-se buscar o ficheiro WSDL à pasta do servidor (<tt>ws</tt>),
+que se assume estar ao lado da pasta do cliente (<tt>ws-cli</tt>).
+</p>
+<pre class="prettyprint lang-xml">
+...
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.jvnet.jax-ws-commons&lt;/groupId&gt;
+        &lt;artifactId&gt;jaxws-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.3&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;wsimport&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+        &lt;configuration&gt;
+          &lt;!-- https://jax-ws-commons.java.net/jaxws-maven-plugin/wsimport-mojo.html --&gt;
+          &lt;wsdlDirectory&gt;${basedir}/../ws/src/main/resources&lt;/wsdlDirectory&gt;
+          &lt;wsdlFiles&gt;
+            &lt;wsdlFile&gt;Calc.wsdl&lt;/wsdlFile&gt;
+          &lt;/wsdlFiles&gt;
+        &lt;/configuration&gt;
+...
+</pre>
+<p>
+Em alternativa também se poderia copiar o ficheiro WSDL para <tt>ws-cli/src/main/resources</tt>
+</p>
+<p>
+Existe ainda a opção <tt>-clientjar</tt> da ferramenta <tt>wsimport</tt>.
+Infelizmente, esta opção não é diretamente suportada pelo <i>plug-in</i> JAX-WS do Maven.
+Existe uma <a href="https://gist.github.com/mpellegrini/5439304">forma de usar a opção -clientjar</a>
+mas é pouco elegante e, por esta razão, não é recomendada a sua utilização.
+</p>
+
+<li>
+<p><strong>Pergunta:</strong> 
+Como resolver o problema com o jaxws maven plugin 
+"Exception in thread "main" java.lang.ClassCastException: java.lang.NoSuchMethodError " ?
+</p>
+<p><strong>Resposta:</strong>
+<pre class="prettyprint lang-java">
+...
+Exception in thread "main" java.lang.ClassCastException: java.lang.NoSuchMethodError cannot be cast to java.lang.Exception
+    at org.jvnet.jax_ws_commons.jaxws.Invoker.main(Invoker.java:87)
+...
+</pre>
+Este problema ainda não está completamente compreendido.
+No entanto,
+em alguns casos,
+o problema resolve-se
+trocando a versão do plugin referido de 2.3 para 2.2 no <tt>pom.xml</tt>.
+<br/>
+
+
+</ol>
+
+<!-- ********************************************************************** -->
+
+<!--h3 id="ws-uddi">Dúvidas UDDI</h3>
+
+<ol>
+
+<li>
+<p><strong>Pergunta: </strong> 
+Como lançar o jUDDI+Tomcat em <b>Linux</b> nos computadores dos laboratorios?
+</p>
+<p><strong>Resposta:</strong>
+<ol>
+<li>Descarregar o <a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2014-2015/download/juddi-3.2.1_tomcat-7.0.57_port-8081.zip">JUDDI</a> para a pasta <tt>/tmp</tt>.</li>
+<li><tt>cd /tmp</tt>.</li>
+<li><tt>wget http://disciplinas.tecnico.ulisboa.pt/leic-sod/2014-2015/download/juddi-3.2.1_tomcat-7.0.57_port-8081.zip</tt>  <font color="red">[Alternativa ao 1º passo]</font>.</li>
+<li><tt>unzip juddi-3.2.1_tomcat-7.0.57_port-8081.zip</tt></li>
+<li><tt>chmod +x /tmp/juddi-3.2.1_tomcat-7.0.57_port-8081/bin/*.sh</tt></li>
+<li>Adicionar <tt>$CATALINA_HOME/bin</tt> à variável de ambiente PATH <font color="red">[Só Tagus]</font></li>
+<ol>
+<li><tt>echo export CATALINA_HOME=/tmp/juddi-3.2.1_tomcat-7.0.57_port-8081 &gt;&gt; ~/.bashrc</tt></li>
+<li><tt>echo export PATH="$PATH:$CATALINA_HOME/bin" >> ~/.bashrc</tt></li>
+</ol>
+<li><tt>/tmp/juddi-3.2.1_tomcat-7.0.57_port-8081/bin/startup.sh</tt></li>
+</ol>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Ao tentar lançar o jUDDI+Tomcat, obtenho um erro:
+<tt>BASEDIR not found</tt><br />
+Qual o problema?
+</p>
+<p><strong>Resposta:</strong>
+Provavelmente algum dos shell scripts necessários não está configurado com permissões de execução.
+Corrija as permissões dos ficheiros .sh por forma a terem permissões de execução para o seu utilizador.<br />
+<tt>chmod +x *.sh</tt>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Ao tentar aceder ao jUDDI+Tomcat, obtenho o erro:
+<tt>... ServletException ... ConfigurationException ... URISyntaxException: Illegal character in path at index</tt><br />
+Qual o problema?
+</p>
+<p><strong>Resposta:</strong>
+Provavelmente o caminho (<i>path</i>) para a pasta de instalação do jUDDI contém espaços ou caracteres acentuados.<br />
+Instalar numa <i>path</i> sem espaços nem caracteres acentuados,
+por exemplo, em <tt>c:\temp\</tt>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Ao tentar ligar-me ao UDDI, recebo a seguinte mensagem de erro:
+<tt>org.apache.commons.configuration.ConfigurationException: Cannot locate configuration source META-INF/uddi.xml</tt><br />
+Qual o problema?
+</p>
+<p><strong>Resposta:</strong>
+O ficheiro <tt>uddi.xml</tt> serve para definir vários parâmetros que são necessários para a ligação ao UDDI registry (e.g. endereços do registry).
+O pathname do ficheiro uddi.xml é indicado nas propriedades da ligação ao UDDI registry, como se pode perceber no exemplo dado no tutorial de UDDI.
+Este erro denota que o pathname indicado para o ficheiro está errado.
+No caso de um web service, este ficheiro deve ser colocado na directoria WEB-INF/classes dentro do .war.
+No caso de uma aplicação consola, é necessário definir um pathname que seja correcto.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como posso limpar a base de dados do jUDDI através da linha de comandos?
+</p>
+<p><strong>Resposta:</strong>
+Parar jUDDI/Tomcat (executar <tt>shutdown.bat</tt> / <tt>shutdown.sh</tt> caso não esteja).<br />
+Apagar a directoria <tt>bin/target/juddi-derby-test-db</tt>.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como resolver o seguinte erro do UDDI?<br />
+<pre class="prettyprint lang-java">
+WSDLException (at /definitions/import[1]/definitions/import/definitions/types/xsd:schema/xsd:schema):
+faultCode=PARSER_ERROR: Problem parsing 'jar:file:/.../uddi-ws-3.1.3.jar!/www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd'.:
+java.net.UnknownHostException: www.w3.org
+</pre>
+</p>
+<p><strong>Resposta:</strong>
+O jUDDI gera os seus próprios Web Services a partir de diversos WSDL
+e um deles refere um <i>schema</i> no domínio <tt>www.w3.org</tt>.<br />
+Isto significa que o jUDDI não funciona correctamente se a máquina não estiver ligada à internet.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+O que significam as mensagens da biblioteca SLF4J?
+</p>
+<p><strong>Resposta:</strong>
+As linhas seguintes indicam que a biblioteca de <i>logging</i>
+<a href="http://www.slf4j.org">SL4J</a> não está incluída no <i>classpath</i>
+e que por isso as mensagens vão ser ignoradas.
+<pre class="prettyprint lang-java">
+    SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+    SLF4J: Defaulting to no-operation (NOP) logger implementation
+    SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+</pre>
+Estas linhas podem ser ignoradas, a não ser que se pretenda mesmo usar esta biblioteca.
+Nesse caso, consultar a <a href="http://www.slf4j.org/codes.html#StaticLoggerBinder">página da biblioteca</a>.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Ainda tenhos erros no jUDDI ou wsimport que não são descritos noutras perguntas.<br />
+Exemplo 1 : O projecto encontra-se localizado num caminho a começar por "C:\program files"
+<pre class="prettyprint lang-java">
+directory not found: C:\program
+</pre>
+Exemplo 2 : O repositório local do maven encontra-se em "C:\users\André"
+<pre class="prettyprint lang-java">
+Exception in thread "main" java.lang.ClassCastException: java.lang.AssertionError cannot be cast to java.lang.Exception
+        at org.jvnet.jax_ws_commons.jaxws.Invoker.main(Invoker.java:87)
+</pre>
+Qual é o problema?
+</p>
+<p><strong>Resposta:</strong>
+JUDDI e wsimport não funcionam bem com espaços e/ou caracteres acentuados na path de instalação (em Windows).<br />
+Por exemplo, usar as seguintes directorias poderá dar problemas:
+<pre>C:\program files
+C:\users\André
+</pre>
+Sugestão:
+<pre>C:\java\
+C:\dev\
+</pre>
+</p>
+</li>
+<br/>
+
+</ol>
+
+<!-- ********************************************************************** -->
+
+<!--h3 id="ws-soap">Dúvidas SOAP Handlers</h3>
+
+<ol>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como detectar se um SOAP Handler está a processar uma mensagem que está a entrar ou a sair?
+</p>
+<p><strong>Resposta:</strong>
+<pre class="prettyprint lang-java">
+    /**
+     *  This method checks if the SOAP message in context
+     *  is going out of Web Service (outbound - true) or in (inbound - false).
+     */
+    public static boolean isOutboundMessage(SOAPMessageContext smc) {
+        Boolean outboundProperty = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        return outboundProperty.booleanValue();
+    }
+</pre>
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+É possível chamar uma operação de um Web Service remoto de dentro do método de um SOAPHandler?
+</p>
+<p><strong>Resposta:</strong>
+Sim. Basta seguir a mesma abordagem usada para qualquer cliente de web service.</p>
+</li>
+<br/>
+
+
+</ol>
+
+<!-- ********************************************************************** -->
+
+
+
+
+<!--hr /-->
+<!-- ********************************************************************** -->
+<!--h2 id="mysql">Dúvidas JDBC/MySQL</h2>
+
+<ol-->
+
+<!--li>
+<p><strong>Pergunta: </strong>
+Como devem ser guardados os dados dos conteúdos na base de dados?
+</p>
+<p><strong>Resposta:</strong>
+Devem utilizar uma coluna com o tipo de dados BLOB (Binary Large Object).<br />
+Mais informação disponível nas seguintes páginas:
+<ul>
+    <li><a href="http://dev.mysql.com/doc/refman/5.5/en/blob.html">BLOB</a></li>
+    <li><a href="http://zetcode.com/db/mysqljava/">mysqljava tutorial</a></li>
+    <li><a href="http://www.java2s.com/Code/Java/Database-SQL-JDBC/ReadBLOBsdatafromdatabase.htm
+">Read BLOBs data from database</a></li>
+    <li><a href="http://www.java2s.com/Code/Java/Database-SQL-JDBC/StoreBLOBsdataintodatabase.htm">Store BLOBs data into database</a></li>
+</ul>
+</p>
+</li>
+<br/-->
+
+
+
+<!--li>
+<p><strong>Pergunta:</strong>
+Usando a interface XA por JDBC, quando chamo o método XAResource.prepare(xid) obtenho uma excepção que indica <i>"XAER_RMFAIL: The command cannot be
+executed when global transaction is in the  ACTIVE state"</i>. O que estou a fazer de mal?
+</p>
+<p><strong>Resposta:</strong>
+Essa excepção ocorre porque a transacção ainda estava activa quando tentou prepará-la. Deve assegurar-se que foi chamado o método XAResource.end(xid,TMSUCCESS) antes de tentar preparar a transacção identificada por xid.</p>
+</li>
+<br/-->
+
+
+<!--li>
+<p><strong>Pergunta:</strong>
+Usando a interface XA por JDBC, quando chamo o método XAResource.prepare(xid) obtenho uma excepção que indica <i>"XAER_RMFAIL: The command cannot be executed
+when global transaction is in the  IDLE state"</i>. O que estou a fazer de mal?
+</p>
+<p><strong>Resposta:</strong>
+Essa excepção ocorre porque tentou confirmar a transacção sem a ter preparado antes. Só deve chamar XAResource.commit sobre uma transacção distribuída para a qual já tenha chamado antes XAResource.prepare.</p>
+</li>
+<br/-->
+
+
+<!--li>
+<p><strong>Pergunta:</strong>
+No meu projecto pode acontecer uma situação em que o servidor recebe 2 pedidos de operações que devem ser executados na mesma transacção distribuída (isto é, o xid é comum a ambos os pedidos). <br/>
+Seguindo a documentação sobre a interface XAResource, o que faço é: no primeiro pedido, chamo XAResource.start(xid, TMNOFLAGS), executo a operação (leituras e escritas à base de dados) e por fim chamo XAResource.end(xid, TMSUCCESS); quando chega o segundo pedido, chamo XAResource.start(xid, TMJOIN) para recuperar a transacção local já iniciada no primeiro pedido. No entanto, quando tento a abordagem acima, recebo a excepção <i>"XAER_INVAL: Invalid arguments (or unsupported command)"</i>. O que estou a fazer de mal?
+</p>
+<p><strong>Resposta:</strong>
+Em teoria, a sua abordagem está correcta. No entanto, a versão actual do MySQL não suporta a opção TMJOIN do método XAResource.start. Isto implica que o MySQL obriga a aplicação a manter a transacção local activa (isto é, não fazer "end") enquanto puderem chegar mais pedidos para se executarem nessa mesma transacção.<br/>
+Neste caso, a solução passa pelo vosso projecto manter uma tabela em memória que associa o xid das transacções distribuídas ainda activas (isto é, não preparadas, nem confirmadas, nem abortadas) a um par (XAResource, Connection) sobre o qual já foi iniciada uma transacção (XAResource.start) mas ainda não foi chamado XAResource.end.<br/>
+Dito de outra forma, o método XAResource.end só deverá ser chamado quando houver a certeza de que não chegarão mais pedidos para executar no âmbito da transacção.
+</p>
+</li>
+<br/-->
+
+<!--li>
+<p><strong>Pergunta:</strong>
+No meu projecto pode acontecer uma situação em que o servidor recebe 2 pedidos de operações que devem ser executados na mesma transacção distribuída (isto é, o xid é comum a ambos os pedidos). <br/>
+Seguindo a documentação sobre a interface XAResource, o que faço é: no primeiro pedido, chamo XAResource.start(xid, TMNOFLAGS), executo a operação (leituras e escritas à base de dados) e por fim chamo XAResource.end(xid, TMSUSPEND); quando chega o segundo pedido, chamo XAResource.start(xid, TMRESUME) para recuperar a transacção local já iniciada no primeiro pedido. No entanto, quando tento a abordagem acima, recebo a excepção <i>"XAER_INVAL: Invalid arguments (or unsupported command)"</i>. O que estou a fazer de mal?
+</p>
+<p><strong>Resposta:</strong>
+Mesma solução que na dúvida acima.</p>
+</li>
+<br/-->
+
+
+<!--li>
+<p><strong>Pergunta:</strong>
+Como saber, num dado momento, quais as transacções preparadas no mysql?
+</p>
+<p><strong>Resposta:</strong>
+A forma mais fácil é:
+<ol><li>
+    Abrir a aplicação de linha de comandos do MySQL, executando o seguinte comando num terminal: mysql -u root -p</li>
+    <li>mysql> connect [nome_da_base_de_dados];</li>
+    <li>mysql> xa recover;</li>
+</ol>
+</p>
+</li>
+<br/-->
+
+
+<!--li>
+<p><strong>Pergunta:</strong>
+Num dos participantes da minha transacção distribuída, chamei XAResource.prepare(xid) com sucesso. Segundo a teoria, a partir deste momento
+esperaria que a transacção ficasse pronta a ser confirmada (ou abortada, caso seja essa a decisão do coordenador do 2PC) a qualquer momento, mesmo
+que o participante falhasse temporariamente ou que o mysql fosse desligado e ligado de seguida.<br/>
+No entanto, quando tento experimentar essas situações (reiniciando o jboss, ou fazendo re-deploy do web service, ou reiniciando o serviço do MySQL),
+a transacção que antes estava preparada surge como inexistente quando faço "xa recover" para listas as transacções preparadas após a recuperação do participante. Estou a fazer algo de errado?
+</p>
+<p><strong>Resposta:</strong>
+Não, não está a fazer nada de errado. Em teoria, uma transacção preparada deveria manter-se pronta a ser confirmada ou abortada mesmo após falhas e
+recuperações do participante ou da base de dados dele.<br/>
+No entanto, o versão actual do MySQL tem um bug que não garante esse comportamento. Esse bug é conhecido e pode ser consultado aqui: <a href="http://bugs.mysql.com/bug.php?id=12161">http://bugs.mysql.com/bug.php?id=12161</a>. Infelizmente, a equipa do MySQL só promete corrigir o bug na próxima versão do MySQL.<br/>
+Por esta razão, que é alheia ao projecto de SD, cada grupo deverá simular a falha temporária do participante de outras formas. Por exemplo, uma sugestão é: instalar um handler que, em determinadas situações, intercepta os pedidos que chegam ao participante e descarta-os; dessa forma, simulando a falha silenciosa temporária do participante (perante o coordenador ou cliente).
+</p>
+</li>
+<br/-->
+
+<!--
+"
+Porque é que mesmo depois de substituir a mensagem SOAP por outra nova, esta última não é utilizada?  ^
+
+Internamente a biblioteca de Web Services guarda a referência para o objecto SOAPMessage original. Se se substituir a original por uma nova mensagem, não é lançada nenhuma excepção, mas a nova mensagem é ignorada e é usada a original (ou seja, aquela que continua a ser referenciada pelo Web Service).
+A forma de resolver este problema é manter a mensagem original mas substituir-lhe o conteúdo pelo da nova mensagem. Assim a referência interna da biblioteca de Web Services continua a ser válida.
+
+MessageFactory factory = MessageFactory.newInstance();
+SOAPMessage newMessage = factory.createMessage(oldMessage.getMimeHeaders(), inputByteArray);
+oldMessage.getSOAPPart().setContent(newMessage.getSOAPPart().getContent());
+"
+
+-->
+
+<!--/ol-->
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribu&iacute;dos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Instituto Superior Técnico, Universidade de Lisboa</a><br />
+Última actualização em 23 de fevereiro de 2016 por Miguel Coimbra
+</p>
+</div>
+</body></html>

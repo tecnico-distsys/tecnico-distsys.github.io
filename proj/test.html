@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>Dados para teste</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+
+<div class="titulo" id="1">
+    <h1>Dados para teste</h1>
+</div>
+
+<div class="corpo">
+
+<!--p><small>
+(Esta informação é adaptada da informação disponibilizada pelos docentes de
+<a href="https://fenix.ist.utl.pt/disciplinas/esof12/2012-2013/2-semestre/projecto/repositorio-svn">ES</a>)
+</small></p-->
+
+<hr />
+
+<p>
+Os dados descritos de seguida devem ser pré-carregados nos Web Services a desenvolver.
+</p>
+<!--p>
+Sugere-se a utilização do mecanismo <tt>@PostConstruct</tt> na classe do Web Service
+ou de um <tt>ServletContextListener</tt> na aplicação Web.
+</p-->
+
+<!--p>
+Para preencher os dados com comandos SQL
+executados a partir do Ant podem consultar o exemplo da
+<a href="../07-persistencia/index.html">aula de persistência</a>
+(ver <tt>ant db-populate</tt>).
+</p>
+<p>
+Em alternativa,
+sugere-se a criação de uma classe <i>Populate</i>
+com um método <tt>public static void main(String[] args)</tt> que
+estabelece ligação à BD e
+preenche os dados desejados.
+Poderão criar um <i>ant target</i> para chamar esta classe da seguinte forma:
+<pre class="prettyprint lang-xml">
+    &lt;target name="populate"
+        description="Populate database"&gt;
+        &lt;antcall target="run"&gt;
+            &lt;param name="run.mainclass" value="my.package.Populate" /&gt;
+            &lt;param name="run.args" value="..." /&gt;
+        &lt;/antcall&gt;
+    &lt;/target&gt;
+</pre>
+</p>
+<p>
+Para os projectos dispensados da persistência (grupos LETI),
+o método <tt>public static void main(String[] args)</tt> do Web Service
+pode chamar um método <tt>static void populate()</tt>
+que preenche as estruturas de teste em memória.
+</p-->
+
+<hr />
+
+<h2>Transporter</h2>
+
+<p>
+Os itinerários das viagens poderão ter como origem ou destino qualquer capital dos <a href="https://pt.wikipedia.org/wiki/Distritos_de_Portugal">distritos de Portugal</a>, apresentadas em baixo.
+<br>
+Deverão ser criadas as seguintes localizações, a ser usadas como origem/destino das viagens do sistema <b>Upa Transportes</b>:
+
+</p>
+<pre>
+Aveiro
+Beja
+Braga
+Bragança
+Castelo Branco
+Coimbra
+Évora
+Faro
+Guarda
+Leiria
+Lisboa
+Portalegre
+Porto
+Santarém
+Setúbal
+Viana do Castelo
+Vila Real
+Viseu
+</pre>
+
+<!--
+<p>
+Estas capitais poderão ser populadas na aplicação Transporter aquando do início da sua execução, dentro da função <tt>public static void main(String[] args)</tt>.
+</p>
+-->
+
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribu&iacute;dos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+Última actualização em 29 de fevereiro de 2016 por Miguel E. Coimbra
+</p>
+</div>
+
+</body></html>
+

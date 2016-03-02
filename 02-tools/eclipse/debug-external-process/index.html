@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+    <link rel="stylesheet" type="text/css" href="../../../_css/labs-sd.css">
+
+    <link href="../../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../../_prettify/prettify.js"></script>
+
+    <title>Como fazer debug de um projecto lançado através do Ant</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="titulo">
+    <h2>Como fazer debug de um projecto lançado através do Ant</h2>
+</div>
+	
+	Como o projecto lançado pelo Ant se executa num processo 
+	externo ao Eclipse, é preciso fazer o seguinte para permitir a ligação 
+	entre o debugger do Eclipse e o processo externo.
+	<ol>
+	<li> No build.xml deve haver um alvo de execução que lance o processo de
+		forma a esperar por um debugger externo.
+		Para isso basta ter um alvo adicional ("run-debug", por exemplo) que
+		defina os 2 argumentos da máquina virtual seguintes:
+
+<pre class="prettyprint lang-xml">
+&lt;target name="run-debug" ...&gt;
+  &lt;java ...&gt;
+    &lt;jvmarg value="-Xdebug" /&gt;
+    &lt;jvmarg
+      value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432" /&gt;
+    &lt;/java&gt;
+&lt;/target&gt;
+</pre>
+
+		O número "5432" acima é o nº de porto onde o debugger se deverá ligar.
+		No caso de haver múltiplos projectos que corram em paralelo, esse valor
+		deve ser diferente para cada projecto.
+		</li>
+		<li>
+			No Eclipse, seleccionar no menu "Run > Debug Configurations...".
+			Na janela que surge, escolher "Remote Java Application" no lado
+			esquerdo, e depois "New".
+			Em "connect", dar um nome e colocar o nº do porto em "Port" (neste
+			exemplo, "5432").<br/>
+			<img src="debug-remote.png" width="400">
+		</li>
+	</ol>
+
+	Feitos estes 2 passos, sempre que se lança "ant run-debug" o processo
+	imprime "Listening for transport dt_socket at address: ..." e
+	bloqueia-se até o debugger ser lançado no Eclipse.<br/>
+	Depois de lançado o debugger, a execução é continuada, tendo o debugger
+	total controlo do processo (breakpoints, etc).
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribu&iacute;dos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+Última actualização em 25 de Fevereiro de 2014 por João Barreto
+</p>
+</div>
+
+</body></html>

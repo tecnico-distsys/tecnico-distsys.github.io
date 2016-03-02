@@ -1,0 +1,37 @@
+Taguspark
+
+- Eclipse: 
+	(Windows)
+	Window -> Preferences -> Java -> Installed JREs -> Add...
+	Adicionar "Standard VM"
+	Especificar o path até ao diretório do jdk:
+		C:\Program Files\Java\jdk1.8.0_72
+	Certificar que a check box em "Installed JREs" está só no 
+	jdk acabado de adicionar.
+	Apply
+	(A ideia é que esteja a ser usada a pasta Java/jdk1.8.0_72 e não a Java/jre1.8.0_72 em todas as imagens)
+	
+	Conectores: 
+		Abrir as preferências do eclipse e escolher -> Maven -> Discovery e 
+		clicar em "Open catalog".
+		Seleccionar e assegurar que estão instalados: 
+			m2e-apt (nos testes que fiz só faltava instalar este)
+			
+			m2e connector for jaxws-maven-plugin
+			m2e connector for maven-dependency-plugin
+			m2e connector for org.codehaus.mojo:jaxb2-maven-plugin
+			m2e-egit
+		
+- jUDDI:
+	(Todos os OS)
+	Substituir ocorrências de 8080 por 9090 nos ficheiros
+		juddi-distro-3.3.2\juddi-tomcat-3.3.2/webapps/juddiv3/WEB-INF/classes/juddiv3.xml
+		juddi-distro-3.3.2\juddi-tomcat-3.3.2/webapps/juddiv3/WEB-INF/classes/META-INF/uddi.xml
+	
+	(Windows)
+	Está instalado em C:\juddi-distro-3.3.2, e para os exercícios da 
+	cadeira convém que esta diretoria (e todos os sub-conteúdos) NÃO 
+	SEJA READ-ONLY. É preciso dar permissões de escrita:
+		Abrir o C:\ no explorador do Windows, Right click na pasta e 
+		certificar que o quadrado "Read only" está a branco. Apply to 
+		all sub-folders.

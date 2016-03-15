@@ -5,11 +5,11 @@ Distributed Systems  - Instituto Superior Tecnico - Practical Assignments
 ## Laboratórios de Sistemas Distribuídos 2015-2016 - 2º semestre
 
 
-[Lab0](./02-tools) - Instalação de Software 
+[Lab0](./software) - Instalação de Software 
 
 [Lab1](./Lab1) - Ferramentas
 
-[Lab2](./Lab2) - Sun RPC
+[Lab2](./02-tools) - Sun RPC
 
 [Lab3](./Lab3) - Java RMI
 

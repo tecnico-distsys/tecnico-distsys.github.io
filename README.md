@@ -5,21 +5,19 @@ Distributed Systems  - Instituto Superior Tecnico - Practical Assignments
 ## Laboratórios de Sistemas Distribuídos 2015-2016 - 2º semestre
 
 
-[Lab0](./software) - Instalação de Software 
+[Lab1](./software) - Instalação de Software 
 
-[Lab1](./Lab1) - Ferramentas
+[Lab2](./02-tools) - Ferramentas
 
-[Lab2](./02-tools) - Sun RPC
+[Lab3](./03-rpc) - Sun RPC
 
-[Lab3](./Lab3) - Java RMI
+[Lab4](./04-rmi) - Java RMI
 
-[Lab4](./Lab4) - Web Services Implementation-First
+[Lab5](./05-ws1) - Web Services Implementation-First
 
-[Lab5](./Lab5) - Web Services Contract-First 
+[Lab6](./06-ws2) - Web Services Contract-First 
 
-[Lab6](./Lab6) - Web Services Tests
-
-[Lab7](./Lab7) - Web Services Avançados | Criptografia
+[Lab7](./07-ws3) - Web Services Avançados | Criptografia
 
 
 * * *

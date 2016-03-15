@@ -5,7 +5,7 @@ Distributed Systems  - Instituto Superior Tecnico - Practical Assignments
 ## Laboratórios de Sistemas Distribuídos 2015-2016 - 2º semestre
 
 
-[Lab0](./Lab0) - Instalação de Software 
+[Lab0](./Software) - Instalação de Software 
 
 [Lab1](./Lab1) - Ferramentas
 

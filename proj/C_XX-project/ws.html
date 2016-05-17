@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css">
+
+    <link href="../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../_prettify/prettify.js"></script>
+
+    <title>Ficheiros base do projeto</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<!--div class="titulo" id="1">
+</div-->
+
+<!--div class="objectivos">
+</div-->
+
+<!--div class="indice">
+</div-->
+
+<div class="corpo">
+
+<img src="ws-uml.png" width="1000" alt="UML" />
+
+<h3>
+Legenda:
+</h3>
+<ul>
+    <li>
+<a href="uml_legend.png">Notação UML</a>
+    </li>
+    <li>
+As operações descritas em cada WSDL são traduzidas na interface (<tt>PortType</tt>) gerada pelo <tt>wsimport</tt>,
+incluindo tipos de dados e exceções.
+    </li>
+    <li>
+<b>Servidor</b>:
+    </li>                
+    <ul>
+        <li>
+<tt><b>App</b></tt> -
+ponto de entrada no programa servidor.<br />
+Recebe os argumentos de linha de comando e instancia o gestor da comunicação.<br />
+<small>(nomes alternativos: <tt>Application</tt>, <tt>Main</tt>)</small>
+        </li>
+        <li>
+<tt><b>EndpointManager</b></tt> - 
+recebe argumentos no construtor e 
+vai criar a extremidade (<tt>Endpoint</tt>) do Web Service, 
+ou seja,<br />
+vai criar um <i>socket</i> associado a um URL onde o servidor fica à espera de receber pedidos.<br />
+Vai também ser responsável pela publicação do Web Service no UDDI.
+        </li>
+        <li>
+<tt><b>Port</b></tt> -
+implementação da interface (<tt>PortType</tt>) do Web Service.
+Define o que cada operação vai fazer.<br />
+Em Web Services de maior dimensão, poderá usar um ou mais objetos de Domínio para 
+implementar a lógica da aplicação.<br />
+<small>(nomes alternativos: <tt>PortImpl</tt>, <tt>Impl</tt>)</small>
+        </li>
+    </ul>
+    <li>
+<b>Cliente</b>:
+    </li>
+    <ul>
+        <li>
+<tt><b>ClientApp</b></tt> -
+ponto de entrada no programa cliente.<br />
+Recebe os argumentos de linha de comando e 
+instancia um cliente para invocações remotas.<br />
+<small>(nomes alternativos: <tt>ClientApplication</tt>, <tt>ClientMain</tt>)</small>
+        </li>
+        <li>
+<tt><b>Client</b></tt> -
+implementação da interface (<tt>PortType</tt>) do Web Service,<br />
+que enriquece o <i>Stub</i> gerado 
+(obtido a partir do <tt>Service</tt>) 
+com a configuração do URL obtido por pesquisa do Web Service no UDDI.<br />
+<small>(nomes alternativos: <tt>Stub</tt>, <tt>FrontEnd</tt>)</small>
+        </li>
+    </ul>
+</ul>
+
+<p>
+<a href="ws-uml_full.png">Diagrama com dependências para bibliotecas</a>
+</p>
+
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+        <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
+
+        <title>Mecanismos criptogr&aacute;ficos</title>
+
+        <meta name="Generator" content="EditPlus">
+        <meta name="Author" content="Miguel Pardal">
+        <meta name="Keywords" content="">
+        <meta name="Description" content="">
+
+    </head>
+
+    <body>
+        <div class="contexto">
+            <p>
+                <a href="../../index.html">Labs SD</a> &gt;
+                <a href="../index.html">Criptografia</a>
+            </p>
+        </div>
+
+        <div class="titulo">
+            <h1>Mecanismos criptogr&aacute;ficos</h1>
+        </div>
+
+        <div class="indice">
+        	<ul>
+                <li><a href="#introducao">Introdu&ccedil;&atilde;o</a></li>
+                <li><a href="#criptografia-simetrica">Criptografia sim&eacute;trica</a></li>
+                <li><a href="#criptografia-assimetrica">Criptografia assim&eacute;trica</a></li>
+                <li><a href="#resumo-digest">Resumo (Digest)</a></li>
+                <li><a href="#assinatura-digital">Assinatura digital</a></li>
+                <li><a href="#mac">C&oacute;digo de autentica&ccedil;&atilde;o de mensagem (MAC)</a></li>
+                <li><a href="#numeros-aleatorios">Gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios</a></li>
+            </ul>
+        </div>
+
+        <hr />
+
+        <div class="corpo">
+            <h2 id="criptografia">Mecanismos criptogr&aacute;ficos</h2>
+            <h3 id="introducao">Introdu&ccedil;&atilde;o</h3>
+            <p>
+Os mecanismos criptogr&aacute;ficos elementares s&atilde;o:
+cifra sim&eacute;trica, cifra assim&eacute;trica, resumo (digest),
+c&oacute;digo de autentica&ccedil;&atilde;o de mensagem (MAC),
+assinatura digital e
+gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios imprevis&iacute;veis.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="criptografia-simetrica">Criptografia sim&eacute;trica</h3>
+            <p>
+A criptografia sim&eacute;trica &eacute; tamb&eacute;m designada por
+criptografia de chave secreta.
+A mesma chave permite cifrar e decifrar os dados.
+            </p>
+            <p>
+Os algoritmos s&atilde;o:
+DES, AES, IDEA, TripleDES, Blowfish, PBE, etc.
+            </p>
+            <p>
+Os modos de cifra s&atilde;o: ECB, CBC, CFB, OFB, PCBC, etc.
+A cifra &eacute; feita bloco a bloco.
+O modo define como s&atilde;o combinados os blocos.
+            </p>
+            <p>
+Os enchimentos (padding) s&atilde;o: PKCS5, OAEP, SSL3, etc.
+Permitem fazer o acerto quando o tamanho dos dados
+n&atilde;o &eacute; m&uacute;ltiplo do tamanho do bloco.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="criptografia-assimetrica">Criptografia assim&eacute;trica</h3>
+            <p>
+A criptografia assim&eacute;trica &eacute; tamb&eacute;m designado por
+criptografia de chave p&uacute;blica.
+Existe um par de chaves: p&uacute;blica e privada.
+A chave privada cifra os dados e a p&uacute;blica decifra-os (ou vice-versa).
+            </p>
+            <p>
+&Eacute; 100 a 1000 vezes mais lenta que criptografia sim&eacute;trica!
+            </p>
+            <p>
+Os algoritmos s&atilde;o:
+RSA – para assinatura digital e pequena cifra (blocos 117 bytes com PKCS1 Padding),
+DSA – apenas para assinatura digital,
+Diffie-Hellman (Key Agreement Algorithm).
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="resumo-digest">Resumo (Digest)</h3>
+            <p>
+As fun&ccedil;&otilde;es de resumo (digest)
+produzem um resultado, com tamanho constante, a partir de dados com tamanho vari&aacute;vel.
+Produzem valores muito diferentes para entradas semelhantes.
+            </p>
+            <p>
+S&atilde;o "n&atilde;o invert&iacute;veis"
+e oferecem resist&ecirc;ncia &agrave; descoberta de dados alternativos
+que tenham o mesmo resumo.
+Partindo dos dados e do seu resumo, &eacute; dif&iacute;cil encontrar outros dados que produzam o mesmo resumo.
+            </p>
+            <p>
+Os algoritmos de resumo s&atilde;o:
+MD5, SHA-1, etc.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="mac">C&oacute;digo de autentica&ccedil;&atilde;o de mensagem (MAC)</h3>
+            <p>
+Os MAC (Message Authentication Codes) - c&oacute;digos de autentica&ccedil;&atilde;o de mensagens -
+são uma forma de assinatura digital baseada num segredo partilhado entre interlocutores (e.g., uma chave simétrica de sessão).
+Permitem garantir a integridade e autenticidade do conte&uacute;do de uma mensagem
+trocada entre duas entidades que partilham um segredo.
+            </p>
+            <p>
+Embora haja várias alternativas de MACs, uma solução muito eficiente e comum consiste em:
+concatenar a mensagem com a chave secreta, gerar um resumo (usando função de resumo criptográfica) do resultado dessa concateção.
+            </p>
+            <p>
+Para verificar um MAC:
+concatenar a mensagem recebida com a chave secreta, gerar o resumo correspondente, 
+comparar o resumo obtido com o resumo (HMAC) recebido pela rede.
+Se forem iguais a mensagem n&atilde;o foi modificada!
+            </p>
+            <p>
+Se a chave secreta for apenas partilhada entre o emissor e o recetor, a validação com MAC permite ao recetor confirmar que 
+i) a mensagem foi de facto emitida pelo emissor legítimo (autenticidade), e ii) que a mensagem não foi modificada durante
+a transmissão pela rede (integridade). No entanto, ao contrário das assinaturas digitais de chave pública, o MAC não assegura não repúdio da mensagem.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="assinatura-digital">Assinatura digital de chave pública</h3>
+            <p>
+A assinatura digital de chave pública (ou, simplesmente, assinatura digital)
+permite garantir a autentica&ccedil;&atilde;o do emissor e a integridade do conte&uacute;do da mensagem.
+            </p>
+            <p>
+Para fazer uma assinatura:
+gerar resumo de mensagem a enviar,
+cifrar resumo com a chave privada do emissor.
+            </p>
+            <p>
+Para verificar uma assinatura:
+gerar novo resumo de mensagem recebida
+(a mensagem pode ter sido modificada),
+decifrar resumo com chave p&uacute;blica do emissor,
+comparar resumo decifrado com novo resumo.
+Se forem iguais a mensagem n&atilde;o foi modificada!
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="numeros-aleatorios">Gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios</h3>
+            <p>
+A gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios &eacute; importante,
+porque muitos mecanismos de seguran&ccedil;a s&atilde;o derrotados
+por falta de verdadeira aleatoriedade.
+            </p>
+            <p>
+Um erro comum &eacute; o uso de fun&ccedil;&otilde;es pseudo-aleat&oacute;rias, que
+recebem uma semente (seed) e depois geram
+uma sequ&ecirc;ncia de n&uacute;mero determin&iacute;stica
+(a mesma semente gera sempre a mesma sequ&ecirc;ncia). Nestes casos
+&eacute; poss&iacute;vel adivinhar as chaves que v&atilde;o ser geradas a seguir.
+            </p>
+            <p>
+As solu&ccedil;&otilde;es poss&iacute;veis s&atilde;o
+recolher fontes de aleatoriedade na m&aacute;quina
+- movimentos do rato do utilizador, n&uacute;mero de processos, mem&oacute;ria utilizada, etc -
+e combin&aacute;-las ou
+usar hardware espec&iacute;fico que me&ccedil;a fen&oacute;menos f&iacute;sicos.
+O objectivo &eacute; a gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios de boa qualidade,
+que produzam valores equiprov&aacute;veis e imprevis&iacute;veis.
+            </p>
+        </div>
+
+        <hr />
+
+        <div class="rodape">
+            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UTL</p>
+        </div>
+
+	</body>
+</html>

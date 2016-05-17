@@ -8,7 +8,7 @@
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="../_prettify/prettify.js"></script>
 
-    <title>Web Services II - Contract-first</title>
+    <title>Web Services Contract-First</title>
 </head>
 
 <body onload="prettyPrint()">
@@ -25,96 +25,235 @@
 
 <div class="objectivos">
 
-    <h2>Objectivos</h2>
+    <h2>Objetivos</h2>
     <ul>
-        <li>Desenvolver Web Services usando a abordagem <i>contract-first</i></li>
+        <li>Desenvolver Web Service usando a abordagem <i>contract-first</i></li>
     </ul>
 
-    <h2>No laboratório:</h2>
+    <h3>Projeto:</h3>
     <ul>
-        <li>Esclarecer dúvidas</li>
-        <li>Terminar o exercício</li>
+        <li>Construir <tt>transporter-ws</tt> a partir do contrato WSDL</li>
+        <li>Concretizar a operação <tt>ping</tt></li>
+        <li>Construir <tt>broker-ws</tt> a partir do contrato WSDL</li>
     </ul>
 </div>
 
 <div class="indice">
-
+<p>&nbsp;</p>
 </div>
 
 <div class="corpo">
 
-<h2>Documentação de apoio à aula</h2>
-<ul>
-    <li><a href="xml/index.html">XML</a>,
-        <a href="xsd/index.html">XSD</a> e
-        <a href="wsdl/index.html">WSDL</a></li>
-</ul>
+<h1>Web Service contract</h1>
 
-<h2>Software necessário</h2>
 <p>
-Para realizar esta aula deverá instalar todo o
-<a href="../software/index.html">software</a> necessário
-para o projecto de SD,
-incluindo o <b>jUDDI</b>
-configurado para usar o porto 9090.
-</p>
-<p>
-	<b>É fortemente recomendado que os diretórios que contêm o código não contenham espaços no seu caminho.</b>
+Os <i>Web Services</i> também têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
+A <b>WSDL</b> permite especificar a interface funcional (<i>port type</i>) 
+- operações com entradas, saídas e erros -
+e também a vinculação (<i>binding</i>) com tecnologias concretas 
+- habitualmente SOAP sobre HTTP.<br />
+A WSDL é baseada em XML de forma a ser independente da plataforma e
+usa XSD para definir o detalhe dos tipos de dados de entrada e saída (e erros) em cada operação.
 </p>
 
-<p>Para testar o servidor UDDI:</p>
+<p>
+Um documento XML diz-se válido se, 
+para além de ser bem-formado, 
+respeita também as restrições impostas por um XSD.
+</p>
+
+Para uma explicação mais detalhada destas tecnologias, ver:
 <ul>
-    <li>
-        Assegure-se que definiu correctamente a variável de ambiente CATALINA_HOME.
+    <li>Livro de Couloris, Capítulo 9</li>
+    <li>        
+<a href="wsdl/index.html">WSDL</a></li>
     </li>
     <li>
-        Inicie o servidor jUDDI,
-        com o comando:
-		<tt>startup.bat</tt> (Windows) ou
-		<tt>startup.sh</tt> (Linux).
-    </li>
-    <li>
-        Confirme que o servidor de nomes está a correr,
-        visitando:
-        <a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a> e
-        confirmando que a consola da administração é apresentada.
+<a href="xml/index.html">XML</a> e 
+<a href="xsd/index.html">XSD</a>
     </li>
 </ul>
-
-<h3>Exemplos</h3>
-
-<p><i>Contract-first</i></p>
-<ul>
-    <li>
-        <a href="Hello.wsdl">Hello.wsdl</a>
-        - define o serviço Hello World
-        - os comentários explicam o conteúdo do documento
-    </li>
-    <li>
-        <a href="Calc.wsdl">Calc.wsdl</a>
-        - define o serviço Calculadora
-        - usa um espaço de nomes baseado em URN (<i>Universal Resource Name</i>)
-    </li>
-</ul>
-<ul>
-    <li>
-        <a href="hello-ws_wsdl.zip">Web Service <i>contract-first</i>
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - Web Service <i>contract-first</i>
-        - mas que não se regista no UDDI
-    </li>
-    <li>
-        <a href="../05-ws1/hello-ws-cli.zip">Web Service client
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - Idêntico ao do laboratório anterior
-    </li>
 </ul>
 
-<hr/>
+<p>&nbsp;</p>
+<hr />
 
-<h2>Exercício</h2>
 
-<h3>Contract-first</h3>
+<h1>Exemplo</h1>
+
+<p>
+É possível implementar Web Services partindo de um contrato WSDL (e XSD) já existente.
+Esta abordagem ao desenvolvimento de serviços é chamada <i>contract-first</i>.
+</p>
+
+<p>
+Vamos então ver um exemplo de um <i>Web Service</i> feito em Java que segue a abordagem <i>contract-first</i>.
+</p>
+<p><small><b>
+Notas:<br />
+As pastas que contêm o código não devem ter espaços no seu caminho.<br />
+O servidor e 
+o cliente usam a biblioteca <tt>UDDINaming</tt> apresentada na <a href="../05-ws1/index.html">aula anterior</a>.
+</b></small></p>
+
+<p><small>&nbsp;</small></p>
+
+<li><b>Servidor JAX-WS</b></li>
+    <ul>
+        <li>
+Obter o código do servidor:
+        </li>
+        <ul>
+            <li>
+<a href="ping/ping-ws_juddi.zip">Ping Web Service (Contract-First)
+<img src="../_img/zip.png" alt="ZIP" ></a>
+            </li>
+        </ul>
+<img src="ping/ping-uml_server.png" height="300">
+        <li>
+O contrato do serviço faz parte do código fonte do servidor e
+está em: <tt>/src/main/resources/<a href="ping/Ping.wsdl">Ping.wsdl</a></tt>.<br />
+Estudar o contrato seguindo os comentários numerados que explicam o conteúdo das diferentes seções do documento:
+            <ol>
+                <li><i>namespaces</i></li>
+                <li><i>service definition</i></li>
+                <li><i>binding definitions</i></li>
+                <li><i>port type definitions</i></li>
+                <li><i>message definitions</i></li>
+                <li><i>type definitions</i></li>
+            </ol>
+    </li>
+        <li>
+Confirmar que a classe de implementação do serviço está anotada de forma a ficar associada ao WSDL existente.<br />
+Deverá ter os atributos
+<i>endpoint interface</i> (nome do tipo Java do PortType), 
+<i>wsdlLocation</i> (nome do ficheiro WSDL),
+<i>name</i> (definido no WSDL), 
+<i>portName</i> (definido no WSDL),
+<i>targetNamespace</i> (definido no WSDL) e
+<i>serviceName</i> (também definido no WSDL).
+        </li>
+        <li>
+Construir o servidor:
+        </li>
+        <ul>
+            <li>
+<tt>cd ping-ws_juddi</tt>
+            </li>
+            <li>
+<tt>mvn compile</tt><br />
+Antes de chegar à fase <tt>compile</tt>, 
+o Maven executa a fase <tt>generate-sources</tt> onde a ferramenta <tt>wsimport</tt> é chamada para gerar o código de adaptação no servidor 
+(as classes geradas podem ser consultadas em <tt>target/</tt>).<br />
+A localizaçao do WSDL é referenciada no <tt>pom.xml</tt>.
+            </li>
+        </ul>
+        <li>
+Executar o servidor:
+        </li>
+        <ul>
+            <li>
+<tt>mvn exec:java</tt><br />
+O nome da classe a executar e 
+os argumentos estão definidos no <tt>pom.xml</tt><br />
+O servidor deve executar sem erros,
+disponibilizando o <i>endpoint address</i>.
+            </li>
+            <li>
+Confirmar que o servidor está à espera de pedidos e
+consultar o contrato disponibilizado é o ficheiro original 
+(e não é gerado automaticamente):
+            <ul>
+                <li>
+<a href="http://localhost:8080/ping-ws/endpoint?wsdl">http://localhost:8080/ping-ws/endpoint?wsdl</a>
+                </li>
+            </ul>
+        </ul>
+    </ul>
+
+<li><b>Cliente JAX-WS</b></li>
+    <ul>
+        <li>
+Obter o código do cliente:
+        </li>
+        <ul>
+            <li>
+<a href="ping/ping-ws-cli_juddi.zip">Web Service client
+<img src="../_img/zip.png" alt="ZIP" ></a>
+            </li>
+        </ul>
+<img src="ping/ping-uml_client.png" height="300">
+        <li>
+Construir o cliente:
+        </li>
+        <ul>
+            <li>
+<tt>cd ping-ws-cli_juddi</tt>
+            </li>
+            <li>
+Confirmar que o <tt>pom.xml</tt> do cliente referencia o ficheiro do WSDL e 
+não o URL do servidor.<br />
+No <tt>pom.xml</tt>, deve constar:
+<pre class="prettyprint lang-xml">
+        ...
+        &lt;wsdl.directory&gt;${basedir}/../ping-ws_juddi/src/main/resources&lt;/wsdl.directory&gt;
+        &lt;wsdl.filename&gt;Ping.wsdl&lt;/wsdl.filename&gt;
+        ...
+            &lt;wsdlDirectory&gt;${wsdl.directory}&lt;/wsdlDirectory&gt;
+            &lt;wsdlFiles&gt;
+                &lt;wsdlFile&gt;${wsdl.filename}&lt;/wsdlFile&gt;
+            &lt;/wsdlFiles&gt;
+        ...
+</pre>
+            <li>
+<tt>mvn compile</tt><br />
+Antes de chegar à fase <tt>compile</tt>, 
+o Maven executa a fase <tt>generate-sources</tt>
+que usa a ferramenta <tt>wsimport</tt> com o ficheiro do contrato WSDL<br />
+para gerar as classes de invocação do serviço
+(as classes podem ser consultadas em <tt>target/</tt>)<br />
+            </li>
+        </ul>
+        <li>
+Executar o cliente:
+        </li>
+        <ul>
+            <li>
+<tt>mvn exec:java</tt><br />
+O cliente deve executar fazendo uma invocação remota.<br />
+Existe a probabilidade de 1/3 do cliente receber a resposta esperada ou
+um erro simulado (de acordo com a implementação do servidor neste exemplo).
+            </li>
+        </ul>
+    </ul>
+</ol>
+
+<h2>Resumo</h2>
+<p>
+Primeiro foi construído e iniciado o servidor,
+que fica à espera de pedidos no <i>endpoint address</i> e
+disponibiliza o WSDL original 
+(e não um WSDL gerado automaticamente).
+</p>
+<p>
+Em seguida, 
+foi necessário verificar que o cliente referencia o ficheiro WSDL e não o URL.
+Depois,
+o cliente usa o WSDL para gerar o código de invocação.<br />
+Finalmente,
+o cliente faz uma invocação remota que pode receber o resultado esperado ou um erro simulado.
+</p>
+<p>
+Depois de testado o Exemplo,
+passar ao Exercício.
+</p>
+
+<p>&nbsp;</p>
+<hr />
+
+<h1>Exercício</h1>
+
+<h2>Contract-first</h2>
 
 <p>
 O objectivo desta primeira parte da aula é construir um Web Service <i>contract-first</i>,
@@ -130,21 +269,21 @@ depois fazer a implementação em Java.
     </li>
     <ul>
         <li>
-            <b><a href="Calc.wsdl">Calculadora</a></b>
+            <b><a href="calc/Calc.wsdl">Calculadora</a></b>
         </li>
         <li>
             Projeto: <i>Upa Transportes</i>
             <ul>
-                <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2015-2016/labs/proj/broker.1 0.wsdl">Broker WSDL</a></li>
-				<li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2015-2016/labs/proj/transporter.1 0.wsdl">Transporter WSDL</a></li>
+				<li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2015-2016/labs/proj/transporter.1_0.wsdl">Transporter WSDL</a></li>
+                <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2015-2016/labs/proj/broker.1_0.wsdl">Broker WSDL</a></li>
             </ul>
         </li>
     </ul>
     <li>
         O ponto de partida é o exemplo
-        <a href="hello-ws_wsdl.zip">Web Service <i>contract-first</i>
-        <img src="../_img/zip.png" alt="ZIP" ></a>,
-        que deverá ser modificado.
+        Web Service <i>contract-first</i> apresentado acima,
+        que deverá ser modificado.<br />
+        Para os serviços do projeto deverá ser usado o <a href="../proj/C_XX-project.zip">projeto base</a>.
     </li>
     <li>
         Analise todos os ficheiros do projecto.
@@ -156,8 +295,9 @@ depois fazer a implementação em Java.
             quais os respectivos parâmetros e excepções?
         </li>
         <li>
-            Qual a fase do ciclo de vida de contrução em que o WSDL é usado para gerar os stubs?
-            Onde são colocados os stubs?
+            Em que fase do ciclo de vida de construção Maven 
+            é que o WSDL é usado para gerar código?<br />
+            Onde é colocado o código gerado pela ferramenta <tt>wsimport</tt>?
         </li>
         <li>
             Qual a classe que implementa o Web Service?
@@ -179,28 +319,21 @@ depois fazer a implementação em Java.
         descubra a interface Java que foi gerada a partir do WSDL.
     </li>
     <li>
-        Crie a classe de implementação do serviço,
-        que deve implementar a interface Java.
+        Crie a classe de implementação do serviço <tt>...Port</tt>,
+        que deve implementar a interface Java gerada (PortType no WSDL).
         Em termos práticos,
         isto significa que todos os métodos listados na interface
         devem ser implementados na classe do serviço.
         Cada método é uma operação do Web Service,
         com entradas, saídas e excepções.<br />
-        <!--i>Sugestão:
-        para começar não implemente completamente os serviços.
-        Limite-se a retornar imediatamente valores pré-definidos.</i-->
+        <i>Sugestão:
+        para começar não implemente completamente as operações,
+        limite-se a retornar imediatamente valores pré-definidos.</i>
     </li>
     <li>
-        Crie a classe <tt>Main</tt> com base na <tt>HelloMain</tt>. 
+        Crie a classe <tt>...Main</tt> com base na <tt>HelloMain</tt>. 
     </li>
-	<li id="ws2_exception1">
-		Na classe de base <tt>HelloMain</tt>, no bloco <tt>try/catch/finally</tt> de código onde é publicado o 
-		<i>endpoint</i> (<tt>Endpoint.create(new ...Impl())</tt>), as exceções 
-		estão a ser apanhadas de forma genérica (<tt>catch(Exception e) {...}</tt>).
-		Descubra quais as exceções específicas que podem de facto ocorrer nesse primeiro bloco <tt>try</tt> 
-		e apanhe-as especificamente (use o número de blocos <tt>catch</tt> que achar necessário).
-		
-	</li>
+
     <li>
         Edite o ficheiro <em>pom.xml</em> do projecto
     </li>
@@ -213,7 +346,7 @@ depois fazer a implementação em Java.
     </ol>	
     <li>
         Acrescentar a anotação <tt>@WebService</tt> com todos os atributos necessários
-        (para descobrir os valores terá que consultar o WSDL,
+        (para descobrir os valores terá que consultar o código gerado e o WSDL,
         onde são definidos originalmente).
     </li>
 <pre class="prettyprint lang-java">
@@ -226,12 +359,13 @@ depois fazer a implementação em Java.
     targetNamespace="...",
     serviceName="..."
 )
-public class ...Impl implements ... {
+public class ...Port implements ...PortType {
 
     </pre>
     <li>
-        Faça <tt>mvn package</tt> para compilar o código e gerar o JAR.<br />
-		<i>Atenção: Os passos necessários para compilar, gerar o JAR, correr, etc podem também ser encontrados <tt>readme.txt</tt> de cada projeto.</i>
+        Faça <tt>mvn install</tt> para compilar o código e gerar o JAR.<br />
+		<i>Nota: Os passos necessários para compilar, gerar o JAR, correr, etc. 
+		 podem também ser encontrados <tt>readme.txt</tt> de cada projeto.</i>
     </li>
     <li>
 	Faça <tt>mvn exec:java</tt> para correr o servidor 
@@ -247,13 +381,25 @@ public class ...Impl implements ... {
     <li>
         O Web Service <i>contract-first</i> está pronto a receber pedidos.<br />
         Um cliente de teste pode ser desenvolvido de forma idêntica aos já vistos na aula de laboratório anterior.
-        Ou seja, a partir do WSDL, fazer <tt>mvn generate-sources</tt>, ver o código gerado e
+        Ou seja, a partir do WSDL, fazer <tt>mvn generate-sources</tt>, 
+        ver o código gerado e
         depois fazer as chamadas desejadas.
     </li>
 </ol>
 
+<p><b>
+Comparando a abordagem <em>contract-first</em> com a abordagem <em>implementation-first</em>,
+que vantagens e desvantagens encontra em cada uma?
+</b></p>
+
+
+<hr />
+
+<h2 id="extras">Extras</h2>
+
+
 <p>
-<i>Sugestão: Para visualizar e validar o seu WSDL:</i>
+<i>Sugestão:</i> Visualizar e validar um WSDL no Eclipse:
 <ul>
     <li>
         No <i>Package Explorer</i>,
@@ -267,270 +413,15 @@ public class ...Impl implements ... {
     </li>
 </ul>
 </p>
-
-<p>&nbsp;</p>
-
-<p><b>
-Comparando a abordagem <em>contract-first</em> com a abordagem <em>implementation-first</em>,
-que vantagens e desvantagens encontra em cada uma?
-</b></p>
-
-<h3>UDDI</h3>
-
+<br />
 <p>
-As localizações dos Web Services devem ser registadas e encontradas de forma dinâmica
-usando o <a href="../05-ws1/uddi/index.html">UDDI</a>
-(à semelhança do que acontece com o Sun RPC que usa o rpcbind e
-com o Java RMI que usa o rmiregistry).
-</p>
-<p>
-A biblioteca para publicar e pesquisar no UDDI chama-se
-<a href="../05-ws1/jaxr/index.html">JAX-R</a>.
-De seguida damos uma explicação muito resumida sobre como
-programar com esta biblioteca.
-</p>
-<ol>
-
-    <li>
-        Estabelecer ligação ao UDDI registry
-    </li>
-    <ul>
-        <li>
-            Antes de se efectuar qualquer operação sobre o UDDI registry,
-            é necessário estabelecer uma ligação.
-        </li>
-        <li>
-            Para tal precisará de definir vários parâmetros
-            (desde a versão do UDDI aos endereços do UDDI registry).
-            Tal é feito num ficheiro
-            <a href="uddi.xml">uddi.xml</a>,
-            que deverá ser referenciado a partir do seu programa.
-        </li>
-
-<pre class="prettyprint lang-java">
-    ...
-
-    ConnectionFactory connFactory = ConnectionFactory.newInstance();
-
-    ...
-
-    // Para uma correcta ligação ao UDDI registry, é necessário definir vários
-    // parâmetros (properties), desde a versão do UDDI aos URLs de publicação e pesquisa do registry
-    Properties props = new Properties();
-
-    // Localização do ficheiro de configuração da ligação,
-    // que deve estar na directoria WEB-INF/classes do .war
-    props.setProperty("scout.juddi.client.config.file", "uddi.xml");
-
-    // URL para pesquisas ao UDDI registry
-    props.setProperty("javax.xml.registry.queryManagerURL", "http://localhost:9090/juddiv3/services/inquiry");
-
-    // URL para publicar dados no UDDI registry
-    props.setProperty("javax.xml.registry.lifeCycleManagerURL", "http://localhost:9090/juddiv3/services/publish");
-
-    // URL do gestor de segurança do UDDI registry
-    props.setProperty("javax.xml.registry.securityManagerURL", "http://localhost:9090/juddiv3/services/security");
-
-    // Versão UDDI que o registry usa
-    props.setProperty("scout.proxy.uddiVersion", "3.0");
-
-    // Protocolo de transporte usado para invocações ao UDDI registry
-    props.setProperty("scout.proxy.transportClass", "org.apache.juddi.v3.client.transport.JAXWSTransport");
-    connFactory.setProperties(props);
-
-    // Finalmente, estabelece a ligação ao UDDI registry
-    Connection connection = connFactory.createConnection();
-
-    // Define credenciais de autenticação a usar para interacção com o UDDI registry
-    // Nota: o jUDDI fornecido para utilização no projecto está configurado
-    // para aceitar qualquer par username/password; no mundo real, não é assim
-    PasswordAuthentication passwdAuth = new PasswordAuthentication("username", "password".toCharArray());
-    Set<PasswordAuthentication> creds = new HashSet<PasswordAuthentication>();
-    creds.add(passwdAuth);
-    connection.setCredentials(creds);
-
-    // Obter objecto RegistryService
-    RegistryService rs = connection.getRegistryService();
-
-    // Obter objecto QueryManager da JAXR Business API
-    // (caso se pretenda fazer pesquisas)
-    BusinessQueryManager businessQueryManager = rs.getBusinessQueryManager();
-    // Obter objecto BusinessLifeCycleManager da JAXR Business API
-    // (caso se pretenda registar/alterar informação no UDDI registry)
-    BusinessLifeCycleManager businessLifeCycleManager = rs.getBusinessLifeCycleManager();
-</pre>
-    </ul>
-
-    <li>
-        Pesquisar no UDDI registry
-    </li>
-    <ul>
-        <li>
-            A operação de pesquisa (query)
-            procura serviços que respeitem um dado critério de selecção.
-            Existem diversos critérios, tais como:
-            findQualifiers,
-            namePatterns,
-            classifications,
-            specifications,
-            externalIdentifiers,
-            externalLinks.
-
-            O seguinte excerto ilustra uma pesquisa de todas organizações cujo nome inclui "Fly":
-        </li>
-<pre class="prettyprint lang-java">
-    // Definir critério de pesquisa por nome
-    Collection findQualifiers = new ArrayList();
-    findQualifiers.add(FindQualifier.SORT_BY_NAME_DESC);
-
-    // Neste exemplo, pretendemos pesquisar as organizações cujo nome inclua "Fly"
-    Collection namePatterns = new ArrayList();
-    namePatterns.add("%Fly%");
-
-    // Efectua a pesquisa
-    BulkResponse r = bqm.findOrganizations(findQualifiers, namePatterns, null, null, null, null);
-    Collection<Organization> orgs = r.getCollection();
-
-    for (Organization o : orgs) {
-        // Aqui posso consultar cada organização encontrada (e os respectivos serviços)
-        // Posso também alterar/criar elementos (por exemplo, serviços) e
-        // registar as alterações usando o businessLifeCycleManager
-    }
-</pre>
-    </ul>
-
-    <li>
-        Registar organizações e serviços no UDDI registry
-    </li>
-    <ul>
-        <li>
-            A publicação dos vários tipos de informação
-            associados a uma organização
-            (contactos, serviços e implementações de serviços)
-            é feita usando o <em>businessLifeCycleManager</em> obtido aquando da ligação.
-            <br>O seguinte excerto de código ilustra um exemplo de criação de
-            uma nova organização que disponibiliza um serviço:<br>
-        </li>
-<pre class="prettyprint lang-java">
-
-    // Cria nova Organização (em memória, ainda não registada no UDDI)
-    Organization org = businessLifeCycleManager.createOrganization("Fly Away Airline Travel Agents");
-
-    // Cria serviço (em memória)
-    Service service = businessLifeCycleManager.createService("Fly Away Airline Reservation Service");
-    service.setDescription(businessLifeCycleManager.createInternationalString("Flight Reservation Service"));
-
-    // Cria serviceBinding
-    ServiceBinding serviceBinding = businessLifeCycleManager.createServiceBinding();
-    serviceBinding.setDescription(businessLifeCycleManager.
-        createInternationalString("Information for airline reservation service access"));
-    serviceBinding.setValidateURI(false);
-    serviceBinding.setAccessURI("http://www.airlinetravel.com:8080/airlineService/service");
-
-    // Adiciona o serviceBinding ao serviço
-    service.addServiceBinding(serviceBinding);
-
-    // Adiciona o serviço à organização
-    org.addService(service);
-
-    Collection<Organization> orgs = new ArrayList<Organization>();
-    orgs.add(org);
-
-    // Finalmente, regista a organização e serviço no UDDI registry
-    BulkResponse br = businessLifeCycleManager.saveOrganizations(orgs);
-
-    if (br.getStatus() == JAXRResponse.STATUS_SUCCESS) {
-        System.out.println("Successfully saved the organization to the registry provider.");
-    } else {
-        System.out.println("Error when saving the organization to the registry provider.");
-    }
-</pre>
-</ul>
-
-
-<li>Alterar organizações já existentes no UDDI registry</li>
-<ul>
-    <li>É também possível alterar uma organização existente,
-    por exemplo adicionando-lhe um novo serviço ou removendo um dos seus serviços.<br />
-    Para tal, basta substituir a linha 2 do excerto acima por uma pesquisa ao
-    <em>BusinessQueryManager</em> que obtenha uma referência para a organização já existente
-    (por exemplo, uma pesquisa por nome ou por chave da organização).
-    Para mais informação, consultar o exemplo fornecido.
-    </li>
-</ul>
-
-
-<li>Apagar organizações já existentes no UDDI registry</li>
-<ul>
-    <li>Para apagar organizações já existentes,
-    usar o método <tt>deleteOrganizations</tt>,
-    que recebe como argumento a colecção de chaves de organizações a eliminar:
-    </li>
-
-<pre class="prettyprint lang-java">
-    //O seguinte programa elimina a organização organizationToDelete do UDDI Registry
-    Collection<Key> keys = new ArrayList<Key>();
-    keys.add(organizationToDelete.getKey());
-    businessLifeCycleManager.deleteOrganizations(keys);
-</pre>
-</ul>
-
-<p>&nbsp;</p>
-
-<p>
-A classe de exemplo
-<a href="UDDINaming.java">example.ws.uddi.<b>UDDINaming</b></a>
-utiliza os objectos JAX-R para fazer o registo de: 
-1 organização, 1 serviço e 1 implementação.
-</p>
-
-<p>
-Exemplos com UDDINaming
-</p>
+    <i>Sugestão:</i> <a href="http://tomi.vanek.sk/index.php?page=wsdl-viewer">WSDL Viewer</a>
 <ul>
     <li>
-        <a href="../05-ws1/hello-ws_juddi.zip">Web Service <i>implementation-first</i>
-        <img src="../_img/zip.png" alt="ZIP" ></a>
-    </li>
-    <li>
-        <a href="../05-ws1/hello-ws-cli_juddi.zip">Cliente de Web Service
-        <img src="../_img/zip.png" alt="ZIP" ></a>
+	Submeta um endereço de um WSDL na página para aplicar uma transformação XSLT e <br />
+	produzir uma visão do documento WSDL (um pouco) mais <i>human-friendly</i>
     </li>
 </ul>
-<ul>
-    <li>
-        <a href="uddi-naming.zip">Biblioteca uddi-naming
-        <img src="../_img/zip.png" alt="ZIP" ></a>
-        (código comum aos exemplos acima - pode ser reutilizado no projeto)
-        <span style="color:red;font-size:90%">[novo]</span>
-    </li>
-</ul>
-
-<p>
-<b>Compare</b> o código do Web Service servidor e 
-cliente <i>com UDDI</i> com o código do Web Service <i>contract-first</i> <i>sem UDDI</i> desenvolvido na primeira parte da aula.
-</p>
-<p>
-<b>Descubra as diferenças</b> e 
-faça uma fusão (<i>merge</i>) cuidada dos <i>poms</i> e do código.
-</p>
-<p>
-No fim, 
-deverá ter um Web Service <i>contract-first</i> com registo no UDDI e 
-um cliente com pesquisa dinâmica no UDDI, 
-à semelhança do que deverá ter no projecto.
-</p>
-
-</ol>
-
-<hr />
-
-<h2 id="extras">Extras</h2>
-
-<p>
-    <a href="http://tomi.vanek.sk/index.php?page=wsdl-viewer">WSDL Viewer</a><br />
-	Submeta um link de WSDL nessa página para aplicar uma transformação XSLT e produzir 
-	uma visão do documento WSDL mais <i>human-friendly</i>
 </p>
 
 </div>
@@ -542,7 +433,6 @@ um cliente com pesquisa dinâmica no UDDI,
 &copy; Docentes de Sistemas Distribuídos,
 <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
 <a href="http://www.ist.eu">Técnico Lisboa</a><br />
-Última actualização em 11 de fevereiro de 2016 por Miguel Coimbra
 </p>
 </div>
 

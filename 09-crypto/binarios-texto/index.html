@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+        <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
+        <script type="text/javascript" src="../../_prettify/prettify.js"></script>
+
+        <title>Representa&ccedil;&atilde;o de dados bin&aacute;rios em texto</title>
+
+        <meta name="Generator" content="EditPlus">
+        <meta name="Author" content="Miguel Pardal">
+        <meta name="Keywords" content="">
+        <meta name="Description" content="">
+
+    </head>
+
+    <body onload="prettyPrint()">
+        <div class="contexto">
+            <p>
+                <a href="../../index.html">Labs SD</a> &gt;
+                <a href="../index.html">Criptografia</a>
+            </p>
+        </div>
+
+        <div class="titulo">
+            <h1>Representa&ccedil;&atilde;o de dados bin&aacute;rios em texto</h1>
+        </div>
+
+        <div class="indice">
+        	<ul>
+                <li><a href="#introducao">Introdu&ccedil;&atilde;o</a></li>
+                <li><a href="#base-64">Base 64</a></li>
+            </ul>
+        </div>
+
+        <hr />
+
+        <div class="corpo">
+            <h2 id="criptografia">Representa&ccedil;&atilde;o de dados bin&aacute;rios em texto</h2>
+            <h3 id="introducao">Introdu&ccedil;&atilde;o</h3>
+            <p>
+A entrada e sa&iacute;da dos algoritmos criptogr&aacute;ficos s&atilde;o vectores de octetos (byte[]).
+            </p>
+            <p>
+Muitas vezes &eacute; necess&aacute;rio representar conte&uacute;dos cifrados em ficheiros de texto,
+como acontece com documentos XML, por exemplo.
+Neste caso, a representa&ccedil;&atilde;o de dados n&atilde;o pode ser directa, porque
+existem muitos octetos que n&atilde;o correspondem a caracteres v&aacute;lidos.
+            </p>
+            <p>
+Sendo assim, uma solu&ccedil;&atilde;o poss&iacute;vel &eacute; usar codifica&ccedil;&atilde;o de base 64.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="base-64">Base 64</h3>
+            <p>
+A codifica&ccedil;&atilde;o de base 64 foi definida originalmente
+para anexos do correio electr&oacute;nico:
+RFC 2045: "Multipurpose Internet Mail Extensions".
+            </p>
+            <p>
+A codifica&ccedil;&atilde;o de base 64 usa o
+sub-conjunto de 65 caracteres do US-ASCII
+que s&atilde;o os caracteres mais "universais",
+ou seja, caracteres
+que s&atilde;o iguais em practicamente todos os c&oacute;digos:
+A-Z, a-z, 0-9, +, /
+= pad.
+            </p>
+            <p>
+24 bits s&atilde;o representados em 4 caracteres<br />
+6 bits &uacute;teis por caracter<br />
+Aumenta tamanho do conte&uacute;do em 33%,
+por causa dos 2 bits "desperdi&ccedil;ados".
+            </p>
+            <p>
+O objecto <tt>javax.xml.bind.DatatypeConverter</tt>
+disponível na plataforma Java desde a versão 6 permite efectuar a conversão:
+            </p>
+            <p>
+<pre class="prettyprint lang-java">
+// import helper methods to print byte[]
+import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
+import static javax.xml.bind.DatatypeConverter.printBase64Binary;
+
+...
+
+    // encoding binary data with base 64
+    System.out.println("Encoding to Base64 ...");
+    String result = printBase64Binary(cipherBytes);
+
+...
+
+    // decoding string in base 64
+    System.out.println("Decoding from Base64 ...");
+    byte[] result = parseBase64Binary(cipherText);
+
+</pre>
+        </p>
+
+        </div>
+
+        <hr />
+
+        <div class="rodape">
+            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UTL</p>
+        </div>
+
+	</body>
+</html>

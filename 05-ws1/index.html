@@ -8,7 +8,7 @@
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="../_prettify/prettify.js"></script>
 
-    <title>Web Services I - Implementation-first</title>
+    <title>Web Services Implementation-First</title>
 </head>
 
 <body onload="prettyPrint()">
@@ -24,17 +24,10 @@
 </div>
 
 <div class="objectivos">
-
-    <h2>Objectivos</h2>
+    <h2>Objetivos</h2>
     <ul>
-        <li>Desenvolver Web Services simples usando a abordagem <i>implementation-first</i></li>
-        <li>Registar e descobrir Web Services usando o servidor de registo jUDDI</li>
-    </ul>
-
-    <h2>No laboratório:</h2>
-    <ul>
-        <li>Esclarecer dúvidas</li>
-        <li>Terminar o exercício</li>
+        <li>Desenvolver Web Services em Java usando a abordagem <i>implementation-first</i></li>
+        <li>Publicar e pesquisar Web Services no servidor de nomes jUDDI</li>
     </ul>
 </div>
 
@@ -42,190 +35,360 @@
 
 </div>
 
+<p>&nbsp;</p>
+
 <div class="corpo">
 
-<h2>Documentação de apoio à aula</h2>
-<ul>
-	<li>
-	    Introdução aos Web Services : capítulo 9 do livro base da cadeira (Couloris et al., 5th Edition)
-	</li>
-	<li>
-	    <a href="jaxws/index.html">JAX-WS</a>, 
-        <a href="uddi/index.html">UDDI</a> e
-        <a href="jaxr/index.html">JAX-R</a>
-    </li>
-</ul>
-
-<h2>Software necessário</h2>
+<h1>Web Services</h1>
 
 <p>
-    Para realizar esta aula deverá instalar todo o <a href="../software/index.html">software</a> necessário
-    para o projecto de SD, incluindo o servidor UDDI.
+Um serviço é uma funcionalidade de um sistema de informação que pode ser invocada remotamente através da rede.<br />
+Um <i>Web Service</i> é um serviço que usa os protocolos de comunicação da <i>World Wide Web</i>
+- HTTP sobre TCP sobre IP -
+e protocolos adicionais para descrever mensagens e dados
+- SOAP sobre XML.
 </p>
 
 <p>
-	<b>É fortemente recomendado que os diretórios que contêm o código não contenham espaços no seu caminho.</b>
+Para permitir uma definição rigorosa das operações e dos tipos de dados dos <i>Web Services</i> 
+são usadas as linguagens WSDL (<i>Web Services Description Language</i>) e
+XSD (<i>XML Schema Definition</i>),
+respetivamente.
 </p>
 
-<p>Para testar o servidor UDDI:</p>
+<p>
+Para a publicação e pesquisa de <i>Web Services</i>
+usa-se um servidor de nomes que implementa a norma
+UDDI (<i>Universal Description, Discovery and Integration</i>).
+No Sun RPC usa-se o <tt>rpcbind</tt>,
+no Java RMI usa-se o <tt>rmiregistry</tt>,
+nos Web Services usa-se o <tt>jUDDI</tt> (<i>Java UDDI</i>).
+</p>
+
+
+Para uma explicação mais detalhada destas tecnologias, ver:
 <ul>
-    <li>
-        Assegure-se que definiu correctamente a variável de ambiente CATALINA_HOME.
-    </li>
-    <li>
-        Inicie o servidor jUDDI,
-        com o comando:
-		<tt>startup.bat</tt> (Windows) ou
-		<tt>startup.sh</tt> (Linux).
-    </li>
-    <li>
-        Confirme que o servidor de nomes está a correr,
-        visitando:
-        <a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a> e
-        confirmando que a consola da administração é apresentada.
-    </li>
+    <li>Livro de Couloris, Capítulo 9</li>
+    <li><a href="uddi/index.html">UDDI</a></li>
 </ul>
 
+<p>&nbsp;</p>
 
-<h3>Exemplos</h3>
+<h2>JAX</h2>
 
-<p><i>Implementation-first</i></p>
+<p>
+As bibliotecas JAX (<i>Java API for XML</i>) são a família de bibliotecas da plataforma Java que lidam com tecnologias baseadas em XML,
+como é o caso dos <i>Web Services</i>.
+</p>
+    
+<p>
+A JAX-WS (Java API for XML Web Services) é uma biblioteca para Java que permite implementar <i>Web Services</i>,
+usando as normas:
+HTTP/TCP/IP para mensagens, 
+SOAP/XML para mensagens, 
+WSDL e XSD para descrição.
+</p>
+
+<p>
+Para comunicar com servidores UDDI,
+existe a biblioteca JAX-R (Java API for XML Registries),
+que permite publicar, pesquisar e eliminar registos de <i>Web Services</i>.
+</p>
+
+Para uma explicação mais detalhada destas tecnologias, ver:
 <ul>
-    <li><a href="hello-ws_juddi.zip">Web Service Hello World
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />-
-        Web Service que se regista automaticamente no UDDI</li>
-    <li><a href="hello-ws-cli_juddi.zip">Web Service client
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />-
-        Programa cliente que pesquisa a localização do Web Service no jUDDI</li-->
-</ul>
-
-<hr/>
-
-<h2>Guia de laboratório</h2>
-
-<h3>Implementation-first</h3>
-
-<p><b>Para experimentar o exemplo:</b></p>
-<ul>
-    <li>
-        São necessárias as bibliotecas para um cliente jUDDI</tt>,
-        que estão definidas no <tt>pom.xml</tt>. <br />
-	      Verifique a sua existência procurando pela tag <tt>&ltdependencies&gt</tt>.
-    </li>
+    <li><a href="jaxws/index.html">JAX-WS</a></li>
+    <li><a href="jaxr/index.html">JAX-R</a></li>
 </ul>
 
 <p>
-<b>Servidor</b> (assume-se que o jUDDI esteja a correr)
+O esquema de dados do UDDI é consideravelmente mais rico do que o habitual num servidor de nomes,
+com diversas entidades e relações,
+que permitem guardar informação de negócio sobre a organização e os seus serviços.
+Como consequência, o JAX-R é uma biblioteca verbosa,
+que obriga a escrever muitas linhas de código para realizar as tarefas mais habituais de registo e de pesquisa.
 </p>
-<ul>
-    <li>
-        <tt>cd hello-ws_juddi</tt>
-    </li>
-    <li>
-	<tt>mvn package</tt> <br />
-	Compila o código-fonte e cria JAR.
-    </li>	
-    <li>
-	Executar através do Maven:<br />
-        <tt>mvn exec:java</tt><br />
-        (o nome da classe a executar pelo exec e os argumentos estão definidos no <tt>pom.xml</tt>)<br />
-        O servidor deve executar sem erros,
-        disponibilizando o endereço HTTP (<i>endpoint address</i>) e
-        registando no UDDI.
-        Deve consultar o contrato que é gerado automaticamente
-        acrescentando <b>?WSDL</b> no final do endereço HTTP (Por ex: <tt>http://localhost:8080/hello-ws/endpoint?WSDL</tt>).
-    </li>
-    <li>
-        Carregue em <i>enter</i>
-        para encerrar o servidor e
-        eliminar o registo.
-    </li>
-</ul>
 
 <p>
-<b>Cliente</b> (assume-se que o jUDDI e o servidor estejam a correr)
+Para tornar a utilização do UDDI mais simples
+foi criada a biblioteca <tt>UDDINaming</tt> que simplifica o esquema de dados para suportar apenas:<br />
+1 organização, 1 serviço e 1 implementação.<br />
+Esta biblioteca,
+cujo código está disponível para consulta e modificação,
+torna o registo e pesquisa de serviços mais sucinto.
 </p>
-<ul>
-    <li>
-        <tt>cd hello-ws-cli_juddi</tt>
-    </li>
-    <li>
-        <tt>mvn generate-sources</tt><br />
-	Comando para correr o wsimport.
-	O cliente <!--consulta o UDDI para descobrir onde está o servidor,
-        consulta o servidor para obter --> obtém o contrato WSDL,
-        <!-- guarda uma cópia local do ficheiro -->e
-        gera as classes de invocação do serviço
-        (em <tt>target/classes/</tt>) <br />
-	* A fase <tt>generate-sources</tt> do Maven é uma das primeiras
-	a ser executada, portanto ao executar uma fase mais adiantada como
-	<tt>compile</tt>, o cliente chama o wsimport implicitamente. *
-    </li>
-    <li>
-	Executar através do Maven:<br />
-        <tt>mvn package exec:java</tt><br />
-        O cliente deve executar sem erros,
-        consultando o UDDI para descobrir o endereço do servidor,
-        e fazendo uma invocação remota.
-    </li>
-</ul>
 
-<p>Usando o <b>Eclipse</b>:</p>
-<ul>
-    <li>
-        Crie/importe um projecto no Eclipse para o servidor e
-        outro projecto para o cliente.
-        Deste modo separará melhor as definições de cada um,
-        evitando erros de utilização de código não partilhado.
-    </li>
-    <li>
-        O <tt>wsimport</tt> do <b>cliente</b> deverá ser executado através do Maven (<tt>mvn generate-sources)</tt>.<br />
-	Também é possível correr a partir da linha de comandos (mais informação no ficheiro readme.txt).
-    </li>
-    <li>
-        Quando o Eclipse está correctamente configurado
-        pode tirar partido da <a href="http://www.slideshare.net/MiguelLPardal/eclipse-workshop-presentation">edição de código assistida (<i>auto-complete</i>)
-        e das capacidades de <i>debug</i></a>.
-    </li>
-</ul>
+<p>&nbsp;</p>
+
+<hr />
+
+
+<h1>Exemplo</h1>
+
+<p>
+Vamos então ver um exemplo de um <i>Web Service</i> feito em Java,
+que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.
+</p>
+<p>
+<small><b>Nota: As pastas que contêm o código não devem ter espaços no seu caminho.</b></small>
+</p>
+
+<ol>
+<li><b>jUDDI</b></li>
+    <ul>
+        <li>
+O servidor de nomes a utilizar é o jUDDI (<i>Java UDDI</i>),
+que faz parte do <a href="../software/index.html">software</a> que se pediu para instalar.
+        </li>
+        <li>
+Para lançar o servidor,
+basta executar o seguinte comando na pasta <tt>juddi-.../bin</tt>:</li>
+            <ul>
+                <li><tt>startup.sh</tt> (Linux e Mac)</li>
+                <li><tt>startup.bat</tt> (Windows)</li>
+            </ul>
+        <li>
+Para confirmar funcionamento,
+aceder à página de índice do jUDDI, 
+que dá também acesso à interface de administração<br />
+<a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a>
+        </li>
+            <ul>
+                <li>utilizador:senha <tt>uddiadmin:da_password1</tt></li>
+            </ul>
+    </ul>
+
+<li><b>UDDINaming</b></li>
+    <ul>
+        <li>
+Obter o código da biblioteca <tt>UDDINaming</tt>:
+        </li>
+        <ul>
+            <li>
+<a href="uddi-naming.zip">Biblioteca uddi-naming
+<img src="../_img/zip.png" alt="ZIP"></a>
+            </li>
+            <li>
+Consultar <a href="uddinaming-apidocs/index.html">javadoc</a>
+        </ul>
+        <li>
+Instalar o módulo no repositório Maven local:
+        <ul>
+            <li>
+<tt>cd uddi-naming</tt>
+            </li>
+            <li>
+<tt>mvn install</tt>
+            </li>
+        </ul>
+        </li>
+        <li>
+A biblioteca inclui um teste de integração 
+(IT - <i>Integration Test</i>)<br />
+que verifica o funcionamento correto do jUDDI antes de instalar o módulo.
+        </li>
+        <li>
+Uma vez instalado o módulo no repositório Maven local,
+a biblioteca pode ser usada como dependência num <tt>pom.xml</tt>:
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;!-- UDDI Naming --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;pt.ulisboa.tecnico.sdis&lt;/groupId&gt;
+        &lt;artifactId&gt;uddi-naming&lt;/artifactId&gt;
+        &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    ...
+</pre>
+        </li>
+    </ul>
+
+<li><b>Servidor JAX-WS</b></li>
+    <p>
+É possível implementar Web Services partindo de código Java já existente.
+Esta abordagem de desenvolvimento designa-se por <i>implementation-first</i>.
+Para transformar um tipo Java num <i>Web Service</i>,
+basta usar a anotação <tt>@WebService</tt>.
+As descrições em WSDL e XSD são geradas automaticamente quando o servidor se executa.
+    </p>
+
+    <ul>
+        <li>
+Obter o código do servidor:
+        </li>
+        <ul>
+            <li>
+<a href="hello-ws_juddi.zip">Hello World Web Service (Implementation-First)
+<img src="../_img/zip.png" alt="ZIP" ></a>
+            </li>
+        </ul>
+        <li>
+Construir o servidor:
+        </li>
+        <ul>
+            <li>
+<tt>cd hello-ws_juddi</tt>
+            </li>
+            <li>
+<tt>mvn compile</tt>
+            </li>
+        </ul>
+        <li>
+Executar o servidor:
+        </li>
+        <ul>
+            <li>
+<tt>mvn exec:java</tt><br />
+O nome da classe a executar e 
+os argumentos estão definidos no <tt>pom.xml</tt><br />
+O servidor deve executar sem erros,
+disponibilizando o <i>endpoint address</i> e
+registando-se no UDDI.
+            </li>
+            <li>
+Confirmar que o servidor está à espera de pedidos e
+consultar o contrato que é gerado automaticamente:
+            <ul>
+                <li>
+<a href="http://localhost:8080/hello-ws/endpoint?wsdl">http://localhost:8080/hello-ws/endpoint?wsdl</a>
+                </li>
+                <ul>
+                    <li>
+<a href="http://localhost:8080/hello-ws/endpoint?xsd=1">http://localhost:8080/hello-ws/endpoint?xsd=1</a>
+                    </li>
+                </ul>
+            </ul>
+        </ul>
+    </ul>
+
+<li><b>Cliente JAX-WS</b></li>
+    <ul>
+        <li>
+Obter o código do cliente:
+        </li>
+        <ul>
+            <li>
+<a href="hello-ws-cli_juddi.zip">Web Service client
+<img src="../_img/zip.png" alt="ZIP" ></a>
+            </li>
+        </ul>
+        <li>
+Construir o cliente:
+        </li>
+        <ul>
+            <li>
+<tt>cd hello-ws-cli_juddi</tt>
+            </li>
+            <li>
+<tt>mvn compile</tt><br />
+Executa previamente <tt>generate-sources</tt> onde
+o cliente obtém o contrato WSDL a partir do servidor e<br />
+usa a ferramenta <tt>wsimport</tt> para gerar as classes de invocação do serviço
+(em <tt>target/</tt>)<br />
+            </li>
+        </ul>
+        <li>
+Executar o cliente:
+        </li>
+        <ul>
+            <li>
+<tt>mvn exec:java</tt><br />
+O cliente deve executar sem erros,
+consultando o UDDI para descobrir o endereço do servidor,<br />
+e fazendo uma invocação remota.
+            </li>
+        </ul>
+    </ul>
+</ol>
+
+<h2>Resumo</h2>
+<p>
+Primeiro foi lançado o servidor de nomes jUDDI.<br />
+Depois foi instalada a biblioteca UDDINaming no repositório Maven local,
+que testa também o funcionamento do servidor jUDDI.<br />
+Em seguida,
+foi construído e iniciado o servidor,
+que se regista no jUDDI e 
+fica à espera de pedidos no <i>endpoint address</i>.<br />
+Finalmente,
+o cliente obtém o WSDL a partir do servidor e 
+gera o código de invocação que permite depois fazer invocações remotas.
+</p>
+<p>
+Depois de testado o Exemplo,
+passar ao Exercício.
+</p>
+
+<p>&nbsp;</p>
 
 <hr />
 
 <h1>Exercício</h1>
 
+<p>
+Partindo do exemplo acima,
+foi construído um novo Web Service Tic Tac Toe (jogo do galo).<br />
+<img src="ttt.png" alt="Tic Tac Toe" height="75" />
+</p>
 <ul>
     <li>
-        Partindo dos exemplos,
-        foi construído um novo Web Service Tic Tac Toe (jogo do galo).
+O ponto de partida foi o programa
+<a href="ttt-local.zip">ttt-local</a>
     </li>
-    <ul>
-        <li>
-            O ponto de partida foi o
-            <a href="ttt-local.zip">ttt-local</a>
-        </li>
-        <li>
-            O ponto de chegada é o <a href="ttt-ws_juddi.zip">ttt-ws_juddi</a> e
-            <a href="ttt-ws-cli_juddi.zip">ttt-ws-cli_juddi</a>,
-            <b>mas faltam ainda alterações importantes (procurar por "..." no código e <tt>pom.xml</tt>)!</b>
-        </li>
-    </ul>
+    <li>
+O ponto de chegada consiste em dois programas:
+<b>servidor</b> <a href="ttt-ws_juddi.zip">ttt-ws_juddi</a> e 
+<b>cliente</b> <a href="ttt-ws-cli_juddi.zip">ttt-ws-cli_juddi</a>.
+    </li>
 </ul>
 <ul>
     <li>
-        A classe <tt>example.ws.uddi.UDDINaming</tt> utiliza a API JAX-R
-        para efectuar as interacções com o servidor UDDI.<br />
-        Para usar a API JAX-R são necessárias as bibliotecas <tt>juddi-client</tt>
-        (que devem ser incluídas no ficheiro pom.xml)<br />
-        Analise as dependências do exemplo anterior e adicione o que estiver
-	em falta dentro da tag <tt>&ltdependencies&gt</tt>.
+A estrutura dos projetos está montada mas,
+<b>atenção</b>,<br />
+<b>faltam ainda alterações importantes assinaladas com "..."</b>,<br />
+quer no <tt>pom.xml</tt>, 
+quer no código Java!
     </li>
+</ul>
+<ul>
     <li>
-        No servidor (<tt>ttt-ws_juddi</tt>):
+O <b>objetivo</b> do exercício é acrescentar o que falta e 
+colocar o servidor e cliente a funcionar.
+    </li>
+</ul>
+
+<p>&nbsp;</p>
+
+<ol>
+    <li>
+No <b>servidor</b> (<tt>ttt-ws_juddi</tt>):
     </li>
     <ul>
         <li>
-            Consultar a interface <tt>TTT</tt> e
-            respectiva implementação <tt>TTTImpl</tt>
+Configurar no ficheiro <tt>pom.xml</tt>:
+        </li>
+        <ul>
+            <li>
+A dependência para a biblioteca UDDINaming
+(em falta dentro da tag <tt>&ltdependencies&gt</tt>).
+            </li>
+            <li>
+A localização do UDDI (<tt>uddi.url</tt>)<br />
+Por omissão, o valor é <tt>http://localhost:9090</tt>.
+            </li>
+            <li>
+O nome do serviço a registar (<tt>ws.name</tt>)
+            </li>
+            <li>
+O endereço do serviço a disponibilizar (<tt>ws.url</tt>)<br />
+Por exemplo, <tt>http://localhost:8080/ttt-ws/endpoint</tt>
+            </li>
+        </ul>
+    </ul>
+    <ul>
+        <li>
+Consultar a interface <tt>TTT</tt> e
+respectiva implementação <tt>TTTImpl</tt>
         </li>
         <li>
             Completar as anotações <tt>javax.jws.WebService</tt>,
@@ -238,98 +401,75 @@
 
 </pre>
         <li>
-            Configurar no ficheiro <tt>pom.xml</tt> (além da(s) dependência(s) em falta):
-        </li>
-        <ul>
-            <li>
-                A localização do UDDI (<tt>uddi.url</tt>)<br />
-                Por omissão, o valor é <tt>http://localhost:9090</tt>.
-            </li>
-            <li>
-                O nome do serviço a registar (<tt>ws.name</tt>)
-            </li>
-            <li>
-                O endereço do serviço a disponibilizar (<tt>ws.url</tt>)<br />
-                Por exemplo, <tt>http://localhost:8080/ttt-ws/endpoint</tt>
-            </li>
-        </ul>
-        <li>
-            Depois de efectuadas as alterações:<br />
-            <tt>mvn package exec:java</tt><br />
-            (a classe a executar pelo exec e os argumentos estão definidos no <tt>pom.xml</tt>)<br />
+Depois de efectuadas as alterações:<br />
+<tt>mvn compile exec:java</tt><br />
+(a classe a executar e os argumentos estão definidos no <tt>pom.xml</tt>)<br />
         </li>
         <li>
-            Consultar o WSDL gerado dinamicamente,
-            que deverá estar disponível no endereço<br />
-            <a href="http://localhost:8080/ttt-ws/endpoint?WSDL">http://localhost:8080/ttt-ws/endpoint?WSDL</a>.</li>
+Consultar o WSDL gerado dinamicamente,
+que deverá estar disponível no endereço<br />
+<a href="http://localhost:8080/ttt-ws/endpoint?WSDL">http://localhost:8080/ttt-ws/endpoint?WSDL</a>.
         </li>
     </ul>
-</ul>
-<ul>
+
+<p>&nbsp;</p>
+
     <li>
-        No cliente (<tt>ttt-ws-cli_juddi</tt>):
+No <b>cliente</b> (<tt>ttt-ws-cli_juddi</tt>):
     </li>
     <ul>
         <li>
-            Configurar no ficheiro <tt>pom.xml</tt> (além da(s) dependência(s) em falta):
+Configurar no ficheiro <tt>pom.xml</tt>:
         </li>
         <ul>
             <li>
-                A localização do UDDI (<tt>uddi.url</tt>)<br />
+A dependência para a biblioteca UDDINaming
+(em falta dentro da tag <tt>&ltdependencies&gt</tt>).
             </li>
             <li>
-                O nome do serviço a pesquisar (<tt>ws.name</tt>)
+A localização do UDDI (<tt>uddi.url</tt>)<br />
+            </li>
+            <li>
+O nome do serviço a pesquisar (<tt>ws.name</tt>)
             </li>
         </ul>
-        <!-- li>
-	    Criar pasta necessária para <tt>wsimport</tt>:<br />
-	    <tt>mkdir target/classes</tt>
-	      </li-->
         <li>
-	    Run wsimport from Maven:<br />
-	    <tt>mvn generate-sources</tt><br />
-            Gera o código necessário às invocações remotas a partir do WSDL.
-            O WSDL é necessário para a compilação do cliente,
-            pelo que o servidor deverá estar acessível.
+Gerar o código necessário às invocações remotas a partir do WSDL:<br />
+<tt>mvn generate-sources</tt><br />
+O WSDL é necessário para a compilação do cliente,
+pelo que o servidor deverá estar a correr.<br />
+Caso se pretenda gerar novamente as classes,
+deve fazer-se:<br />
+<tt>mvn clean generate-sources</tt><br />		
+        </li>
+        <li>
+Consultar <tt>./target/generated-sources/wsimport</tt> ou
+faça <em>refresh</em> no <em>package explorer</em> do Eclipse.<br />
         </li>
         <ul>
             <li>
-                Caso se pretenda gerar novamente as classes,
-                deve fazer-se:<br />
-                <tt>mvn clean generate-sources</tt><br />		
+Verificar que alterações ocorreram nas pastas do projeto
+em resultado da geração de código a partir do WSDL.<br />
+Inspeccione o conteúdo dos novos ficheiros gerados e
+tente compreender a função de cada um.
+            </li>
+            <li>
+Abrir e
+analisar o ficheiro cujo nome termina em <tt>...Service.java</tt>.<br />
+A classe <tt>...Service</tt> estende a classe
+<tt>javax.xml.ws.Service</tt>,
+que é a classe que o JAX-WS fornece para acesso ao serviço remoto.<br />
+A classe gerada já está configurada para o <i>Web Service</i> em causa,
+logo é mais fácil de usar que usando a classe Service diretamente.
             </li>
         </ul>
         <li>
-            Consultar <tt>./target/generated-sources/wsimport</tt> ou
-            faça <em>refresh</em> no <em>package explorer</em> do Eclipse.<br />
-        </li>
-        <ul>
-            <li>
-                Verificar que alterações ocorreram nas pastas do seu projecto
-                em resultado da geração de código a partir do WSDL.<br />
-                Inspeccionar o conteúdo dos novos ficheiros gerados e
-                tente compreender a função de cada um.
-            </li>
-            <li>
-                Abrir e
-                analisar o ficheiro cujo nome termina em <tt>Service.java</tt>.<br />
-                A classe <tt>...Service</tt> estende a classe
-                <em>javax.xml.ws.Service</em>,
-                que é a classe que o JAX-WS fornece para acesso ao serviço remoto.<br />
-                A classe gerada já está configurada para o <i>web service</i> em causa,
-                logo é mais fácil de usar que usando a classe Service directamente.
-            </li>
-        </ul>
-        <li>No Eclipse, o programa cliente <tt>Game</tt> importa as classes geradas automaticamente, já que
-	estão presentes na directoria de source por omissão.</li>
-        
-        <li>
-            No método <tt>main()</tt> do cliente,
-            criar uma instância de <tt>...Service</tt> e
-            chamar o método <tt>get...Port()</tt>,
-            que retorna uma instância da interface (remota) do seu Web Service.
-            A partir daí,
-            pode invocar qualquer operação chamando métodos dessa interface.
+No método <tt>main()</tt> do cliente,
+criar uma instância de <tt>...Service</tt> e
+chamar o método <tt>get...Port()</tt>,
+que retorna uma instância da interface (remota) do seu Web Service.
+A partir daí,
+pode invocar qualquer operação chamando métodos dessa interface.
         </li>
         <pre class="prettyprint lang-java">
 
@@ -345,133 +485,47 @@
             Agora já deverá ser possível compilar a aplicação sem erros:<br />
             <tt>mvn compile</tt>
         </li>
-        <li>Para jogar:<br />
+        <li>E jogar:<br />
           <tt>mvn exec:java</tt>
         </li>
-	      <!--li>
-		        Em alternativa: <tt>mvn package appassembler:assemble</tt><br />
-		        Cria JAR e script para correr na linha de comandos.
-	      </li-->
     </ul>
-</ul>
+</ol>
 
-<ul id="client_exceptions">
-	<li>
-		Se observar o cabeçalho do ponto de entrada do cliente (<tt>ttt-ws-cli_juddi</tt>), irá reparar que é explícito no código que podem ser lançadas exceções:
-	</li>
-	<pre class="prettyprint lang-java">
-	public Game() {
-		public static void main(String[] args) <span style="font-size:150%"><b>throws Exception</b></span> {
-			...
-		}
-	...
-	}
-	</pre>
-	Esta forma de declarar que uma função pode atirar uma excepção não é uma boa prática. Para outra pessoa que veja o código, esta informação de pouco ou nada serve, pois 
-	nada nos diz sobre que tipo de problemas concretos podem ocorrer durante a execução:
-	<br>
-	Vai agora alterar a declaração da função <tt>main</tt> no cliente (<tt>ttt-ws-cli_juddi</tt>) para mencionar as exceções concretas que podem ser atiradas em execução.
-	<br>
-	<b>Nota: assume-se que está a usar o Eclipse para editar o código nos próximos passos; se desempenhar os próximos passos no Eclipse, poderá fazer uso dos 
-	mecanismos auxiliares deste. São sempre uma ajuda bem-vinda para projetos de grandes dimensões...</b>
-	<ul>
-	<li>
-		Começe por comentar/remover no código o troço <tt>throws Exception</tt>:
-		<pre class="prettyprint lang-java">
-	public Game() {
-		public static void main(String[] args) <span style="font-size:150%"><b>{ //</b></span> throws Exception {
-			...
-		}
-	...
-	}
-	</pre>
-		Como consequência, o Eclipse irá sublinhar a vermelho todos os pontos de execução da função <tt>main</tt> que lançam exceções:
-		<pre class="prettyprint lang-java">
-	public Game() {
-		public static void main(String[] args) { // throws Exception {
-			...
-			UDDINaming uddiNaming = new <span style="text-decoration: underline;font-size:150%">UDDINaming(uddiURL)</span>;
-			...
-			String endpointAddress = <span style="text-decoration: underline;font-size:150%">uddiNaming.lookup(name)</span>;
-			...
-		}
-	...
-	}
-	</pre>
-	</li>
-	<li>
-		Se passar com o cursor por cima de uma das expressões sublinhadas (por exemplo, <tt>UDDINaming(uddiURL)</tt>) e retiver o cursor, o Eclipse 
-		irá dar diferentes sugestões para tentar corrigir a situação:
-		<div>
-		<img style="padding: 20px 0px 0px 0px" alt="Sugestões do Eclipse para lidar com uma exceção..." title="Sugestões do Eclipse para lidar com uma exceção..." src="./exceptions/suggestion.png"></img>
-		</div>
-		Escolha o <i>quick-fix</i> <div><tt><b>Add throws declaration</b></tt></div>
-	</li>
-	<li>
-		Repare que a classe de excepção <tt>JAXRException</tt> foi adicionada à declaração da função <tt>main</tt>:
-		<pre class="prettyprint lang-java">
-	public Game() {
-		public static void main(String[] args) <span style="font-size:150%"><b>throws JAXRException</b></span> { // throws Exception {
-			...
-			UDDINaming uddiNaming = new UDDINaming(uddiURL);
-			...
-			String endpointAddress = uddiNaming.lookup(name);
-			...
-		}
-	...
-	}
-	</pre>
-		As expressões sublinhadas a vermelho no Eclipse como sendo erros deverão ficar sem o sublinhado.
-		<br>
-		O programa está agora <b>com informação mais útil</b> sobre as exceções que podem ser lançadas.
-		<br>		
-		Através da mudança da declaração da função <tt>main</tt>, rapidamente se percebe que as exceções que podem ocorrer estão relacionadas com JAXR.
-	</li>
-	</ul>
-</ul>
 <h2>Perguntas</h2>
-    <ol type="1">
+
+<ol type="1">
+    <li>
+        Estude o WSDL gerado.
+        Consegue mapear o código Java para as definições WSDL e XSD?
+    </li>
+    <li>
+        Onde, no WSDL,
+        é especificado o tipo de argumentos do Web Service?
+    </li>
+    <li>
+        Compare o WSDL gerado com o ficheiro <tt>ttt.x</tt> do servidor SUN RPC do ttt.
+    </li>
+    <ol type="a">
         <li>
-            Estude o WSDL gerado.
-            Consegue mapear o código Java para as definições WSDL e XSD?
+            Que informação é comum a ambos os ficheiros?
         </li>
         <li>
-            Onde, no WSDL,
-            é especificado o tipo de argumentos do Web Service?
+            Que informação existe no WSDL mas não existe no .x?
         </li>
-        <li>
-            Compare o WSDL gerado com o ficheiro <tt>ttt.x</tt> do servidor SUN RPC do ttt.
-        </li>
-        <ul>
-            <li>
-                Que informação é comum a ambos os ficheiros?
-            </li>
-            <li>
-                Que informação existe no WSDL mas não existe no .x?
-            </li>
-        </ul>
-        <li>
-            Identifique a função de cada ficheiro gerado no cliente
-            (ignore os ficheiros <tt>ObjectFactory.java</tt> e <tt>package-info.java</tt> na sua resposta).
-        </li>
-        <li>
-            Como pode modificar o endereço que o cliente utiliza para contactar o servidor?
-        </li>
-		<li id="question_exception">
-			Porque é que quando tornou mais específicas as exceções que a função <tt>main</tt> do cliente (<tt>ttt-ws-cli_juddi</tt>) pode atirar, ambas as 
-			expressões sublinhadas pelo Eclipse deixaram de indicar erro?
-		</li>
-		<li>
-			Em que medida é mais informativo e útil declarar a função <tt>main</tt> do cliente (<tt>ttt-ws-cli_juddi</tt>) com a exceção <tt>JAXRException</tt> 
-			em vez de <tt>Exception</tt>?
-		</li>
     </ol>
+    <li>
+        Identifique a função de cada ficheiro gerado no cliente
+        (ignore os ficheiros <tt>ObjectFactory.java</tt> e <tt>package-info.java</tt> na sua resposta).
+    </li>
+</ol>
 
 <p>
 O resto do enunciado será entregue na aula.<br />
-O objectivo será estender ou
+O objetivo será estender ou
 modificar as funcionalidades disponíveis.
 </p>
+
+<p>&nbsp;</p>
 
 </div>
 
@@ -517,63 +571,12 @@ modificar as funcionalidades disponíveis.
 
 <hr />
 
-<h2 id="extras">Extras</h2>
-<ul>
-    <li>
-        <em>Caso queira usar tipos complexos (classes com vários campos),
-        assegure-se que:</em>
-        <ul>
-            <li>
-                <em>todas as classes pelo Web Service incluem um construtor sem argumentos;</em>
-            </li>
-            <li>
-                <em>cada campo X de cada classe ou
-                (i) tem um par de métodos <tt>tipo getX()</tt> e <tt>void setX(tipo)</tt>, ou
-                (ii) tem visibilidade <tt>public</tt>;
-                caso contrário,
-                esses campos não serão incluídos nas mensagens SOAP trocadas.</em>
-            </li>
-        </ul>
-    </li>
-</ul>
-
-<ul>
-    <li>
-        <a href="hello-ws.zip">Web Service
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - Web Service que não usa o UDDI
-    </li>
-    <li>
-        <a href="hello-ws-cli.zip">Web Service client
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - Programa cliente que invoca o Web Service sem recurso ao UDDI
-    </li>
-</ul>
-<p>
-Exercício sem UDDI -
-<b>faltam também alterações importantes
-(procurar por "..." no código e no pom.xml)!</b>
-
-<ul>
-    <li>
-        <a href="ttt-ws.zip">ttt-ws
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />
-    </li>
-    <li>
-        <a href="ttt-ws-cli.zip">ttt-ws-cli
-        <img src="../_img/zip.png" alt="ZIP" ></a>
-    </li>
-</ul>
-
-<hr />
-
 
 <div class="rodape">
 <p>
 &copy; Docentes de Sistemas Distribuídos,
 <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
 <a href="http://www.ist.eu">Técnico Lisboa</a><br />
-Última actualização em 11 de fevereiro de 2016 por Miguel Coimbra
 </p>
 </div>
 

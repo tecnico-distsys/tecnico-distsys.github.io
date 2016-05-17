@@ -119,13 +119,13 @@
     <!-- Week even -->
     <tr class="even">
         <td class="mes" style="height: 17px">Mar</td>
-        <td style="height: 17px">14</td>
+        <td style="height: 17px" class="enunciado">14</td>
         <td style="height: 17px">15</td>
         <td style="height: 17px">16</td>
         <td style="height: 17px">17</td>
         <td style="height: 17px">18</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            <!--a href="05-ws1/index.html"-->Web Services Implementation-First<!--/a-->
+            <a href="05-ws1/index.html">Web Services Implementation-First</a>
         </td>
     </tr>
 
@@ -151,7 +151,7 @@
         <td style="height: 17px">31</td>
         <td style="height: 17px">1</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            <!--a href="06-ws2/index.html"-->Web Services Contract-First<!--/a-->
+            <a href="06-ws2/index.html">Web Services Contract-First</a>
         </td>
     </tr>
 
@@ -164,7 +164,7 @@
         <td style="height: 17px">7</td>
         <td style="height: 17px">8</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            <!--a href="07-ws3/index.html"-->Web Services Tests<!--/a-->
+            <a href="07-ws3/index.html">Web Services Tests</a>
         </td>
     </tr>
 
@@ -177,7 +177,7 @@
         <td style="height: 17px">14</td>
         <td style="height: 17px" class="entrega">15</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            Apoio ao projeto
+            <a href="08-apoio/index.html">Apoio ao projeto</a>
         </td>
     </tr>
 
@@ -190,7 +190,9 @@
         <td style="height: 17px">21</td>
         <td style="height: 17px">22</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            Visualização da primeira entrega
+            <a href="09-visualizacao/index.html">Visualização da 1ª entrega</a>
+            |
+            <a href="09-crypto/index.html">Criptografia</a>
     </tr>
 
     <!-- Week even -->
@@ -202,9 +204,9 @@
         <td style="height: 17px">28</td>
         <td style="height: 17px">29</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            <!--a href="10-ws4/index.html"-->Web Services Avançados<!--/a-->
+            <a href="10-ws-async/index.html">Web Services Avançados</a>
             |
-            <!--a href="10-crypto/index.html"-->Criptografia<!--/a-->
+            <a href="10-soap-handlers/index.html">SOAP Handlers</a>
         </td>
     </tr>
 
@@ -217,7 +219,7 @@
         <td style="height: 17px">5</td>
         <td style="height: 17px">6</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            Apoio ao projeto
+            <a href="11-apoio/index.html">Apoio ao projeto - segurança e replicação</a>
         </td>
     </tr>
 
@@ -230,7 +232,7 @@
         <td style="height: 17px">12</td>
         <td style="height: 17px" class="entrega">13</td>
         <td rowspan="1" class="desc" style="height: 17px">
-            Apoio ao projeto
+            <a href="12-apoio/index.html">Apoio ao projeto - relatório e demonstrações</a>
         </td>
     </tr>
 
@@ -253,7 +255,7 @@
         <td style="height: 17px">23</td>
         <td style="height: 17px">24</td>
         <td style="height: 17px">25</td>
-        <td style="height: 17px">26</td>
+        <td style="height: 17px">F</td>
         <td style="height: 17px">27</td>
         <td rowspan="1" class="desc" style="height: 17px">
             Discussões
@@ -263,13 +265,6 @@
     </table>
 <hr/>
 
-		<ul>
-            <li>
-                <a href="proj/faq.html">Q &amp; A - perguntas e respostas sobre os laboratórios</a>
-            </li>
-        </ul>
-
-
     <!--a href="pautas/....pdf">Pautas ...</a>
 
     Discussões <a href="proj/Discussoes_ES-SD_2013-14_Alameda.pdf">Alameda</a>,
@@ -278,58 +273,52 @@
 <hr/-->
     <h3>Projeto</h3>
 
-    <!--p class="enunciado">
-        <span class="enunciado">18 Mar</span> <a href="proj/Projecto_SD_2014-15_p_1.pdf">1&ordm; enunciado SD</a>,
-        <span class="enunciado">18 Abr</span> <a href="proj/Projecto_SD_2014-15_p_2.pdf">2&ordm; enunciado  SD</a>
-    </p-->
     <p class="entrega">
         <span class="entrega">15 Abr 23:59</span> 1&ordf; entrega,
         <span class="entrega">13 Mai 23:59</span> 2&ordf; entrega
     </p>
 
-    <!--p>
-        Contratos WSDL:
+    <p class="enunciado">
+        <span class="enunciado">14 Mar</span> <a href="proj/enunciado_projecto_SD_2015_16.pdf">Enunciado SD</a><br />
         <ul>
             <li>
-                <small><a href="proj/SD-ID.1_1.wsdl">SD-ID.1_1.wsdl</a></small>
+                Contratos WSDL:
+            </li>
+            <ul>
+                <li>
+                    <small><a href="proj/transporter.1_0.wsdl">transporter.1_0.wsdl</a></small>
+                </li>
+                <li>
+                    <small><a href="proj/broker.1_0.wsdl">broker.1_0.wsdl</a></small>
+                </li>
+            </ul>
+            <li>
+                Testes de Integração:
+            </li>
+            <ul>
+                <li>
+                    <small><a href="proj/transporter-ws-cli_eval.zip">transporter-ws-cli_eval.zip</a></small>
+                </li>
+                <li>
+                    <small><a href="proj/broker-ws-cli_eval.zip">broker-ws-cli_eval.zip</a></small>
+                </li>
+            </ul>
+            <li>
+<a href="proj/faq.html">Q &amp; A - perguntas e respostas</a> <span style="color:red;font-size:90%">[atualizado em 2016-05-11]</span>
             </li>
             <li>
-                <small><a href="proj/SD-STORE.1_1.wsdl">SD-STORE.1_1.wsdl</a></small>
+<a href="proj/git.html">Utilização do GitHub</a>
             </li>
+            <li>
+Ficheiros ponto de partida - <a href="proj/C_XX-project/C_XX-project.zip">C_XX-project.zip</a>
+            </li>
+            <ul>
+                <li>
+<a href="proj/C_XX-project/ws.html">Diagrama UML de Classes e Pacotes</a> com breve explicação do papel de cada objeto
+                </li>
+            </ul>
         </ul>
-
-        Implementação mínima dos servidores e testes:
-	    <ul>
-	        <li>
-                <a href="proj/SD-part1-minimal.zip">Implementação mínima dos servidores da 1ª parte</a>
-            </li>
-	        <li>
-	            <a href="proj/SD-part1-integration-tests.zip">Testes de integração da 1ª parte</a>
-            </li>
-        </ul>
-
-        Informação adicional sobre o PROJETO:
-        <ul>
-            <li>
-                <a href="proj/test.html">Dados de teste</a>
-            </li>
-            <li>
-                Instruções a incluir: <a href="proj/README.md">README.md</a>
-            </li>
-            <li>
-                <a href="proj/git.html">Utilização do GitHub</a> - como trabalhar e entregar
-            </li>
-	    </ul>
-		<ul>
-            <li>
-                <a href="proj/faq.html">Q &amp; A - perguntas e respostas</a>
-            </li>
-            <li>
-                <a href="proj/planeamento.html">Planeamento sugerido para o projeto</a>
-            </li>
-        </ul>
-
-    </p-->
+    </p>
 
 <hr />
 
@@ -340,7 +329,6 @@
 &copy; Docentes de Sistemas Distribu&iacute;dos,
 <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
 <a href="http://www.ist.eu">Técnico Lisboa</a><br />
-Última actualização em 1 de março de 2016 por Miguel Pardal 
 </p>
 </div>
 

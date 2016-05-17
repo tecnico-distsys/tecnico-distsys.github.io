@@ -111,9 +111,9 @@
 					<li>No projecto servidor, crie uma nova classe com método <tt>main</tt>,
 						onde correrá o servidor. <br />No método <tt>main</tt> deverá:
 						<ol type="i">
-							<li>Instanciar um objecto remoto do tipo TTT, e</li>
-							<!--<li>Lançar um <tt>rmiregistry</tt> (serviço de nomes do RMI) e
-                    registar o objecto remoto nesse <tt>rmiregistry</tt>.--></li>
+							<li>Instanciar um objecto remoto do tipo TTT</li>
+							<li>Lançar um <tt>rmiregistry</tt> (serviço de nomes do RMI) e
+                    registar o objecto remoto nesse <tt>rmiregistry</tt></li>
 				</ol> Consulte o <a href="./ShapeListServer.java">exemplo da classe
 					ShapeListServer apresentado no livro</a> para ajuda.<br> Não se
 				esqueça de actualizar o ficheiro <tt>pom.xml</tt>.
@@ -133,12 +133,19 @@
 						onde corre o <tt>rmiregistry</tt> (respectivamente) onde foi
 						registado o objecto remoto e <tt>name</tt> é o nome que foi
 						atribuído ao objecto pelo servidor quando chamou <tt>rebind</tt>.
+					</li>
 						<!--pre class="prettyprint lang-xml">
     &lt;path id=&quot;project.classpath&quot;&gt;
         ...
         &lt;pathelement location=&quot;../game/build/ttt.jar&quot; /&gt;
     &lt;/path&gt;
 </pre-->
+					<li>Adicione o tratamento adequado às excepções lançadas quando acontece
+						algo inesperado numa invocação remota. (Algumas das excepções  que podem
+						ocorrer são: <tt>java.rmi.UnknownHostException</tt>, <tt>java.rmi.UnmarshalException</tt>,
+						<tt>java.rmi.MarshalException</tt>, <tt>java.rmi.RemoteException</tt> e
+						<tt>java.rmi.ConnectException</tt>)  
+					</li>
 				</ol>
 
 			</li>
@@ -206,7 +213,7 @@
 					<b>...</b>
 				</li>
 				<li>Para compilar: <tt>mvn compile</tt></li>
-				<li>O servidor deve executar com o seguinte comando: 
+				<li>O servidor deve executar com o seguinte comando:
 				<tt>./target/appassembler/bin/ttt-rmi-server</tt>
 				</li>
 				<li>O cliente deve executar com o comando: <tt>./target/appassembler/bin/ttt-rmi-client
@@ -253,22 +260,16 @@
 			</li>
 			<li>
 				O RMIRegistry é lançado internamente pelo servidor na mesma JVM (
-				<tt>LocateRegistry.createRegistry()</tt>). O RMI Registry é 
-				normalmente um serviço autónomo que corre numa máquina virtual Java (JVM) 
+				<tt>LocateRegistry.createRegistry()</tt>). O RMI Registry é
+				normalmente um serviço autónomo que corre numa máquina virtual Java (JVM)
 				separada do processo que instancia e solitica o registo de um objecto remoto.
 				Neste caso, é necessário que os ficheiros com as interfaces remotas
-				dos objectos a registar no Registry estejam disponíveis num URL definido 
-				no parâmetro "codebase" da JVM do processo servidor. <br />Um exemplo de uma aplicação
-				que usa RMI Registry como serviço autónomo pode ser consultado aqui:<br />
-				<a href="./hello-rmi-server.zip">servidor<img src="../_img/zip.png" alt="ZIP"></a>, 
+				dos objectos a registar no Registry estejam disponíveis num URL definido
+				no parâmetro "codebase" da JVM do processo servidor. <br />
+				Um exemplo que usa RMI Registry como serviço autónomo pode ser consultado aqui:<br />
+				<a href="./hello-rmi-server.zip">servidor<img src="../_img/zip.png" alt="ZIP"></a>,
 				<a href="./hello-rmi-client.zip">cliente<img src="../_img/zip.png"alt="ZIP"></a>.
 			</li>
-			<!--<li>O Registry é lançado pelo processo servidor na mesma JVM que este.
-	<br/>O RMI Registry é normalmente um serviço autónomo que corre numa máquina virtual Java (JVM) separada do processo que
-	instancia e solitica o registo de um objecto remoto (pelo contrário, no projecto acima o Registry é lançado pelo processo
-	servidor na mesma JVM que este). Neste caso, é necessário que os ficheiros com as interfaces remotas
-	dos objectos a registar no Registry estejam disponíveis num URL definido no parâmetro "codebase" da JVM do processo
-	servidor.</li>-->
 		</ol>
 		</p>
 	</div>
@@ -279,8 +280,7 @@
 		<p>
 			&copy; Docentes de Sistemas Distribu&iacute;dos, <a
 				href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-			<a href="http://www.ist.eu">Técnico Lisboa</a><br /> Última
-			actualização em 29 de Fevereiro de 2016 por David R. Matos
+			<a href="http://www.ist.eu">Técnico Lisboa</a><br />
 		</p>
 	</div>
 

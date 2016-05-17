@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>Apoio ao Projeto</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo" id="1">
+    <h1>Apoio ao Projeto</h1>
+</div>
+
+<div class="objectivos">
+
+    <h2>Objetivos de Projeto</h2>
+    <ul>
+        <li>Completar as funcionalidades dos serviços</li>
+        <li>Concluir testes de integração do <tt>broker-ws</tt></li>
+    </ul>
+</div>
+
+    <h2>Resumo das tarefas do projeto</h2>
+    <ul>
+        <li>Substituir <tt>cxx</tt> nas coordenadas dos módulos Maven pelo código do grupo: <br />
+        <small>substituir <tt>c</tt> por <tt>a</tt> (Alameda) ou <tt>t</tt> (Taguspark) e substituir <tt>xx</tt> por número do grupo com dois dígitos.<br />
+            Por exemplo, o grupo 99 do Taguspark deve substituir por <tt>t99</tt>.</small></li>
+        <li>Editar <tt>README.md</tt> com a identificação do grupo</li>
+        <li><b>Transportadoras</b></li>
+        <ol>
+            <li>Construir "esqueleto" do servidor</li>
+            <ul>
+                <li>Implementar operação <tt>ping()</tt></li>
+            </ul>
+            <li>Construir "esqueleto" do cliente</li>
+            <ul>
+                <li>Invocar a operação <tt>ping()</tt></li>
+            </ul>
+            <li>Implementar operações do serviço</li>
+            <ul>
+                <li>E respetivos testes unitários</li>
+            </ul>
+            <li>Concretizar registo e pesquisa no UDDI</li>
+            <ul>
+                <li>E respetivos testes unitários usando <i>mocks</i> para simular UDDI</li>
+            </ul>
+            <li>Testes de integração das operações principais</li>
+            <ul>
+                <li>Testar casos mais importantes</li>
+                <li>Não esquecendo casos com entradas incorretas: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc.</li>
+            </ul>
+            <li>Lançar e registar múltiplas instâncias de transportadoras: UpaTransporter1, UpaTransporter2, ...</li>
+            <li>Atualizar <tt>README.md</tt> com instruções</li>
+        </ol>
+        
+        <li><b>Corretor</b></li>
+        <ol>
+            <li>Construir "esqueleto" do servidor</li>
+            <ul>
+                <li>Implementar operação <tt>ping()</tt></li>
+            </ul>
+            <li>Construir "esqueleto" do cliente</li>
+            <ul>
+                <li>Invocar a operação <tt>ping()</tt></li>
+            </ul>
+            <li>Tornar o corretor cliente de transportadoras</li>
+            <ul>
+                <li>Sugestão: acrescentar dependência Maven para módulo <tt>transporter-ws-cli</tt></li>
+                <li>Sugestão: fazer a operação <tt>ping()</tt> do corretor invocar o <tt>ping()</tt> de cada transportadora</li>
+            </ul>
+            <li>Concretizar registo e pesquisa no UDDI</li>
+            <ul>
+                <li>E respetivos testes unitários usando <i>mocks</i> para simular UDDI</li>
+            </ul>
+            <li>Implementar operações do serviço</li>
+            <ul>
+                <li>E respetivos testes unitários usando <i>mocks</i> para simular Transporters, se necessário</li>
+            </ul>
+            <li>Testes de integração das operações principais</li>
+            <ul>
+                <li>Testar casos mais importantes - abrangem toda a solução em funcionamento</li>
+                <li>Mais uma vez, não esquecer os casos com entradas incorretas: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc.</li>
+            </ul>
+            <li>Finalizar instruções no <tt>README.md</tt></li>
+        </ol>
+    </ul>
+
+<hr />
+
+    <h2>Solução da Calculadora</h2>
+
+<p>
+    <a href="calc/calc.html">Calculadora</a>
+</p>
+    
+</div>
+
+<div class="indice">
+<p>&nbsp;</p>
+</div>
+
+<div class="corpo">
+<p>&nbsp;</p>
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

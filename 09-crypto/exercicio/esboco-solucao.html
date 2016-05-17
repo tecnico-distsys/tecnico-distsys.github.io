@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+        <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
+
+        <title>Esbo&ccedil;o de solu&ccedil;&atilde;o do exerc&iacute;cio de seguran&ccedil;a</title>
+
+        <meta name="Generator" content="EditPlus">
+        <meta name="Author" content="Miguel Pardal">
+        <meta name="Keywords" content="">
+        <meta name="Description" content="">
+
+    </head>
+
+    <body>
+        <div class="contexto">
+            <p>
+                <a href="../../index.html">Labs SD</a> &gt;
+                <a href="../index.html">Criptografia</a>
+            </p>
+        </div>
+
+        <div class="titulo">
+            <h1>Esbo&ccedil;o de solu&ccedil;&atilde;o de Seguran&ccedil;a</h1>
+        </div>
+
+        <div class="indice">
+        </div>
+
+        <hr />
+
+        <div class="corpo">
+            <h3>
+Assinatura digital de dados n&atilde;o estruturados
+            </h3>
+            <p>
+O mecanismo de assinatura numa sequ&ecirc;ncia de dados n&atilde;o estruturada (leia-se byte[])
+&eacute; o seguinte:
+                <ul>
+                    <li><b>Assinar</b> -
+calcular resumo,
+cifrar resumo com chave privada de quem assina;</li>
+                    <li><b>Verificar</b> -
+calcular novo resumo,
+decifra assinatura com chave p&uacute;blica de quem assinou,
+comparar resumos para confirmar que os dados n&atilde;o foram modificados.</li>
+                </ul>
+            </p>
+            <p>&nbsp;</p>
+
+            <h3>
+Documento electr&oacute;nico estruturado
+            </h3>
+            <p>
+Um documento electr&oacute;nico &eacute; mais do que uma sequ&ecirc;ncia de dados,
+pois pressup&otilde;e uma <b>estrutura</b>.
+            </p>
+            <p>
+A estrutura do documento cont&eacute;m meta-informa&ccedil;&atilde;o
+al&eacute;m dos dados.
+A meta-informa&ccedil;&atilde;o &eacute; informa&ccedil;&atilde;o sobre o pr&oacute;prio documento.
+            </p>
+            <p>
+Por exemplo:
+                <ul>
+                    <li>Data;</li>
+                    <li>...;</li>
+                    <li>Corpo;</li>
+                    <li>Assinatura.</li>
+                </ul>
+            </p>
+            <p>
+Existe um formato can&oacute;nico em que toda a informa&ccedil;&atilde;o
+contida no documento &eacute; representada por uma sequ&ecirc;ncia de dados
+bem definida.
+            </p>
+            <p>&nbsp;</p>
+
+            <h3>
+Assinatura digital de dados estruturados
+            </h3>
+            <p>
+O mecanismo de assinatura num documento electr&oacute;nico estruturado
+&eacute; o seguinte:
+                <ul>
+                    <li><b>Assinar</b> -
+converter o documento para formato can&oacute;nico
+(sem incluir o cont&eacute;udo do campo assinatura),
+calcular o resumo do documento em formato can&oacute;nico,
+cifrar resumo com chave privada de quem assina,
+preencher o campo assinatura com o resultado;
+                    </li>
+                    <li><b>Verificar</b> -
+converter o documento assinado para formato can&oacute;nico
+(remover temporariamente o conte&uacute;do do campo assinatura),
+calcular o novo resumo do documento,
+decifrar assinatura com chave p&uacute;blica de quem assinou,
+comparar resumos para confirmar que os dados n&atilde;o foram modificados.</li>
+                </ul>
+            </p>
+            <p>&nbsp;</p>
+
+            <h3>
+Certificados digitais de chave p&uacute;blica
+            </h3>
+            <p>
+O par&acirc;metro fundamental na verifica&ccedil;&atilde;o de assinatura &eacute;
+a <b>chave p&uacute;blica</b> de quem assinou.
+Para que se possa confiar que as chaves p&uacute;blicas pertencem a uma dada entidade,
+s&atilde;o distribu&iacute;das num certificado digital emitido por uma autoridade certificadora.
+            </p>
+            <p>
+O certificado digital de chave p&uacute;blica &eacute; um documento electr&oacute;nico estruturado
+contendo a chave p&uacute;blica, meta-informa&ccedil;&atilde;o e a assinatura da autoridade que o emite.
+            </p>
+            <p>
+Para confiar no certificado &eacute; necess&aacute;rio confiar na autoridade
+e possuir a sua chave p&uacute;blica,
+que se pode designar por <b>raiz da confian&ccedil;a</b> (<i>trust root</i>).
+            </p>
+            <p>&nbsp;</p>
+
+        </div>
+
+		<hr />
+
+        <div class="rodape">
+            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UTL</p>
+        </div>
+
+	</body>
+</html>

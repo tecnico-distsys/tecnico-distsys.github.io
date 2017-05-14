@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- http://maven.apache.org/pom.html#Quick_Overview -->
+
+    <!-- Please replace 'CXX' below with
+        your C (campus) with A (Alameda) / T (Tagus); and
+        your group number with two digits.
+        Then delete this comment. -->
+    <groupId>org.komparator.CXX</groupId>
+    <artifactId>komparator</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!-- specify modules to include in the build reactor -->
+        <module>ca-ws-cli</module>
+        <module>cc-ws-cli</module>
+
+        <module>security</module>
+
+        <module>supplier-ws</module>
+        <module>supplier-ws-cli</module>
+
+        <module>mediator-ws</module>
+        <module>mediator-ws-cli</module>
+    </modules>
+
+</project>

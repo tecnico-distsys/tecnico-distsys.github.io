@@ -63,7 +63,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <ul>
         <li>Obter</li>
         <ul>
-            <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8u72</a></li>
+            <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8u121</a></li>
         </ul>
         <li>Instalar</li>
         <li>Configurar</li>
@@ -81,8 +81,8 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <ul>
         <li>Obter</li>
         <ul>
-            <li><a href="http://maven.apache.org/download.cgi">MVN 3.3.3</a>
-            <small>(preferência por esta versão por ser a utilizada internamente no Eclipse Mars.1)</small></li>
+            <li><a href="http://maven.apache.org/download.cgi">MVN 3.3.9</a>
+            <small>(preferência por esta versão por ser a utilizada internamente no Eclipse recomendado)</small></li>
         </ul>
         <li>Instalar</li>
         <!--ul>
@@ -119,9 +119,9 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <b>Eclipse for Java Enterprise Edition, Eclipse JEE</b><br />
     Ambiente integrado de desenvolvimento para a plataforma Java, versão empresarial</li>
     <ul>
-        <li>Obter o arquivo que contém o executável de Eclipse Mars e ficheiros associados:</li>
+        <li>Obter o arquivo que contém o executável de Eclipse e ficheiros associados:</li>
         <ul>
-            <li><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/mars1">Eclipse JEE 4.5.1 - Mars Service Release 1</a>
+            <li><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon2">Eclipse JEE  ‎4.6.2 - Neon.2</a>
 			<small></small></li>
 			<ul>
 				<li>Atenção: se tem instalado no seu sistema operativo o JDK 32 bits, deve obter o Eclipse 32 bits; se instalou o JDK 64 bits, deve obter o Eclipse 64 bits.</li>
@@ -138,13 +138,13 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         </ul>
         <li>Configurar:</li>
         <ul>
-            <li>Especificar o JDK como Standard VM</li>
+            <li>Especificar o JDK como Standard VM (em vez do JRE)</li>
 			<b>Nota: só deverá ser necessário este passo em Windows.</b>
 			Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre
             <ul>
                 <li>Window -> Preferences -> Java -> Installed JREs -> Add...</li>
                 <li>Indicar o caminho até ao diretório do JDK:
-                    ex. <tt>C:\Java\jdk1.8.0_72</tt></li>
+                    ex. <tt>C:\Java\jdk1.8.0_121</tt></li>
                 <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
             </ul>
             <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
@@ -153,8 +153,9 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                 <li>Window -> Preferences -> Maven -> Discovery e clicar em "Open catalog".</li>
                 <li>Seleccionar:</li>
                 <ul>
-                    <li>m2e connector for jaxws-maven-plugin</li>
+                    <li>m2e connector for jaxws-maven-plugin</li><!-- if not installed, handlers config file may not be found on Run As, Maven, exec:java<!-->
                     <li>m2e connector for maven-dependency-plugin</li>
+                    <li>m2e connector for maven-remote-resources-plugin</li>
 					<li>m2e connector for org.codehaus.mojo:jaxb2-maven-plugin and org.jvnet.jaxb2.maven2:maven-jaxb2-plugin</li>
                     <li>m2e-apt</li>
                     <li>m2e-egit</li>
@@ -174,29 +175,29 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <ul>
         <li>Obter</li>
         <ul>
-            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.2/">jUDDI 3.3.2 distro</a></li-->
-            <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2015-2016/download/juddi-3.3.2_tomcat-7.0.64_9090.zip">jUDDI 3.3.2</a> <small>(configured for port <b>9090</b>)</small></li>
+            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.3/">jUDDI 3.3.3 distro</a></li-->
+            <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2016-2017/download/juddi-3.3.3_tomcat-7.0.64_9090.zip">jUDDI 3.3.3</a> <small>(configured for port <b>9090</b>)</small></li>
         </ul>
         <li>Instalar</li>
         <ul>
-            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.2/readme.txt">Instruções de instalação</a></li-->
-            <!--li>Definir variável de ambiente CATALINA_HOME com o caminho para a pasta de instalação terminada em /juddi-distro-3.3.2/juddi-tomcat-3.3.2</li>
+            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.3/readme.txt">Instruções de instalação</a></li-->
+            <!--li>Definir variável de ambiente CATALINA_HOME com o caminho para a pasta de instalação terminada em /juddi-distro-3.3.3/juddi-tomcat-3.3.3</li>
             <li>Acrescentar CATALINA_HOME/bin à variável de ambiente PATH</li-->
             <li>Em Linux ou Mac,
                 tornar os <i>scripts</i> de lançamento executáveis:<br />
-                <tt>chmod +x juddi-3.3.2_tomcat-7.0.64_9090/bin/*.sh</tt>
+                <tt>chmod +x juddi-3.3.3_tomcat-7.0.64_9090/bin/*.sh</tt>
             <!--li><b>IMPORTANTE</b>: Configurar o jUDDI para escutar no porto <b>9090</b></li>
             <ul>
-                <li>Abrir o ficheiro '...\juddi-distro-3.3.2\juddi-tomcat-3.3.2\conf\server.xml' e alterar a linha 71 para:<br>
+                <li>Abrir o ficheiro '...\juddi-distro-3.3.3\juddi-tomcat-3.3.3\conf\server.xml' e alterar a linha 71 para:<br>
                 <tt>&lt;Connector port="9090" protocol="HTTP/1.1"</tt></li>
                 <li>Substituir ocorrências de 8080 por 9090 nos ficheiros</li>
                 <ul>
-                    <li>juddi-3.3.2_tomcat-7.0.64_9090/webapps/juddiv3/WEB-INF/classes/juddiv3.xml</li>
-                    <li>juddi-3.3.2_tomcat-7.0.64_9090/webapps/juddiv3/WEB-INF/classes/META-INF/uddi.xml</li>
+                    <li>juddi-3.3.3_tomcat-7.0.64_9090/webapps/juddiv3/WEB-INF/classes/juddiv3.xml</li>
+                    <li>juddi-3.3.3_tomcat-7.0.64_9090/webapps/juddiv3/WEB-INF/classes/META-INF/uddi.xml</li>
                 </ul>
             </ul-->
             <li>Para lançar o servidor,
-                basta executar o seguinte comando na pasta <tt>juddi-3.3.2_tomcat-7.0.64_9090/bin</tt>:</li>
+                basta executar o seguinte comando na pasta <tt>juddi-3.3.3_tomcat-7.0.64_9090/bin</tt>:</li>
                 <ul>
                     <li><tt>startup.sh</tt> (Linux e Mac)</li>
                     <li><tt>startup.bat</tt> (Windows)</li>

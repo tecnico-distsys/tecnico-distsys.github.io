@@ -40,7 +40,7 @@ Toda a partilha de código para trabalho deve ser feita através do <a href="http:
 <a href="http://github.com"><img src="githuboctocat.jpeg" height="122" /></a>
 </p>
 <p>
-Cada membro da equipa deve <a href="https://help.github.com/articles/how-do-i-set-up-my-profile-picture/">atualizar a sua <b>foto</b></a>
+Cada membro da equipa deve <a href="https://help.github.com/articles/setting-your-profile-picture/">atualizar a sua <b>foto</b></a>
 para facilitar a identificação e comunicação.
 </p>
 <p>
@@ -59,11 +59,7 @@ Nota importante: O grupo é responsável por fazer <i>backup</i> regular dos fiche
 O repositório de cada grupo está disponível no GitHub em:<br />
 
 <pre>
-https://github.com/tecnico-distsys/C_XX-project/
-</pre>
-ou em:
-<pre>
-https://github.com/tecnico-softeng-distsys-2015/C_XX-project/
+https://github.com/tecnico-distsys/CXX-Komparator/
 </pre>
 onde:
 <ul>
@@ -71,15 +67,18 @@ onde:
         <tt>C</tt> representa o campus (A para Alameda e T para Taguspark)
     </li>
     <li>
-        <tt>XX</tt> representa o número do grupo de SD atribuído pelo Fénix
+        <tt>XX</tt> representa o número do grupo de SD atribuído pelo Fénix, 
+        sempre com dois dígitos
     </li>
 </ul>
 </p>
 
+<hr />
+
 <p>
 A estrutura pretendida para os projetos no repositório é a seguinte:
 <pre class="prettyprint">
-    C_XX-project/
+    CXX-Komparator/
     |
     |---...-ws/
     |   |---pom.xml
@@ -88,7 +87,6 @@ A estrutura pretendida para os projetos no repositório é a seguinte:
     |---...ws-cli/
     |   |---pom.xml
     |   |---...
-    |
     .
     .
     .
@@ -97,44 +95,25 @@ A estrutura pretendida para os projetos no repositório é a seguinte:
 </pre>
 </p>
 <p>
-Deve existir um ficheiro <tt>README.md</tt> contendo instruções de instalação dos diferentes servidores.
+Deve existir um ficheiro <tt>README.md</tt> contendo a identificação do grupo.
+Devem editar e preencher.
+<!-- instruções de instalação dos diferentes servidores.-->
 </p>
 
 <p>
-Para configurar os ficheiros a ignorar devem definir o ficheiro
-<b>.gitignore</b>:<br/>
-(<a href="http://git-scm.com/docs/gitignore">sintaxe descrita no manual</a>)
-<pre>
-*.class 
-
-# Mobile Tools for Java (J2ME) 
-.mtj.tmp/ 
-
-# Package Files # 
-*.jar 
-*.war 
-*.ear 
- 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml 
-hs_err_pid* 
-
-# maven target (build) folders 
-target/ 
-
-</pre>
+Devem confirmar se o ficheiro
+<b><a href=".gitignore">.gitignore</a></b> está a ignorar os ficheiros que não interessam
+(a <a href="http://git-scm.com/docs/gitignore">sintaxe</a> deste ficheiro está descrita no manual).
 </p>
 
 <hr />
 
 <p>
 Para trabalhar,
-devem obter uma cópia local do repositório:
+cada membro do grupo 
+deve obter uma cópia local do repositório:
 <pre class="prettyprint lang-sh">
-$ git clone https://github.com/tecnico-distsys/C_XX-project/
-</pre>
-ou:
-<pre class="prettyprint lang-sh">
-$ git clone https://github.com/tecnico-softeng-distsys-2015/C_XX-project/
+$ git clone https://github.com/tecnico-distsys/CXX-Komparator/
 </pre>
 </p>
 
@@ -142,7 +121,7 @@ Fazer os <i>commits</i> locais e depois "empurrar" para o GitHub, por exemplo:
 <pre class="prettyprint lang-sh">
 $ git status
 ...
-$ git commit -m "Closed issue #22"
+$ git commit -m "Close issue #22"
 ...
 $ git push
 
@@ -150,13 +129,13 @@ $ git push
 
 Em alternativa à linha de comandos, 
 o Eclipse suporta as principais funcionalidades de forma simplificada 
-(ver as opções do menu <b>Team</b>).
+através do menu <b>Team</b>.
 </p>
 
 <p>&nbsp;</p>
 <hr />
 
-<h2 id="SD_R1">Primeira entrega do Projeto</h2>
+<h2 id="SD_P1">Primeira entrega do Projeto</h2>
 
 <p>
 Para os grupos que usam GitHub para trabalhar (recomendado),
@@ -166,40 +145,40 @@ a entrega das várias partes do projeto é feita através do repositório.
 A cada parte do projecto a entregar está associada uma TAG.
 Cada grupo tem que marcar o código que representa cada entrega a realizar com uma TAG específica.
 </p>
-
 <p>
-Por exemplo,
-supondo que o repositório do GitHub já contém os <i>commits</i> 
-correspondentes à <b>primeira parte do projecto</b>:
-</p>
-<p>
-O grupo deve criar a TAG <b>SD_R1</b>:<br />
+O grupo deve criar a TAG <b>SD_P1</b>:<br />
 <pre class="prettyprint lang-sh">
-$ git tag SD_R1
-$ git push origin SD_R1
+$ git tag SD_P1
+$ git push origin SD_P1
 </pre>
 </p>
 
 <p>
 Podem obter a versão entregue, fazendo:
 <pre class="prettyprint lang-sh">
-$ git clone -b SD_R1 https://github.com/tecnico-distsys/C_XX-project/
+$ git clone -b SD_P1 https://github.com/tecnico-distsys/CXX-Komparator/
 </pre>
-ou:
-<pre class="prettyprint lang-sh">
-$ git clone -b SD_R1 https://github.com/tecnico-softeng-distsys-2015/C_XX-project/
-</pre>
-</p>
 
-<p>&nbsp;</p>
-<hr />
+<p><small>&nbsp;</small></p>
 
-<h2 id="SD_R2">Segunda entrega do Projeto</h2>
+<h2 id="SD_P2">Segunda entrega do Projeto</h2>
 
 <p>
 Para a <b>segunda parte do projecto</b>,
 o processo é idêntico ao da primeira,
-mas o nome da TAG deve ser <b>SD_R2</b>.
+mas o nome da TAG deve ser <b>SD_P2</b>.
+</p>
+
+<h2 id="SD_P3">Terceira entrega do Projeto</h2>
+
+<p>
+Para a <b>terceira parte</b>, a TAG deve ser <b>SD_P3</b>.
+</p>
+
+<h2 id="SD_P4">Quarta entrega do Projeto</h2>
+
+<p>
+Para a <b>quarta parte</b>, a TAG deve ser <b>SD_P4</b>.
 </p>
 
 <p>&nbsp;</p>
@@ -225,6 +204,4 @@ Atenção: a entrega via Fénix sobrepõe-se a uma entrega via GitHub.
 </p>
 </div>
 
-
 </body></html>
-

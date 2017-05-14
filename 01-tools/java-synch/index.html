@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css">
+
+    <link href="../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../_prettify/prettify.js"></script>
+
+    <title>Java synchronization</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../../index.html">Labs SD</a> &gt;
+        <a href="../index.html">Ferramentas</a>
+    </p>
+</div>
+
+<div class="titulo" id="1">
+</div>
+
+<!--div class="objectivos">
+</div-->
+
+<!--div class="indice">
+<p>&nbsp;</p>
+</div-->
+
+<div class="corpo">
+
+<h2>Concorrência e Sincronização</h2>
+
+<p>
+<b>Concorrência</b>
+</p>
+Com a concorrência procura-se o aumento do desempenho de uma aplicação através da divisão de trabalho 
+por várias tarefas que se executam em simultâneo,
+tirando partido de eventuais múltiplos processadores.
+</p>
+<p>
+<b>Sincronização</b>
+</p>
+Na partilha de dados entre processadores (ou tarefas) 
+é necessário garantir que os dados estão coerentes aquando da sua escrita.<br />
+Caso a sincronização não seja implementada, 
+pode ocorrer interferência entre tarefas que causam 
+erros de consistência de dados em memória.
+</p>
+<p>
+Por outro lado, 
+a presença de mecanismos de sincronização pode originar contenção 
+quando duas ou mais tarefas tentam aceder ao mesmo recurso em simultâneo.<br />
+Se apenas existir leitura de dados partilhados por parte das tarefas concorrentes, 
+estes problemas não se colocam.
+</p>
+
+<p>&nbsp;</p>
+<h3>Sincronização em Java</h3>
+<p>
+Cada objeto Java tem um <b>trinco lógico</b> próprio,
+que pode ser adquirido através da primitiva <tt>synchronize</tt>.
+</p>
+<p>
+As seguintes palavras chave da linguagem são importantes:
+</p>
+<ul>
+    <li>
+    <tt>synchronized</tt>: 
+    é aplicada a métodos do objeto e 
+    oferece um mecanismo de exclusão mútua a um recurso partilhado, 
+    que previne a reordenação do código pelo compilador.<br />
+    Um método sincronizado adquire o trinco do objeto no início de execução e
+    liberta-o no fim.
+    <!--Em particular, 
+    os métodos do construtor não podem ser sincronizados.-->
+    </li>
+    <li>
+    <tt>volatile</tt>: 
+    é aplicada a variáveis para indicar ao compilador que o valor da variável pode ser alterado concorrentemente.<br />
+    Uma variável volátil deve ser sempre obtida a partir da memória principal sem usar o valor de uma <i>cache</i> local.
+    </li>
+</ul>
+
+<p>
+O seguinte exemplo mostra uma utilização da sincronização em Java:
+</p>
+<pre class="prettyprint lang-java">
+public class MySynchronizedCounter {
+    private volatile int c = 0;
+
+    public synchronized void increment() {
+        c++;
+    }
+
+    public synchronized void decrement() {
+        c--;
+    }
+
+    public synchronized int value() {
+        return c;
+    }
+}
+</pre> 
+<p>
+Os métodos <tt>increment()</tt>, 
+<tt>decrement()</tt> e 
+<tt>value()</tt> da classe <tt>MySynchronizedCounter</tt> estão sincronizados.
+Isto significa que, caso um dos 3 métodos seja invocado, o trinco do objeto é adquirido, 
+e se houver outra tarefa a tentar aceder a qualquer um deles, 
+ficará bloqueada à espera que o recurso/método seja libertado pela primeira invocação.
+</p>
+<p>
+Também é possível usar o <tt>synchronize</tt> para adquirir o trinco apenas numa parte do código.
+</p>
+<pre class="prettyprint lang-java">
+    // acquire lock of object referenced by 'this'
+    synchronize (this) {
+
+        // access shared variables protected by lock
+
+    }
+    // release lock
+</pre> 
+
+<p>&nbsp;</p>
+<h3>Coleções de objetos no contexto de múltiplas tarefas</h3>
+<p>
+As coleções são objetos que armazenam vários outros objetos.
+Algumas das coleções mais conhecidas no Java são:
+<tt>ArrayList</tt>, <tt>LinkedList</tt>, <tt>HashMap</tt>, <tt>HashSet</tt>, <tt>TreeMap</tt>, <tt>TreeSet</tt>, etc.<br />
+Cada coleção implementa uma interface que dita o tipo de acesso esperado:
+</p>
+<ul>
+    <li>
+    <tt>List</tt> é uma lista (preserva a ordem e pode haver repetidos);
+    </li>
+    <li>
+    <tt>Set</tt> é um conjunto (sem ordem nem repetidos);
+    </li>
+    <li>
+    <tt>Map</tt> estabelece uma associação entre chave e valor;
+    </li>
+    <li>
+    etc.
+    </li>
+</ul>    
+<p>
+Por omissão, 
+as coleções não são sincronizadas pois este mecanismo retira desempenho ao programa.
+<!--Como a grande maioria das classes corre em aplicações com uma tarefa, 
+as novas coleções de classes (List, Set, Map, etc.) não suportam esse mecanismo.</p>-->
+</p>
+
+<p>
+Para situações em que é necessário sincronizar os acessos às coleções,
+existem versões sincronizadas que apenas permitem um acesso de cada vez.<br />
+Para construir uma coleção sincronizada usa-se um método especial da classe <tt>Collections</tt>,
+que cria a nova coleção "embrulhando" uma coleção do mesmo tipo:
+</p>
+<pre class="prettyprint lang-java">
+    
+    List synchronizedList = Collections.synchronizedList(regularList);
+    
+</pre> 
+
+<p>
+Posteriormente, foram acrescentadas ao Java coleções concorrentes 
+(<i>Concurrent Collections</i> no pacote <tt>java.util.concurrent</tt>)
+que são desenhadas para acesso concorrente e 
+que usam mecanismos “inteligentes” de bloqueio (parcial) da coleção.
+Exemplos destas coleções concorrentes são:
+<tt>ConcurrentHashMap</tt>, <tt>CopyOnWriteArrayList</tt>, e <tt>CopyOnWriteHashSet</tt>.<br />
+No exemplo seguinte constroí-se um mapa optimizado para acessos concorrentes:
+</p>
+<pre class="prettyprint lang-java">
+
+    Map&lt;String,Object&gt; map = new ConcurrentHashMap&lt;&gt;();
+
+
+</pre> 
+
+<!--
+Existem 3 tipos de coleções em Java: 
+<p>- Java 1.0: Evitar usar num contexto multi-threaded</p>
+<p>- Java 1.2: Permite as classes serem sincronizáveis através do método Collections.synchronizedX()</p>
+<p>- Java >5.0: suporte para coleções concorrentes</p>
+-->
+
+<p>&nbsp;</p>
+<hr/>
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

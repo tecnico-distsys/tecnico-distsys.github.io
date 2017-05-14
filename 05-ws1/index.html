@@ -8,7 +8,7 @@
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="../_prettify/prettify.js"></script>
 
-    <title>Web Services Implementation-First</title>
+    <title>Web Services Contract-First</title>
 </head>
 
 <body onload="prettyPrint()">
@@ -20,26 +20,30 @@
 </div>
 
 <div class="titulo" id="1">
-    <h1>Web Services Implementation-First</h1>
+    <h1>Web Services Contract-First</h1>
 </div>
 
 <div class="objectivos">
+
     <h2>Objetivos</h2>
     <ul>
-        <li>Desenvolver Web Services em Java usando a abordagem <i>implementation-first</i></li>
-        <li>Publicar e pesquisar Web Services no servidor de nomes jUDDI</li>
+        <li>Desenvolver Web Services usando a abordagem <i>contract-first</i></li>
+    </ul>
+
+    <h3>Projeto:</h3>
+    <ul>
+        <li>Construir <tt>supplier-ws</tt> a partir do contrato WSDL</li>
+        <li>Concretizar as operações <tt>searchProducts</tt> e <tt>buyProduct</tt></li>
+        <li>Testar as operações a partir do <tt>supplier-ws-cli</tt></li>
     </ul>
 </div>
 
 <div class="indice">
-
 </div>
-
-<p>&nbsp;</p>
 
 <div class="corpo">
 
-<h1>Web Services</h1>
+<h2>Web Services</h2>
 
 <p>
 Um serviço é uma funcionalidade de um sistema de informação que pode ser invocada remotamente através da rede.<br />
@@ -56,25 +60,50 @@ XSD (<i>XML Schema Definition</i>),
 respetivamente.
 </p>
 
+
+<h3>Web Service contract</h3>
+
 <p>
-Para a publicação e pesquisa de <i>Web Services</i>
-usa-se um servidor de nomes que implementa a norma
-UDDI (<i>Universal Description, Discovery and Integration</i>).
-No Sun RPC usa-se o <tt>rpcbind</tt>,
-no Java RMI usa-se o <tt>rmiregistry</tt>,
-nos Web Services usa-se o <tt>jUDDI</tt> (<i>Java UDDI</i>).
+Os <i>Web Services</i> também têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
+A <b>WSDL</b> permite especificar a interface funcional (<i>port type</i>) 
+- operações com entradas, saídas e erros -
+e também a vinculação (<i>binding</i>) com tecnologias concretas 
+- habitualmente SOAP sobre HTTP.<br />
+A WSDL é baseada em XML de forma a ser independente da plataforma e
+usa XSD para definir o detalhe dos tipos de dados de entrada e saída (e erros) em cada operação.
 </p>
 
-
-Para uma explicação mais detalhada destas tecnologias, ver:
+<p>
+Exemplo:
 <ul>
-    <li>Livro de Couloris, Capítulo 9</li>
-    <li><a href="uddi/index.html">UDDI</a></li>
+<li><a href="ping/Ping.wsdl">Ping.wsdl</a> - 
+os comentários numerados explicam as diferentes seções do documento:<br />
+<i>namespaces</i>,
+<i>service definition</i>,
+<i>binding definitions</i>,
+<i>port type definitions</i>,
+<i>message definitions</i> e
+<i>type definitions</i>.
+</li>
+</ul>
+</p>
+
+Mais informação:
+<ul>
+    <li>        
+<a href="wsdl/index.html">WSDL</a></li>
+    </li>
+    <li>
+<a href="xml/index.html">XML</a> e 
+<a href="xsd/index.html">XSD</a>
+    </li>
+    <li>
+    Livro Couloris, Capítulo 9
+    </li>
 </ul>
 
-<p>&nbsp;</p>
 
-<h2>JAX</h2>
+<h3>Java API for XML Web Services</h3>
 
 <p>
 As bibliotecas JAX (<i>Java API for XML</i>) são a família de bibliotecas da plataforma Java que lidam com tecnologias baseadas em XML,
@@ -90,487 +119,280 @@ WSDL e XSD para descrição.
 </p>
 
 <p>
-Para comunicar com servidores UDDI,
-existe a biblioteca JAX-R (Java API for XML Registries),
-que permite publicar, pesquisar e eliminar registos de <i>Web Services</i>.
+É possível implementar Web Services partindo de um contrato WSDL (e XSD) já existente.
+Esta abordagem ao desenvolvimento de serviços é chamada <i>contract-first</i>.
 </p>
 
-Para uma explicação mais detalhada destas tecnologias, ver:
+Mais informação:
+<!--ul>
+    <li--><a href="jaxws/index.html">JAX-WS</a><!--/li>
+</ul-->
+
+<p>
+Exemplo Ping Web Service:
 <ul>
-    <li><a href="jaxws/index.html">JAX-WS</a></li>
-    <li><a href="jaxr/index.html">JAX-R</a></li>
+    <li>
+    <a href="ping/ping-ws.zip">server
+    <img src="../_img/zip.png" alt="ZIP" ></a>
+    <a href="ping/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>
+    </li>
+    
+    <li>
+    <a href="ping/ping-ws-cli.zip">client
+    <img src="../_img/zip.png" alt="ZIP" ></a>
+    <a href="ping/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>
+    </li>
 </ul>
-
-<p>
-O esquema de dados do UDDI é consideravelmente mais rico do que o habitual num servidor de nomes,
-com diversas entidades e relações,
-que permitem guardar informação de negócio sobre a organização e os seus serviços.
-Como consequência, o JAX-R é uma biblioteca verbosa,
-que obriga a escrever muitas linhas de código para realizar as tarefas mais habituais de registo e de pesquisa.
 </p>
 
-<p>
-Para tornar a utilização do UDDI mais simples
-foi criada a biblioteca <tt>UDDINaming</tt> que simplifica o esquema de dados para suportar apenas:<br />
-1 organização, 1 serviço e 1 implementação.<br />
-Esta biblioteca,
-cujo código está disponível para consulta e modificação,
-torna o registo e pesquisa de serviços mais sucinto.
-</p>
-
-<p>&nbsp;</p>
-
-<hr />
+<p><small>
+Nota: As pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
+</small></p>
 
 
-<h1>Exemplo</h1>
+
+<h3>JUnit Integration Tests</h3>
 
 <p>
-Vamos então ver um exemplo de um <i>Web Service</i> feito em Java,
-que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.
+Para garantir a qualidade do código do Web Service,
+é necessário produzir testes de integração (<tt>IT</tt>)
+que verificam o comportamento de todo o sistema através de invocações <i>remotas</i>.
 </p>
 <p>
-<small><b>Nota: As pastas que contêm o código não devem ter espaços no seu caminho.</b></small>
-</p>
-
-<ol>
-<li><b>jUDDI</b></li>
-    <ul>
-        <li>
-O servidor de nomes a utilizar é o jUDDI (<i>Java UDDI</i>),
-que faz parte do <a href="../software/index.html">software</a> que se pediu para instalar.
-        </li>
-        <li>
-Para lançar o servidor,
-basta executar o seguinte comando na pasta <tt>juddi-.../bin</tt>:</li>
-            <ul>
-                <li><tt>startup.sh</tt> (Linux e Mac)</li>
-                <li><tt>startup.bat</tt> (Windows)</li>
-            </ul>
-        <li>
-Para confirmar funcionamento,
-aceder à página de índice do jUDDI, 
-que dá também acesso à interface de administração<br />
-<a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a>
-        </li>
-            <ul>
-                <li>utilizador:senha <tt>uddiadmin:da_password1</tt></li>
-            </ul>
-    </ul>
-
-<li><b>UDDINaming</b></li>
-    <ul>
-        <li>
-Obter o código da biblioteca <tt>UDDINaming</tt>:
-        </li>
-        <ul>
-            <li>
-<a href="uddi-naming.zip">Biblioteca uddi-naming
-<img src="../_img/zip.png" alt="ZIP"></a>
-            </li>
-            <li>
-Consultar <a href="uddinaming-apidocs/index.html">javadoc</a>
-        </ul>
-        <li>
-Instalar o módulo no repositório Maven local:
-        <ul>
-            <li>
-<tt>cd uddi-naming</tt>
-            </li>
-            <li>
-<tt>mvn install</tt>
-            </li>
-        </ul>
-        </li>
-        <li>
-A biblioteca inclui um teste de integração 
-(IT - <i>Integration Test</i>)<br />
-que verifica o funcionamento correto do jUDDI antes de instalar o módulo.
-        </li>
-        <li>
-Uma vez instalado o módulo no repositório Maven local,
-a biblioteca pode ser usada como dependência num <tt>pom.xml</tt>:
-<pre class="prettyprint lang-xml">
-    ...
-    &lt;!-- UDDI Naming --&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;pt.ulisboa.tecnico.sdis&lt;/groupId&gt;
-        &lt;artifactId&gt;uddi-naming&lt;/artifactId&gt;
-        &lt;version&gt;1.1.1&lt;/version&gt;
-    &lt;/dependency&gt;
-    ...
-</pre>
-        </li>
-    </ul>
-
-<li><b>Servidor JAX-WS</b></li>
-    <p>
-É possível implementar Web Services partindo de código Java já existente.
-Esta abordagem de desenvolvimento designa-se por <i>implementation-first</i>.
-Para transformar um tipo Java num <i>Web Service</i>,
-basta usar a anotação <tt>@WebService</tt>.
-As descrições em WSDL e XSD são geradas automaticamente quando o servidor se executa.
-    </p>
-
-    <ul>
-        <li>
-Obter o código do servidor:
-        </li>
-        <ul>
-            <li>
-<a href="hello-ws_juddi.zip">Hello World Web Service (Implementation-First)
-<img src="../_img/zip.png" alt="ZIP" ></a>
-            </li>
-        </ul>
-        <li>
-Construir o servidor:
-        </li>
-        <ul>
-            <li>
-<tt>cd hello-ws_juddi</tt>
-            </li>
-            <li>
-<tt>mvn compile</tt>
-            </li>
-        </ul>
-        <li>
-Executar o servidor:
-        </li>
-        <ul>
-            <li>
-<tt>mvn exec:java</tt><br />
-O nome da classe a executar e 
-os argumentos estão definidos no <tt>pom.xml</tt><br />
-O servidor deve executar sem erros,
-disponibilizando o <i>endpoint address</i> e
-registando-se no UDDI.
-            </li>
-            <li>
-Confirmar que o servidor está à espera de pedidos e
-consultar o contrato que é gerado automaticamente:
-            <ul>
-                <li>
-<a href="http://localhost:8080/hello-ws/endpoint?wsdl">http://localhost:8080/hello-ws/endpoint?wsdl</a>
-                </li>
-                <ul>
-                    <li>
-<a href="http://localhost:8080/hello-ws/endpoint?xsd=1">http://localhost:8080/hello-ws/endpoint?xsd=1</a>
-                    </li>
-                </ul>
-            </ul>
-        </ul>
-    </ul>
-
-<li><b>Cliente JAX-WS</b></li>
-    <ul>
-        <li>
-Obter o código do cliente:
-        </li>
-        <ul>
-            <li>
-<a href="hello-ws-cli_juddi.zip">Web Service client
-<img src="../_img/zip.png" alt="ZIP" ></a>
-            </li>
-        </ul>
-        <li>
-Construir o cliente:
-        </li>
-        <ul>
-            <li>
-<tt>cd hello-ws-cli_juddi</tt>
-            </li>
-            <li>
-<tt>mvn compile</tt><br />
-Executa previamente <tt>generate-sources</tt> onde
-o cliente obtém o contrato WSDL a partir do servidor e<br />
-usa a ferramenta <tt>wsimport</tt> para gerar as classes de invocação do serviço
-(em <tt>target/</tt>)<br />
-            </li>
-        </ul>
-        <li>
-Executar o cliente:
-        </li>
-        <ul>
-            <li>
-<tt>mvn exec:java</tt><br />
-O cliente deve executar sem erros,
-consultando o UDDI para descobrir o endereço do servidor,<br />
-e fazendo uma invocação remota.
-            </li>
-        </ul>
-    </ul>
-</ol>
-
-<h2>Resumo</h2>
-<p>
-Primeiro foi lançado o servidor de nomes jUDDI.<br />
-Depois foi instalada a biblioteca UDDINaming no repositório Maven local,
-que testa também o funcionamento do servidor jUDDI.<br />
-Em seguida,
-foi construído e iniciado o servidor,
-que se regista no jUDDI e 
-fica à espera de pedidos no <i>endpoint address</i>.<br />
-Finalmente,
-o cliente obtém o WSDL a partir do servidor e 
-gera o código de invocação que permite depois fazer invocações remotas.
+O JUnit pode também ser usado para fazer testes de integração.
 </p>
 <p>
-Depois de testado o Exemplo,
-passar ao Exercício.
+No contexto dos Web Services, 
+os testes de integração são um programa cliente (<tt>ws-cli</tt>) que faz invocações remotas a um programa servidor (<tt>ws</tt>),
+verificando o contrato das operações remotas definidas no WSDL.<br />
+Assume-se que todos os Web Services já foram previamente lançados antes de correr os testes de integração.
 </p>
 
-<p>&nbsp;</p>
+Mais informação:
+<!--ul>
+    <li--><a href="junit-it/index.html">JUnit Integration Tests</a><!--/li>
+</ul-->
 
+<p>
+&nbsp;
+</p>
 <hr />
 
 <h1>Exercício</h1>
+<h2>Primeira parte do projeto (P1)</h2>
 
 <p>
-Partindo do exemplo acima,
-foi construído um novo Web Service Tic Tac Toe (jogo do galo).<br />
-<img src="ttt.png" alt="Tic Tac Toe" height="75" />
+O objectivo é construir o Web Service <i>contract-first</i> da primeira parte do projeto.
 </p>
-<ul>
-    <li>
-O ponto de partida foi o programa
-<a href="ttt-local.zip">ttt-local</a>
-    </li>
-    <li>
-O ponto de chegada consiste em dois programas:
-<b>servidor</b> <a href="ttt-ws_juddi.zip">ttt-ws_juddi</a> e 
-<b>cliente</b> <a href="ttt-ws-cli_juddi.zip">ttt-ws-cli_juddi</a>.
-    </li>
-</ul>
-<ul>
-    <li>
-A estrutura dos projetos está montada mas,
-<b>atenção</b>,<br />
-<b>faltam ainda alterações importantes assinaladas com "..."</b>,<br />
-quer no <tt>pom.xml</tt>, 
-quer no código Java!
-    </li>
-</ul>
-<ul>
-    <li>
-O <b>objetivo</b> do exercício é acrescentar o que falta e 
-colocar o servidor e cliente a funcionar.
-    </li>
-</ul>
+<p>
+O ponto de partida é o <a href="../proj/P1_start.zip">projeto base</a>.
+Este código inclui o servidor incompleto 
+(<tt>supplier-ws</tt> <a href="../proj/uml/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>) e
+o cliente incompleto 
+(<tt>supplier-ws-cli</tt> <a href="../proj/uml/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>).
+Antes de começar, e para prevenir conflitos de módulos Maven,
+alterar os <tt>pom.xml</tt> substituindo as referências 
+<tt>CXX</tt> pelo identificador do grupo.
+</p>
 
-<p>&nbsp;</p>
-
+<p>
+Vamos começar pelo <b>servidor</b> <tt>supplier-ws</tt>
+</p>
 <ol>
     <li>
-No <b>servidor</b> (<tt>ttt-ws_juddi</tt>):
-    </li>
-    <ul>
-        <li>
-Configurar no ficheiro <tt>pom.xml</tt>:
-        </li>
-        <ul>
-            <li>
-A dependência para a biblioteca UDDINaming
-(em falta dentro da tag <tt>&ltdependencies&gt</tt>).
-            </li>
-            <li>
-A localização do UDDI (<tt>uddi.url</tt>)<br />
-Por omissão, o valor é <tt>http://localhost:9090</tt>.
-            </li>
-            <li>
-O nome do serviço a registar (<tt>ws.name</tt>)
-            </li>
-            <li>
-O endereço do serviço a disponibilizar (<tt>ws.url</tt>)<br />
-Por exemplo, <tt>http://localhost:8080/ttt-ws/endpoint</tt>
-            </li>
-        </ul>
-    </ul>
-    <ul>
-        <li>
-Consultar a interface <tt>TTT</tt> e
-respectiva implementação <tt>TTTImpl</tt>
-        </li>
-        <li>
-            Completar as anotações <tt>javax.jws.WebService</tt>,
-            indicando a interface implementada: <tt>ttt.TTT</tt>
-        </li>
-        <pre class="prettyprint lang-java">
-
-    @WebService(endpointInterface="...")
-    public class TTTImpl implements TTT {
-
-</pre>
-        <li>
-Depois de efectuadas as alterações:<br />
-<tt>mvn compile exec:java</tt><br />
-(a classe a executar e os argumentos estão definidos no <tt>pom.xml</tt>)<br />
-        </li>
-        <li>
-Consultar o WSDL gerado dinamicamente,
-que deverá estar disponível no endereço<br />
-<a href="http://localhost:8080/ttt-ws/endpoint?WSDL">http://localhost:8080/ttt-ws/endpoint?WSDL</a>.
-        </li>
-    </ul>
-
-<p>&nbsp;</p>
-
-    <li>
-No <b>cliente</b> (<tt>ttt-ws-cli_juddi</tt>):
-    </li>
-    <ul>
-        <li>
-Configurar no ficheiro <tt>pom.xml</tt>:
-        </li>
-        <ul>
-            <li>
-A dependência para a biblioteca UDDINaming
-(em falta dentro da tag <tt>&ltdependencies&gt</tt>).
-            </li>
-            <li>
-A localização do UDDI (<tt>uddi.url</tt>)<br />
-            </li>
-            <li>
-O nome do serviço a pesquisar (<tt>ws.name</tt>)
-            </li>
-        </ul>
-        <li>
-Gerar o código necessário às invocações remotas a partir do WSDL:<br />
-<tt>mvn generate-sources</tt><br />
-O WSDL é necessário para a compilação do cliente,
-pelo que o servidor deverá estar a correr.<br />
-Caso se pretenda gerar novamente as classes,
-deve fazer-se:<br />
-<tt>mvn clean generate-sources</tt><br />		
-        </li>
-        <li>
-Consultar <tt>./target/generated-sources/wsimport</tt> ou
-faça <em>refresh</em> no <em>package explorer</em> do Eclipse.<br />
-        </li>
-        <ul>
-            <li>
-Verificar que alterações ocorreram nas pastas do projeto
-em resultado da geração de código a partir do WSDL.<br />
-Inspeccione o conteúdo dos novos ficheiros gerados e
-tente compreender a função de cada um.
-            </li>
-            <li>
-Abrir e
-analisar o ficheiro cujo nome termina em <tt>...Service.java</tt>.<br />
-A classe <tt>...Service</tt> estende a classe
-<tt>javax.xml.ws.Service</tt>,
-que é a classe que o JAX-WS fornece para acesso ao serviço remoto.<br />
-A classe gerada já está configurada para o <i>Web Service</i> em causa,
-logo é mais fácil de usar que usando a classe Service diretamente.
-            </li>
-        </ul>
-        <li>
-No método <tt>main()</tt> do cliente,
-criar uma instância de <tt>...Service</tt> e
-chamar o método <tt>get...Port()</tt>,
-que retorna uma instância da interface (remota) do seu Web Service.
-A partir daí,
-pode invocar qualquer operação chamando métodos dessa interface.
-        </li>
-        <pre class="prettyprint lang-java">
-
-    public Game() {
-        ...
-
-        ...Service service = new ...Service();
-        ... port = service.get...Port();
-
-
-</pre>
-        <li>
-            Agora já deverá ser possível compilar a aplicação sem erros:<br />
-            <tt>mvn compile</tt>
-        </li>
-        <li>E jogar:<br />
-          <tt>mvn exec:java</tt>
-        </li>
-    </ul>
-</ol>
-
-<h2>Perguntas</h2>
-
-<ol type="1">
-    <li>
-        Estude o WSDL gerado.
-        Consegue mapear o código Java para as definições WSDL e XSD?
-    </li>
-    <li>
-        Onde, no WSDL,
-        é especificado o tipo de argumentos do Web Service?
-    </li>
-    <li>
-        Compare o WSDL gerado com o ficheiro <tt>ttt.x</tt> do servidor SUN RPC do ttt.
+    As classes de domínio da aplicação já estão implementadas.
     </li>
     <ol type="a">
         <li>
-            Que informação é comum a ambos os ficheiros?
+        Consulte o pacote <tt>domain</tt>.
         </li>
         <li>
-            Que informação existe no WSDL mas não existe no .x?
+        Identifique o <i>Domain Root</i> e 
+        as restantes entidades representadas nas classes.
+        </li>
+        <li>
+        Veja os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
         </li>
     </ol>
     <li>
-        Identifique a função de cada ficheiro gerado no cliente
-        (ignore os ficheiros <tt>ObjectFactory.java</tt> e <tt>package-info.java</tt> na sua resposta).
+    De seguida,
+    consultar o contrato WSDL do serviço a implementar:
     </li>
+    <ul>
+		<li><a href="../proj/supplier.1_0.wsdl">Supplier WSDL</a></li>
+        <li>
+        Analise o contrato para ver que operações define e 
+        quais os respectivos parâmetros e exceções.
+        </li>
+    </ul>
+    <li>
+    Vamos gerar código Java a partir do WSDL.
+    O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
+    </li>
+    <ol type="a">
+        <li>
+        Copie o ficheiro WSDL do serviço a implementar para a pasta 
+        <tt>src/main/resources</tt> do servidor
+        </li>
+        <li>
+        <tt>cd supplier-ws</tt>
+        </li>
+        <li>
+        <tt>mvn generate-sources</tt><br />
+        Caso o WSDL esteja bem formado e válido,
+        a ferramenta <tt>wsimport</tt> gera vários ficheiros que suportam o web service.
+        Entre eles, estarão as classes para os tipos complexos usados como parâmetros
+        e a interface Java que define o Web Service.
+        </li>
+        <li>
+        Faça <i>refresh</i> no Eclipse e
+        consulte as classes geradas na pasta:
+        <tt>target/generated-sources/wsimport</tt>.<br />
+        Em especial,
+        consulte a classe <tt>...Service</tt>, e
+        descubra a interface Java <tt>...PortType</tt> que foi gerada a partir do WSDL.
+        </li>
+    </ol>
+    <li>
+    Vamos agora concretizar o serviço.
+    </li>
+    <ol type="a">
+        <li>
+        Consulte a classe de implementação do serviço <tt>...PortImpl</tt>,
+        que deverá implementar a interface Java gerada.
+        </li>
+        <li>
+        Deverá associar a classe <tt>PortImpl</tt> ao WSDL através da 
+        anotação <tt>@WebService</tt> com os seguintes atributos:
+        <i>endpoint interface</i> (nome do tipo Java do PortType), 
+        <i>wsdlLocation</i> (nome do ficheiro WSDL),
+        <i>name</i> (definido no WSDL), 
+        <i>portName</i> (WSDL),
+        <i>targetNamespace</i> (WSDL) e
+        <i>serviceName</i> (WSDL).
+        </li>
+        <li>
+        Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
+        devem ser implementados na classe do serviço.
+        Cada método é uma operação do Web Service,
+        com entradas, saídas e excepções.<br />
+        Para cada operação, confira se está corretamente implementada.<br />
+        Adicione a anotação <tt>@Override</tt> antes de cada método de operação,
+        para que o compilador confirme que está a implementar corretamente 
+        o método definido na interface.<br />
+        Note que as operações <tt>searchProducts</tt> e <tt>buyProducts</tt> 
+        não estão implementadas.
+        Para já vamos compilar e executar o servidor sem estas operações estarem concluídas.
+        </li>
+    </ol>
+<li>
+Executar o servidor:
+</li>
+    <ol type="a">
+        <li>
+        <tt>mvn compile exec:java</tt><br />
+        O nome da classe a executar e 
+        os argumentos estão definidos no <tt>pom.xml</tt><br />
+        O servidor deve executar sem erros,
+        disponibilizando o <i>endpoint address</i>.
+        </li>
+        <li>
+Confirmar que o servidor está à espera de pedidos no endereço:
+        </li>
+        <ul>
+            <li>
+<a href="http://localhost:8081/supplier-ws/endpoint?wsdl">http://localhost:8081/supplier-ws/endpoint?wsdl</a>
+            </li>
+            <li>
+            O contrato disponibilizado deve ser o documento original,
+            com os respetivos comentários.
+            </li>
+        </ul>
+    </ol>
 </ol>
 
 <p>
-O resto do enunciado será entregue na aula.<br />
-O objetivo será estender ou
-modificar as funcionalidades disponíveis.
+Vamos agora usar o <b>cliente</b> <tt>supplier-ws-cli</tt> para testar o servidor.
 </p>
+<ol>
+    <li>
+    Vamos gerar o código Java para invocação do serviço.
+    </li>
+    <ol type="a">
+        <li>
+        Consultar o <tt>pom.xml</tt> do cliente para confirmar que o WSDL está a ser corretamente referenciado 
+        (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt>)
+        </li>
+        <li>
+        <tt>cd supplier-ws-cli</tt>
+        </li>
+        <li>
+        <tt>mvn generate-sources</tt><br />
+        As classes são geradas na pasta:
+        <tt>target/generated-sources/wsimport</tt>.
+        </li>
+    </ol>
+    <li>
+    Vamos fazer uma chamada simples, correndo a aplicação cliente.
+    </li>
+    <ul>
+        <li>
+        <tt>mvn compile exec:java</tt><br />
+        A operação auxiliar <tt>ping</tt> deverá ser invocada.
+        </li>
+    </ul>
+    <li>
+    Depois do teste pontual, vamos correr os testes de integração já existentes.
+    </li>
+    <ul>
+        <li>
+        <tt>mvn verify</tt><br />
+        O Maven executa todos os testes contidos em classes <tt>...IT</tt> e 
+        um resumo é apresentado.
+        </li>
+    </ul>
+</ol>
 
-<p>&nbsp;</p>
-
-</div>
-
-<div class="objectivos">
-    <h2>Entrega da solução</h2>
-
-	<p>Fénix, Avaliação, Projetos, <b>mini Exercício 3 - Web Services</b></p>
-	
-    <p>
-	A solução completa deverá ser submetida no Fénix
-    <b>antes do fim da sua aula de laboratório</b>.<br />
-	Emails recebidos depois do fim da aula não serão considerados.<br>
-	</p>
-	
-	<p>
-	<b>Ter atenção ao seguinte:</b>
-	</p>
-	
-	<ul>
-		<li>Só serão aceites trabalhos de alunos que estiveram presentes no laboratório.</li>
-		<li>Assegure-se que a solução é enviada em formato ZIP e
-		    que não contém código compilado.<br />
-            (faça <tt>mvn clean</tt> antes de zipar)</li>
-		<li>Deverá incluir um ficheiro <tt>respostas.txt</tt> 
-        com as respostas às perguntas do enunciado do exercício.</li>
-		<li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
-        com resumo da funcionalidade implementada e 
-        com instruções para colocar o programa a funcionar como esperado.<br />
-        Por exemplo:</li>
+<p>
+<b>O que falta fazer?</b>
+</p>
+<ul>
+    <li>
+    No servidor:
+    </li>
+    <ul>
+        <li>
+        Implementar <tt>searchProducts</tt> e <tt>buyProduct</tt>
+        de acordo com o enunciado
+        </li>
+    </ul>
+    <li>
+    No cliente:
+    </li>
+    <ul>
+        <li>
+        Fazer testes de integração das operações implementadas
+        </li>
         <ul>
-            <li>A funcionalidade pedida foi total/parcialmente implementada <b>...</b></li>
-            <li>O servidor deve compilar e executar com os comandos:
-				<br>
-                <tt>mvn compile exec:java</tt>
-            </li>
-            <li>O cliente deve compilar e executar com os comandos:
-				<br>
-				<tt>mvn generate-sources compile exec:java</tt>
+            <li>
+            Testar casos mais importantes
+            <li>
+            Não esquecer os casos com entradas incorretas: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc
             </li>
         </ul>
-	</ul>
+        <li>
+        Os testes de integração correm com <tt>mvn verify</tt>
+        </li>
+    </ul>
+</ul>
+
+<p>
+<b>Bom trabalho!</b>
+</p>
+       
 </div>
 
 <hr />
-
 
 <div class="rodape">
 <p>

@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+WSDL contract for Komparator mediator service
+
+This WSDL defines the operations provided by the Web Service,
+and should not be modified.
+
+For more information, consult sections
+wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
+-->
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:tns="http://ws.mediator.komparator.org/"
+    targetNamespace="http://ws.mediator.komparator.org/"
+    name="MediatorWebService">
+    <types>
+        <xs:schema
+            targetNamespace="http://ws.mediator.komparator.org/"
+            version="1.0" >
+            <xs:element name="EmptyCart" type="tns:EmptyCart"/>
+
+            <xs:element name="InvalidCartId" type="tns:InvalidCartId"/>
+
+            <xs:element name="InvalidCreditCard" type="tns:InvalidCreditCard"/>
+
+            <xs:element name="InvalidItemId" type="tns:InvalidItemId"/>
+
+            <xs:element name="InvalidQuantity" type="tns:InvalidQuantity"/>
+
+            <xs:element name="InvalidText" type="tns:InvalidText"/>
+
+            <xs:element name="NotEnoughItems" type="tns:NotEnoughItems"/>
+
+            <xs:element name="addToCart" type="tns:addToCart"/>
+
+            <xs:element name="addToCartResponse" type="tns:addToCartResponse"/>
+
+            <xs:element name="buyCart" type="tns:buyCart"/>
+
+            <xs:element name="buyCartResponse" type="tns:buyCartResponse"/>
+
+            <xs:element name="clear" type="tns:clear"/>
+
+            <xs:element name="clearResponse" type="tns:clearResponse"/>
+
+            <xs:element name="getItems" type="tns:getItems"/>
+
+            <xs:element name="getItemsResponse" type="tns:getItemsResponse"/>
+
+            <xs:element name="listCarts" type="tns:listCarts"/>
+
+            <xs:element name="listCartsResponse" type="tns:listCartsResponse"/>
+
+            <xs:element name="ping" type="tns:ping"/>
+
+            <xs:element name="pingResponse" type="tns:pingResponse"/>
+
+            <xs:element name="searchItems" type="tns:searchItems"/>
+
+            <xs:element name="searchItemsResponse" type="tns:searchItemsResponse"/>
+
+            <xs:element name="shopHistory" type="tns:shopHistory"/>
+
+            <xs:element name="shopHistoryResponse" type="tns:shopHistoryResponse"/>
+
+            <xs:complexType name="listCarts">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="listCartsResponse">
+                <xs:sequence>
+                    <xs:element name="carts" type="tns:cartView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="cartView">
+                <xs:sequence>
+                    <xs:element name="cartId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="items" type="tns:cartItemView" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="cartItemView">
+                <xs:sequence>
+                    <xs:element name="item" type="tns:itemView" minOccurs="0"/>
+                    <xs:element name="quantity" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="itemView">
+                <xs:sequence>
+                    <xs:element name="itemId" type="tns:itemIdView" minOccurs="0"/>
+                    <xs:element name="desc" type="xs:string" minOccurs="0"/>
+                    <xs:element name="price" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="itemIdView">
+                <xs:sequence>
+                    <xs:element name="productId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="supplierId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getItems">
+                <xs:sequence>
+                    <xs:element name="productId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getItemsResponse">
+                <xs:sequence>
+                    <xs:element name="items" type="tns:itemView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="InvalidItemId">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ping">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="pingResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="buyCart">
+                <xs:sequence>
+                    <xs:element name="cartId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="creditCardNr" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="buyCartResponse">
+                <xs:sequence>
+                    <xs:element name="shopResult" type="tns:shoppingResultView" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="shoppingResultView">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:string" minOccurs="0"/>
+                    <xs:element name="result" type="tns:result" minOccurs="0"/>
+                    <xs:element name="purchasedItems" type="tns:cartItemView" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="droppedItems" type="tns:cartItemView" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="totalPrice" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="InvalidCartId">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="EmptyCart">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="InvalidCreditCard">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="shopHistory">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="shopHistoryResponse">
+                <xs:sequence>
+                    <xs:element name="shopResults" type="tns:shoppingResultView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="clear">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="clearResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="addToCart">
+                <xs:sequence>
+                    <xs:element name="cartId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="itemId" type="tns:itemIdView" minOccurs="0"/>
+                    <xs:element name="itemQty" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="addToCartResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="InvalidQuantity">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="NotEnoughItems">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="searchItems">
+                <xs:sequence>
+                    <xs:element name="descText" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="searchItemsResponse">
+                <xs:sequence>
+                    <xs:element name="items" type="tns:itemView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="InvalidText">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="result">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="COMPLETE"/>
+                    <xs:enumeration value="PARTIAL"/>
+                    <xs:enumeration value="EMPTY"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </types>
+
+    <!--  Messages (use elements defined in the schema) -->
+    <message name="clear">
+        <part name="parameters" element="tns:clear"/>
+    </message>
+    <message name="clearResponse">
+        <part name="parameters" element="tns:clearResponse"/>
+    </message>
+    <message name="getItems">
+        <part name="parameters" element="tns:getItems"/>
+    </message>
+    <message name="getItemsResponse">
+        <part name="parameters" element="tns:getItemsResponse"/>
+    </message>
+    <message name="InvalidItemId">
+        <part name="fault" element="tns:InvalidItemId"/>
+    </message>
+    <message name="listCarts">
+        <part name="parameters" element="tns:listCarts"/>
+    </message>
+    <message name="listCartsResponse">
+        <part name="parameters" element="tns:listCartsResponse"/>
+    </message>
+    <message name="searchItems">
+        <part name="parameters" element="tns:searchItems"/>
+    </message>
+    <message name="searchItemsResponse">
+        <part name="parameters" element="tns:searchItemsResponse"/>
+    </message>
+    <message name="InvalidText">
+        <part name="fault" element="tns:InvalidText"/>
+    </message>
+    <message name="buyCart">
+        <part name="parameters" element="tns:buyCart"/>
+    </message>
+    <message name="buyCartResponse">
+        <part name="parameters" element="tns:buyCartResponse"/>
+    </message>
+    <message name="InvalidCartId">
+        <part name="fault" element="tns:InvalidCartId"/>
+    </message>
+    <message name="EmptyCart">
+        <part name="fault" element="tns:EmptyCart"/>
+    </message>
+    <message name="InvalidCreditCard">
+        <part name="fault" element="tns:InvalidCreditCard"/>
+    </message>
+    <message name="addToCart">
+        <part name="parameters" element="tns:addToCart"/>
+    </message>
+    <message name="addToCartResponse">
+        <part name="parameters" element="tns:addToCartResponse"/>
+    </message>
+    <message name="InvalidQuantity">
+        <part name="fault" element="tns:InvalidQuantity"/>
+    </message>
+    <message name="NotEnoughItems">
+        <part name="fault" element="tns:NotEnoughItems"/>
+    </message>
+    <message name="ping">
+        <part name="parameters" element="tns:ping"/>
+    </message>
+    <message name="pingResponse">
+        <part name="parameters" element="tns:pingResponse"/>
+    </message>
+    <message name="shopHistory">
+        <part name="parameters" element="tns:shopHistory"/>
+    </message>
+    <message name="shopHistoryResponse">
+        <part name="parameters" element="tns:shopHistoryResponse"/>
+    </message>
+
+    <!-- Port Type (Interface) -->
+    <portType name="MediatorPortType">
+        <operation name="clear">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/clearRequest" message="tns:clear"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/clearResponse" message="tns:clearResponse"/>
+        </operation>
+        <operation name="getItems">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/getItemsRequest" message="tns:getItems"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/getItemsResponse" message="tns:getItemsResponse"/>
+            <fault message="tns:InvalidItemId" name="InvalidItemId" wsam:Action="http://ws.mediator.komparator.org/Mediator/getItems/Fault/InvalidItemId"/>
+        </operation>
+        <operation name="listCarts">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/listCartsRequest" message="tns:listCarts"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/listCartsResponse" message="tns:listCartsResponse"/>
+        </operation>
+        <operation name="searchItems">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/searchItemsRequest" message="tns:searchItems"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/searchItemsResponse" message="tns:searchItemsResponse"/>
+            <fault message="tns:InvalidText" name="InvalidText" wsam:Action="http://ws.mediator.komparator.org/Mediator/searchItems/Fault/InvalidText"/>
+        </operation>
+        <operation name="buyCart">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/buyCartRequest" message="tns:buyCart"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/buyCartResponse" message="tns:buyCartResponse"/>
+            <fault message="tns:InvalidCartId" name="InvalidCartId" wsam:Action="http://ws.mediator.komparator.org/Mediator/buyCart/Fault/InvalidCartId"/>
+            <fault message="tns:EmptyCart" name="EmptyCart" wsam:Action="http://ws.mediator.komparator.org/Mediator/buyCart/Fault/EmptyCart"/>
+            <fault message="tns:InvalidCreditCard" name="InvalidCreditCard" wsam:Action="http://ws.mediator.komparator.org/Mediator/buyCart/Fault/InvalidCreditCard"/>
+        </operation>
+        <operation name="addToCart">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/addToCartRequest" message="tns:addToCart"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/addToCartResponse" message="tns:addToCartResponse"/>
+            <fault message="tns:InvalidCartId" name="InvalidCartId" wsam:Action="http://ws.mediator.komparator.org/Mediator/addToCart/Fault/InvalidCartId"/>
+            <fault message="tns:InvalidItemId" name="InvalidItemId" wsam:Action="http://ws.mediator.komparator.org/Mediator/addToCart/Fault/InvalidItemId"/>
+            <fault message="tns:InvalidQuantity" name="InvalidQuantity" wsam:Action="http://ws.mediator.komparator.org/Mediator/addToCart/Fault/InvalidQuantity"/>
+            <fault message="tns:NotEnoughItems" name="NotEnoughItems" wsam:Action="http://ws.mediator.komparator.org/Mediator/addToCart/Fault/NotEnoughItems"/>
+        </operation>
+        <operation name="ping">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/pingRequest" message="tns:ping"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/pingResponse" message="tns:pingResponse"/>
+        </operation>
+        <operation name="shopHistory">
+            <input wsam:Action="http://ws.mediator.komparator.org/Mediator/shopHistoryRequest" message="tns:shopHistory"/>
+            <output wsam:Action="http://ws.mediator.komparator.org/Mediator/shopHistoryResponse" message="tns:shopHistoryResponse"/>
+        </operation>
+    </portType>
+
+    <!-- SOAP/HTTP Binding -->
+    <binding name="MediatorPortSoapHttpBinding" type="tns:MediatorPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="clear">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getItems">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidItemId">
+                <soap:fault name="InvalidItemId" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="listCarts">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="searchItems">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidText">
+                <soap:fault name="InvalidText" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="buyCart">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidCartId">
+                <soap:fault name="InvalidCartId" use="literal"/>
+            </fault>
+            <fault name="EmptyCart">
+                <soap:fault name="EmptyCart" use="literal"/>
+            </fault>
+            <fault name="InvalidCreditCard">
+                <soap:fault name="InvalidCreditCard" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="addToCart">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidCartId">
+                <soap:fault name="InvalidCartId" use="literal"/>
+            </fault>
+            <fault name="InvalidItemId">
+                <soap:fault name="InvalidItemId" use="literal"/>
+            </fault>
+            <fault name="InvalidQuantity">
+                <soap:fault name="InvalidQuantity" use="literal"/>
+            </fault>
+            <fault name="NotEnoughItems">
+                <soap:fault name="NotEnoughItems" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="ping">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="shopHistory">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="MediatorService">
+        <port name="MediatorPort" binding="tns:MediatorPortSoapHttpBinding">
+            <soap:address location="http://localhost:8080/mediator-ws/endpoint"/>
+        </port>
+    </service>
+
+</definitions>

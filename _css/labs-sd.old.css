@@ -1,0 +1,200 @@
+/*************************************/
+/* Cascading Style Sheet for Labs-SD */
+/*************************************/
+
+/* General definitions */
+
+body {
+  background-color: white;
+  color: black;
+  font-family: serif;
+  font-size: medium;
+}
+
+img {
+  border: 0px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  padding: 0;
+  vertical-align: top;
+  text-align: left;
+  font-weight: bold;
+}
+
+td {
+  padding: 0;
+  vertical-align: top;
+  text-align: left;
+  font-weight: normal;
+}
+
+a:link {
+  color: #0000cc;
+}
+
+a:active {
+  color: #cc0000;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+h1 {
+  font-family: sans-serif;
+  font-size: x-large;
+  margin-top: 0px;
+}
+
+h2 {
+  font-family: sans-serif;
+  font-size: large;
+}
+
+h3 {
+  font-family: sans-serif;
+  font-size: medium;
+}
+
+h4 {
+  font-family: sans-serif;
+  font-size: small;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+pre, code {
+  color: #007000;
+  font-family: monospace;
+  font-size: small;
+}
+
+pre {
+  border: 1px solid silver;
+  background-color: #f5f5f5;
+  padding: 0.5em;
+  overflow: auto;
+  margin: 2em;
+}
+
+pre ins {
+  color: #cc0000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+
+
+/* Specific definitions */
+
+div.contexto {
+    font-size: small;
+}
+
+div.titulo {
+}
+
+div.objectivos {
+	border: medium double gray;
+	background-color: lightyellow;
+	padding: 1% 2% 1% 2%;
+	max-width: 40em;
+}
+
+div.caixadestaque {
+	border: medium double gray;
+	background-color: #cceeff;
+	padding: 1% 2% 1% 2%;
+	max-width: 40em;
+}
+
+div.novidades {
+	border: medium double gray;
+	background-color: gold;
+	padding: 1% 2% 1% 2%;
+	width: 40em;
+	margin-bottom: 1em;
+	font-size: small;
+}
+
+div.indice {
+}
+
+div.corpo {
+}
+
+div.laboratorio {
+	border: thin solid gray;
+	background-color: lightgreen;
+	padding: 1% 2% 1% 2%;
+	max-width: 30em;
+}
+
+div.laboratorio#naoha {
+	background-color: lightcoral;
+}
+
+div.rodape {
+    font-size: small;
+}
+
+
+table.calendario th, table.calendario td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.calendario tr.cabecalho th {
+    color: white;
+    background-color: gray;
+}
+
+table.calendario tr.odd td {
+    background-color: lightblue;
+}
+
+table.calendario th.desc, table.calendario td.desc {
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 2%;
+}
+
+table.calendario td.enunciado {
+	font-weight: bold;
+	color: blue;
+}
+
+table.calendario td.entrega {
+	font-weight: bold;
+	color: red;
+}
+
+div.corpo p.enunciado span.enunciado {
+	font-weight: bold;
+	color: blue;
+}
+
+div.corpo p.entrega span.entrega {
+	font-weight: bold;
+	color: red;
+}
+
+a.externo {
+	color: darkorchid;
+}
+
+b.super {
+	color: darkred;
+}

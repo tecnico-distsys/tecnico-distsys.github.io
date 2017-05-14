@@ -28,7 +28,6 @@
 
         <div class="indice">
         	<ul>
-                <li><a href="#introducao">Introdu&ccedil;&atilde;o</a></li>
                 <li><a href="#jce">Java Cryptography Extension (JCE)</a></li>
                 <li><a href="#jsse">Java Secure Sockets Extension (JSSE)</a></li>
                 <li><a href="#jaas">Java Authentication and Authorization Service (JAAS)</a></li>
@@ -39,7 +38,6 @@
 
         <div class="corpo">
             <h2 id="seguranca-java">Seguran&ccedil;a na plataforma Java</h2>
-            <h3 id="introducao">Introdu&ccedil;&atilde;o</h3>
             <p>
 <img src="java-security.png" alt="Java Security">
             </p>
@@ -68,13 +66,13 @@ Os pacotes principais s&atilde;o: java.security , javax.crypto.
             <p>
 Suporta v&aacute;rios algoritmos atrav&eacute;s de Providers.
 No c&oacute;digo, praticamente todos os objectos JCE s&atilde;o criados com:
-getInstance("algorithm name", "provider name"),
-permitindo &agrave; aplica&ccedil;&atilde;o "pedir" uma implementa&ccedil;&atilde;o de um
+<tt>getInstance("algorithm name", "provider name")</tt>,
+permitindo &agrave; aplica&ccedil;&atilde;o pedir uma implementa&ccedil;&atilde;o de um
 algoritmo.
             </p>
             <p>
 Os principais objectos JCE s&atilde;o:
-Cipher (m&eacute;todos: Init, Update, DoFinal),
+Cipher (m&eacute;todos: <tt>init</tt>, <tt>update</tt>, <tt>doFinal</tt>),
 Key,
 KeyGenerator,
 KeyPair,
@@ -90,7 +88,7 @@ Os Java Security Providers s&atilde;o
 bibliotecas que implementam algoritmos de criptografia.
 O Sun Provider inclu&iacute;do com a Java Standard Edition
 implementa v&aacute;rios algoritmos: AES, SHA1, entre outros.
-Outro exemplo de provider &eacute; o Bouncy Castle
+Outro exemplo de <i>provider</i> &eacute; o Bouncy Castle
 que cont&eacute;m implementa&ccedil;&otilde;es alternativas,
 incluindo o algoritmo RSA.
             </p>
@@ -113,7 +111,7 @@ com autentica&ccedil;&atilde;o do servidor,
 sendo a autentica&ccedil;&atilde;o do cliente &eacute; opcional.
             </p>
             <p>
-Os pacotes s&atilde;o: javax.net.ssl , javax.security.net.
+Os pacotes s&atilde;o: <tt>javax.net.ssl</tt> , <tt>javax.security.net</tt>.
             </p>
 
             <p>&nbsp;</p>
@@ -121,17 +119,13 @@ Os pacotes s&atilde;o: javax.net.ssl , javax.security.net.
             <p>
 A JAAS tem uma arquitectura Pluggable para autentica&ccedil;&atilde;o,
 independente de tecnologias espec&iacute;ficas.
-            </p>
-            <p>
 Permite o controlo de acessos dos utilizadores a recursos (autoriza&ccedil;&atilde;o)
-e tem seguran&ccedil;a centrada no utilizador (user-centric).
-            </p>
-            <p>
+e tem seguran&ccedil;a centrada no utilizador (<i>user-centric</i>).
 A JAAS est&aacute; integrada com Java Naming and Directory Interface (JNDI),
 Windows NT, Solaris Login, Kerberos.
             </p>
             <p>
-O pacote principal &eacute;: javax.security.auth
+O pacote principal &eacute;: <tt>javax.security.auth</tt>
             </p>
 
         </div>
@@ -139,7 +133,7 @@ O pacote principal &eacute;: javax.security.auth
         <hr />
 
         <div class="rodape">
-            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UTL</p>
+            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UL</p>
         </div>
 
 	</body>

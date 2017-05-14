@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
         <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
 
         <title>Mecanismos criptogr&aacute;ficos</title>
@@ -82,8 +82,8 @@ A chave privada cifra os dados e a p&uacute;blica decifra-os (ou vice-versa).
             </p>
             <p>
 Os algoritmos s&atilde;o:
-RSA – para assinatura digital e pequena cifra (blocos 117 bytes com PKCS1 Padding),
-DSA – apenas para assinatura digital,
+RSA ï¿½ para assinatura digital e pequena cifra (blocos 117 bytes com PKCS1 Padding),
+DSA ï¿½ apenas para assinatura digital,
 Diffie-Hellman (Key Agreement Algorithm).
             </p>
 
@@ -107,13 +107,13 @@ MD5, SHA-1, etc.
             <h3 id="mac">C&oacute;digo de autentica&ccedil;&atilde;o de mensagem (MAC)</h3>
             <p>
 Os MAC (Message Authentication Codes) - c&oacute;digos de autentica&ccedil;&atilde;o de mensagens -
-são uma forma de assinatura digital baseada num segredo partilhado entre interlocutores (e.g., uma chave simétrica de sessão).
+sâ­ uma forma de assinatura digital baseada num segredo partilhado entre interlocutores (e.g., uma chave simè³²ica de sessâ­©.
 Permitem garantir a integridade e autenticidade do conte&uacute;do de uma mensagem
 trocada entre duas entidades que partilham um segredo.
             </p>
             <p>
-Embora haja várias alternativas de MACs, uma solução muito eficiente e comum consiste em:
-concatenar a mensagem com a chave secreta, gerar um resumo (usando função de resumo criptográfica) do resultado dessa concateção.
+Embora haja và±©as alternativas de MACs, uma soluè¢¯ muito eficiente e comum consiste em:
+concatenar a mensagem com a chave secreta, gerar um resumo (usando funè¢¯ de resumo criptogrà¥©ca) do resultado dessa concateè¢¯.
             </p>
             <p>
 Para verificar um MAC:
@@ -122,14 +122,14 @@ comparar o resumo obtido com o resumo (HMAC) recebido pela rede.
 Se forem iguais a mensagem n&atilde;o foi modificada!
             </p>
             <p>
-Se a chave secreta for apenas partilhada entre o emissor e o recetor, a validação com MAC permite ao recetor confirmar que 
-i) a mensagem foi de facto emitida pelo emissor legítimo (autenticidade), e ii) que a mensagem não foi modificada durante
-a transmissão pela rede (integridade). No entanto, ao contrário das assinaturas digitais de chave pública, o MAC não assegura não repúdio da mensagem.
+Se a chave secreta for apenas partilhada entre o emissor e o recetor, a validaè¢¯ com MAC permite ao recetor confirmar que 
+i) a mensagem foi de facto emitida pelo emissor legì³©mo (autenticidade), e ii) que a mensagem nâ­ foi modificada durante
+a transmissâ­ pela rede (integridade). No entanto, ao contrà±©o das assinaturas digitais de chave pï¿½a, o MAC nâ­ assegura nâ­ repï¿½da mensagem.
             </p>
 
-            <h3 id="assinatura-digital">Assinatura digital de chave pública</h3>
+            <h3 id="assinatura-digital">Assinatura digital de chave pï¿½a</h3>
             <p>
-A assinatura digital de chave pública (ou, simplesmente, assinatura digital)
+A assinatura digital de chave pï¿½a (ou, simplesmente, assinatura digital)
 permite garantir a autentica&ccedil;&atilde;o do emissor e a integridade do conte&uacute;do da mensagem.
             </p>
             <p>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" >
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
 
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
@@ -29,12 +29,12 @@
     <ul>
         <li>Construir e modificar mensagens SOAP</li>
         <li>Desenvolver <i>SOAP Handlers</i> para modificar as mensagens XML do Web Service</li>
-        <!--li>Passar dados entre os <i>Handlers</i> e as classes de implementação do Web Service</li-->
+        <!--li>Passar dados entre os <i>Handlers</i> e as classes de implementaè¢¯ do Web Service</li-->
     </ul>
 </div>
 
 <div class="indice">
-<p><b>Índice:</b></p>
+<p><b>Ì®dice:</b></p>
 <ul>
     <li><a href="#soap">SOAP</a></li>
     <!--ul>
@@ -45,9 +45,9 @@
     <!--/ul-->
     <li><a href="#handlers">Handlers</a></li>
     <ul>
-        <li><a href="#handlers-config">Configuração</a></li>
+        <li><a href="#handlers-config">Configuraè¢¯</a></li>
         <li><a href="#bib-handlers">Biblioteca <tt>ws-handlers</tt></a></li>
-        <li><a href="#ex-handlers">Exemplo de inspeção de mensagens</a></li>
+        <li><a href="#ex-handlers">Exemplo de inspeè¢¯ de mensagens</a></li>
         <!--li><a href="#relay-handlers">Exemplos de estafetas de dados</a></li-->
     </ul>
 </ul>
@@ -62,14 +62,14 @@
 <img src="envelope.png" height="40" />
 
 <p>
-O SOAP é o formato de mensagens para Web Services.
+O SOAP çŸ¯ formato de mensagens para Web Services.
 Os envelopes podem ser transportados pela rede de diversas formas,
-mas a mais comum é através do protocolo HTTP.
-O SOAP é independente do protocolo de transporte.
+mas a mais comum çŸ¡travè± do protocolo HTTP.
+O SOAP çŸ©ndependente do protocolo de transporte.
 </p>
 
 <p>
-Os documentos seguintes são mensagens SOAP
+Os documentos seguintes sâ­ mensagens SOAP
 correspondentes a um par pedido-resposta.
 <!-- trocado por um cliente com um Web Service. -->
 </p>
@@ -98,26 +98,26 @@ correspondentes a um par pedido-resposta.
 </pre>
 
 <p>
-Uma mensagem SOAP é um documento XML
+Uma mensagem SOAP çŸµm documento XML
 designado por <i>envelope</i>.
 <!--
-O SOAP separa o cabeçalho, com dados de sistema para serem
+O SOAP separa o cabeæ ¬ho, com dados de sistema para serem
 processados pelas bibliotecas de Web Services, do corpo, com dados de
-negócio para serem processados pelas aplicações.
+negò¢¨¯ para serem processados pelas aplicaè´¥s.
 </p>
 <p-->
-O cabeçalho <i>header</i> permite a composição de protocolos,
-pois cada elemento de extensão indica a sua versão e
-a opcionalidade da sua interpretação.<br />
-O corpo (<i>body</i>) contém os dados de negócio da mensagem ou
-então o elemento <i>Fault</i> com informação de erro.
+O cabeæ ¬ho <i>header</i> permite a composiè¢¯ de protocolos,
+pois cada elemento de extensâ­ indica a sua versâ­ e
+a opcionalidade da sua interpretaè¢¯.<br />
+O corpo (<i>body</i>) contè« os dados de negò¢¨¯ da mensagem ou
+entâ­ o elemento <i>Fault</i> com informaè¢¯ de erro.
 </p>
 <!--h3 id="saaj">SAAJ</h3-->
 <p>
-A SAAJ (SOAP with Attachments API for Java) é uma
+A SAAJ (SOAP with Attachments API for Java) çŸµma
 biblioteca que estende o XML DOM, adaptando-o
-para documentos XML que são <b>mensagens SOAP</b>.
-Isto significa que existem vários métodos específicos
+para documentos XML que sâ­ <b>mensagens SOAP</b>.
+Isto significa que existem và±©os mè³¯dos especì¥©cos
 para tratar as mensagens.
 </p>
 
@@ -129,20 +129,20 @@ uma mensagem SOAP tem a seguinte estrutura:
 <img src="soap-message.gif" alt="SOAP Message" height="250">
 </p>
 <p>
-A SOAPMessage contém várias partes.
-A primeira parte é uma SOAPPart, que contém um SOAPEnvelope.<br />
-Um SOAPEnvelope contém um SOAPBody e opcionalmente um SOAPHeader.<br />
+A SOAPMessage contè« và±©as partes.
+A primeira parte çŸµma SOAPPart, que contè« um SOAPEnvelope.<br />
+Um SOAPEnvelope contè« um SOAPBody e opcionalmente um SOAPHeader.<br />
 Dentro destes, podem ser colocados SOAPElement.<br />
 <!--/p>
 <p-->
 Numa mensagem SOAP, os elementos devem ser sempre especificados
-com espaço de nomes,
+com espaæ­ de nomes,
 para evitar conflitos.
 </p>
 
 <p>
-Os objectos da biblioteca SAAJ estão no pacote <tt>javax.xml.soap.*</tt><br />
-O exemplo seguinte mostra como se constrói uma mensagem simples.
+Os objectos da biblioteca SAAJ estâ­ no pacote <tt>javax.xml.soap.*</tt><br />
+O exemplo seguinte mostra como se constrò§Ÿµma mensagem simples.
 </p>
 <p>
 <pre class="prettyprint">
@@ -171,7 +171,7 @@ O exemplo seguinte mostra como se constrói uma mensagem simples.
 <p>
 Os exemplos seguintes mostram como modificar as mensagens SOAP e
 como enviar mensagem SOAP directamente sem <i>stubs</i>.<br />
-Para complementar existem também exemplos das tecnologias base de XML:
+Para complementar existem tambè« exemplos das tecnologias base de XML:
 SAX, DOM, XSD, XPath.
 </p>
 <ul>
@@ -194,18 +194,18 @@ SAX, DOM, XSD, XPath.
 
 <h2 id="handlers">SOAP Handlers</h2>
 <!--p>
-O JAX-WS é uma biblioteca para a plataforma Java que simplifica a invocação de Web Services,
+O JAX-WS çŸµma biblioteca para a plataforma Java que simplifica a invocaè¢¯ de Web Services,
 fazendo o mapeamento de tipos para Java para mensagens SOAP.
 Normalmente os programadores nem sequer precisam de "ver" as mensagens SOAP.
-No entanto, quando se quer implementar segurança ao nível das mensagens ou
-transportar informação adicional relativa a transacções distribuídas,
-é necessário ter uma forma de aceder &agrave;s mensagens SOAP.
+No entanto, quando se quer implementar seguranæŸ ao nìµ¥l das mensagens ou
+transportar informaè¢¯ adicional relativa a transacè´¥s distribuì£¡s,
+çŸ®ecessà±©o ter uma forma de aceder &agrave;s mensagens SOAP.
 </p-->
 <p>
 A biblioteca de Web Services para Java, JAX-WS,
 tem um mecanismo que permite intercetar e
-aceder diretamente às mensagens SOAP.<br />
-<!--Os JAX-WS Handlers são objectos intercetores que podem ler e
+aceder diretamente ï¿½mensagens SOAP.<br />
+<!--Os JAX-WS Handlers sâ­ objectos intercetores que podem ler e
 escrever dados nas mensagens SOAP geradas pelos Stubs
 e pelos Ties.-->
 </p>
@@ -215,13 +215,13 @@ e pelos Ties.-->
 <p>
 
 <p>
-Um <i>Handler</i> é uma classe Java que implementa a
+Um <i>Handler</i> çŸµma classe Java que implementa a
 interface <tt>javax.xml.ws.handler.soap.SOAPHandler</tt>.
 </p>
 <p>
-O seguinte exemplo é um <i>Handler</i> básico.
-O principal método
-é o <tt>handleMessage()</tt> que é invocado de cada vez que
+O seguinte exemplo çŸµm <i>Handler</i> bà²©co.
+O principal mè³¯do
+çŸ¯ <tt>handleMessage()</tt> que çŸ©nvocado de cada vez que
 chega ou parte uma mensagem:
 </p>
 <p>
@@ -270,27 +270,27 @@ public class EmptyHandler implements SOAPHandler<SOAPMessageContext> {
 </p>
 
 <p>&nbsp;</p>
-<h3 id="handlers-context">Configuração e parametrização</h3>
+<h3 id="handlers-context">Configuraè¢¯ e parametrizaè¢¯</h3>
 <p>
-Os <i>Handlers</i> são classes Java como quaisquer outras.
+Os <i>Handlers</i> sâ­ classes Java como quaisquer outras.
 No entanto, 
-como são construídas pelo <i>Web Services Run-time</i> e não pela aplicação, 
-não há forma direta de lhes aceder.
+como sâ­ construì£¡s pelo <i>Web Services Run-time</i> e nâ­ pela aplicaè¢¯, 
+nâ­ hï¿½orma direta de lhes aceder.
 Por este motivo,
-não se consegue "passar" argumentos para os <i>Handlers</i>.
+nâ­ se consegue "passar" argumentos para os <i>Handlers</i>.
 </p>
 <p>
 Assim sendo,
-algumas formas possíveis de configurar um <i>Handler</i> são as seguintes:
+algumas formas possìµ¥is de configurar um <i>Handler</i> sâ­ as seguintes:
 </p>
 <ul>
     <li>
-    Receber parâmetros via contexto (<tt>SOAPMessageContext</tt>)<br />
-    - esta técnica é ilustrada no exemplo <a href="#relay-handlers"><tt>handler_relay</tt></a>
+    Receber pará¬¥tros via contexto (<tt>SOAPMessageContext</tt>)<br />
+    - esta tè¢®ica çŸ©lustrada no exemplo <a href="#relay-handlers"><tt>handler_relay</tt></a>
     </li>
     <li>
-    Receber parâmetros via variáveis globais 
-    <!--à instância da JVM-->
+    Receber pará¬¥tros via variàµ¥is globais 
+    <!--ï¿½nstá­£ia da JVM-->
     </li>
     <ul>
         <li>
@@ -298,32 +298,32 @@ algumas formas possíveis de configurar um <i>Handler</i> são as seguintes:
         e.g. <tt>HandlersContext</tt>.
         </li>
         <li>
-        Variáveis <tt>static</tt> nas próprias classes dos <i>Handlers</i>
+        Variàµ¥is <tt>static</tt> nas prò¯±©as classes dos <i>Handlers</i>
         </li>
         <li>
         <i>JVM System properties</i>,
-        acessíveis depois por <tt>System.getProperty()</tt>
+        acessìµ¥is depois por <tt>System.getProperty()</tt>
         </li>
         <!--li>
-        <i>Environment variables</i> (variáveis de ambiente do sistema operativo),
-        acessíveis depois por <tt>System.getenv();</tt>
+        <i>Environment variables</i> (variàµ¥is de ambiente do sistema operativo),
+        acessìµ¥is depois por <tt>System.getenv();</tt>
         </li-->
     </ul>
 </ul>
 <p>
-As variáveis são globais à instância da Java Virtual Machine (JVM)
+As variàµ¥is sâ­ globais ï¿½nstá­£ia da Java Virtual Machine (JVM)
 que corresponde a um processo no sistema operativo;
-por isso, diferentes programas em execução terão diferentes valores nas variáveis.
+por isso, diferentes programas em execuè¢¯ terâ­ diferentes valores nas variàµ¥is.
 </p>
 <p>
-As variáveis globais podem ser preenchidas, por exemplo, 
-no método <tt>main()</tt> do programa que vai usar os <i>Handlers</i>.
+As variàµ¥is globais podem ser preenchidas, por exemplo, 
+no mè³¯do <tt>main()</tt> do programa que vai usar os <i>Handlers</i>.
 </p>
 
 
-<h3 id="handlers-ex">Retorno e Exceções</h3>
+<h3 id="handlers-ex">Retorno e Exceè´¥s</h3>
 <p>
-O retorno do método <tt>handleMessage()</tt> determina de que forma
+O retorno do mè³¯do <tt>handleMessage()</tt> determina de que forma
 prossegue o processamento da mensagem.<br />
 Se for 'true' o processamento deve prosseguir;
 se for 'false' bloqueia o processamento da mensagem,
@@ -331,39 +331,39 @@ mudando-lhe o sentido e
 fazendo-a voltar para o cliente.
 </p>
 <p>
-A utilização de <b>exceções</b> permite modificar o normal
+A utilizaè¢¯ de <b>exceè´¥s</b> permite modificar o normal
 processamento das mensagens SOAP:
 </p>
 <ul>
 <li>
-Se um <i>handler</i> atirar uma exceção <tt>java.lang.RuntimeException</tt>
+Se um <i>handler</i> atirar uma exceè¢¯ <tt>java.lang.RuntimeException</tt>
 (ou um sub-tipo desta classe),
 indica que o processamento normal da mensagem deve parar.
-O método <tt>close()</tt> é invocado nos <i>handlers</i> que entretanto já tinham
-sido chamados, o sentido da mensagem é invertido
-e a excepção é despachada.
-Se a mensagem tinha o sentido de saída (<i>outbound</i>),
-é gerada uma mensagem SOAP automaticamente
+O mè³¯do <tt>close()</tt> çŸ©nvocado nos <i>handlers</i> que entretanto jï¿½inham
+sido chamados, o sentido da mensagem çŸ©nvertido
+e a excepè¢¯ çŸ¤espachada.
+Se a mensagem tinha o sentido de saì£¡ (<i>outbound</i>),
+çŸ§erada uma mensagem SOAP automaticamente
 preenchida com uma SOAP <i>Fault</i>.
 </li>
 <li>
-Se um <i>handler</i> atirar uma exceção <tt>javax.xml.ws.soap.SOAPFaultException</tt>
-(que é um sub-tipo de <tt>javax.xml.ws.ProtocolException</tt>),
+Se um <i>handler</i> atirar uma exceè¢¯ <tt>javax.xml.ws.soap.SOAPFaultException</tt>
+(que çŸµm sub-tipo de <tt>javax.xml.ws.ProtocolException</tt>),
 indica que o processamento normal da mensagem deve parar
 e que se deve iniciar o processamento de mensagem de erro.
-O sentido da mensagem é invertido,
-se a mensagem não é ainda uma mensagem de Fault
-é substituída por uma mensagem de Fault,
-e o método <tt>handleFault()</tt> é invocado para o próximo <i>Handler</i> caso exista,
-para que seja preenchida manualmente a informação da <i>Fault</i>.
+O sentido da mensagem çŸ©nvertido,
+se a mensagem nâ­ çŸ¡inda uma mensagem de Fault
+çŸ³ubstituì£¡ por uma mensagem de Fault,
+e o mè³¯do <tt>handleFault()</tt> çŸ©nvocado para o prò·¨­o <i>Handler</i> caso exista,
+para que seja preenchida manualmente a informaè¢¯ da <i>Fault</i>.
 </li>
 </ul>
 
 <p>&nbsp;</p>
-<h3 id="handlers-config">Configuração</h2>
+<h3 id="handlers-config">Configuraè¢¯</h2>
 <p>
-A configuração dos <i>Handlers</i>
-é efectuada num ficheiro que define a cadeia de <i>handlers</i>.
+A configuraè¢¯ dos <i>Handlers</i>
+çŸ¥fectuada num ficheiro que define a cadeia de <i>handlers</i>.
 </p>
 <p>
 <pre class="prettyprint">
@@ -376,18 +376,18 @@ A configuração dos <i>Handlers</i>
 &lt;/handler-chains&gt;
 </pre>
 <p>
-A configuração os <i>Handlers</i> é diferente no servidor e no cliente.
-Em ambos os casos não são necessárias alterações aos <tt>pom.xml</tt>.
+A configuraè¢¯ os <i>Handlers</i> çŸ¤iferente no servidor e no cliente.
+Em ambos os casos nâ­ sâ­ necessà±©as alteraè´¥s aos <tt>pom.xml</tt>.
 <ul>
 <li>
 No <b>servidor</b>:
     <ul>
     <li>
-    Colocar o ficheiro de configuração <tt>handler-chain.xml</tt> na pasta
+    Colocar o ficheiro de configuraè¢¯ <tt>handler-chain.xml</tt> na pasta
     <tt>src/main/resources</tt>
     </li>
     <li>
-    Acrescentar a seguinte anotação na classe de implementação:
+    Acrescentar a seguinte anotaè¢¯ na classe de implementaè¢¯:
     <tt>@HandlerChain(file="/handler-chain.xml")</tt>
     </li>
     </ul>
@@ -396,13 +396,13 @@ No <b>servidor</b>:
 No <b>cliente</b>:
     <ul>
     <li>
-    Colocar o ficheiro de configuração <tt>handler-chain-binding.xml</tt> na pasta
-    <tt>src/jaxws</tt> (definida por convenção)
+    Colocar o ficheiro de configuraè¢¯ <tt>handler-chain-binding.xml</tt> na pasta
+    <tt>src/jaxws</tt> (definida por convenè¢¯)
     </li>
     <!--li>
-    <small>Nota: a definição do <i>handler</i> pode ter que ficar num fragmento XML à parte
+    <small>Nota: a definiè¢¯ do <i>handler</i> pode ter que ficar num fragmento XML ï¿½arte
     - <tt>HelloImplService_handler.xml</tt>, no exemplo abaixo -
-    devido a problemas de compatibilidade com versões mais antigas do JAX-WS</small>
+    devido a problemas de compatibilidade com versï¿½mais antigas do JAX-WS</small>
     </li-->
     </ul>
 </li>
@@ -413,58 +413,58 @@ No <b>cliente</b>:
 <p>&nbsp;</p>
 <h3 id="bib-handlers">Biblioteca <tt>ws-handlers</tt></h3>
 <p>
-Esta biblioteca é um módulo Maven com <i>Handlers</i> que podem ser usados em servidores e clientes.
+Esta biblioteca çŸµm mò£´¬o Maven com <i>Handlers</i> que podem ser usados em servidores e clientes.
 <!--
-sem ter que copiar as mesmas classes por diversos projetos (o que é uma má prática a evitar).
+sem ter que copiar as mesmas classes por diversos projetos (o que çŸµma mï¿½rà³©ca a evitar).
 -->
 </p>
 <ul>
     <li>
         <a href="ws-handlers.zip">Biblioteca de JAX-WS Handlers
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - contém:
+        - contè«º
         <ul>
             <li><tt>LoggingHandler</tt> - imprime mensagens SOAP para <tt>System.out</tt></li>
-            <li><tt>MessageContextHandler</tt> - imprime variáveis de contexto para <tt>System.out</tt></li>
-            <li><tt>HeaderHandler</tt> - acrescenta um Header à mensagem SOAP</li>
+            <li><tt>MessageContextHandler</tt> - imprime variàµ¥is de contexto para <tt>System.out</tt></li>
+            <li><tt>HeaderHandler</tt> - acrescenta um Header ï¿½ensagem SOAP</li>
         </ul>
         <ul>
             <li><tt>HeaderHandlerTest</tt> - usa <i>mocks</i> para testar localmente um handler</li>
         </ul>
         - para usar:
         <ul>
-            <li>fazer <tt>mvn install</tt> para compilar e instalar o módulo no repositório local do Maven</li>
-            <li>acrescentar a dependência para 
+            <li>fazer <tt>mvn install</tt> para compilar e instalar o mò£´¬o no repositò±¨¯ local do Maven</li>
+            <li>acrescentar a dependé­£ia para 
             <tt>example:ws-handlers:1.0-SNAPSHOT</tt> 
             no <tt>pom.xml</tt> do projeto que vai usar 
             os <i>Handlers</i></li>
-            <li>editar/acrescentar o ficheiro de configuração dos 
+            <li>editar/acrescentar o ficheiro de configuraè¢¯ dos 
             <i>handlers</i> no projeto que os vai usar</li>
         </ul>
     </li>
 </ul>
 <p>
-Esta biblioteca poderá ser enriquecida com <i>handlers</i> 
+Esta biblioteca poderï¿½er enriquecida com <i>handlers</i> 
 adicionais (por exemplo, no projeto).
 </p>
 
 <p>&nbsp;</p>
-<h3 id="ex-handlers">Exemplo de <i>Handlers</i> de inspeção de mensagens</h3>
+<h3 id="ex-handlers">Exemplo de <i>Handlers</i> de inspeè¢¯ de mensagens</h3>
 <img src="looking-glass.png" height="60" />
 <p>
-Este exemplo demonstra a forma como os SOAP Handlers acedem às mensagens XML dos Web Services.
+Este exemplo demonstra a forma como os SOAP Handlers acedem ï¿½mensagens XML dos Web Services.
 </p>
 <ul>
     <li>
         <a href="hello-ws_handlers.zip">Web Service com JAX-WS Handlers
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - os SOAP Handlers permitem intercetar as mensagens SOAP que são enviadas e recebidas.<br />
-        A configuração é feita através de um ficheiro e de uma anotação.
+        - os SOAP Handlers permitem intercetar as mensagens SOAP que sâ­ enviadas e recebidas.<br />
+        A configuraè¢¯ çŸ¦eita atravè± de um ficheiro e de uma anotaè¢¯.
     </li>
     <li>
         <a href="hello-ws-cli_handlers.zip">Web Service client com JAX-WS Handlers
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - a definição de handlers no cliente é feita através de um ficheiro de configuração.
+        - a definiè¢¯ de handlers no cliente çŸ¦eita atravè± de um ficheiro de configuraè¢¯.
     </li>
 </ul>
 
@@ -475,20 +475,20 @@ Este exemplo demonstra a forma como os SOAP Handlers acedem às mensagens XML dos
 Este exemplo demonstra os mecanismos de passagem de dados entre as diversas camadas de um Web Service:<br />
 <ol>
     <li>
-        do cliente para o <i>handler</i> cliente (via contexto do pedido, que é obtido a partir do <i>stub</i>),
+        do cliente para o <i>handler</i> cliente (via contexto do pedido, que çŸ¯btido a partir do <i>stub</i>),
     </li>
     <li>
-        do <i>handler</i> cliente para o <i>handler</i> servidor (via cabeçalho na mensagem SOAP),
+        do <i>handler</i> cliente para o <i>handler</i> servidor (via cabeæ ¬ho na mensagem SOAP),
     </li>
     <li>
-        do <i>handler</i> servidor para o servidor (via contexto das mensagens que é fornecido como argumento),
+        do <i>handler</i> servidor para o servidor (via contexto das mensagens que çŸ¦ornecido como argumento),
     </li>
     <li>
         do servidor para o <i>handler</i> servidor
-        (novamente via contexto das mensagens que é fornecido pela biblioteca através da anotação <tt>@Resource</tt>),
+        (novamente via contexto das mensagens que çŸ¦ornecido pela biblioteca atravè± da anotaè¢¯ <tt>@Resource</tt>),
     </li>
     <li>
-        do <i>handler</i> servidor para o <i>handler</i> cliente (via cabeçalho na mensagem SOAP),
+        do <i>handler</i> servidor para o <i>handler</i> cliente (via cabeæ ¬ho na mensagem SOAP),
     </li>
     <li>
         e finalmente,
@@ -498,8 +498,8 @@ Este exemplo demonstra os mecanismos de passagem de dados entre as diversas cama
 </p>
 
 <p>
-Consultar os exemplos seguindo os comentários numerados <tt>#1, #2, #3, ...</tt> que seguem a sequência de uma
-invocação remota começando no cliente, passando pelo servidor e voltando ao cliente.
+Consultar os exemplos seguindo os comentà±©os numerados <tt>#1, #2, #3, ...</tt> que seguem a sequé­£ia de uma
+invocaè¢¯ remota comeæ ®do no cliente, passando pelo servidor e voltando ao cliente.
 Pelo caminho o <i>token</i> vai sendo acrescentado com mais dados.
 <ul>
     <li>
@@ -518,33 +518,33 @@ Pelo caminho o <i>token</i> vai sendo acrescentado com mais dados.
 &nbsp;
 </p>
 <hr />
-<h2>Exercício</h2>
+<h2>Exercì¢©o</h2>
 <h3>Terceira parte do projeto</h3>
 
 <p>
-O objetivo deste exerc&iacute;cio &eacute; configurar o <i>LoggingHandler</i> para intercetar as comunicações.
+O objetivo deste exerc&iacute;cio &eacute; configurar o <i>LoggingHandler</i> para intercetar as comunicaè´¥s.
 </p>
 
 <p>
-Começar por <tt>supplier-ws</tt>:
+Comeæ ² por <tt>supplier-ws</tt>:
 </p>
 <ol>
     <li>
-    Adicionar a dependência para a biblioteca <tt>ws-handlers</tt> no <tt>pom.xml</tt>.
+    Adicionar a dependé­£ia para a biblioteca <tt>ws-handlers</tt> no <tt>pom.xml</tt>.
     </li>
     <li>
     Na pasta <tt>src/main/resources</tt>
-    adicionar ficheiro <tt>supplier-ws_handler-chain.xml</tt> com configuração da cadeia de interceção.<br />
-    O <i>LoggingHandler</i> deve ser chamado no início e no fim da cadeia.
+    adicionar ficheiro <tt>supplier-ws_handler-chain.xml</tt> com configuraè¢¯ da cadeia de interceè¢¯.<br />
+    O <i>LoggingHandler</i> deve ser chamado no inì¢©o e no fim da cadeia.
     </li>
     <li>
-    Adicionar a seguinte anotação ao <tt>PortImpl</tt>:<br />
+    Adicionar a seguinte anotaè¢¯ ao <tt>PortImpl</tt>:<br />
 <pre class="prettyprint lang-java">
 @HandlerChain(file = "/supplier-ws_handler-chain.xml")
 </pre>
     </li>
     <li>
-    Lançar o servidor.
+    Lanæ ² o servidor.
     </li>
     <ul>
         <li><tt>cd supplier-ws</tt></li>
@@ -568,94 +568,94 @@ Configurar os <i>handlers</i> <tt>supplier-ws-cli</tt>:
 </p>
 <ol>
     <li>
-    Adicionar também a dependência para a biblioteca <tt>ws-handlers</tt>.
+    Adicionar tambè« a dependé­£ia para a biblioteca <tt>ws-handlers</tt>.
     </li>
     <li>
-    Criar os ficheiros de configuração
+    Criar os ficheiros de configuraè¢¯
     da cadeia de handlers na pasta <tt>src/jaxws</tt>
     </li>
     <ul>
         <li>
-        Para ver ficheiros de configuração semelhantes,
+        Para ver ficheiros de configuraè¢¯ semelhantes,
         consultar este
         <a href="hello-ws-cli_handlers.zip">exemplo</a>.
         </li>
     </ul>
     <li>
-    Para verificar se a configuração ficou bem feita,
+    Para verificar se a configuraè¢¯ ficou bem feita,
     fazer uma chamada ao <tt>ping</tt> e
-    confirmar que as mensagens são também capturadas e 
+    confirmar que as mensagens sâ­ tambè« capturadas e 
     impressas na consola do lado do cliente.
     </li>
     <!--ul>
         <li>
-        Não é necessário parar o servidor, apenas o cliente muda
+        Nâ­ çŸ®ecessà±©o parar o servidor, apenas o cliente muda
         </li>
     </ul>
     <li>
     </li-->
 </ol>
 <p>
-Neste ponto as mensagens SOAP estão a ser capturadas à saída no cliente e à chegada no servidor.
+Neste ponto as mensagens SOAP estâ­ a ser capturadas ï¿½aì£¡ no cliente e ï¿½hegada no servidor.
 </p>
 <p>
-Vamos agora criar um novo <i>handler</i> para validação temporal das mensagens:
+Vamos agora criar um novo <i>handler</i> para validaè¢¯ temporal das mensagens:
 </p>
 <ol>
     <li>
-    Criar um <i>handler</i> que acrescenta um cabeçalho simples à saída do cliente 
+    Criar um <i>handler</i> que acrescenta um cabeæ ¬ho simples ï¿½aì£¡ do cliente 
     (<i>outbound message</i>)
     com a data e hora atual.
     </li>
     <li>
-    O novo <i>handler</i> deve ler o cabeçalho à chegada ao servidor 
+    O novo <i>handler</i> deve ler o cabeæ ¬ho ï¿½hegada ao servidor 
     (<i>inbound message</i>).
     </li>
     <li>
     Confirmar que o novo <i>handler</i> funciona como esperado.<br />
-    O <i>LoggingHandler</i> deve ser chamado no início e no fim da cadeia para ver 
-    a mensagem antes e depois da modificação.
+    O <i>LoggingHandler</i> deve ser chamado no inì¢©o e no fim da cadeia para ver 
+    a mensagem antes e depois da modificaè¢¯.
     </li>
     <li>
     Modificar o <i>handler</i> para aplicar a seguinte regra:<br />
-    Caso a diferença temporal seja maior do que 
-    3 segundos (valor configurável),
+    Caso a diferenæŸ temporal seja maior do que 
+    3 segundos (valor configuràµ¥l),
     rejeitar a mensagem<br /> 
-    (ver secção sobre <a href="#handlers-ex">retorno e exceções</a> em <i>handlers</i>)
+    (ver secè¢¯ sobre <a href="#handlers-ex">retorno e exceè´¥s</a> em <i>handlers</i>)
     </li>
     </ul>
     <li>
-    De que forma se poderá testar a rejeição de mensagem?
+    De que forma se poderï¿½estar a rejeiè¢¯ de mensagem?
     </li>
 </ol>
 
 <p>
-Próximos passos</tt>:
+Prò·¨­os passos</tt>:
 </p>
 <ul>
     <li>
-    Para cada requisito de segurança referido no enunciado do projeto:
+    Para cada requisito de seguranæŸ referido no enunciado do projeto:
     </li>
     <ul>
         <li>
-        Identificar que alterações são necessárias às mensagens SOAP.
+        Identificar que alteraè´¥s sâ­ necessà±©as ï¿½mensagens SOAP.
         </li>
         <ul>
             <li>
-            O que se deve fazer à saída da mensagem?
+            O que se deve fazer ï¿½aì£¡ da mensagem?
             </li>
             <li>
-            O que se deve fazer à chegada?
+            O que se deve fazer ï¿½hegada?
             </li>
             <ul>
                 <li>
-                O que fazer quando a mensagem não corresponde ao esperado?
+                O que fazer quando a mensagem nâ­ corresponde ao esperado?
                 </li>
             </ul>
         </ul>
         <li>
         Definir <i>handlers</i> (e outros objetos) para implementar
-        as alterações necessárias
+        as alteraè´¥s necessà±©as
         </li>
         <li>
         Implementar de forma gradual.
@@ -675,9 +675,9 @@ Próximos passos</tt>:
 
 <div class="rodape">
 <p>
-&copy; Docentes de Sistemas Distribuídos,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+&copy; Docentes de Sistemas Distribuì£¯s,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informà³©ca</a>,
+<a href="http://www.ist.eu">Tè¢®ico Lisboa</a><br />
 </p>
 </div>
 

@@ -68,7 +68,7 @@
                 <li>Criptografia em texto (XML)</li>
             </ul>
         </ul>
-&nbsp;&nbsp;&nbsp;&nbsp;Para executar apenas o teste da cifra assim賲ica, escrever:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Para executar apenas o teste da cifra assimétrica, escrever:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<tt>mvn test -Dtest=AsymCrypto*#testCipherPublic*</tt><br />
         &nbsp;<br />
         
@@ -81,9 +81,9 @@
                     <li><b>Assinaturas digitais</b></li>
                     <ul>
                         <li>com chave privada em <b><i>keystore</i></b></li>
-                        <li>com chave p�a em <b>certificados X.509</b></li>
+                        <li>com chave pública em <b>certificados X.509</b></li>
                     </ul>
-                    <li>Verifica袯 de assinatura de certificado</li>
+                    <li>Verificação de assinatura de certificado</li>
                 </ul>
         </ul>
 &nbsp;&nbsp;&nbsp;&nbsp;Para executar apenas os testes de assinatura digital, escrever:<br />
@@ -95,29 +95,30 @@
 <p>
 &nbsp;
 </p>
-<h1>Exerc좩o</h1>
+<h1>Exercício</h1>
 <h2>Terceira parte do projeto</h2>
 <p>
-O <a href="../proj/P3_continue.zip">ponto de continua袯</a> cont諠novos m򣴬os,
-nomeadamente o m򣴬o <tt>security</tt> onde dever⭠ser criadas classes para a implementa袯 da seguran柊(criptografia, <i>handlers</i>, etc).<br />
-Come栲 por editar os <tt>pom.xml</tt> para substituir <tt>CXX</tt> pelo identificador do grupo.<br />
-Adicionar os novos m򣴬os ao projeto no Git.
+O <a href="../proj/P3_continue.zip">ponto de continuação</a> contém novos módulos,
+nomeadamente o módulo <tt>security</tt> onde deverão ser criadas classes para a implementação da segurança
+(criptografia, <i>handlers</i>, etc).<br />
+Começar por editar os <tt>pom.xml</tt> para substituir <tt>CXX</tt> pelo identificador do grupo.<br />
+Adicionar os novos módulos ao projeto no Git.
 </p>
 
 <p>&nbsp;</p>
 
 <p>
-O objetivo deste exerc좩o 矣riar m賯dos para proteger dados com uma cifra assim賲ica.<br />
-Uma chave p�a ser�sada para cifrar os dados.<br />
-Uma chave privada ser�sada para decifrar.<br />
-Deste modo 矰oss쵥l garantir que apenas o dono da chave privada consegue ler a informa袯 cifrada.
+O objetivo deste exercício é criar métodos para proteger dados com uma cifra assimétrica.<br />
+Uma chave pública será usada para cifrar os dados.<br />
+Uma chave privada será usada para decifrar.<br />
+Deste modo é possível garantir que apenas o dono da chave privada consegue ler a informação cifrada.
 </p>
 <ol>
     <li>
-    Criar a classe <tt>CryptoUtil</tt> no m򣴬o <tt>security</tt>.
+    Criar a classe <tt>CryptoUtil</tt> no módulo <tt>security</tt>.
     </li>
     <li>
-    Criar m賯do <tt>asymCipher()</tt> que recebe dados (<tt>byte[]</tt>) e
+    Criar método <tt>asymCipher()</tt> que recebe dados (<tt>byte[]</tt>) e
     uma chave e 
     devolve esses dados cifrados.
     </li>
@@ -132,7 +133,7 @@ Deste modo 矰oss쵥l garantir que apenas o dono da chave privada consegue ler a
         </li>
     </ul>
     <li>
-    Criar o m賯do <tt>asymDecipher()</tt> na classe que recebe os dados cifrados e
+    Criar o método <tt>asymDecipher()</tt> na classe que recebe os dados cifrados e
     uma chave e
     devolve os dados decifrados.
     </li>
@@ -143,23 +144,23 @@ Deste modo 矰oss쵥l garantir que apenas o dono da chave privada consegue ler a
         </li>
     </ul>
     <li>
-    Criar testes JUnit na classe <tt>CryptoUtilTest</tt> para verificar o funcionamento correto dos m賯dos implementados.
+    Criar testes JUnit na classe <tt>CryptoUtilTest</tt> para verificar o funcionamento correto dos métodos implementados.
     </li>
     <ul>
         <li>
-        E tamb諠para verificar o que acontece quando algo n⭠est�orreto (ex. chave errada, dados adulterados, etc).
+        E também para verificar o que acontece quando algo não está correto (ex. chave errada, dados adulterados, etc).
         </li>
     </ul>
 </ol>
 
-<i>Sugest�</i>
+<i>Sugestões:</i>
 <ul>
     <li>
     Utilize este par de chaves para testes (coloque os ficheiros em <tt>src/test/resources</tt>):
     </li>
     <ul>
         <li>
-        Chave p�a armazenada em <a href="example.cer">certificado</a>
+        Chave pública armazenada em <a href="example.cer">certificado</a>
         </li>
         <!--ul>
             <li>
@@ -179,37 +180,37 @@ Deste modo 矰oss쵥l garantir que apenas o dono da chave privada consegue ler a
         </ul>
     </ul>
     <li>
-    Pode imprimir os dados bin౩os em texto com
+    Pode imprimir os dados binários em texto com
     <tt>javax.xml.bind.DatatypeConverter.printHexBinary</tt> (hexadecimal)
     ou <tt>printBase64Binary</tt> (base 64)
     </li>
     <li>
-    Melhore o c򣨧o para lidar bem com as <a href="../01-tools/exceptions/index.html">exce败s</a>.
+    Melhore o código para lidar bem com as <a href="../01-tools/exceptions/index.html">exceções</a>.
     </li>
 </ul>
 
 <p>&nbsp;</p>
 
 <p>
-<b>Pr򷨭os passos</b>:
+<b>Próximos passos</b>:
 </p>
 <!--ul>
     <li>
-    Qual 矯 tamanho limite para os dados que podem ser cifrados com a t袮ica anterior?
+    Qual é o tamanho limite para os dados que podem ser cifrados com a técnica anterior?
     </li>
     <li>
-    Criar m賯dos na <tt>CryptoUtil</tt> para cifrar/decifrar com chaves sim賲icas
+    Criar métodos na <tt>CryptoUtil</tt> para cifrar/decifrar com chaves simétricas
     </li>
     <ul>
         <li>
-        Faz sentido combinar cifra sim賲ica com assim賲ica?<br />
-        Em que situa败s?
+        Faz sentido combinar cifra simétrica com assimétrica?<br />
+        Em que situações?
         </li>
     </ul>
 </ul-->
 <ul>
     <li>
-    Criar m賯dos na classe <tt>CryptoUtil</tt> para fazer e verificar assinatura digital
+    Criar métodos na classe <tt>CryptoUtil</tt> para fazer e verificar assinatura digital
     </li>
     <ul>
         <li>
@@ -220,18 +221,18 @@ Deste modo 矰oss쵥l garantir que apenas o dono da chave privada consegue ler a
 <ul>
     <li>
     Usar a classe <tt>CryptoUtil</tt> juntamente com <i>Handlers</i> intercetores de mensagens SOAP 
-    para proteger as comunica败s no projeto
+    para proteger as comunicações no projeto
     </li>
     <ul>
         <li>
-        Adicionar a depend魣ia para o m򣴬o <tt>security</tt> onde necess౩o
+        Adicionar a dependência para o módulo <tt>security</tt> onde necessário
         </li>
         <li>
-        A comunica袯 entre <tt>mediator-ws-cli</tt> e <tt>mediator-ws</tt>
-        deve ocultar o n� do cart⭠de cr裩to
+        A comunicação entre <tt>mediator-ws-cli</tt> e <tt>mediator-ws</tt>
+        deve ocultar o número do cartão de crédito
         </li>
         <li>
-        A comunica袯 entre <tt>supplier-ws-cli</tt> e <tt>supplier-ws</tt>
+        A comunicação entre <tt>supplier-ws-cli</tt> e <tt>supplier-ws</tt>
         deve garantir a autenticidade, integridade e frescura das mensagens
         </li>
     </ul>
@@ -249,9 +250,9 @@ Deste modo 矰oss쵥l garantir que apenas o dono da chave privada consegue ler a
 
 <div class="rodape">
 <p>
-&copy; Docentes de Sistemas Distribu죯s,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Inform೩ca</a>,
-<a href="http://www.ist.eu">T袮ico Lisboa</a><br />
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
 </p>
 </div>
 

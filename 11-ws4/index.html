@@ -28,17 +28,17 @@
     <h2>Objectivos</h2>
     <ul>
         <li>Configurar o limite de tempo de espera do cliente</li>
-        <li>Invocar uma opera袯 unidireccional <i>(one-way)</i></li>
-        <li>Fazer chamadas ass쭣ronas <i>(async)</i></li>
+        <li>Invocar uma operação unidireccional <i>(one-way)</i></li>
+        <li>Fazer chamadas assíncronas <i>(async)</i></li>
     </ul>
 </div>
 
 <div class="indice">
-<p><b>̮dice:</b></p>
+<p><b>Índice:</b></p>
 <ul>
     <li><a href="#timeout">Limite de tempo</a></li>
-    <li><a href="#oneway">Opera败s unidireccionais</a></li>
-    <li><a href="#async">Opera败s ass쭣ronas</a></li>
+    <li><a href="#oneway">Operações unidireccionais</a></li>
+    <li><a href="#async">Operações assíncronas</a></li>
 </ul>
 </div>
 
@@ -51,17 +51,17 @@
 <p>
 O exemplo abaixo demonstra como configurar os tempos de espera pelas respostas de Web Services.
 No fim do tempo,
-caso a resposta n⭠tenha sido recebida,
-矡tirada uma excep袯.
+caso a resposta não tenha sido recebida,
+é atirada uma excepção.
 </p>
 <p>
 O JAX-WS distingue dois <i>timeouts</i> distintos:
 <ul>
 <li>
-<i>connection</i> - quando tempo deve esperar at石e estabelecer uma liga袯 com o servidor;
+<i>connection</i> - quando tempo deve esperar até se estabelecer uma ligação com o servidor;
 </li>
 <li>
-<i>receive</i> - quando tempo deve esperar at矲eceber a resposta a um pedido feito ao servidor.
+<i>receive</i> - quando tempo deve esperar até receber a resposta a um pedido feito ao servidor.
 </li>
 </ul>
 </p>
@@ -78,7 +78,7 @@ Exemplo:
 		Para verificar o comportamento do timeout do cliente,
 		pode experimentar
 		<a href="hello-ws_sleep.zip">este servidor</a>
-		que introduz um atraso artificial na execu袯 das suas opera败s.
+		que introduz um atraso artificial na execução das suas operações.
     </li>
 </ul>
 
@@ -86,31 +86,31 @@ Exemplo:
 
 <hr />
 
-<h2 id="oneway">Opera败s unidireccionais</h2>
+<h2 id="oneway">Operações unidireccionais</h2>
 <img src="oneway.png" height="45" />
 <p>
-Este exemplo demonstra como definir opera败s unidireccionais, ou seja,
-opera败s de Web Service que n⭠enviam resposta.
+Este exemplo demonstra como definir operações unidireccionais, ou seja,
+operações de Web Service que não enviam resposta.
 </p>
 
 <ul>
     <li>
         <a href="bye-ws_oneway_sleep.zip">Implementation-first Web Service with one-way operation that sleeps
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        Lan栲 servidor,
-        abrir o WSDL gerado e confirmar o que 矤iferente na opera袯 one-way.
+        Lançar servidor,
+        abrir o WSDL gerado e confirmar o que é diferente na operação one-way.
         No caso <i>contract-first</i>,
-        dever⭠escrever um WSDL semelhante ao que 矧erado neste exemplo,
+        deverão escrever um WSDL semelhante ao que é gerado neste exemplo,
         ou seja, 
-        a opera袯 <i>one-way</i> n⭠declara <tt>output</tt>
+        a operação <i>one-way</i> não declara <tt>output</tt>
         no <tt>portType</tt> e no <tt>binding</tt>.
     </li>
 
     <li>
         <a href="bye-ws-cli_oneway.zip">Web Service client of one-way operation
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - o cliente 矩d魴ico ao habitual,
-        mas podem confirmar que n⭠espera pela conclus⭠da execu袯 da opera袯 <i>one-way</i> no servidor
+        - o cliente é idêntico ao habitual,
+        mas podem confirmar que não espera pela conclusão da execução da operação <i>one-way</i> no servidor
     </li>
 
 </ul>
@@ -119,36 +119,36 @@ opera败s de Web Service que n⭠enviam resposta.
 
 <hr />
 
-<h2 id="async">Opera败s ass쭣ronas</h2>
+<h2 id="async">Operações assíncronas</h2>
 
 <img src="async.gif" height="120" />
 <!-- image credits: http://java.boot.by/scdjws5-guide/ch12s03.html -->
 
 <p>
-Em situa败s em que o cliente n⭠pretenda ficar bloqueado �spera da resposta do servidor, 
-矰oss쵥l faz謬o atrav豠de uma invoca袯 ass쭣rona.
+Em situações em que o cliente não pretenda ficar bloqueado à espera da resposta do servidor, 
+é possível fazê-lo através de uma invocação assíncrona.
 </p>
 
 <ul>
     <li>
         <a href="echo-ws_async.zip">Web Service for asynchronous invocations
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - Lan栲 servidor da forma habitual
+        - Lançar servidor da forma habitual
     </li>
 
     <li>
         <a href="echo-ws-cli_async.zip">Web Service client of asynchronous operations
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - O cliente 矤iferente do habitual,
-        porque n⭠fica bloqueado �spera da resposta do servidor.
+        - O cliente é diferente do habitual,
+        porque não fica bloqueado à espera da resposta do servidor.
     </li>
 
 </ul>
 
 <p>
-Uma poss쵥l maneira de fazer invoca败s ass쭣ronas 矡trav豠dos m賯dos com sufixo <tt>Async</tt>. 
-Para que estes m賯dos sejam gerados 矮ecess౩o do lado do cliente indicar um ficheiro de <i>binding</i>. 
-Os <i>stubs</i> assim gerados passam a incluir tanto os m賯dos para invoca袯 sincrona como ass쭣rona.
+Uma possível maneira de fazer invocações assíncronas é através dos métodos com sufixo <tt>Async</tt>. 
+Para que estes métodos sejam gerados é necessário do lado do cliente indicar um ficheiro de <i>binding</i>. 
+Os <i>stubs</i> assim gerados passam a incluir tanto os métodos para invocação sincrona como assíncrona.
 </p>
 
 <pre class="prettyprint lang-xml">
@@ -163,13 +163,13 @@ Os <i>stubs</i> assim gerados passam a incluir tanto os m賯dos para invoca袯 s
 </pre>
 
 <p>
-Para uma invoca袯 ass쭣rona, 
-o cliente deve executar um m賯do com o sufixo <tt>Async</tt> e 
-de seguida usar o m賯do <tt>Response.isDone()</tt> para verificar se a resposta j�hegou. 
-Nesta solu袯 o cliente invoca o m賯do remoto sem ficar bloqueado, 
-ficando respons൥l por verificar quando o servidor j�espondeu atrav豠do objecto <tt>Response</tt>. 
-S񟣥pois da resposta ter chegado, 
-pode ent⭠obter o seu resultado atrav豠do objecto <tt>Response</tt>. 
+Para uma invocação assíncrona, 
+o cliente deve executar um método com o sufixo <tt>Async</tt> e 
+de seguida usar o método <tt>Response.isDone()</tt> para verificar se a resposta já chegou. 
+Nesta solução o cliente invoca o método remoto sem ficar bloqueado, 
+ficando responsável por verificar quando o servidor já respondeu através do objecto <tt>Response</tt>. 
+Só depois da resposta ter chegado, 
+pode então obter o seu resultado através do objecto <tt>Response</tt>. 
 </p>
 
 <pre class="prettyprint lang-java">
@@ -189,10 +189,10 @@ pode ent⭠obter o seu resultado atrav豠do objecto <tt>Response</tt>.
 </pre>
 
 <p>
-Um outro modelo de funcionamento 矯 registo de um objecto de <i>callback</i> 
-do tipo <tt>AsyncHandler</tt> aquando da execu袯 da chamada ass쭣rona.
+Um outro modelo de funcionamento é o registo de um objecto de <i>callback</i> 
+do tipo <tt>AsyncHandler</tt> aquando da execução da chamada assíncrona.
 Quando a resposta chega, 
-um m賯do desse objecto 矩nvocado.
+um método desse objecto é invocado.
 </p>
 
 <pre class="prettyprint lang-java">
@@ -230,25 +230,25 @@ um m賯do desse objecto 矩nvocado.
 
 <p>
 Em ambos os casos, 
-a resposta 矯btida invocando o m賯do <tt>response.get()</tt> que lan柠uma excep袯 caso esta tenha sido retornada pelo m賯do remoto. 
-Caso o m賯do remoto retorne <tt>Void</tt>, 
-este m賯do lancar�ma <tt>NullPointerException</tt>. 
-Caso contr౩o, 
-o objecto retornado pode ser obtido com o m賯do <tt>getReturn()</tt>.
+a resposta é obtida invocando o método <tt>response.get()</tt> que lança uma excepção caso esta tenha sido retornada pelo método remoto. 
+Caso o método remoto retorne <tt>Void</tt>, 
+este método lancará uma <tt>NullPointerException</tt>. 
+Caso contrário, 
+o objecto retornado pode ser obtido com o método <tt>getReturn()</tt>.
 </p>
 <p>
-Repare que n⭠矰reciso alterar o servidor para que o cliente possa fazer invoca败s ass쭣ronas.
+Repare que não é preciso alterar o servidor para que o cliente possa fazer invocações assíncronas.
 </p>
 
 <p>
 &nbsp;
 </p>
 <hr />
-<h2>Exerc좩o</h2>
+<h2>Exercício</h2>
 <h3>Quarta parte do projeto</h3>
 
 <p>
-O objetivo deste exerc좩o 矲eplicar o mediador e implementar o mecanismo de provas de vida entre mediador prim౩o e secund౩o.
+O objetivo deste exercício é replicar o mediador e implementar o mecanismo de provas de vida entre mediador primário e secundário.
 </p>
 
 <p>
@@ -256,10 +256,11 @@ O objetivo deste exerc좩o 矲eplicar o mediador e implementar o mecanismo de pr
 </p>
 <ol type="a">
     <li>
-    A forma mais simples de permitir m�las inst᭣ias do mediador 爠   parametrizar as propriedades de configura袯 com um n� de inst᭣ia, tal como se fez para o <tt>supplier-ws</tt>.
+    A forma mais simples de permitir múltiplas instâncias do mediador é
+    parametrizar as propriedades de configuração com um número de instância, tal como se fez para o <tt>supplier-ws</tt>.
     </li>
     <li>
-    Adicionar as seguintes defini败s ao <tt>pom.xml</tt> 
+    Adicionar as seguintes definições ao <tt>pom.xml</tt> 
     (substituir CXX pelo identificador do grupo):<br />
 <pre class="prettyprint lang-xml">
     ...
@@ -279,16 +280,16 @@ O objetivo deste exerc좩o 矲eplicar o mediador e implementar o mecanismo de pr
     </li>
     <ul>
         <li>
-        O porto do URL do servi歠foi trocado para 8071, por omiss⭮
+        O porto do URL do serviço foi trocado para 8071, por omissão.
         </li>
         <li>
-        O nome do servi歠n⭠inclui o n� de inst᭣ia
-        porque o mediador secund౩o n⭠se regista no UDDI.
-        O secund౩o "n⭠existe" para os clientes.
+        O nome do serviço não inclui o número de instância
+        porque o mediador secundário não se regista no UDDI.
+        O secundário "não existe" para os clientes.
         </li>
     </ul>
     <li>
-    Para lan栲 o Mediador Prim౩o:
+    Para lançar o Mediador Primário:
     </li>
     <ul>
         <li>
@@ -296,86 +297,86 @@ O objetivo deste exerc좩o 矲eplicar o mediador e implementar o mecanismo de pr
         </li>
         <li>
         <tt>mvn exec:java</tt><br />
-        Por omiss⭬ ser� inst᭣ia 1, 
-        que fica �scuta de pedidos no porto 8071 e 
+        Por omissão, será a instância 1, 
+        que fica à escuta de pedidos no porto 8071 e 
         que se regista com o nome CXX_Mediator.
         </li>
     </ul>
     <li>
-    Para lan栲 o Mediador Secund౩o:
+    Para lançar o Mediador Secundário:
     </li>
     <ul>
         <li>
         <tt>mvn exec:java <b>-Dws.i=2</b></tt><br />
-        A inst᭣ia <b>2</b> fica �scuta de pedidos no porto 807<b>2</b> e n⭠se regista no UDDI.<br />
+        A instância <b>2</b> fica à escuta de pedidos no porto 807<b>2</b> e não se regista no UDDI.<br />
         </li>
     </ul>
 </ol>
 <p>
-Cada inst᭣ia, ao arrancar, deve imprimir para a consola uma 
-mensagem que indique se est� funcionar como prim౩o ou
-como secund౩o
+Cada instância, ao arrancar, deve imprimir para a consola uma 
+mensagem que indique se está a funcionar como primário ou
+como secundário
 </p>
 <p>
-A partir deste momento j�xistem duas inst᭣ias do mediador a correr,
-mas ambas v⭠ter estados diferentes, pelo que n⭠s⭠ainda r诬icas.
-A replica袯 de estado ser�ratada depois.
+A partir deste momento já existem duas instâncias do mediador a correr,
+mas ambas vão ter estados diferentes, pelo que não são ainda réplicas.
+A replicação de estado será tratada depois.
 </p>
 
 <p>
-2) Pretende-se agora modificar o contrato WSDL do mediador para permitir uma opera袯 unidireccional de prova de vida: <tt>imAlive</tt>.
+2) Pretende-se agora modificar o contrato WSDL do mediador para permitir uma operação unidireccional de prova de vida: <tt>imAlive</tt>.
 </p>
 <ol type="a">
     <li>
-    Criar nova vers⭠do WSDL. 
-    Pretende-se manter a compatibilidade com as opera败s existentes,
-    pelo a modifica袯 seguinte deve apenas <b>acrescentar</b>
-    elementos e opera败s.
+    Criar nova versão do WSDL. 
+    Pretende-se manter a compatibilidade com as operações existentes,
+    pelo a modificação seguinte deve apenas <b>acrescentar</b>
+    elementos e operações.
     </li>
     <li>
-    Sem alterar as opera败s j�efinidas no WSDL, 
-    adicionar uma nova opera袯 <tt>imAlive</tt>.
+    Sem alterar as operações já definidas no WSDL, 
+    adicionar uma nova operação <tt>imAlive</tt>.
     </li>
     <li>
     Fazer <tt>mvn generate-sources</tt>
     </li>
     <li>
-    Implementar m賯do <tt>imAlive()</tt> no mediador onde:
+    Implementar método <tt>imAlive()</tt> no mediador onde:
     </li>
     <ul>
         <li>
-        Se for mediador prim౩o, 
-        retorna sem executar qualquer instru袯.
+        Se for mediador primário, 
+        retorna sem executar qualquer instrução.
         </li>
         <li>
-        Se for mediador secund౩o, 
+        Se for mediador secundário, 
         guarda a data da hora da chegada dessa prova de vida 
-        (<i>timestamp</i> do instante em que o m賯do foi executado).
+        (<i>timestamp</i> do instante em que o método foi executado).
         </li>
     </ul>
     <li>
-    Adicionar m賯do <tt>imAlive()</tt> no MediatorClient que executa a chamada do m賯do sobre o <i>stub</i>.
+    Adicionar método <tt>imAlive()</tt> no MediatorClient que executa a chamada do método sobre o <i>stub</i>.
     </li>
 </ol>
 
 <p>
-3) Pretende-se agora criar uma classe <tt>LifeProof.java</tt> que faz o lan栭ento de provas de vida do mediador prim౩o para secund౩o.
+3) Pretende-se agora criar uma classe <tt>LifeProof.java</tt> que faz o lançamento de provas de vida do mediador primário para secundário.
 </p>
 <ol type="a">
     <li>
-    Para as provas de vida, ser�ecess౩o ter uma atividade que se executa de forma independente.<br /> 
+    Para as provas de vida, será necessário ter uma atividade que se executa de forma independente.<br /> 
     Esta atividade deve estender a classe <i>Thread</i> ou <i>TimerTask</i> do Java:
     </li>
     <ul>
         <li>
         <a href="thread.zip">thread
         <img src="../_img/zip.png" alt="ZIP"></a>
-        - cria袯 de novas tarefas<br />
+        - criação de novas tarefas<br />
         </li>
         <li>
         <a href="timer.zip">timer
         <img src="../_img/zip.png" alt="ZIP"></a>
-        - cria袯 de novas tarefas temporizadas<br />
+        - criação de novas tarefas temporizadas<br />
         </li>
     </ul>
     <li>
@@ -384,48 +385,48 @@ A replica袯 de estado ser�ratada depois.
     no <tt>mediator-ws</tt>.
     </li>
     <li>
-    Implementar o m賯do <tt>run</tt> da classe para que, se for o mediador prim౩o:
+    Implementar o método <tt>run</tt> da classe para que, se for o mediador primário:
     </li>
     <ul>
         <li>
-        Cria um cliente de mediador que aponta para o mediador secund౩o<br />
-        (atrav豠de conven袯 estabelecida ou argumento expl좩to
-        - n⭠usa UDDI porque se assume que 
-        o prim౩o conhece o secund౩o)
+        Cria um cliente de mediador que aponta para o mediador secundário<br />
+        (através de convenção estabelecida ou argumento explícito
+        - não usa UDDI porque se assume que 
+        o primário conhece o secundário)
         </li>
         <li>    
-        De 5 em 5 segundos (valor configur൥l) chama o 
-        m賯do <tt>imAlive()</tt> no servidor atrav豠do cliente
+        De 5 em 5 segundos (valor configurável) chama o 
+        método <tt>imAlive()</tt> no servidor através do cliente
         </li>
     </ul>
     <li>
-    Modificar a classe <tt>MediatorApp</tt> de modo a lan栲 a classe <tt>LifeProof</tt> antes de ficar �scuta de pedidos.
+    Modificar a classe <tt>MediatorApp</tt> de modo a lançar a classe <tt>LifeProof</tt> antes de ficar à escuta de pedidos.
     </li>
 </ol>
 
 <p>
 <b>
-Pr򷨭os passos:
+Próximos passos:
 </b>
 </p>
 
 <p>
-4) Acrescentar �lasse <tt>LifeProof.java</tt> o comportamento para o caso de ser o mediador secund౩o
+4) Acrescentar à classe <tt>LifeProof.java</tt> o comportamento para o caso de ser o mediador secundário
 </p>
 <!--
 , i.e.:
 </p>
 <ol> 
-    - Detetar a falha do mediador principal por aus魣ia de provas de vida recebidas
-    - Substituir no UDDI o mediador prim౩o pelo secund౩o
-    - Passar o mediador secund౩o para "modo prim౩o"
+    - Detetar a falha do mediador principal por ausência de provas de vida recebidas
+    - Substituir no UDDI o mediador primário pelo secundário
+    - Passar o mediador secundário para "modo primário"
 </ol>
 -->
 
 <p>
 5) Modificar novamente o contrato WSDL para conter as 
-opera败s auxiliares de atualiza袯 de estado do mediador secund౩o.<br />
-Estas opera败s devem ser unidireccionais.
+operações auxiliares de atualização de estado do mediador secundário.<br />
+Estas operações devem ser unidireccionais.
 </p>
 <ul>
     <li><tt>
@@ -437,35 +438,35 @@ Estas opera败s devem ser unidireccionais.
 </ul>
 
 <p>
-6) Implementar a l򦨣a de atualiza败s entre os dois mediadores, tendo em aten袯 a execu袯 de pedidos repetidos avaliando a idempot魣ia das opera败s
+6) Implementar a lógica de atualizações entre os dois mediadores, tendo em atenção a execução de pedidos repetidos avaliando a idempotência das operações
 </p>
 
 <p>
-7) Utilizar as invoca败s de opera败s com <i>timeout</i> para alterar o <tt>MediatorClient</tt> de modo a 
-garantir um <i>front-end</i> com a sem᭴ica pretendida no enunciado, tendo em aten袯 os v౩os tipos de exce败s de comunica袯.
+7) Utilizar as invocações de operações com <i>timeout</i> para alterar o <tt>MediatorClient</tt> de modo a 
+garantir um <i>front-end</i> com a semântica pretendida no enunciado, tendo em atenção os vários tipos de exceções de comunicação.
 </p>
 <ul>
 <!--li>
-Apenas as opera败s principais
+Apenas as operações principais
 - i.e. aquelas que se destinam a ser chamadas dos clientes para o mediador -
 necessitam de ser tolerantes a faltas.
 </li-->
 <li>
 Ou seja, tornar o cliente tolerante a faltas de
-quebra de liga袯 TCP dos pedidos-respostas HTTP
+quebra de ligação TCP dos pedidos-respostas HTTP
 </li>
 <li>
-Os intervalos de tempo devem ser configur൥is
+Os intervalos de tempo devem ser configuráveis
 </li>
 <li>
-Mais informa袯 sobre <a href="../01-tools/exceptions/index.html">tratamento de exce败s</a> e 
-sobre <a href="../05-ws1/junit-it/ws-exceptions.html">exce败s de Web Services</a>.
+Mais informação sobre <a href="../01-tools/exceptions/index.html">tratamento de exceções</a> e 
+sobre <a href="../05-ws1/junit-it/ws-exceptions.html">exceções de Web Services</a>.
 </li>
 </ul>
 
 
 <p>
-<b>Continua袯 de bom trabalho!</b>
+<b>Continuação de bom trabalho!</b>
 </p>
 
 
@@ -480,9 +481,9 @@ sobre <a href="../05-ws1/junit-it/ws-exceptions.html">exce败s de Web Services</
 
 <div class="rodape">
 <p>
-&copy; Docentes de Sistemas Distribu죯s,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Inform೩ca</a>,
-<a href="http://www.ist.eu">T袮ico Lisboa</a><br />
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
 </p>
 </div>
 

@@ -43,10 +43,110 @@
 <!-- resposta mais recente em primeiro lugar -->
 <ol>
 
-<!--li>
+<li>
+<p><strong>Pergunta:</strong>
+Como separar a configuração da cadeia de <i>handlers</i>
+do mediator cliente da do mediator servidor ?
+<font color="red">[NOVA]</font> 
+</p>
+<p><strong>Resposta:</strong>
+A geração de código da ferramenta <tt>wsimport</tt>
+gera o código correspondente ao WSDL num <i>package</i> que
+deriva do <i>namespace</i>.<br />
+Como o mediator cliente e mediator servidor dependem do mesmo
+WSDL, o código é gerado duas vezes com o mesmo <i>package</i>.
+E pode ser diferente, caso a configuração das cadeias de 
+<i>handlers</i> seja diferente.
+</p>
+<p>
+Para evitar esta sobreposição,
+<b>que leva a que a configuração da cadeia de <i>handlers</i>
+do mediator cliente possa ser ignorada</b>,
+é necessário forçar a geração de código
+do mediator cliente a usar um <i>package</i> diferente.
+Esta configuração faz-se no <tt>pom.xml</tt>,
+na configuração do <i>plug-in</i> de JAX-WS:
+</p>
+<pre class="prettyprint lang-xml">
+                &lt;configuration&gt;
+                    &lt;!-- http://www.mojohaus.org/jaxws-maven-plugin/wsimport-mojo.html --&gt;
+                    &lt;wsdlDirectory&gt;${wsdl.directory}&lt;/wsdlDirectory&gt;
+                    &lt;wsdlFiles&gt;
+                        &lt;wsdlFile&gt;${wsdl.filename}&lt;/wsdlFile&gt;
+                    &lt;/wsdlFiles&gt;
+                    <b>&lt;packageName&gt;org.komparator.mediator.ws.client&lt;/packageName&gt;</b>
+                &lt;/configuration&gt;
+</pre>
+</p>
+</li>
+<br/>
+
+
+<li>
+<p><strong>Pergunta:</strong>
+O que significa que um parâmetro deve ser <b>configurável</b> ?
+<font color="red">[nova]</font> 
+</p>
+<p><strong>Resposta:</strong>
+Significa que deve poder ser ajustado durante a demonstração alterando o valor
+apenas num único ficheiro.<br />
+Isto significa que devem ser usadas constantes no código
+e/ou ficheiros de configuração e/ou propriedades de sistema.<br />
+Em resumo: qualquer mecanismo que permita mudar o valor de forma rápida.
+</p>
+<p>
+Os parâmetros configuráveis permitirão a cada grupo
+"afinar" o funcionamento do seu trabalho na preparação para a demonstração.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Quantas vezes deve o cliente reenviar os pedidos ?
+<font color="red">[nova]</font>
+</p>
+<p><strong>Resposta:</strong>
+O cliente deve estar em ciclo a tentar reenviar o pedido,<br />
+consultando o UDDI antes de enviar nova tentativa.<br />
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Quanto tempo deve o cliente esperar entre cada reenvio ?
+<font color="red">[nova]</font>
+</p>
+<p><strong>Resposta:</strong>
+Entre cada tentativa deve esperar algum tempo.<br />
+Este tempo irá depender do tempo máximo de recuperação do servidor,
+que por sua vez depende do período do "I'm Alive" e do tempo máximo de propagação de mensagem.<br />
+Todos os intervalos de tempo envolvidos neste comportamento devem ser configuráveis.
+</p>
+</li>
+<br/>
+
+<li>
+<p><strong>Pergunta:</strong>
+Como pode ser enviado o identificador único de um dado pedido ao mediador?
+<font color="red">[nova]</font>
+</p>
+<p><strong>Resposta:</strong>
+O envio deste identificador é um requisito para poder
+ter a semântica "no-máximo-uma-vez" do cliente para o servidor.<br />
+A forma mais transparente é através de um <i>handler</i> que acrescenta 
+esse valor às mensagens SOAP 
+(à semelhança do que se fazia para garantir a frescura das mensagens na segurança).<br />
+<!--Outra possibilidade é, nas novas operações, incluir um argumento que é esse id.-->
+</p>
+</li>
+<br/>
+
+<li>
 <p><strong>Pergunta:</strong>
 É possível comunicar com Web Services sem <i>stubs</i> ?
-<font color="red">[NOVA]</font> 
+<font color="red">[nova]</font>
 </p>
 <p><strong>Resposta:</strong>
 Sim, podem-se construir mensagens SOAP de forma manual e 
@@ -55,13 +155,12 @@ Mais informação nos exemplos SOAP da aula de <i>Handlers</i><br />
 (ver <tt>javax.xml.soap.SOAPConnection</tt>).
 </p>
 </li>
-<br/-->
+<br/>
 
 <li>
 <p><strong>Pergunta:</strong>
 O <tt>mediator-ws</tt> pode depender do <tt>mediator-ws-cli</tt>?<br />
 Não é gerada uma dependência circular?
-<font color="red">[NOVA]</font> 
 </p>
 <p><strong>Resposta:</strong>
 Na realidade o cliente do mediador não depende do mediador, mas sim do contrato WSDL.<br />
@@ -73,7 +172,6 @@ Desta forma é possível que o módulo <tt>mediator-ws</tt> possa depender de <t
 <li>
 <p><strong>Pergunta:</strong>
 É possível modificar o WSDL para acrescentar operações de atualização de estado (ex. carrinho de compras)?
-<font color="red">[NOVA]</font> 
 </p>
 <p><strong>Resposta:</strong>
 Sim, é possível.
@@ -149,8 +247,7 @@ Não.
 <li>
 <p><strong>Pergunta:</strong>
 Já experimentei vários métodos para extrair uma chave privada de um keystore e continuo com problemas. O que se pode estar a passar?
-<font color="red">[NOVA]</font> 
-</p>
+<font color="red">[nova]</font> </p>
 <p><strong>Resposta:</strong>
 Quando o maven copia os ficheiros keystore (.jks) para o directório de construção assume que estes são ficheiros de texto e faz uma conversão automática de alguns caracteres ASCII, causando a corrupção dos ficheiros keystore. </br>
 Para resolver este problema pode-se: </p></br>

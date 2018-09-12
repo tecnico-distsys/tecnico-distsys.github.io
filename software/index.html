@@ -27,11 +27,9 @@
 -->
 
 <p>
-Para realizar os exercícios de laboratório e
-o projecto de SD é necessário instalar um conjunto de ferramentas e
-servidores. Todo o software listado abaixo está disponível em sistemas Windows,
-Linux e
-Mac.<br/>
+Para realizar os exercícios de laboratório e o projecto de SD é necessário instalar um conjunto de ferramentas e servidores. 
+Todo o software listado abaixo está disponível em sistemas Windows,
+Linux e Mac.<br/>
 </p>
 
 <p>
@@ -64,8 +62,9 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <li>Obter</li>
         <ul>
             <li>
-                <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8u162</a>
-                <small>(preferência por esta versão mas qualquer JDK 8 recente deverá funcionar)</small>
+                <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8u181</a>
+                <small>(preferência por esta versão mas qualquer JDK 8 recente deverá funcionar)</small><br />
+				<small>(não usar Java 9 ou seguintes)</small>
             </li>
         </ul>
         <li>Instalar</li>
@@ -85,7 +84,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <li>Obter</li>
         <ul>
             <li>
-                <a href="http://maven.apache.org/download.cgi">MVN 3.3.9</a>
+                <a href="http://maven.apache.org/download.cgi">MVN 3.5.3</a>
                 <small>(preferência por esta versão por ser a que é utilizada internamente no Eclipse recomendado)</small>
             </li>
         </ul>
@@ -126,11 +125,11 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <ul>
         <li>Obter o arquivo que contém o executável de Eclipse e ficheiros associados:</li>
         <ul>
-            <li><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2">Eclipse JEE  ‎4.7.2 - Oxygen.2</a>
+            <li><a href="https://www.eclipse.org/downloads/packages/release/photon/r/eclipse-ide-java-ee-developers">Eclipse JEE  ‎4.8 - Photon</a>
 			<small></small></li>
 			<ul>
-				<li>Atenção: se tem instalado no seu sistema operativo o JDK 32 bits, deve obter o Eclipse 32 bits; se instalou o JDK 64 bits, deve obter o Eclipse 64 bits.</li>
-				<li>Nota: o arquivo para Windows vem em formato <b>.zip</b>, para outros sistemas operativos vem em <b>.tar.gz</b>.</li>
+				<li>Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
+				<!--li>Nota: o arquivo para Windows vem em formato <b>.zip</b>, para outros sistemas operativos vem em <b>.tar.gz</b>.</li-->
 			</ul>
         </ul>
         <li>Instalar:</li>
@@ -149,13 +148,13 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
             <ul>
                 <li>Window -> Preferences -> Java -> Installed JREs -> Add...</li>
                 <li>Indicar o caminho até ao diretório do JDK:
-                    ex. <tt>C:\Java\jdk1.8.0_152</tt></li>
+                    ex. <tt>C:\Java\jdk1.8.0_181</tt></li>
                 <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
             </ul>
             <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
             <li><b>Conectores m2e</b> (maven 2 eclipse)</li>
             <ul>
-                <li>Window -> Preferences -> Maven -> Discovery e clicar em "Open catalog".</li>
+                <li>Window -> Preferences -> Maven -> Discovery, "Open catalog".</li>
                 <li>Seleccionar:</li>
                 <ul>
                     <li>m2e connector for jaxws-maven-plugin</li><!-- if not installed, handlers config file may not be found on Run As, Maven, exec:java<!-->
@@ -163,7 +162,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                     <li>m2e connector for maven-remote-resources-plugin</li>
 					<li>m2e connector for org.codehaus.mojo:jaxb2-maven-plugin and org.jvnet.jaxb2.maven2:maven-jaxb2-plugin</li>
                     <li>m2e-apt</li>
-                    <li>m2e-egit</li>
+                    <li>m2e-egit <small>&#x26A0; not working on 2018-08-10. Try to install. If there is an <a href="2018-08-10_maven_egit_problem.png">error</a>, skip and try again later.</small></li>
                 </ul>
             </ul>
             <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
+
+        <title>Kerberos</title>
+
+        <meta name="Generator" content="Notepad">
+        <meta name="Author" content="Rui Duarte">
+        <meta name="Keywords" content="Kerberos">
+        <meta name="Description" content="Kerberos">
+
+    </head>
+
+    <body>
+        <div class="contexto">
+            <p>
+                <a href="../../index.html">Labs SD</a> &gt;
+                <a href="../index.html">Criptografia</a>
+            </p>
+        </div>
+
+        <div class="titulo">
+            <h1>Kerberos</h1>
+        </div>
+
+
+        <hr />
+
+	
+O Kerberos é um protocolo de autenticação em redes não seguras, baseado em bilhetes (<i>tickets</i>), e que permite identificar os utilizadores de forma segura. 
+O Kerberos usa apenas cifra simétrica. 
+Existem várias versões de Kerberos disponíveis, sendo a versão 5 (V5) a mais recente.
+De forma simplificada, tanto o cliente como o servidor de uma determinada aplicação provam a sua identidade entre si através do acesso a um servidor Kerberos. 
+As mensagens do protocolo Kerberos são protegidas contra ataques de intercepção e repetição.
+A interacção entre um cliente e o servidor Kerberos V5 é ilustrada na figura seguinte.
+
+<p> </p>
+
+<img src="kerberos.jpg" alt="kerberos" width="600">
+
+<p> </p>
+
+<p>
+O detalhe do protocolo pode ser consultado nas aulas téoricas.
+</p>
+
+<hr />
+
+<!--H2> Protocolo </H2>
+
+<p>1. O cliente pede ao AS com o ID do utilizador. </p>
+<p>2. O AS verifica se o utilizador existe na lista de utilizadores autorizados. O AS gera uma <i>hash</i> da password do utilizador, e envia as seguintes mensagens ao utilizador: chave da sessão TGS (Ticket-Granting Service) cifrada com a chave do utilizador, TGT (Ticket-Granting-Ticket) que inclui o ID do utilizador + endereço rede + periodo de validade do ticket + chave de sessão TGS. </p>
+<p>3. Assim que o utilizador receber as mensagens, decifra a mensagem A com a sua chave secreta gerada a partir da palavra passe do utilizador. Com isto, o utilizador consegue recuperar a chave de sessão TGS do cliente. Esta chave de sessão TGS é usada para interacção com o TGS. O utilizador não consegue decifrar a mensagem B, pois foi cifrada com a chave secreta do TGS.</p-->
+ 
+<H2>Kerberos simplificado</H2>
+
+<p> </p>
+É possível simplificar o Kerberos para ficar apenas com o componente Saut.
+
+<!--O Kerberos foi inicialmente implementado em C, sendo a implementação simplificada em Java disponibilizada pelo Kerby.
+<p> </p>
+-->
+A figura seguinte ilustra a troca de mensagens da versão simplificada (<i>slide</i> das aulas teóricas).
+A tabela no canto superior direito da figura indica a distribuição de chaves.
+
+<p> </p>
+
+<img src="kerby.png" alt="kerberos" width="600">
+
+<p> </p>
+
+<p>
+Para ajudar na utilização do Kerberos, foi criada a biblioteca <b><tt>kerby-lib</tt></b> que contém
+os <i>stubs</i> de invocação do web service já gerados, bem como classes utilitárias, a saber:
+
+<ul>
+<li>
+<tt>Ticket</tt> e <tt>Auth</tt> representam as estruturas de dados do Kerberos.
+<tt>SessionKey</tt> e <tt>RequestTime</tt> representam as restantes estruturas.
+</li>
+<li>
+<tt>TicketView</tt> e <tt>AuthView</tt> (e restantes <i>views</i>) representam cópias dos dados, e podem ser transformadas em XML.
+</li>
+<li>
+<tt>CipheredView</tt> permite proteger o conteúdo de uma <i>view</i> com uma cifra de dados.
+</li>
+</ul>
+
+</p>
+
+<p>Restantes módulos do Kerberos simplificado:</p>
+<ul>
+<li>Kerby-contract: WSDL do servidor.</li>
+<li>Kerby-lib: depende de Kerby-ws-cli. Os <i>handlers</i> vão depender de Kerby-lib.</li>
+<ul>
+<li>  A classe <tt>SecurityHelper</tt> contém vários métodos estáticos para gerar chaves e cifrar/decifrar Views com uma chave.</li>
+<li>  A classe <tt>CipherClerk</tt> contém vários métodos para marshalling/unmarshimalling de CipheredViews de/para XML/Bytes.</li>
+</ul>
+<li>Kerby-ws: servidor que está a correr na RNL. Ao arrancar, carrega os utilizadores e passwords a partir de um txt, gera chaves para cada um e mantém em memória. Implementa a Operação RequestTicket, que devolve uma SessionKeyandTicketView, de acordo com o esquema acima.</li>
+<li>  Kerby-ws-cli: <i>stubs</i> para invocação do Web Service.</li>
+</ul>
+
+<p>
+Informação mais detalhada sobre as classes da biblioteca:
+<ul>
+    <li><a href="apidocs/index.html">JavaDoc</a></li>
+</ul>
+</p>
+        <hr />
+
+        <div class="rodape">
+            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UL</p>
+        </div>
+
+	</body>
+</html>

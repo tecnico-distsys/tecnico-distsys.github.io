@@ -37,60 +37,45 @@
 <p>
 <b>Concorrência</b>
 </p>
-Com a concorrência procura-se o aumento do desempenho de uma aplicação através da divisão de trabalho 
+Com a concorrência procura-se o aumento do desempenho de uma aplicação através da divisão de trabalho
 por várias tarefas que se executam em simultâneo,
 tirando partido de eventuais múltiplos processadores.
 </p>
 <p>
 <b>Sincronização</b>
 </p>
-Na partilha de dados entre processadores (ou tarefas) 
-é necessário garantir que os dados estão coerentes aquando da sua escrita.<br />
-Caso a sincronização não seja implementada, 
-pode ocorrer interferência entre tarefas que causam 
-erros de consistência de dados em memória.
+Na partilha de dados entre tarefas
+é necessário garantir que os dados estão consistentes.<br />
+Caso a sincronização não seja implementada,
+pode ocorrer interferência entre tarefas, levando a situações de inconsistência nos dados partilhados.
 </p>
 <p>
-Por outro lado, 
-a presença de mecanismos de sincronização pode originar contenção 
+Por outro lado,
+a presença de mecanismos de sincronização pode originar contenção
 quando duas ou mais tarefas tentam aceder ao mesmo recurso em simultâneo.<br />
-Se apenas existir leitura de dados partilhados por parte das tarefas concorrentes, 
+Se apenas existir leitura de dados partilhados por parte das tarefas concorrentes,
 estes problemas não se colocam.
 </p>
 
 <p>&nbsp;</p>
 <h3>Sincronização em Java</h3>
 <p>
-Cada objeto Java tem um <b>trinco lógico</b> próprio,
-que pode ser adquirido através da primitiva <tt>synchronize</tt>.
+Cada objeto Java tem um <b>trinco lógico</b> (<i>mutex</i>) próprio,
+que pode ser (implicitamente) adquirido através da primitiva <tt>synchronized</tt>.
 </p>
 <p>
-As seguintes palavras chave da linguagem são importantes:
-</p>
-<ul>
-    <li>
-    <tt>synchronized</tt>: 
-    é aplicada a métodos do objeto e 
-    oferece um mecanismo de exclusão mútua a um recurso partilhado, 
+A primitiva <tt>synchronized</tt> é aplicada a métodos do objeto e
+    oferece um mecanismo de exclusão mútua a um recurso partilhado,
     que previne a reordenação do código pelo compilador.<br />
     Um método sincronizado adquire o trinco do objeto no início de execução e
     liberta-o no fim.
-    <!--Em particular, 
-    os métodos do construtor não podem ser sincronizados.-->
-    </li>
-    <li>
-    <tt>volatile</tt>: 
-    é aplicada a variáveis para indicar ao compilador que o valor da variável pode ser alterado concorrentemente.<br />
-    Uma variável volátil deve ser sempre obtida a partir da memória principal sem usar o valor de uma <i>cache</i> local.
-    </li>
-</ul>
-
+</p>
 <p>
 O seguinte exemplo mostra uma utilização da sincronização em Java:
 </p>
 <pre class="prettyprint lang-java">
 public class MySynchronizedCounter {
-    private volatile int c = 0;
+    private int c = 0;
 
     public synchronized void increment() {
         c++;
@@ -104,30 +89,35 @@ public class MySynchronizedCounter {
         return c;
     }
 }
-</pre> 
+</pre>
 <p>
-Os métodos <tt>increment()</tt>, 
-<tt>decrement()</tt> e 
+Os métodos <tt>increment()</tt>,
+<tt>decrement()</tt> e
 <tt>value()</tt> da classe <tt>MySynchronizedCounter</tt> estão sincronizados.
-Isto significa que, caso um dos 3 métodos seja invocado, o trinco do objeto é adquirido, 
-e se houver outra tarefa a tentar aceder a qualquer um deles, 
+Isto significa que, caso um dos 3 métodos seja invocado, o trinco do objeto é adquirido,
+e se houver outra tarefa a tentar aceder a qualquer um deles,
 ficará bloqueada à espera que o recurso/método seja libertado pela primeira invocação.
 </p>
 <p>
-Também é possível usar o <tt>synchronize</tt> para adquirir o trinco apenas numa parte do código.
+Também é possível usar o <tt>synchronized</tt> para adquirir o trinco apenas numa parte do código.
 </p>
 <pre class="prettyprint lang-java">
     // acquire lock of object referenced by 'this'
-    synchronize (this) {
+    synchronized (this) {
 
         // access shared variables protected by lock
 
     }
     // release lock
-</pre> 
+</pre>
+
+<p>
+No contexto de uma região <tt>synchronized</tt>, é também possível utilizar variáveis de condição, usando as primitivas <tt>wait</tt>, <tt>notify</tt> e <tt>notifyAll</tt>.
+</p>
+
 
 <p>&nbsp;</p>
-<h3>Coleções de objetos no contexto de múltiplas tarefas</h3>
+<h3>Concorrência com coleções</h3>
 <p>
 As coleções são objetos que armazenam vários outros objetos.
 Algumas das coleções mais conhecidas no Java são:
@@ -147,11 +137,11 @@ Cada coleção implementa uma interface que dita o tipo de acesso esperado:
     <li>
     etc.
     </li>
-</ul>    
+</ul>
 <p>
-Por omissão, 
-as coleções não são sincronizadas pois este mecanismo retira desempenho ao programa.
-<!--Como a grande maioria das classes corre em aplicações com uma tarefa, 
+Por omissão,
+as coleções as coleções não são sincronizadas, pois assim conseguem melhor desempenho sequencial.
+<!--Como a grande maioria das classes corre em aplicações com uma tarefa,
 as novas coleções de classes (List, Set, Map, etc.) não suportam esse mecanismo.</p>-->
 </p>
 
@@ -162,16 +152,16 @@ Para construir uma coleção sincronizada usa-se um método especial da classe <
 que cria a nova coleção "embrulhando" uma coleção do mesmo tipo:
 </p>
 <pre class="prettyprint lang-java">
-    
+
     List synchronizedList = Collections.synchronizedList(regularList);
-    
-</pre> 
+
+</pre>
 
 <p>
-Posteriormente, foram acrescentadas ao Java coleções concorrentes 
+Posteriormente, foram acrescentadas ao Java coleções concorrentes
 (<i>Concurrent Collections</i> no pacote <tt>java.util.concurrent</tt>)
-que são desenhadas para acesso concorrente e 
-que usam mecanismos “inteligentes” de bloqueio (parcial) da coleção.
+que utilizam estruturas de dados sofisticadas, desenhadas de raíz para garantir a consistência
+da coleção mesmo quando esta é acedida concorrentemente por muitas tarefas.
 Exemplos destas coleções concorrentes são:
 <tt>ConcurrentHashMap</tt>, <tt>CopyOnWriteArrayList</tt>, e <tt>CopyOnWriteHashSet</tt>.<br />
 No exemplo seguinte constroí-se um mapa optimizado para acessos concorrentes:
@@ -181,10 +171,10 @@ No exemplo seguinte constroí-se um mapa optimizado para acessos concorrentes:
     Map&lt;String,Object&gt; map = new ConcurrentHashMap&lt;&gt;();
 
 
-</pre> 
+</pre>
 
 <!--
-Existem 3 tipos de coleções em Java: 
+Existem 3 tipos de coleções em Java:
 <p>- Java 1.0: Evitar usar num contexto multi-threaded</p>
 <p>- Java 1.2: Permite as classes serem sincronizáveis através do método Collections.synchronizedX()</p>
 <p>- Java >5.0: suporte para coleções concorrentes</p>

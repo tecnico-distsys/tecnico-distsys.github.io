@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
 
 <head>
@@ -35,23 +36,23 @@
     <h2 id="conteudos">Materiais de apoio à aula</h2>
 
     <p class="exemplos">
-        <ul>
-            <li><a href="http://www.cdk4.net/wo/additional/rmi/Ed2/SunRPC.pdf">Capítulo sobre SUN RPC da 2ª Edição do livro &quot;Distributed Systems: Concepts and Design&quot;</a></li>
+        </p><ul>
+            <li><a href="http://www.cdk4.net/wo/additional/rmi/Ed2/SunRPC.pdf">Capítulo sobre SUN RPC da 2ª Edição do livro "Distributed Systems: Concepts and Design"</a></li>
         </ul>
-    </p>
+    <p></p>
 
     <p class="exercicios">
-    <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
+    </p><h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
 
     <ol>
-        <li>Numa máquina Linux/Unix, descarregue e 
-            descomprima o <a href="./ttt.zip">código fonte de um servidor do Jogo do Galo/Tic Tac Toe, baseado em Sun RPC</a>.<br />
-        <img src="ttt.png" alt="Tic Tac Toe" height="75" /><br />
+        <li>Numa máquina Linux/Unix, descarregue e
+            descomprima o código fonte de um <a href="./ttt.zip">cliente e servidor do Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP" ></a>, baseado em Sun RPC .<br>
+        <img src="./ttt.png" alt="Tic Tac Toe" height="75"><br>
         Sugestões:</li>
         <ul>
             <li>Caso não disponha de máquina Unix/Linux,
                 use a sua conta no <tt>sigma.tecnico.ulisboa.pt</tt>.<br />
-            Pode usar um dos vários editores de texto no terminal:
+            Pode usar qualquer um dos vários editores de texto no terminal:
             <tt>nano</tt>, <tt>vi</tt>, <tt>emacs</tt>, <tt>pico</tt>, <tt>joe</tt>, ...</li>
             <li>Para evitar conflitos com outros RPC na mesma máquina
             deverá editar o identificador do programa (<tt>ttt.x</tt>) e substituir os últimos
@@ -60,19 +61,18 @@
             é necessário instalar os seguintes pacotes Linux
             (os nomes exactos variam conforme a distribuição usada):
             <tt>rpcbind</tt> e <tt>nfs-kernel-server</tt>. <br />
-            Em algumas máquinas, que recorrem ao rpcbind,
+            Em algumas máquinas, que recorrem ao <i>rpcbind</i>,
             pode ser necessário lancar esta aplicação usando <tt>rpcbind -wi</tt>
             ou então usando privilégios de administração <tt>(sudo)</tt>
             no caso de obter a seguinte mensagem de erro:
             <i>"Cannot register service: RPC: Authentication error; why = Client credential too weak"</i></li>
         </ul>
-
-        <li>Estude a interface remota deste servidor (ficheiro <tt>ttt.x</tt>) e 
-            explore a implementação do servidor para compreender como cada procedimento remoto está implementado 
-            (restantes ficheiros iniciados em <tt>ttt</tt>).</li>
-        <ul>
-            <li>Para que serve o <i>mutex</i> usado no ficheiro ttt_lib.c?</li>
-        </ul>
+        <br/>
+        <li>Estude a interface remota deste servidor (ficheiro <tt>ttt.x</tt>) e
+            explore a implementação do servidor para compreender como cada procedimento remoto está implementado.<br />
+            Observe também os restantes ficheiros com nome iniciado por <tt>ttt</tt>.<br />
+            <br />
+        </li>
 
         <li>Execute na consola:<br />
         <tt>&gt rpcgen ttt.x</tt><br />
@@ -80,21 +80,22 @@
         Depois execute: <br />
         <tt>&gt rpcgen -Sc ttt.x > ttt_client.c</tt><br />
         para gerar um exemplo de um cliente.
-        (existe também a opção <tt>-Ss</tt> para gerar um exemplo de servidor)
-        <br />
+        (existe também a opção <tt>-Ss</tt> para gerar um exemplo de servidor)<br />
         <br />
         </li>
 
-        <li>Estude os ficheiros gerados.
+        <li>Tente responder às seguintes questões:
             <ol type="a">
-                <li>Onde estão as rotinas de conversão de tipos de dados?</li>
+                <li>Para que serve o <i>mutex</i> usado no ficheiro ttt_lib.c?</li>
+                <li>Em que ficheiro estão as rotinas de conversão de tipos de dados?</li>
                 <li>Onde é chamada a função <tt>clnt_call()</tt>?</li>
-                <li>Que ficheiros pertencem ao cliente, ao servidor, e a ambos?<br />
+                <li>Que ficheiros pertencem ao cliente?
+E ao servidor? E a ambos?<br>
                 (consulte também a <tt>Makefile</tt>)</li>
                 <li>Que ficheiros estão incompletos e devem ser alterados pelo programador?</li>
                 <li>Qual o protocolo que o cliente e servidor usam para comunicar?</li>
             </ol>
-        <br />
+        <br>
         </li>
 
         <li>Pretende-se também que haja um processo cliente
@@ -106,11 +107,11 @@
         Com base no <tt>local_main.c</tt>, modifique o ficheiro <tt>ttt_client.c</tt>
         por forma a obter um cliente do servidor remoto. <br/>
         <br />
-        <i>Sugestão: 
-        i) copie o código da função main do <tt>local_main.c</tt> para dentro do método <tt>ttt_1</tt> de <tt>ttt_client.c</tt>; 
-        ii) procure as linhas onde existem chamadas locais às funções <tt>currentBoard</tt>, <tt>play</tt> e 
-        <tt>checkWinner</tt> e substitua essas chamadas pelos exemplos de chamadas remotas que já existem no ficheiro <tt>ttt_client.c</tt> gerado;</i> 
-        iii) Não se esqueça de verificar o retorno da chamada remota ao servidor e 
+        <i>Sugestão:
+        i) copie o código da função main do <tt>local_main.c</tt> para dentro do método <tt>ttt_1</tt> de <tt>ttt_client.c</tt>;
+        ii) procure as linhas onde existem chamadas locais às funções <tt>currentBoard</tt>, <tt>play</tt> e
+        <tt>checkWinner</tt> e substitua essas chamadas pelos exemplos de chamadas remotas que já existem no ficheiro <tt>ttt_client.c</tt> gerado;</i>
+        iii) Não se esqueça de verificar o retorno da chamada remota ao servidor e
         garantir o tratamento adequado em caso de erro.<br />
         Utilize o comando <tt>make</tt> para compilar.<br />
         <br />
@@ -119,12 +120,12 @@
         <li>Lance o servidor e experimente jogar remotamente através do cliente construído.<br />
         Para tal, execute na consola:<br />
         <tt>&gt ./ttt_server &</tt><br />
-        (lança servidor em fundo - <i>background</i>)<br />
+        (lança o servidor em segundo plano <i>background</i>)<br />
         <tt>&gt ./ttt_client localhost</tt><br />
-        (lança cliente para jogar em servidor registado na própria máquina (localhost)<br />
+        (lança o cliente para jogar em servidor registado na própria máquina (localhost)<br />
         <br />
         </li>
-        
+
         <li>Pode consultar o estado dos processos com o comando <tt>ps</tt> e
         terminar instâncias com o comando <tt>kill</tt>.</li>
     </ol>
@@ -145,28 +146,26 @@
     <b>antes do fim da sua aula de laboratório</b>.<br />
 	Trabalhos submetidos depois da hora de fim da aula não serão considerados.<br>
     </p>
-    
+
     <p>
 	<b>Ter atenção ao seguinte:</b>
 	</p>
 	<ul>
 		<li>Só serão aceites trabalhos de estudantes que estiveram presentes no laboratório.</li>
 		<li>Assegure-se que a solução é enviada em formato ZIP e
-		    que não contém código compilado.<br />
-            (faça <tt>make clean</tt> antes de zipar)</li>
-        <li>Deverá incluir um ficheiro <tt>respostas.txt</tt> 
-        com as respostas às perguntas do enunciado do exercício.</li>
+		    que não contém código compilado
+            (faça <tt>make clean</tt> antes de criar o zip)</li>
         <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
-        com resumo da funcionalidade implementada e 
+        com resumo da funcionalidade implementada e
         com instruções para colocar o programa a funcionar como esperado.<br />
         Por exemplo:</li>
         <ul>
             <li>A funcionalidade pedida foi total/parcialmente implementada <b>...</b></li>
             <li>Para compilar: <tt>make</tt></li>
             <li>O servidor deve executar com o comando:
-                <tt>./ttt_server &</tt>
+                <tt>./ttt_server &amp;</tt>
             </li>
-            <li>O cliente deve executar com o comando: 
+            <li>O cliente deve executar com o comando:
                 <tt>./ttt_client localhost</tt>
             </li>
         </ul>

@@ -8,7 +8,7 @@
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="../_prettify/prettify.js"></script>
 
-    <title>Laboratórios/Projecto: soluções para dúvidas frequentes</title>
+    <title>Perguntas e Respostas sobre o Projeto</title>
 </head>
 
 <body onload="prettyPrint()">
@@ -19,13 +19,14 @@
     </p>
 </div>
 
+
 <div class="titulo">
-    <h1>Perguntas e respostas sobre o Projecto</h1>
+    <h1>Projeto de Sistemas Distribuídos</h1>
+    <h2>Respostas a perguntas frequentes</h2>
 
     <ul>
-        <li><a href="#p4">Dúvidas 4ª Parte do Projecto</a></li>
-        <li><a href="#p3">Dúvidas 3ª Parte do Projecto</a></li>
-        <li><a href="#p2">Dúvidas 2ª Parte do Projecto</a></li>
+        <!--li><a href="#p3">Dúvidas 3ª Parte do Projecto</a></li-->
+        <!--li><a href="#p2">Dúvidas 2ª Parte do Projecto</a></li-->
         <li><a href="#p1">Dúvidas 1ª Parte do Projecto</a></li>
     </ul>
 </div>
@@ -38,633 +39,23 @@
 
 <hr>
 
-<!-- ********************************************************************** -->
-<h2 id="p4">Dúvidas 4ª Parte do Projecto</h2>
-<!-- resposta mais recente em primeiro lugar -->
-<ol>
-
-<li>
-<p><strong>Pergunta:</strong>
-São necessárias chamadas assíncronas no projeto ?
-</p>
-<p><strong>Resposta:</strong>
-Não.
-</p>
-</li>
-<br/>
-
-
-<li>
-<p><strong>Pergunta:</strong>
-Como separar a configuração da cadeia de <i>handlers</i>
-do mediator cliente da do mediator servidor ?
-</p>
-<p><strong>Resposta:</strong>
-A geração de código da ferramenta <tt>wsimport</tt>
-gera o código correspondente ao WSDL num <i>package</i> que
-deriva do <i>namespace</i>.<br />
-Como o mediator cliente e mediator servidor dependem do mesmo
-WSDL, o código é gerado duas vezes com o mesmo <i>package</i>.
-E pode ser diferente, caso a configuração das cadeias de 
-<i>handlers</i> seja diferente.
-</p>
-<p>
-Para evitar esta sobreposição,
-<b>que leva a que a configuração da cadeia de <i>handlers</i>
-do mediator cliente possa ser ignorada</b>,
-é necessário forçar a geração de código
-do mediator cliente a usar um <i>package</i> diferente.
-Esta configuração faz-se no <tt>pom.xml</tt>,
-na configuração do <i>plug-in</i> de JAX-WS:
-</p>
-<pre class="prettyprint lang-xml">
-                &lt;configuration&gt;
-                    &lt;!-- http://www.mojohaus.org/jaxws-maven-plugin/wsimport-mojo.html --&gt;
-                    &lt;wsdlDirectory&gt;${wsdl.directory}&lt;/wsdlDirectory&gt;
-                    &lt;wsdlFiles&gt;
-                        &lt;wsdlFile&gt;${wsdl.filename}&lt;/wsdlFile&gt;
-                    &lt;/wsdlFiles&gt;
-                    <b>&lt;packageName&gt;org.komparator.mediator.ws.client&lt;/packageName&gt;</b>
-                &lt;/configuration&gt;
-</pre>
-<p>
-Após a geração do código com a opção <tt>packageName</tt>
-o pacote das classes muda e portanto
-será necessário ajustar os <i>import</i> de classes.
-</p>
-</li>
-<br/>
-
-
-<li>
-<p><strong>Pergunta:</strong>
-O que significa que um parâmetro deve ser <b>configurável</b> ?
-</p>
-<p><strong>Resposta:</strong>
-Significa que deve poder ser ajustado durante a demonstração alterando o valor
-apenas num único ficheiro.<br />
-Isto significa que devem ser usadas constantes no código
-e/ou ficheiros de configuração e/ou propriedades de sistema.<br />
-Em resumo: qualquer mecanismo que permita mudar o valor de forma rápida.
-</p>
-<p>
-Os parâmetros configuráveis permitirão a cada grupo
-"afinar" o funcionamento do seu trabalho na preparação para a demonstração.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Quantas vezes deve o cliente reenviar os pedidos ?
-</p>
-<p><strong>Resposta:</strong>
-O cliente deve estar em ciclo a tentar reenviar o pedido,<br />
-consultando o UDDI antes de enviar nova tentativa.<br />
-</p>
-<p>
-Pode ser definido um limite máximo de tentativas configurável, 
-mas por omissão deve tentar para sempre.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Quanto tempo deve o cliente esperar entre cada reenvio ?
-</p>
-<p><strong>Resposta:</strong>
-Entre cada tentativa deve esperar algum tempo.<br />
-Este tempo irá depender do tempo máximo de recuperação do servidor,
-que por sua vez depende do período do "I'm Alive" e do tempo máximo de propagação de mensagem.<br />
-Todos os intervalos de tempo envolvidos neste comportamento devem ser configuráveis.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como pode ser enviado o identificador único de um dado pedido ao mediador?
-</p>
-<p><strong>Resposta:</strong>
-O envio deste identificador é um requisito para poder
-ter a semântica "no-máximo-uma-vez" do cliente para o servidor.<br />
-A forma mais transparente é através de um <i>handler</i> que acrescenta 
-esse valor às mensagens SOAP 
-(à semelhança do que se fazia para garantir a frescura das mensagens na segurança).<br />
-<!--Outra possibilidade é, nas novas operações, incluir um argumento que é esse id.-->
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É possível comunicar com Web Services sem <i>stubs</i> ?
-</p>
-<p><strong>Resposta:</strong>
-Sim, podem-se construir mensagens SOAP de forma manual e 
-depois enviar.<br />
-Mais informação nos exemplos SOAP da aula de <i>Handlers</i><br />
-(ver <tt>javax.xml.soap.SOAPConnection</tt>).
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-O <tt>mediator-ws</tt> pode depender do <tt>mediator-ws-cli</tt>?<br />
-Não é gerada uma dependência circular?
-</p>
-<p><strong>Resposta:</strong>
-Na realidade o cliente do mediador não depende do mediador, mas sim do contrato WSDL.<br />
-Desta forma é possível que o módulo <tt>mediator-ws</tt> possa depender de <tt>mediator-ws-cli</tt> sem que isso obrigue a que exista uma dependência circular.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É possível modificar o WSDL para acrescentar operações de atualização de estado (ex. carrinho de compras)?
-</p>
-<p><strong>Resposta:</strong>
-Sim, é possível.
-Devem só ter a precaução de não quebrar a compatibilidade do contrato,
-ou seja, as operações já existentes devem ser especificadas sem alteração.<br />
-Sugere-se que se mude o nome ao ficheiro do contrato para <tt>mediator.2_0.wsdl</tt>.
-</p>
-<p>
-É de notar que estas novas operações são auxiliares e que, 
-normalmente, não estariam acessíveis a clientes normais do mediator.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É necessário ter a parte 3 a funcionar por completo para poder começar a parte 4?
-</p>
-<p><strong>Resposta:</strong>
-Não.
-</p>
-<p>
-Para iniciar o desenvolvimento da parte 4 podem-se
-simplesmente comentar todas as cadeias de <i>Handlers</i> de segurança 
-para concentrar esforços nos novos desenvolvimentos da tolerância a faltas.
-</p>
-<p>
-Caso o grupo não tenha concluído a implementação da parte 3,
-deve deixar as partes inacabadas por fazer.
-</p>
-<p>
-Caso o grupo tenha concluído a parte 3,
-pode mesmo assim optar por comentar os <i>handlers</i> durante o desenvolvimento da parte 4,
-para simplificar o desenvolvimento e testes.
-</p>
-<p>
-Para os grupos que tenham realizado as duas partes,
-a demonstração final do projeto irá valorizar o esforço de integração da segurança e 
-da tolerância a faltas.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É necessário replicar o UDDI?
-</p>
-<p><strong>Resposta:</strong>
-Por simplificação, pode-se assumir o UDDI como sendo 100% disponível,
-não sendo necessário efectuar a sua replicação.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É necessário proteger as comunicações entre mediator primário e secundário?
-</p>
-<p><strong>Resposta:</strong>
-Não.
-</p>
-</li>
-<br/>
-
-
-</ol>
 
 <!-- ********************************************************************** -->
-<h2 id="p3">Dúvidas 3ª Parte do Projecto</h2>
-<!-- resposta mais recente em primeiro lugar -->
+<h2 id="p1">Dúvidas 1ª Parte do Projecto</h2>
 <ol>
-
-<li>
-<p><strong>Pergunta:</strong>
-Já experimentei vários métodos para extrair uma chave privada de um keystore e continuo com problemas. O que se pode estar a passar?
-<font color="red">[nova]</font> </p>
-<p><strong>Resposta:</strong>
-Quando o maven copia os ficheiros keystore (.jks) para o directório de construção assume que estes são ficheiros de texto e faz uma conversão automática de alguns caracteres ASCII, causando a corrupção dos ficheiros keystore. </br>
-Para resolver este problema pode-se: </p></br>
-<ul>
-    <li>
-    Acrescentar ao pom um plugin que evita o filtro durante a cópia dos ficheiros keystore:
-    <plugin>
-    <pre class="prettyprint lang-xml">
-        &lt;plugin&gt;
-        	&lt;groupId&gt;org.komparator.CXX&lt;/groupId&gt;
-        	&lt;artifactId&gt;supplier-ws-cli&lt;/artifactId&gt;
-        	&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-        	&lt;configuration&gt;
-        		&lt;nonFilteredFileExtensions&gt;
-        			&lt;nonFilteredFileExtension&gt;jks&lt;/nonFilteredFileExtension&gt;        		
-        		&lt;/nonFilteredFileExtensions&gt;
-        	&lt;/configuration&gt;
-        &lt;/plugin&gt;
-	</pre>
-    </li>
-    <li>
-    Indicar extensão a extensão quais o ficheiros que não devem ser filtrados.
-    <pre class="prettyprint lang-xml">
-    	&lt;resources&gt;
-            &lt;resource&gt;
-                &lt;directory&gt;src/main/resources&lt;/directory&gt;
-                &lt;filtering&gt;true&lt;/filtering&gt;
-                &lt;excludes>&gt;
-                    &lt;exclude&gt;**/*.jks&lt;/exclude&gt;
-                    &lt;exclude&gt;**/*.xml&lt;/exclude&gt;
-                    &lt;exclude&gt;**/*.cer&lt;/exclude&gt;
-                &lt;/excludes&gt;
-            &lt;/resource&gt;
-            &lt;resource&gt;
-                &lt;directory>&gt;src/main/resources&lt;/directory&gt;
-                &lt;filtering>&gt;false&lt;/filtering&gt;
-                &lt;includes>&gt;
-                    &lt;include&gt;**/*.jks&lt;/include&gt;
-                    &lt;include&gt;**/*.xml&lt;/include&gt;
-                    &lt;include&gt;**/*.cer&lt;/include&gt;
-                &lt;/includes>&gt;
-            &lt;/resource>&gt;
-        &lt;/resources>&gt;
-    </pre>
-    </li>
-</ul>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como se pode automatizar a compilação de todos os módulos ?
-</p>
-<p>
-Segure-se incluir um POM mestre que permite a instalação de todos os módulos,pela ordem correta, e com um único comando:<br />
-<tt>mvn clean install -DskipITs</tt>
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É necessário incluir as bibliotecas das aulas de laboratório na entrega ?
-</p>
-<p>
-Podem assumir que as versões publicadas de 
-<tt>uddi-naming</tt>, <tt>ws-handlers</tt>, <tt>cert-util</tt> 
-estarão instaladas no repositório Maven do ambiente de avaliação.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Que notação usar na figura ilustrativa do relatório ?
-</p>
-<p>
-A notação da figura da solução é livre mas sugere-se a utilização de UML,
-por ser um <i>standard</i>.
-O mais importante é ajudar a perceber a vossa solução.
-</p>
-<p>
-Relembra-se que o relatório deve explicar os mecanismos de proteção 
-do canal client-mediator e<br />
-do canal mediator-supplier através de mensagens SOAP legendadas
-i.e. explicando os elementos adicionados e para que servem.<br />
-As mensagens SOAP podem ser abreviadas.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como pode um <i>Handler</i> receber parâmetros de configuração ?
-</p>
-<p>
-Os <i>Handlers</i> são classes Java como quaisquer outras.
-No entanto, como são construídas pelo <i>Web Services Run-time</i> e não pela aplicação, não há forma direta de lhes aceder.
-</p>
-<p>
-Assim sendo,
-algumas formas possíveis de configurar um <i>Handler</i> são as seguintes:
-</p>
-<ul>
-    <li>
-    Receber parâmetros via contexto (<tt>SOAPMessageContext</tt>)<br />
-    - esta técnica é ilustrada no exemplo <tt>handler_relay</tt>
-    </li>
-    <li>
-    Receber parâmetros via variáveis globais 
-    <!--à instância da JVM-->
-    </li>
-    <ul>
-        <li>
-        Por exemplo, um objeto <tt>Singleton</tt> 
-        <!--e.g. <tt>SecurityManager</tt>.-->
-        </li>
-        <li>
-        Variáveis <tt>static</tt> nas próprias classes dos <i>Handlers</i>
-        </li>
-        <li>
-        <i>JVM System properties</i>, 
-        acessíveis depois por <tt>System.getProperty()</tt>
-        </li>
-        <!--li>
-        <i>Environment variables</i> (variáveis de ambiente do sistema operativo),
-        acessíveis depois por <tt>System.getenv();</tt>
-        </li-->
-    </ul>
-</ul>
-<p>
-As variáveis são globais à instância da Java Virtual Machine (JVM)
-que corresponde a um processo no sistema operativo;
-por isso, diferentes programas em execução terão diferentes valores nas variáveis.
-</p>
-<p>
-As variáveis globais podem ser preenchidas, por exemplo, 
-no método <tt>main()</tt> do programa.
-</p>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Quando se deve consultar a CA (Certificate Authority) ?
-</p>
-<p>
-A CA deve ser consultada sempre que se precisar de aceder a um 
-certificado de uma entidade.
-</p>
-<p>
-Por exemplo,
-para verificar uma assinatura digital
-pode-se pedir à CA o certificado do assinante,
-e depois usar a chave pública para verificar a mensagem.
-</p>
-<p>
-É importante confirmar que o certificado recebido foi mesmo assinado pela CA.
-</p>
-<p>
-Depois de recebido o certificado,
-este pode ser mantido em memória para utilização futura.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Qual é a <i>keystore pass</i>, a <i>key alias</i> e a <i>key password</i> para conseguir aceder à chave privada do <i>keystore</i> ?
-</p>
-<p>
-A password do <i>keystore</i> e da <i>key</i> é mesma que o grupo usa para o UDDI da RNL.
-</p>
-<p>
-A <i>key alias</i> é o <b>nome do serviço em letras minúsculas</b>.
-Por exemplo, para o mediator do grupo T99, é t99_mediator.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como pode o <i>handler</i> saber o destinatário da mensagem SOAP ?
-</p>
-<p><strong>Resposta:</strong>
-O <tt>SOAPMessageContext</tt> tem vários atributos relevantes.
-Entre eles encontra-se o endereço (URL) do destinatário.
-Cruzando esta informação com a listagem obtida do UDDI é possível
-descobrir o nome do destinatário.
-</p>
-</li>
-<br/>
-
-
-
-<li>
-<p><strong>Pergunta:</strong>
-O que se deve fazer a uma mensagem SOAP cuja assinatura não está correta ?
-</p>
-<p><strong>Resposta:</strong>
-O essencial é que as mensagens comprometidas sejam rejeitadas e que isso se possa verificar.<br />
-Por exemplo, o <i>handler</i> que deteta o problema pode atirar uma <tt>RunTimeException</tt> (ou sub-classe) e depois o cliente vai receber uma <tt>SOAPFaultException</tt> com a respetiva mensagem de erro.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como se podem representar dados binários (<tt>byte[]</tt>) em texto (<tt>String</tt>) ?
-</p>
-<p><strong>Resposta:</strong>
-Podem usar codificação de base 64 para transportar dados binários em texto.
-</p>
-<p>
-Sugerimos a utilização dos seguintes métodos:
-<pre class="prettyprint lang-java">
-import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
-import static javax.xml.bind.DatatypeConverter.printBase64Binary;
-</pre>
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-A assinatura digital deve englobar apenas o <tt>body</tt> da mensagem SOAP?
-</p>
-<p><strong>Resposta:</strong>
-A assinatura deve englobar o <tt>body</tt> da mensagem e 
-todos os outros itens de informação que sejam necessários para a 
-sua validação, como identificadores, marcas temporais, etc.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Onde devem ser colocadas as <i>keystores</i> das chaves privadas ?
-<font color="red">[nova] [Estendida]</font> 
-</p>
-<p><strong>Resposta:</strong>
-As <i>keystores</i> podem ser colocadas como recursos de cada aplicação, ou seja, em <tt>src/main/resources</tt>.<br />
-Cada aplicação deve ter uma <i>keystore</i> com a sua chave privada e o certificado de chave pública da CA.<br />
-Estes recursos são "empacotados" juntos com a aplicação e podem depois ser acedidos com <tt>.getResourceAsStream(resourcePath)</tt>.<br />
-A classe <tt>CertUtil</tt> têm métodos de exemplo que permitem ler chaves de <i>keystores</i> e de certificados a partir de recursos da aplicação.
-</p>
-<p>
-Para obter ficheiros que estejam na raíz dos recursos,
-a <i>resource path</i> deve começar por "/".<br />
-Por exemplo, para obter <tt>src/main/resources/ca.cer</tt>,
-o caminho de recurso será <tt>/ca.cer</tt>.
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É necessário depender de <tt>ws-handlers</tt>, <tt>cert-util</tt> e outros módulos de exemplo ?
-</p>
-<p><strong>Resposta:</strong>
-A escolha de dependências e a sua gestão é da responsabilidade do grupo.
-</p>
-<p>
-Para simplificar a gestão de dependências podem-se copiar
-(e adaptar) as classes de exemplo, copiando-as
-para o módulo <tt>security</tt>.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Deve usar-se o <tt>LoggingHandler</tt> do módulo <tt>ws-handlers</tt> ou do módulo <tt>security</tt> ?
-</p>
-<p><strong>Resposta:</strong>
-A escolha de dependências e a sua gestão é da responsabilidade do grupo.
-</p>
-<p>
-Neste caso concreto, 
-sugere-se que se utilize apenas o módulo <tt>security</tt>,
-criando ou copiando as classes que forem necessárias.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-A solução pode ter mais do que um <i>handler</i>?
-</p>
-<p><strong>Resposta:</strong>
-Os <i>Handlers</i> são objetos individuais que podem depois ser compostos numa cadeia de processamento.<br />
-Idealmente cada <i>handler</i> deve realizar apenas uma função, 
-de modo a que possa ser mais reutilizável.<br /> 
-No entanto, a nível de programação, nada impede que um <i>handler</i> faça várias coisas. Trata-se portanto de uma questão de estilo de programação.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como se pode converte um certificado de texto para objeto?
-</p>
-<p><strong>Resposta:</strong>
-Sugerimos a utilização dos seguintes métodos:
-<pre class="prettyprint lang-java">
-byte[] bytes = certificateString.getBytes(StandardCharsets.UTF_8);
-InputStream in = new ByteArrayInputStream(bytes);
-CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
-Certificate cert = certFactory.generateCertificate(in);
-</pre>
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-É necessário proteger as comunicações entre clientes e mediator, e com o UDDI?
-</p>
-<p><strong>Resposta:</strong>
-É necessário proteger o número de cartão de crédito entre <tt>mediator-ws-cli</tt> e <tt>mediator</tt>.<br />
-É também necessário garantir a autenticidade, integridade e frescura das mensagens entre <tt>supplier-ws-cli</tt> e <tt>supplier-ws</tt>.<br />
-De resto, não é necessário para simplificação do projeto.
-</p>
-</li>
-<br/>
+<!-- resposta mais recente em primeiro lugar -->
 
 <!--li>
 <p><strong>Pergunta:</strong>
-O que é um ficheiro CSR?
-</p>
-<p><strong>Resposta:</strong>
-Um ficheiro CSR é um 'Certificate Signing Request' e serve para pedir a uma CA para assinar uma chave pública.<br />
-Depois de gerados e assinados os certificados, os CSR já não são necessários (e podem ser eliminados). 
-</p>
-</li>
-<br/-->
-
-<li>
-<p><strong>Pergunta:</strong>
-Porque é que algumas chaves têm que ser distribuídas manualmente antes do arranque do sistema?
-</p>
-<p><strong>Resposta:</strong>
-O sistema, para ser seguro, necessita de ter um ponto de partida para a confiança (uma <i>trust root</i>, raíz de confiança).<br />
-Só depois é seguro trocar chaves entre servidores, desde que certificadas, 
-cujas assinaturas podem ser verificadas com as chaves que fazem parte da <i>trust root</i>
-(e.g. chave pública da CA).<br />
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Como se podem obter as chaves e certificados digitais?
-</p>
-<p><strong>Resposta:</strong>
-Os pares de chaves das entidades foram gerados antes do início do funcionamento da comunicação entre servidores.
-</p>
-<p>
-Cada grupo pode aceder à <a href="keys/">página das chaves</a>,
-fazer <i>download</i> de um ZIP com as chaves do seu grupo e 
-aceder ao conteúdo (a senha do ZIP é igual à senha de UDDI).
-<p>
-Para gerar estes certificados foram usadas as ferramentas <tt>keytool</tt> e <tt>openssl</tt>
-tal como exemplificado neste <i><a href="gen_keys.sh.txt">script</a></i>.
-</p>
-<!--p>
-Exemplo de <a href="gen_keys.zip">resultado</a>.<br />
-Documentação:
-<a href="https://docs.oracle.com/cd/E19509-01/820-3503/ggeyj/index.html">Creating a Sample CA Certificate</a>,
-<a href="https://docs.oracle.com/cd/E19509-01/820-3503/ggezy/index.html">Signing Certificates With Your Own CA</a><br />
-</p-->
-<!--p>
-O <i>script</i> automaticamente importa os certificados para as respetivas <i>keystores</i>, ou seja, 
-todas as entidades têm na sua <i>keystore</i> o certificado da CA, o seu próprio certificado e a sua chave privada. 
-A CA pode simplesmente guardar os certificados das outras entidades em ficheiros individuais ou
-ter a sua própria <i>keystore</i> os certificados de todas as entidades, o seu próprio certificado e a sua chave privada.
-</p-->
-<!--p>
-Resumidamente, o que cada entidade deve fazer quando pretende autenticar uma mensagem é:
-<ul>
-<li>pedir (caso não tenha pedido antes) o certificado do emissor da mensagem (emissor.cer);</li>
-<li>verificar se esse certificado (emissor.cer) foi devidamente assinado pelo CA usando o certificado da CA (ca-certificate.cer) que está guardado na sua keystore (recetor.jks)</li>
-<li>usar o certificado do emissor (se for válido) para verificar a assinatura digital da mensagem;</li>
-</ul>
-</p-->
-</li>
-<br/>
-
-
-</ol>
-
-<!-- ********************************************************************** -->
-<h2 id="p2">Dúvidas 2ª Parte do Projecto</h2>
-<ol>
-<!-- resposta mais recente em primeiro lugar -->
-<li>
-<p><strong>Pergunta:</strong>
-Que números de cartão de crédito válidos podemos utilizar nos testes de integração do mediador?
+Que números de cartão de crédito válidos podemos utilizar nos testes de integração?
 </p>
 <p><strong>Resposta:</strong>
 Alguns exemplos de números válidos são: 4024007102923926, 4556648855991861, 4024007141789403, 4677292597378279
 </p>
 </li>
-<br/>
+<br/-->
 
-<li>
+<!--li>
 <p><strong>Pergunta:</strong>
 Como devem ser preenchidos produtos nos fornecedores para os testes do mediador?
 </p>
@@ -686,11 +77,11 @@ deve ser acrescentada a dependência do módulo
 </pre>
 </p>
 </li>
-<br/>
+<br/-->
 
-<li>
+<!--li>
 <p><strong>Pergunta:</strong>
-Quantos fornecedores são necessários para os testes do mediador?
+Quantas estações são necessárias para os testes do binas?
 </p>
 <p><strong>Resposta:</strong>
 Página 5 do enunciado:<br />
@@ -698,43 +89,11 @@ Página 5 do enunciado:<br />
 menos) 2 fornecedores associados."</i>
 </p>
 </li>
-<br/>
+<br/-->
 
 <li>
 <p><strong>Pergunta:</strong>
-Em que situação é que <tt>buyCart</tt> devolve o erro <tt>EmptyCart</tt>?
-</p>
-<p><strong>Resposta:</strong>
-Quando o cliente pede para comprar um carrinho vazio.<br />
-No entanto, com as operações disponíveis não é possível esta situação ser testada.
-Ou seja, não é possível a um cliente criar um carrinho vazio pois o carrinho é implicitamente criado quando se adiciona o primeiro produto, e não é possível remover produtos do carrinho.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-O que deve fazer <tt>buyCart</tt> caso o carrinho não exista?
-</p>
-<p><strong>Resposta:</strong>
-Devolver o erro <tt>InvalidCartId</tt> com uma mensagem adequada.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Os produtos com quantidade 0 devem aparecer nos resultados de <tt>getItems</tt> e <tt>searchItems</tt> ?
-</p>
-<p><strong>Resposta:</strong>
-Sim.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-O Mediator deve registar-se no UDDI?
+O Binas deve registar-se no UDDI?
 </p>
 <p><strong>Resposta:</strong>
 Sim e deve chamar-se tal como é referido no enunciado.
@@ -742,53 +101,25 @@ Sim e deve chamar-se tal como é referido no enunciado.
 </li>
 <br/>
 
-</ol>
-
-
-<!-- ********************************************************************** -->
-<h2 id="p1">Dúvidas 1ª Parte do Projecto</h2>
-<ol>
-<!-- resposta mais recente em primeiro lugar -->
-
 <li>
 <p><strong>Pergunta:</strong>
 É necessário fazer testes para as operações auxiliares ?
 </p>
 <p><strong>Resposta:</strong>
 No enunciado refere-se que as operações auxiliares 
-- <tt>ping</tt>, <tt>clear</tt>, <tt>createProduct</tt>, <tt>listProducts</tt>, <tt>listPurchases</tt> -
+- <tt>ping</tt>, <tt>clear</tt>, ... -
 se <i>"destinam a auxiliar os testes e não necessitam de ser testadas exaustivamente"</i>.<br />
 Sendo mais concreto, podem fazer testes para estas operações, 
 mas estes testes não serão avaliados.
 </p>
 <p>
 Já as operações principais
-- <tt>getProduct</tt>, <tt>searchProducts</tt>, <tt>buyProduct</tt> -
 podem e devem ser testadas o melhor possível.
 </li>
 <br/>
 
-<li>
-<p><strong>Pergunta:</strong>
-Em que situações devem ser lançadas as exceções
-<em>BadQuantity</em> e <em>InsufficientQuantity</em>?
-</p>
-<p><strong>Resposta:</strong>
-As duas exceções têm o seguinte significado:
-<ul>
-    <li>
-    <em>BadQuantity</em>: significa que foi dada uma quantidade inválida. Independentemente do produto, só se pode comprar quantidades positivas.
-    </li>
-    <li>
-    <em>InsufficientQuantity</em>: significa que o fornecedor em causa não tem quantidade suficiente para satisfazer o pedido.
-    </li>
-</ul>
-</p>
-</li>
-<br/>
 
-
-<li>
+<!--li>
 <p><strong>Pergunta:</strong>
 O que é avaliado na 'Estrutura base' da primeira entrega? 
 </p>
@@ -817,27 +148,8 @@ Neste item de avaliação são considerados:
 </ul>
 </p>
 </li>
-<br/>
+<br/-->
 
-<li>
-<p><strong>Pergunta:</strong>
-O que deve fazer <tt>buyProduct</tt> caso o produto a comprar não exista?
-</p>
-<p><strong>Resposta:</strong>
-Devolver o erro <tt>BadProductId</tt> com uma mensagem adequada.
-</p>
-</li>
-<br/>
-
-<li>
-<p><strong>Pergunta:</strong>
-Os produtos com quantidade 0 devem aparecer nos resultados de <tt>getProduct</tt> e <tt>searchProducts</tt> ?
-</p>
-<p><strong>Resposta:</strong>
-Sim.
-</p>
-</li>
-<br/>
 
 <li>
 <p><strong>Pergunta:</strong>
@@ -847,11 +159,11 @@ Como se executam os testes de integração?
 Para executar os testes de integração:
 <ul>
     <li>Lançar o servidor:<br />
-    <tt>cd supplier-ws</tt><br />
+    <tt>cd station-ws</tt><br />
     <tt>mvn compile exec:java</tt>
     </li>
     <li>Correr os testes de integração:<br />
-    <tt>cd supplier-ws-cli</tt><br />
+    <tt>cd station-ws-cli</tt><br />
     <tt>mvn verify</tt>
     </li>
 </ul>
@@ -861,19 +173,19 @@ Para executar os testes de integração:
 
 <li>
 <p><strong>Pergunta:</strong>
-Para que serve o <tt>supplier-ws-cli</tt>?
+Para que serve o <tt>station-ws-cli</tt>?
 </p>
 <p><strong>Resposta:</strong>
-O projeto <tt>supplier-ws-cli</tt> serve para:
+O projeto <tt>station-ws-cli</tt> serve para:
 <ul>
-    <li>Gerar os <i>stubs</i> do <tt>supplier-ws</tt></li>
-    <li>Conter os testes de integração (<tt>...IT</tt>) do <tt>supplier-ws</tt></li>
-	<li>Encapsular criação de <i>stubs</i> e invocações remotas a um servidor <tt>supplier-ws</tt> dentro da classe <tt>SupplierClient</tt>.
+    <li>Gerar os <i>stubs</i> do <tt>station-ws</tt></li>
+    <li>Conter os testes de integração (<tt>...IT</tt>) do <tt>station-ws</tt></li>
+	<li>Encapsular criação de <i>stubs</i> e invocações remotas a um servidor <tt>station-ws</tt> dentro da classe <tt>StationClient</tt>.
 	<!--br>
-	Código (por exemplo, no <tt>mediator-ws</tt>) que queira invocar serviços remotos de um fornecedor poderia, por esta ordem:
+	Código (por exemplo, no <tt>binas-ws</tt>) que queira invocar serviços remotos de um fornecedor poderia, por esta ordem:
 	<ul>
-		<li>Obter os endpoints das transportadoras a partir do jUDDI: <tt>Collection<String> endpoints = uddiNaming.list("CXX_Supplier%");</tt></li>
-		<li>Instanciar um <tt>TransporterClient</tt> por cada transportadora que se queira invocar remotamente (exemplo): <tt>SupplierClient tc = new SupplierClient(specificEndpoint)</tt></li>
+		<li>Obter os endpoints das estações a partir do jUDDI: <tt>Collection<String> endpoints = uddiNaming.list("CXX_Station%");</tt></li>
+		<li>Instanciar um <tt>StationClient</tt> por cada estação que se queira invocar remotamente (exemplo): <tt>StationClient tc = new tationClient(specificEndpoint)</tt></li>
 	</ul>
 	</li-->
 </ul>

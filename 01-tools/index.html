@@ -42,9 +42,12 @@
 As ferramentas para o desenvolvimento do projeto são:
 o Java (plataforma), Maven (construção), e o Eclipse (ambiente integrado de desenvolvimento).
 </p>
+<p>
+Esta página contém textos introdutórios a cada uma das ferramentas e um exercício.
+</p>
 
 <p>
-Em primeiro lugar, 
+Em primeiro lugar, antes de começar,
 é necessário <a href="../software/index.html">instalar o software</a>.
 </p>
 
@@ -57,13 +60,13 @@ Em primeiro lugar,
 <p>
 O Java Developer Kit (JDK) é um conjunto de ferramentas para
 programação na linguagem Java.<br />
-As mais importantes são 
-o <tt>javac</tt> que compila os programas e 
+As mais importantes são
+o <tt>javac</tt> que compila os programas e
 o <tt>java</tt> que lança as aplicações.
 </p>
 <p>
 <tt>javac</tt> e <tt>java</tt> são suficientes para construir pequenos programas,
-mas para programas de maior dimensão, 
+mas para programas de maior dimensão,
 é muito útil ter:
 </p>
 <ul>
@@ -91,7 +94,8 @@ A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e Eclipse:
 </ul>
 <p>
 A programação em Java para Sistemas Distribuídos deve ter em conta a
-<a href="java-synch/index.html">Concorrência e Sincronização</a>.
+<a href="java-synch/index.html">concorrência e sincronização</a>.</br>
+O <a href="exceptions/index.html">tratamento de exceções</a> é também um aspeto muito importante, e que irá ser especialmente importante para lidar com faltas de comunicação.
 </p>
 
 <p>&nbsp;</p>
@@ -101,15 +105,15 @@ A programação em Java para Sistemas Distribuídos deve ter em conta a
 A ferramenta Maven é, talvez,
 a mais importante logo a seguir ao próprio JDK
 (sim, é mais importante que o Eclipse).
-A utilização do Eclipse é opcional,
+Em Sistemas Distribuídos, a utilização do Eclipse é opcional,
 mas o Maven é considerado obrigatório.
 </p>
 <p>
-O Maven desempenha o papel muito importante de 
+O Maven desempenha o papel muito importante de
 automatizar toda a construção do código e
 de explicitar dependências de outros programas.
-Todos os programas devem ter a configuração Maven 
-- <b>pom.xml</b> -
+Todos os programas devem ter a configuração Maven
+no ficheiro <b>pom.xml</b> -
 para que possam ser (re)construídos de forma repetível.
 </p>
 
@@ -130,10 +134,10 @@ para que possam ser (re)construídos de forma repetível.
     <li>
         <a href="java-lib.zip">Exemplo de biblioteca Java
         <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - permite agrupar um conjunto de classes comuns, 
+        - permite agrupar um conjunto de classes comuns,
         que podem depois ser reutilizadas por outros programas.<br />
         - o comando <tt>mvn install</tt> disponibiliza o módulo no repositório local.<br />
-        - o módulo instalado pode depois ser usado como dependência através das coordenadas 
+        - o módulo instalado pode depois ser usado como dependência através das coordenadas
         (<i>groupId</i>, <i>artifactId</i>, e <i>version</i>).
     </li>
 </ul>
@@ -218,200 +222,81 @@ ou então por cima também do Maven (Eclipse/Maven/JDK).
         <li>Criar um <i>breakpoint</i> no programa e
         fazer <i>debug</i>.</li>
         <li>Alterar os argumentos do programa e
-        inspeccionar as variáveis durante a execução.</li>
+        inspecionar as variáveis durante a execução.</li>
     </ul>
 </ul>
 
-
-
-
 <p>&nbsp;</p>
 
-
-<h2>Sockets</h2>
-
-<p>
-Um <i>socket</i> é uma extremidade de uma ligação através de uma rede de computadores.
-Atualmente, 
-a comunicação entre computadores faz-se quase sempre com IP (Internet Protocol).
-Os <i>sockets</i> mais comuns usam TCP (Transmission Control Protocol),
-que estabelecem uma ligação entre cliente e servidor.
-Um endereço de <i>socket</i> é composto por um endereço IP e 
-por um número de porto.
-</p>
-<p>
-<img height="70" src="connection.png" />
-
-<p>
-O Java disponibiliza uma biblioteca de <i>sockets</i> que 
-está disponível no pacote <tt>java.net</tt>.
-O exemplo seguinte 
-- servidor e cliente -
-ilustra a comunicação entre dois programas usando esta biblioteca.
-</p>
-<ul>
-    <li>
-        <a href="socket-server.zip">Servidor de Sockets TCP/IP
-        <img src="../_img/zip.png" alt="ZIP" ></a>
-        - transfer&ecirc;ncia de texto com sockets TCP/IP
-    </li>
-    <li>
-        <a href="socket-client.zip">Cliente de Sockets TCP/IP
-        <img src="../_img/zip.png" alt="ZIP" ></a>
-    </li>
-</ul>
-
-<p>
-Os <i>sockets</i> estão na base da programação da comunicação na World Wide Web.
-O porto 80 é reservado para comunicação com o HTTP
-(HyperText Transfer Protocol).
-</p>
-<ul>
-    <li><a href="www/index.html">(Breve) introdução à World Wide Web</a></li>
-    <li>Consultar Seção 1.6 do livro da cadeira e
-    a apresentação das teóricas sobre World Wide Web e Sockets</li>
-</ul>
-
-<p>&nbsp;</p>
+<hr />
 
 <h2>Exercício a resolver até ao fim da aula</h2>
 
+<p>
+    Neste exercício vamos construir uma pequena aplicação java que, para já, apenas apresenta os argumentos e configurações que recebe.
+    Estas técnicas são ilustrativas do que muitas vezes é necessário fazer nas nossas aplicações.</br>
+</p>
+<p>
+    O Maven é uma ferramenta muito poderosa que facilita a gestão de dependências de um determinado projecto. Adicionalmente permite ainda automatizar a fase de compilação e de testes.
+    No seguinte exercício iremos explorar alguns dos mecanismos que o Maven disponibiliza.
+</p>
 <ol>
-    <li>Obter o exemplo de <b>sockets TCP/IP</b>.<br />
-    Neste caso temos dois programas que colaboram entre si.</li>
+    <li>Obter o exemplo  <a href="./mainApp.zip">MainApp
+    <img src="../_img/zip.png" alt="ZIP" ></a>
+    </li>
     <ol type="a">
-        <li>
-        Configurar os projectos no Eclipse
-        </li>
-        <li>
-        Estudar o código fonte e
-        os ficheiros <tt>pom.xml</tt> do servidor e do cliente.
-        </li>
-        <li>
-        Compilar e executar o servidor e cliente,
-        seguindo as instruções no ficheiro <tt>readme.txt</tt>
+        <li>Configurar o projecto no Eclipse  (o <tt>readme.txt</tt> contém instruções mais detalhadas)  </li>
+        <li>Estudar o código fonte (pasta src) e o ficheiro <tt>pom.xml</tt>               </li>
+        <li>Compilar e executar o projecto. 
+        (Fazer <tt>mvn compile</tt> e depois <tt>mvn exec:java</tt>)
         </li>
     </ol>
-</ol>
-
-<p>
-<b>Problemas?</b> Observar atentamente as <a href="exceptions/index.html">exceções</a> produzidas.
-</p>
-<ol start="2">
+</br>
+    <li>Na pasta <tt>src/main/java/pt/tecnico/sd</tt> abrir a classe <b>App</b></li>
+    <ol type="a">
+        <li>Descomentar o código no método <tt>main()</tt> e voltar a compilar o projecto</li>
+        <li>Há um erro, consegue perceber qual é?</br></li>
+        <li>
+            Abrir o ficheiro <tt>pom.xml</tt> e adicionar o seguinte excerto dentro da tag "&lt;dependencies&gt;" (Basta descomentar):
+            <code>
+                <br/>
+                <p>
+                &lt;dependency&gt;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;pt.tecnico.sd&lt;/groupId&gt;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;ConfigHelper&lt;/artifactId&gt;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;<br/>
+                &lt;/dependency<br/>
+                </p>
+            </code>
+            Desta forma estamos a declarar que o projecto tem uma dependência do módulo ConfigHelper.
+        </li>
+        <li>Voltar a tentar compilar o projecto </li>
+    </ol>
+</br>
+    <li>Há um novo erro, consegue perceber qual é? </li>
+    <ol type="a">
+        <li>Obter o exemplo  <a href="./ConfigHelper.zip">ConfigHelper
+        <img src="../_img/zip.png" alt="ZIP" ></a>
+        </li>
+        <li>Configurar o projecto no Eclipse  (<tt>readme.txt</tt> com instruções mais detalhadas)  </li>
+        <li>Estudar o código fonte (pasta <tt>src</tt>) e o ficheiro <tt>pom.xml</tt>               </li>
+        <li>Para resolver o problema temos de disponibilizar a dependência ConfigHelper na máquina de desenvolvimento (fazer <tt>mvn install</tt>)</li>
+        <li>Voltar a compilar o projecto <b>MainApp</b> e executá-lo</li>
+    </ol>
+<!--
+</br>
     <li>
-    Analisar o <i>output</i> do Maven,
-    em especial as linhas começadas por <small>[WARNING]</small>:
+    Quando corremos mvn install no projecto <b>ConfigHelper</b> corremos todas as fases do mvn anteriores, incluindo a fase de testes:
     </li>
     <ol type="a">
-        <li>
-        Qual foi a causa da exceção?
-        </li>
-		<li>
-        Que exceção é que foi lançada?
-        </li>
-		<li>
-        Em que linha do código do cliente é que foi lançada a exceção?
-        </li>
-        <ul>
-            <li>Ou será um problema na configuração dos argumentos?</li>
-        </ul>
+        <li>        Quantos testes foram executados?        </li>
+		<li>        Na pasta <tt>src/test/pt/tecnico/sd</tt> adicionar um teste na classe <tt>AppTest.java</tt>.		</li>
+        <li>        Para isso deve criar um novo método e adicionar-lhe a anotação @Test.        </li>
+		<li>        Voltar a correr mvn install e confirmar que há mais um teste a ser executado.        </li>
+        <li>        No test3 descomentar a linha "assert(false)" e voltar a fazer mvn install, que aconteceu?        </li>
 	</ol>
+-->
 </ol>
-
-<ol start="3">
-    <li>Compilar e executar o servidor até funcionar sem erros.</li>
-</ol>
-
-<ul>
-    <li>
-    Em casos mais complicados,
-    pode usar-se o depurador (<i>debugger</i>):
-    </li>
-    <ul>
-        <li>
-        Criar um <i>breakpoint</i> no servidor,
-        na linha desejada
-        </li>
-        <li>
-        Inspeccione o valor das variáveis relevantes
-        </li>
-    </ul>
-</ul>
-
-<p>
-Problema resolvido?
-<a href="http://www.phdcomics.com/comics/archive.php?comicid=180">Sim</a> ou 
-<a href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Keep_Calm_and_Carry_On_Poster.svg/683px-Keep_Calm_and_Carry_On_Poster.svg.png">Não</a>? :)<br />
-Retomar o exercício:
-</p>
-
-<ol start="4">
-    <li>
-    <b>Modificar os programas para que o servidor
-    responda ao cliente com uma mensagem de confirmação.</b>
-    </li>
-    <li>
-    ... o resto do enunciado será entregue no início da aula.
-    </li>
-</ol>
-
-</div>
-
-<p>&nbsp;</p>
-
-
-<div class="objectivos">
-    <h2>Entrega da solução</h2>
-
-    <span style="color:red;font-size:90%">
-    A solução do exercício desta aula <b>não</b> conta para a avaliação,
-    mas deverá ser entregue da forma descrita abaixo.
-    </span>
-    
-    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 0</b></p>
-
-    <p>
-	A solução completa deverá ser submetida no Fénix
-    <b>antes do fim da sua aula de laboratório</b>.<br />
-	Trabalhos submetidos depois da hora de fim da aula não serão considerados.
-    </p>
-    
-    <p>
-	<b>Ter atenção ao seguinte:</b>
-	</p>
-	<ul>
-		<li>Só serão aceites trabalhos de estudantes que estiveram presentes no laboratório.</li>
-		<li>Assegure-se que a solução é enviada em formato ZIP e
-		    que não contém código compilado.<br />
-            (faça <tt>mvn clean</tt> antes de zipar)</li>
-        <li>Deverá incluir um ficheiro <tt>respostas.txt</tt> 
-        com as respostas (breves) às perguntas do enunciado do exercício.</li>
-        <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
-        com resumo da funcionalidade implementada e 
-        com instruções para colocar o programa a funcionar como esperado.<br />
-        Por exemplo:</li>
-        <ul>
-            <li>A funcionalidade pedida foi total/parcialmente implementada <b>...</b></li>
-            <li>O servidor deve executar com o comando:
-                <tt>mvn package exec:java</tt>
-            </li>
-            <li>O cliente deve executar com o comando: 
-                <tt>mvn compile exec:java</tt>
-            </li>
-        </ul>
-	</ul>
-</div>
-
-<p>&nbsp;</p>
-
-<!--p>&nbsp;</p>
-
-<h2>Aprender mais!</h2>
-<p>
-Vai valer a pena regressar a esta aula mais tarde e 
-aprender mais.
-</p-->
-
 
 <hr />
 

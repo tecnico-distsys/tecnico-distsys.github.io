@@ -35,7 +35,7 @@
     Aprofundar os conhecimentos sobre Java RMI
     </li>
     <li>
-    Tomar contacto com os mecanismos de passagem de classes do
+    Tomar contacto com os mecanismos de passagem de objetos do
     Java RMI
     </li>
 </ul>
@@ -68,7 +68,7 @@
 <p>
 Partindo de um Jogo do Galo (Tic Tac Toe) feito para um cenário local, 
 pretende-se desenvolver uma variante do jogo onde a parte
-computacionalmente mais pesada é realizada por um servidor remoto.<br />
+computacionalmente mais pesada é realizada por um servidor remoto.
 O servidor guarda as variáveis do jogo.
 O cliente faz a interface com o utilizador.<br />
 <img src="ttt.png" alt="Tic Tac Toe" height="75" /><br />
@@ -76,8 +76,8 @@ O cliente faz a interface com o utilizador.<br />
 
 <p><em>
 Sugestão: nas alíneas seguintes, corra os programas cliente e servidor
-numa máquina não partilhada com outros grupos para evitar conflitos
-(use uma máquina do laboratório e não o sigma).
+numa máquina não partilhada com outros grupos para evitar conflitos.
+Use uma máquina pessoal ou do laboratório e não o sigma.
 </em></p>
 
 <ol>
@@ -89,9 +89,7 @@ numa máquina não partilhada com outros grupos para evitar conflitos
     </li>
     <ol type="i">
         <li>
-        Importe os projectos no Eclipse, 
-        <a href="../01-tools/eclipse/configure-maven-project/index.html">seguindo
-        os passos aqui indicados</a>.
+        Importe os projectos no Eclipse, recorrendo a <i> File > Import > Maven > Existing Maven Projects</i>.
         </li>
         <li>
         No ponto de partida o código está todo centralizado no servidor, estando o cliente vazio.
@@ -113,30 +111,59 @@ numa máquina não partilhada com outros grupos para evitar conflitos
     permitir-se-á que haja um cliente remoto 
     (que possivelmente corre em máquina diferente que a máquina que serve o jogo) 
     que interage com os jogadores e que invoca as funções do servidor via 
-    Java RMI (Remote Method Invocation).
+    Java RMI (<i>Remote Method Invocation</i>).
     </li>
     <ol type="a">
         <li>
-        Comece por desenhar a interface remota do servidor numa
+        Comece por desenhar os métodos remotos do servidor numa
         interface chamada <tt>TTTService</tt>.<br />
         A interface deve expor todas as funções remotas que o cliente precisa de invocar. 
         Para ser uma interface remota, precisa também de herdar de <tt>java.rmi.Remote</tt> e
         cada um dos seus métodos deve lançar uma <tt>java.rmi.RemoteException</tt>.<br>
-        Consulte o <a href="./ShapeList.java">exemplo de interface
-            remota apresentado no livro</a> para ajuda.
+        Consulte o <a href="./ShapeList.java">exemplo de interface remota apresentado no livro</a> para ajuda.
         </li>
+        <ol type="i">
+            <li>
+            Coloque a nova interface num módulo
+            <a href="./ttt-rmi-interface.zip">interface<img src="../_img/zip.png" alt="ZIP"></a>
+            </li>
+            <li>
+            Depois de codificar a interface,
+            compile o código e instale a dependência:<br />
+            <tt>cd ttt-rmi-interface</tt><br />
+            <tt>mvn install</tt><br />
+            </li>
+            <li>
+            Adicione a dependência no <tt>pom.xml</tt> do servidor e do cliente,
+            pois esta interface terá que ser partilhada por ambos.
+<pre class="prettyprint lang-xml">
+    ...
+        &lt;dependency&gt;
+            &lt;groupId&gt;example&lt;/groupId&gt;
+            &lt;artifactId&gt;ttt-rmi-interface&lt;/artifactId&gt;
+            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+        &lt;/dependency&gt;
+    ...
+</pre>
+            </li>
+            <li>
+            Depois de editar os <tt>pom.xml</tt>, refresque as dependências do Maven no projeto Eclipse<br />
+            (<i>right-click</i>, Maven, Update Project..., Force Update of Snapshots/Releases, OK)
+            </li>
+        </ol>
         <li>
-        Transforme a classe <tt>TTT</tt> para que passe a
+        No servidor, transforme a classe <tt>TTT</tt> para que passe a
         implementar a interface remota <tt>TTTService</tt>. 
         Para que instâncias desta classe possam ser objectos remotos, 
         modifique a definição da classe <tt>TTT</tt> para que ela passe a herdar de 
         <tt>java.rmi.server.UnicastRemoteObject</tt>
-        e acrescente um construtor que lance excepção <tt>RemoteException</tt>.<br>
+        e acrescente um construtor que lance excepção <tt>RemoteException</tt>.<br />
+        Deverá implementar a lógica dos métodos que o Cliente irá chamar posteriormente.<br />
         Consulte o <a href="./ShapeListServant.java">exemplo da classe
         shapeListServant apresentado no livro</a> para ajuda.
         </li>
         <li>
-        No projecto servidor, crie uma nova classe <tt>TTTServer</tt> com método <tt>main</tt>,
+        No servidor, crie uma nova classe <tt>TTTServer</tt> com método <tt>main</tt>,
         onde correrá o servidor.<br />
         No método <tt>main</tt> deverá:
         </li>
@@ -151,9 +178,10 @@ numa máquina não partilhada com outros grupos para evitar conflitos
         </ol>
         Consulte o <a href="./ShapeListServer.java">exemplo da classe
         ShapeListServer apresentado no livro</a> para ajuda.<br /> 
-        Não se esqueça de actualizar o ficheiro <tt>pom.xml</tt>.
+        Não se esqueça de actualizar a <tt>mainclass</tt> do ficheiro <tt>pom.xml</tt> 
+        de modo a reflectir a classe que possui o método <tt>main</tt>.
         <li>
-        Abra agora o ficheiro fonte da classe <tt>ttt.Client</tt>.
+        Deverá agora proceder à modificação do cliente para chamar remotamente os métodos definidos anteriormente.
         </li>
         <ol type="i">
             <li>
@@ -166,16 +194,16 @@ numa máquina não partilhada com outros grupos para evitar conflitos
             apresentado no livro</a> para ajuda.
             </li>
             <li>
-            Não se esqueça de na chamada ao método <tt>Naming.lookup</tt>,
+            Não se esqueça de, na chamada ao método <tt>Naming.lookup</tt>,
             definir correctamente o URL que localiza o objecto, na forma: 
             <tt>//host:port/name</tt>,
             em que <tt>host</tt> e <tt>port</tt> definem a máquina e o porto
-            onde corre o <tt>rmiregistry</tt> (respectivamente) onde foi
+            onde corre o <tt>rmiregistry</tt> onde foi
             registado o objecto remoto e <tt>name</tt> é o nome que foi
             atribuído ao objecto pelo servidor quando chamou <tt>rebind</tt>.
             </li>
             <li>
-            Adicione o tratamento adequado às excepções lançadas quando acontece
+            Adicione o tratamento adequado às exceções lançadas quando acontece
             algo inesperado numa invocação remota. <br />
             (Algumas das excepções que podem ocorrer são: 
             <tt>java.rmi.UnknownHostException</tt>, 
@@ -217,8 +245,8 @@ numa máquina não partilhada com outros grupos para evitar conflitos
 
 <p>&nbsp;</p>
 <p>
-O resto do enunciado será entregue na aula. O objectivo será
-estender a solução resultante do enunciado acima com mais
+O resto do enunciado será entregue na aula. 
+O objectivo será estender a solução resultante do enunciado acima com mais
 procedimentos ou modificar alguns dos seus procedimentos actuais.
 </p>
 
@@ -233,9 +261,9 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
 </p>
 
 <p>
-    A solução completa deverá ser submetida no Fénix <b>antes do fim
-        da sua aula de laboratório</b>.<br /> Trabalhos submetidos depois da
-    hora de fim da aula não serão considerados.<br>
+    A solução completa deverá ser submetida no Fénix 
+    <b>antes do fim da sua aula de laboratório</b>.<br /> 
+    Trabalhos submetidos depois da hora de fim da aula não serão considerados.<br>
 </p>
 
 <p>
@@ -244,9 +272,9 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
 <ul>
     <li>Só são aceites trabalhos de estudantes que estiveram
         presentes no laboratório.</li>
-    <li>Deverá incluir um ficheiro <tt>respostas.txt</tt> com as
+    <!--li>Deverá incluir um ficheiro <tt>respostas.txt</tt> com as
         respostas às perguntas do enunciado do exercício.
-    </li>
+    </li-->
     <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
         com resumo da funcionalidade implementada e com instruções para
         colocar o programa a funcionar como esperado.<br /> Por exemplo:
@@ -304,7 +332,7 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
         separada do processo que instancia e solitica o registo de um objecto remoto.
         Neste caso, é necessário que os ficheiros com as interfaces remotas
         dos objectos a registar no Registry estejam disponíveis num URL definido
-        no parâmetro "codebase" da JVM do processo servidor. <br />
+        no parâmetro "codebase" da JVM do processo servidor.
         Um exemplo que usa RMI Registry como serviço autónomo pode ser consultado aqui:<br />
         <a href="./hello-rmi-server.zip">servidor<img src="../_img/zip.png" alt="ZIP"></a>,
         <a href="./hello-rmi-client.zip">cliente<img src="../_img/zip.png"alt="ZIP"></a>.

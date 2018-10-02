@@ -241,11 +241,11 @@ ou então por cima também do Maven (Eclipse/Maven/JDK).
     No seguinte exercício iremos explorar alguns dos mecanismos que o Maven disponibiliza.
 </p>
 <ol>
-    <li>Obter o exemplo  <a href="./mainApp.zip">MainApp
+    <li>Obter o exemplo  <a href="./config-app.zip">config-app
     <img src="../_img/zip.png" alt="ZIP" ></a>
     </li>
     <ol type="a">
-        <li>Configurar o projecto no Eclipse  (o <tt>readme.txt</tt> contém instruções mais detalhadas)  </li>
+        <li>Configurar o projecto no Eclipse  (o <tt>README.md</tt> contém instruções mais detalhadas)  </li>
         <li>Estudar o código fonte (pasta src) e o ficheiro <tt>pom.xml</tt>               </li>
         <li>Compilar e executar o projecto. 
         (Fazer <tt>mvn compile</tt> e depois <tt>mvn exec:java</tt>)
@@ -263,7 +263,7 @@ ou então por cima também do Maven (Eclipse/Maven/JDK).
                 <p>
                 &lt;dependency&gt;<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;pt.tecnico.sd&lt;/groupId&gt;<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;ConfigHelper&lt;/artifactId&gt;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;config-helper&lt;/artifactId&gt;<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;<br/>
                 &lt;/dependency<br/>
                 </p>
@@ -275,18 +275,18 @@ ou então por cima também do Maven (Eclipse/Maven/JDK).
 </br>
     <li>Há um novo erro, consegue perceber qual é? </li>
     <ol type="a">
-        <li>Obter o exemplo  <a href="./ConfigHelper.zip">ConfigHelper
+        <li>Obter o exemplo  <a href="./config-helper.zip">config-helper
         <img src="../_img/zip.png" alt="ZIP" ></a>
         </li>
         <li>Configurar o projecto no Eclipse  (<tt>readme.txt</tt> com instruções mais detalhadas)  </li>
         <li>Estudar o código fonte (pasta <tt>src</tt>) e o ficheiro <tt>pom.xml</tt>               </li>
-        <li>Para resolver o problema temos de disponibilizar a dependência ConfigHelper na máquina de desenvolvimento (fazer <tt>mvn install</tt>)</li>
-        <li>Voltar a compilar o projecto <b>MainApp</b> e executá-lo</li>
+        <li>Para resolver o problema temos de disponibilizar a dependência config-helper na máquina de desenvolvimento (fazer <tt>mvn install</tt>)</li>
+        <li>Voltar a compilar o projecto <b>config-app</b> e executá-lo</li>
     </ol>
 <!--
 </br>
     <li>
-    Quando corremos mvn install no projecto <b>ConfigHelper</b> corremos todas as fases do mvn anteriores, incluindo a fase de testes:
+    Quando corremos mvn install no projecto <b>config-helper</b> corremos todas as fases do mvn anteriores, incluindo a fase de testes:
     </li>
     <ol type="a">
         <li>        Quantos testes foram executados?        </li>

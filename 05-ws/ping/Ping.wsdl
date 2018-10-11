@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:tns="http://ws.example/"
+    targetNamespace="http://ws.example/"
+    name="Ping">
+
+    <!-- This file is NOT generated automatically -->
+
+    <!-- #( 1 )
+
+         The XML namespaces (xmslns) definitions are very important.
+         They state which namespaces are being used and what are their prefixes.
+
+         The targetNamespace (prefix tns) is the namespace of the Web Service
+         that is being defined by this WSDL document.
+
+         A WSDL file is better read from the end of the file to be beginning.
+         Next, read the service definition #( 2 )
+    -->
+
+
+    <!-- #( 6 )
+         type definitions
+
+         This section defines an XML Schema Definition (XSD).
+         It can be in-line or imported from another file.
+
+         In document-literal style, there must be
+         one XML element definition for each declared message.
+
+         This is the end of the WSDL guided tour :)
+    -->
+    <types>
+        <xs:schema elementFormDefault="qualified"
+            targetNamespace="http://ws.example/">
+
+            <xs:complexType name="Ping">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="PingResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="PingFault">
+                <xs:sequence>
+                    <xs:element type="xs:int" name="number" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="ping" type="tns:Ping"/>
+
+            <xs:element name="pingResponse" type="tns:PingResponse" />
+
+            <xs:element name="pingFault" type="tns:PingFault" />
+
+        </xs:schema>
+    </types>
+
+
+    <!-- #( 5 )
+         message definitions
+
+         In document-literal style, each message has a single part
+         that refers to a XML element defined in the XML Schema Definition.
+
+         Next, read the type definitions #( 6 )
+    -->
+    <message name="ping">
+        <part name="parameters" element="tns:ping" />
+    </message>
+    <message name="pingResponse">
+        <part name="parameters" element="tns:pingResponse" />
+    </message>
+    <message name="pingFault">
+        <part name="fault" element="tns:pingFault" />
+    </message>
+
+    <!-- #( 4 )
+         port type definitions
+
+         A port type is a set of operations.
+         It is similar, in concept, to a Java interface.
+
+         Each operation has: an input message,
+         an output message and, optionally, fault messages.
+
+         Next, read the message definitions #( 5 )
+    -->
+    <portType name="PingPortType">
+        <operation name="ping">
+            <input wsam:Action="http://ws.example/Ping/pingRequest" message="tns:ping" />
+            <output wsam:Action="http://ws.example/Ping/pingResponse" message="tns:pingResponse" />
+            <fault wsam:Action="http://ws.example/Ping/ping/Fault/pingFault" message="tns:pingFault" name="pingFault" />
+        </operation>
+    </portType>
+
+
+    <!-- #( 3 )
+         binding definitions
+
+         A binding defines a concrete implementation of an abstract port type.
+
+         It is essentially a choice of technologies that will be used to
+         actually invoke the service. In this case, SOAP and HTTP.
+
+         It also defines the 'document-literal' style of binding,
+         meaning that the SOAP body will have a single part that is
+         a XML document that is defined by an XML Schema Definition.
+
+         Next, read the port type definition #( 4 )
+    -->
+    <binding name="PingSoapBinding" type="tns:PingPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <operation name="ping">
+            <soap:operation soapAction="" />
+                <input>
+                    <soap:body use="literal" />
+                </input>
+                <output>
+                    <soap:body use="literal" />
+                </output>
+                <fault name="pingFault">
+                    <soap:fault name="pingFault" use="literal" />
+                </fault>
+        </operation>
+    </binding>
+
+
+    <!-- #( 2 )
+         service definition
+
+         A service defines a set of ports (typically just one).
+         The port is a concrete implementation of a port type, defined by a binding.
+
+         The SOAP address location is the default endpoint address for the Web Service.
+
+         Next, read the binding definitions #( 3 )
+    -->
+    <service name="PingService">
+        <port name="PingPort" binding="tns:PingSoapBinding">
+            <soap:address location="http://host:port/ping-ws/endpoint"/>
+        </port>
+    </service>
+
+
+</definitions>

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css">
+
+    <link href="../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../_prettify/prettify.js"></script>
+
+    <title>JAX-WS</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../../index.html">Labs SD</a> &gt;
+        <a href="../index.html">Web Services</a>
+    </p>
+</div>
+
+
+        <div class="titulo">
+            <h1>JAX-WS</h1>
+        </div>
+
+        <div class="indice">
+        	<ul>
+                <li><a href="#definicao">Defini&ccedil;&atilde;o</a></li>
+                <li><a href="#rpc">Chamadas remotas de procedimento</a></li>
+            </ul>
+        </div>
+
+        <hr />
+
+        <div class="corpo">
+            <h2 id="jax-ws">JAX-WS</h2>
+            <h3 id="definicao">Defini&ccedil;&atilde;o</h3>
+            <p>
+A <a href="https://jax-ws.java.net/">Java XML API for Web Services</a> &eacute; uma biblioteca de Web Services para Java,
+que permite implementar servi&ccedil;os baseados nas normas XSD, WSDL e SOAP.
+            </p>
+            <p>
+A JAX-WS define o mapeamento de WSDL para Java e vice-versa.
+O mapeamento pode ser configurado atrav&eacute;s de anota&ccedil;&otilde;es no WSDL ou no c&oacute;digo Java.
+            </p>
+            <p>
+Com a JAX-WS &eacute; poss&iacute;vel implementar Web Services partindo
+de um contrato WSDL ou partindo de c&oacute;digo Java.
+A abordagem preferida para garantir a interoperabilidade &eacute; partir do contrato WSDL.
+            </p>
+            <p>
+Com a JAX-WS &eacute; tamb&eacute;m poss&iacute;vel criar c&oacute;digo cliente de invoca&ccedil;&atilde;o
+de Web Services.
+            </p>
+
+            <p>&nbsp;</p>
+            <h3 id="rpc">Chamadas remotas de procedimento</h3>
+            <p>
+A JAX-WS &eacute; uma biblioteca de "chamadas remotas de procedimento"
+(em ingl&ecirc;s, <b>RPC</b> - Remote Procedure Call).
+A figura seguinte apresenta a estrutura de um RPC gen&eacute;rico.
+            </p>
+            <img src="rpc.png" alt="rpc" />
+            <p>
+O objectivo do RPC &eacute; permitir ao programa cliente
+invocar fun&ccedil;&otilde;es do programa servidor (remotas)
+como se fossem fun&ccedil;&otilde;es locais.
+Todos os aspectos de comunica&ccedil;&atilde;o e de representa&ccedil;&atilde;o
+de dados s&atilde;o tratados pela biblioteca de RPC
+e por objectos gerados automaticamente designados
+por stubs e ties.
+            </p>
+            <p>
+Os <b>stubs</b> e <b>ties</b> s&atilde;o
+objectos que convertem da representa&ccedil;&atilde;o
+de dados no programa cliente e no programa servidor (ex. objectos Java)
+para uma representa&ccedil;&atilde;o em formato standard, para transportar
+na rede (ex. XML).
+            </p>
+            <p>
+Passos de execu&ccedil;&atilde;o de um RPC:
+            </p>
+            <ol>
+                <li>
+O programa cliente invoca uma fun&ccedil;&atilde;o dos 'stubs';
+                </li>
+                <li>
+Os 'stubs' convertem os objectos argumento numa mensagem;<br />
+                </li>
+                <li>
+Depois, usam o 'run-time' da biblioteca e estabelecem
+uma liga&ccedil;&atilde;o com o servidor atrav&eacute;s da rede;<br />
+                </li>
+                <li>
+A mensagem gerada pelos 'stubs' &eacute; transmitida;<br />
+                </li>
+                <li>
+O 'run-time' do servidor recebe a mensagem;<br />
+                </li>
+                <li>
+Os 'ties' convertem a mensagem para objectos;<br />
+                </li>
+                <li>
+O servidor recebe os objectos, processa o pedido
+e gera objectos de resultado;<br />
+                </li>
+                <li>
+Os objectos de resultado s&atilde;o convertidos pelos 'ties'
+numa mensagem de resposta,
+que &eacute; devolvida ao cliente;<br />
+                </li>
+                <li>
+O 'run-time' do cliente recebe a resposta;<br />
+                </li>
+                <li>
+Os 'stubs' convertem a resposta para objectos;<br />
+                </li>
+                <li>
+O programa cliente recebe os objectos de resposta,
+como se tivesse apenas acabado de chamar
+uma fun&ccedil;&atilde;o local.
+                </li>
+            </ol>
+            <p>
+Enquanto a chamada remota foi efectuada, o programa cliente ficou
+bloqueado &agrave; espera. A chamada bloqueante &eacute; <b>s&iacute;ncrona</b>.
+            </p>
+            <p>
+A figura seguinte mostra em detalhe a estrutura do JAX-WS.
+            </p>
+            <img src="jax-ws.png" alt="jax-ws" />
+            <p>
+O contrato WSDL define o acordo entre cliente e servidor.
+Como &eacute; independente da plataforma,
+permite que os programas cliente e servidor sejam
+desenvolvidos em plataformas diferentes
+(ex. Java e Microsoft Dot Net).
+            </p>
+
+        </div>
+
+        <hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+	</body>
+</html>

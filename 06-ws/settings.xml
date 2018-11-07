@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <localRepository/>
+    <interactiveMode/>
+    <usePluginRegistry/>
+    <offline/>
+    <pluginGroups/>
+    <servers/>
+    <mirrors/>
+    <proxies/>
+    <profiles>
+        <profile>
+            <id>rnl-uddi-url</id>
+            <properties>
+                <!-- TODO replace user and pass below -->
+                <uddi.url>http://user:pass@uddi.sd.rnl.tecnico.ulisboa.pt:9090</uddi.url>
+            </properties>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>rnl-uddi-url</activeProfile>
+    </activeProfiles>
+</settings>

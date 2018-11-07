@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  WSDL contract for ECar Park.
+
+  This WSDL defines the operations provided by the Web Service, and should not be modified.
+  For more information, see sections
+  wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
+-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.park.ecar.com/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ParkService" targetNamespace="http://ws.park.ecar.com/">
+
+  <!--  XML Schema Definition (XSD) of data types. -->
+  <types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.park.ecar.com/" version="1.0">
+      <xs:element name="BadInitFault" type="tns:BadInitFault" />
+      <xs:element name="NoCarFault" type="tns:NoCarFault" />
+      <xs:element name="NoSpaceFault" type="tns:NoSpaceFault" />
+      <xs:element name="getInfo" type="tns:getInfo" />
+      <xs:element name="getInfoResponse" type="tns:getInfoResponse" />
+      <xs:element name="getStats" type="tns:getStats" />
+      <xs:element name="getStatsResponse" type="tns:getStatsResponse" />
+      <xs:element name="rentCar" type="tns:rentCar" />
+      <xs:element name="rentCarResponse" type="tns:rentCarResponse" />
+      <xs:element name="returnCar" type="tns:returnCar" />
+      <xs:element name="returnCarResponse" type="tns:returnCarResponse" />
+      <xs:element name="testClear" type="tns:testClear" />
+      <xs:element name="testClearResponse" type="tns:testClearResponse" />
+      <xs:element name="testInit" type="tns:testInit" />
+      <xs:element name="testInitResponse" type="tns:testInitResponse" />
+      <xs:element name="testPing" type="tns:testPing" />
+      <xs:element name="testPingResponse" type="tns:testPingResponse" />
+      <xs:complexType name="testClear">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="testClearResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getStats">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getStatsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:parkStats" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="parkStats">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element name="countRents" type="xs:int" />
+          <xs:element name="countReturns" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testInit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="xy" type="tns:xy" />
+          <xs:element name="capacity" type="xs:int" />
+          <xs:element name="returnBonus" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="xy">
+        <xs:sequence>
+          <xs:element name="x" type="xs:int" />
+          <xs:element name="y" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testInitResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="BadInitFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getInfo">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:parkInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="parkInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="coords" type="tns:xy" />
+          <xs:element name="returnBonus" type="xs:int" />
+          <xs:element name="capacity" type="xs:int" />
+          <xs:element name="availableCars" type="xs:int" />
+          <xs:element name="freeSpaces" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testPing">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testPingResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="returnCar">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="returnCarResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NoSpaceFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="rentCar">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="rentCarResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="NoCarFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+
+  <!--  Messages use elements defined in the schema. -->
+  <message name="testClear">
+    <part element="tns:testClear" name="parameters" />
+  </message>
+  <message name="testClearResponse">
+    <part element="tns:testClearResponse" name="parameters" />
+  </message>
+  <message name="testPing">
+    <part element="tns:testPing" name="parameters" />
+  </message>
+  <message name="testPingResponse">
+    <part element="tns:testPingResponse" name="parameters" />
+  </message>
+  <message name="getStats">
+    <part element="tns:getStats" name="parameters" />
+  </message>
+  <message name="getStatsResponse">
+    <part element="tns:getStatsResponse" name="parameters" />
+  </message>
+  <message name="rentCar">
+    <part element="tns:rentCar" name="parameters" />
+  </message>
+  <message name="rentCarResponse">
+    <part element="tns:rentCarResponse" name="parameters" />
+  </message>
+  <message name="NoCarFault">
+    <part element="tns:NoCarFault" name="fault" />
+  </message>
+  <message name="returnCar">
+    <part element="tns:returnCar" name="parameters" />
+  </message>
+  <message name="returnCarResponse">
+    <part element="tns:returnCarResponse" name="parameters" />
+  </message>
+  <message name="NoSpaceFault">
+    <part element="tns:NoSpaceFault" name="fault" />
+  </message>
+  <message name="getInfo">
+    <part element="tns:getInfo" name="parameters" />
+  </message>
+  <message name="getInfoResponse">
+    <part element="tns:getInfoResponse" name="parameters" />
+  </message>
+  <message name="testInit">
+    <part element="tns:testInit" name="parameters" />
+  </message>
+  <message name="testInitResponse">
+    <part element="tns:testInitResponse" name="parameters" />
+  </message>
+  <message name="BadInitFault">
+    <part element="tns:BadInitFault" name="fault" />
+  </message>
+
+  <!--  Port type (interface). -->
+  <!--  Each operation has input, output and fault messages. -->
+  <portType name="ParkPortType">
+    <operation name="testClear">
+      <input message="tns:testClear" wsam:Action="http://ws.park.ecar.com/ParkPortType/testClearRequest" />
+      <output message="tns:testClearResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/testClearResponse" />
+    </operation>
+    <operation name="testPing">
+      <input message="tns:testPing" wsam:Action="http://ws.park.ecar.com/ParkPortType/testPingRequest" />
+      <output message="tns:testPingResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/testPingResponse" />
+    </operation>
+    <operation name="getStats">
+      <input message="tns:getStats" wsam:Action="http://ws.park.ecar.com/ParkPortType/getStatsRequest" />
+      <output message="tns:getStatsResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/getStatsResponse" />
+    </operation>
+    <operation name="rentCar">
+      <input message="tns:rentCar" wsam:Action="http://ws.park.ecar.com/ParkPortType/rentCarRequest" />
+      <output message="tns:rentCarResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/rentCarResponse" />
+      <fault message="tns:NoCarFault" name="NoCarFault" wsam:Action="http://ws.park.ecar.com/ParkPortType/rentCar/Fault/NoCarFault" />
+    </operation>
+    <operation name="returnCar">
+      <input message="tns:returnCar" wsam:Action="http://ws.park.ecar.com/ParkPortType/returnCarRequest" />
+      <output message="tns:returnCarResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/returnCarResponse" />
+      <fault message="tns:NoSpaceFault" name="NoSpaceFault" wsam:Action="http://ws.park.ecar.com/ParkPortType/returnCar/Fault/NoSpaceFault" />
+    </operation>
+    <operation name="getInfo">
+      <input message="tns:getInfo" wsam:Action="http://ws.park.ecar.com/ParkPortType/getInfoRequest" />
+      <output message="tns:getInfoResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/getInfoResponse" />
+    </operation>
+    <operation name="testInit">
+      <input message="tns:testInit" wsam:Action="http://ws.park.ecar.com/ParkPortType/testInitRequest" />
+      <output message="tns:testInitResponse" wsam:Action="http://ws.park.ecar.com/ParkPortType/testInitResponse" />
+      <fault message="tns:BadInitFault" name="BadInitFault" wsam:Action="http://ws.park.ecar.com/ParkPortType/testInit/Fault/BadInitFault" />
+    </operation>
+  </portType>
+
+  <!--  Binding defines the actual technologies to use. -->
+  <binding name="ParkPortBinding" type="tns:ParkPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="testClear">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="testPing">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getStats">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="rentCar">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="NoCarFault">
+        <soap:fault name="NoCarFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="returnCar">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="NoSpaceFault">
+        <soap:fault name="NoSpaceFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="getInfo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="testInit">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="BadInitFault">
+        <soap:fault name="BadInitFault" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+
+  <!--  Service defines ports. -->
+  <!--  Each port is an abstract port type, made concrete by a binding. -->
+  <service name="ParkService">
+    <port binding="tns:ParkPortBinding" name="ParkPort">
+      <soap:address location="http://ecar.com:8081/park" />
+    </port>
+  </service>
+</definitions>

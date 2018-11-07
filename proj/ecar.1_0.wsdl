@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  WSDL contract for ECar.
+
+  This WSDL defines the operations provided by the Web Service, and should not be modified.
+  For more information, see sections
+  wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
+-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.ecar.com/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ECarService" targetNamespace="http://ws.ecar.com/">
+
+  <!--  XML Schema Definition (XSD) of data types. -->
+  <types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.ecar.com/" version="1.0">
+      <xs:element name="CarNotRentedFault" type="tns:CarNotRentedFault" />
+      <xs:element name="EmailAlreadyExistsFault" type="tns:EmailAlreadyExistsFault" />
+      <xs:element name="InitFault" type="tns:InitFault" />
+      <xs:element name="InitParkFault" type="tns:InitParkFault" />
+      <xs:element name="InsufficientCreditFault" type="tns:InsufficientCreditFault" />
+      <xs:element name="InvalidEmailFault" type="tns:InvalidEmailFault" />
+      <xs:element name="InvalidParkFault" type="tns:InvalidParkFault" />
+      <xs:element name="InvalidUserFault" type="tns:InvalidUserFault" />
+      <xs:element name="NoCarAvailableFault" type="tns:NoCarAvailableFault" />
+      <xs:element name="ParkFullFault" type="tns:ParkFullFault" />
+      <xs:element name="UserAlreadyHasCarFault" type="tns:UserAlreadyHasCarFault" />
+      <xs:element name="activateUser" type="tns:activateUser" />
+      <xs:element name="activateUserResponse" type="tns:activateUserResponse" />
+      <xs:element name="getCredit" type="tns:getCredit" />
+      <xs:element name="getCreditResponse" type="tns:getCreditResponse" />
+      <xs:element name="getNearbyParks" type="tns:getNearbyParks" />
+      <xs:element name="getNearbyParksResponse" type="tns:getNearbyParksResponse" />
+      <xs:element name="getParkView" type="tns:getParkView" />
+      <xs:element name="getParkViewResponse" type="tns:getParkViewResponse" />
+      <xs:element name="rentCar" type="tns:rentCar" />
+      <xs:element name="rentCarResponse" type="tns:rentCarResponse" />
+      <xs:element name="returnCar" type="tns:returnCar" />
+      <xs:element name="returnCarResponse" type="tns:returnCarResponse" />
+      <xs:element name="testClear" type="tns:testClear" />
+      <xs:element name="testClearResponse" type="tns:testClearResponse" />
+      <xs:element name="testInit" type="tns:testInit" />
+      <xs:element name="testInitPark" type="tns:testInitPark" />
+      <xs:element name="testInitParkResponse" type="tns:testInitParkResponse" />
+      <xs:element name="testInitResponse" type="tns:testInitResponse" />
+      <xs:element name="testPing" type="tns:testPing" />
+      <xs:element name="testPingResponse" type="tns:testPingResponse" />
+      <xs:complexType name="getCredit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userEmail" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCreditResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidUserFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testInit">
+        <xs:sequence>
+          <xs:element name="initialUserCredit" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testInitResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InitFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testClear">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="testClearResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="returnCar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="parkId" type="xs:string" />
+          <xs:element minOccurs="0" name="userEmail" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="returnCarResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InvalidParkFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ParkFullFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CarNotRentedFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testPing">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testPingResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activateUser">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userEmail" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activateUserResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:userView" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userEmail" type="xs:string" />
+          <xs:element minOccurs="0" name="hasCar" type="xs:boolean" />
+          <xs:element minOccurs="0" name="credit" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidEmailFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmailAlreadyExistsFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getParkView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="parkId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getParkViewResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:parkView" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="parkView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="coords" type="tns:coordinatesView" />
+          <xs:element name="returnBonus" type="xs:int" />
+          <xs:element name="capacity" type="xs:int" />
+          <xs:element name="availableCars" type="xs:int" />
+          <xs:element name="freeSpaces" type="xs:int" />
+          <xs:element name="countRents" type="xs:int" />
+          <xs:element name="countReturns" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="coordinatesView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="x" type="xs:int" />
+          <xs:element minOccurs="0" name="y" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="rentCar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="parkId" type="xs:string" />
+          <xs:element minOccurs="0" name="userEmail" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="rentCarResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:carView" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="carView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="model" type="tns:carModelView" />
+          <xs:element minOccurs="0" name="licensePlate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="carModelView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="manufacturer" type="xs:string" />
+          <xs:element minOccurs="0" name="model" type="xs:string" />
+          <xs:element name="nrSeats" type="xs:int" />
+          <xs:element name="rangeKm" type="xs:int" />
+          <xs:element name="chargeTimeHrs" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NoCarAvailableFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UserAlreadyHasCarFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InsufficientCreditFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getNearbyParks">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="maxNrParks" type="xs:int" />
+          <xs:element minOccurs="0" name="userCoords" type="tns:coordinatesView" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getNearbyParksResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:parkView" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testInitPark">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="initialParkState" type="tns:parkView" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testInitParkResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InitParkFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+
+  <!--  Messages use elements defined in the schema. -->
+  <message name="rentCar">
+    <part element="tns:rentCar" name="parameters" />
+  </message>
+  <message name="rentCarResponse">
+    <part element="tns:rentCarResponse" name="parameters" />
+  </message>
+  <message name="InvalidParkFault">
+    <part element="tns:InvalidParkFault" name="fault" />
+  </message>
+  <message name="InvalidUserFault">
+    <part element="tns:InvalidUserFault" name="fault" />
+  </message>
+  <message name="NoCarAvailableFault">
+    <part element="tns:NoCarAvailableFault" name="fault" />
+  </message>
+  <message name="UserAlreadyHasCarFault">
+    <part element="tns:UserAlreadyHasCarFault" name="fault" />
+  </message>
+  <message name="InsufficientCreditFault">
+    <part element="tns:InsufficientCreditFault" name="fault" />
+  </message>
+  <message name="returnCar">
+    <part element="tns:returnCar" name="parameters" />
+  </message>
+  <message name="returnCarResponse">
+    <part element="tns:returnCarResponse" name="parameters" />
+  </message>
+  <message name="ParkFullFault">
+    <part element="tns:ParkFullFault" name="fault" />
+  </message>
+  <message name="CarNotRentedFault">
+    <part element="tns:CarNotRentedFault" name="fault" />
+  </message>
+  <message name="testPing">
+    <part element="tns:testPing" name="parameters" />
+  </message>
+  <message name="testPingResponse">
+    <part element="tns:testPingResponse" name="parameters" />
+  </message>
+  <message name="getCredit">
+    <part element="tns:getCredit" name="parameters" />
+  </message>
+  <message name="getCreditResponse">
+    <part element="tns:getCreditResponse" name="parameters" />
+  </message>
+  <message name="getNearbyParks">
+    <part element="tns:getNearbyParks" name="parameters" />
+  </message>
+  <message name="getNearbyParksResponse">
+    <part element="tns:getNearbyParksResponse" name="parameters" />
+  </message>
+  <message name="testClear">
+    <part element="tns:testClear" name="parameters" />
+  </message>
+  <message name="testClearResponse">
+    <part element="tns:testClearResponse" name="parameters" />
+  </message>
+  <message name="testInitPark">
+    <part element="tns:testInitPark" name="parameters" />
+  </message>
+  <message name="testInitParkResponse">
+    <part element="tns:testInitParkResponse" name="parameters" />
+  </message>
+  <message name="InitParkFault">
+    <part element="tns:InitParkFault" name="fault" />
+  </message>
+  <message name="getParkView">
+    <part element="tns:getParkView" name="parameters" />
+  </message>
+  <message name="getParkViewResponse">
+    <part element="tns:getParkViewResponse" name="parameters" />
+  </message>
+  <message name="testInit">
+    <part element="tns:testInit" name="parameters" />
+  </message>
+  <message name="testInitResponse">
+    <part element="tns:testInitResponse" name="parameters" />
+  </message>
+  <message name="InitFault">
+    <part element="tns:InitFault" name="fault" />
+  </message>
+  <message name="activateUser">
+    <part element="tns:activateUser" name="parameters" />
+  </message>
+  <message name="activateUserResponse">
+    <part element="tns:activateUserResponse" name="parameters" />
+  </message>
+  <message name="InvalidEmailFault">
+    <part element="tns:InvalidEmailFault" name="fault" />
+  </message>
+  <message name="EmailAlreadyExistsFault">
+    <part element="tns:EmailAlreadyExistsFault" name="fault" />
+  </message>
+
+  <!--  Port type (interface). -->
+  <!--  Each operation has input, output and fault messages. -->
+  <portType name="ECarPortType">
+    <operation name="rentCar">
+      <input message="tns:rentCar" wsam:Action="http://ws.ecar.com/ECarPortType/rentCarRequest" />
+      <output message="tns:rentCarResponse" wsam:Action="http://ws.ecar.com/ECarPortType/rentCarResponse" />
+      <fault message="tns:InvalidParkFault" name="InvalidParkFault" wsam:Action="http://ws.ecar.com/ECarPortType/rentCar/Fault/InvalidParkFault" />
+      <fault message="tns:InvalidUserFault" name="InvalidUserFault" wsam:Action="http://ws.ecar.com/ECarPortType/rentCar/Fault/InvalidUserFault" />
+      <fault message="tns:NoCarAvailableFault" name="NoCarAvailableFault" wsam:Action="http://ws.ecar.com/ECarPortType/rentCar/Fault/NoCarAvailableFault" />
+      <fault message="tns:UserAlreadyHasCarFault" name="UserAlreadyHasCarFault" wsam:Action="http://ws.ecar.com/ECarPortType/rentCar/Fault/UserAlreadyHasCarFault" />
+      <fault message="tns:InsufficientCreditFault" name="InsufficientCreditFault" wsam:Action="http://ws.ecar.com/ECarPortType/rentCar/Fault/InsufficientCreditFault" />
+    </operation>
+    <operation name="returnCar">
+      <input message="tns:returnCar" wsam:Action="http://ws.ecar.com/ECarPortType/returnCarRequest" />
+      <output message="tns:returnCarResponse" wsam:Action="http://ws.ecar.com/ECarPortType/returnCarResponse" />
+      <fault message="tns:InvalidParkFault" name="InvalidParkFault" wsam:Action="http://ws.ecar.com/ECarPortType/returnCar/Fault/InvalidParkFault" />
+      <fault message="tns:InvalidUserFault" name="InvalidUserFault" wsam:Action="http://ws.ecar.com/ECarPortType/returnCar/Fault/InvalidUserFault" />
+      <fault message="tns:ParkFullFault" name="ParkFullFault" wsam:Action="http://ws.ecar.com/ECarPortType/returnCar/Fault/ParkFullFault" />
+      <fault message="tns:CarNotRentedFault" name="CarNotRentedFault" wsam:Action="http://ws.ecar.com/ECarPortType/returnCar/Fault/CarNotRentedFault" />
+    </operation>
+    <operation name="testPing">
+      <input message="tns:testPing" wsam:Action="http://ws.ecar.com/ECarPortType/testPingRequest" />
+      <output message="tns:testPingResponse" wsam:Action="http://ws.ecar.com/ECarPortType/testPingResponse" />
+    </operation>
+    <operation name="getCredit">
+      <input message="tns:getCredit" wsam:Action="http://ws.ecar.com/ECarPortType/getCreditRequest" />
+      <output message="tns:getCreditResponse" wsam:Action="http://ws.ecar.com/ECarPortType/getCreditResponse" />
+      <fault message="tns:InvalidUserFault" name="InvalidUserFault" wsam:Action="http://ws.ecar.com/ECarPortType/getCredit/Fault/InvalidUserFault" />
+    </operation>
+    <operation name="getNearbyParks">
+      <input message="tns:getNearbyParks" wsam:Action="http://ws.ecar.com/ECarPortType/getNearbyParksRequest" />
+      <output message="tns:getNearbyParksResponse" wsam:Action="http://ws.ecar.com/ECarPortType/getNearbyParksResponse" />
+    </operation>
+    <operation name="testClear">
+      <input message="tns:testClear" wsam:Action="http://ws.ecar.com/ECarPortType/testClearRequest" />
+      <output message="tns:testClearResponse" wsam:Action="http://ws.ecar.com/ECarPortType/testClearResponse" />
+    </operation>
+    <operation name="testInitPark">
+      <input message="tns:testInitPark" wsam:Action="http://ws.ecar.com/ECarPortType/testInitParkRequest" />
+      <output message="tns:testInitParkResponse" wsam:Action="http://ws.ecar.com/ECarPortType/testInitParkResponse" />
+      <fault message="tns:InitParkFault" name="InitParkFault" wsam:Action="http://ws.ecar.com/ECarPortType/testInitPark/Fault/InitParkFault" />
+    </operation>
+    <operation name="getParkView">
+      <input message="tns:getParkView" wsam:Action="http://ws.ecar.com/ECarPortType/getParkViewRequest" />
+      <output message="tns:getParkViewResponse" wsam:Action="http://ws.ecar.com/ECarPortType/getParkViewResponse" />
+      <fault message="tns:InvalidParkFault" name="InvalidParkFault" wsam:Action="http://ws.ecar.com/ECarPortType/getParkView/Fault/InvalidParkFault" />
+    </operation>
+    <operation name="testInit">
+      <input message="tns:testInit" wsam:Action="http://ws.ecar.com/ECarPortType/testInitRequest" />
+      <output message="tns:testInitResponse" wsam:Action="http://ws.ecar.com/ECarPortType/testInitResponse" />
+      <fault message="tns:InitFault" name="InitFault" wsam:Action="http://ws.ecar.com/ECarPortType/testInit/Fault/InitFault" />
+    </operation>
+    <operation name="activateUser">
+      <input message="tns:activateUser" wsam:Action="http://ws.ecar.com/ECarPortType/activateUserRequest" />
+      <output message="tns:activateUserResponse" wsam:Action="http://ws.ecar.com/ECarPortType/activateUserResponse" />
+      <fault message="tns:InvalidEmailFault" name="InvalidEmailFault" wsam:Action="http://ws.ecar.com/ECarPortType/activateUser/Fault/InvalidEmailFault" />
+      <fault message="tns:EmailAlreadyExistsFault" name="EmailAlreadyExistsFault" wsam:Action="http://ws.ecar.com/ECarPortType/activateUser/Fault/EmailAlreadyExistsFault" />
+    </operation>
+  </portType>
+
+  <!--  Binding defines the actual technologies to use. -->
+  <binding name="ECarPortBinding" type="tns:ECarPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="rentCar">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidParkFault">
+        <soap:fault name="InvalidParkFault" use="literal" />
+      </fault>
+      <fault name="InvalidUserFault">
+        <soap:fault name="InvalidUserFault" use="literal" />
+      </fault>
+      <fault name="NoCarAvailableFault">
+        <soap:fault name="NoCarAvailableFault" use="literal" />
+      </fault>
+      <fault name="UserAlreadyHasCarFault">
+        <soap:fault name="UserAlreadyHasCarFault" use="literal" />
+      </fault>
+      <fault name="InsufficientCreditFault">
+        <soap:fault name="InsufficientCreditFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="returnCar">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidParkFault">
+        <soap:fault name="InvalidParkFault" use="literal" />
+      </fault>
+      <fault name="InvalidUserFault">
+        <soap:fault name="InvalidUserFault" use="literal" />
+      </fault>
+      <fault name="ParkFullFault">
+        <soap:fault name="ParkFullFault" use="literal" />
+      </fault>
+      <fault name="CarNotRentedFault">
+        <soap:fault name="CarNotRentedFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="testPing">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getCredit">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserFault">
+        <soap:fault name="InvalidUserFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="getNearbyParks">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="testClear">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="testInitPark">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InitParkFault">
+        <soap:fault name="InitParkFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="getParkView">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidParkFault">
+        <soap:fault name="InvalidParkFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="testInit">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InitFault">
+        <soap:fault name="InitFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="activateUser">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidEmailFault">
+        <soap:fault name="InvalidEmailFault" use="literal" />
+      </fault>
+      <fault name="EmailAlreadyExistsFault">
+        <soap:fault name="EmailAlreadyExistsFault" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+
+  <!--  Service defines ports. -->
+  <!--  Each port is an abstract port type, made concrete by a binding. -->
+  <service name="ECarService">
+    <port binding="tns:ECarPortBinding" name="ECarPort">
+      <soap:address location="http://ecar.com:8080/ecar" />
+    </port>
+  </service>
+</definitions>

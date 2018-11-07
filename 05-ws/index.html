@@ -20,14 +20,14 @@
 </div>
 
 <div class="titulo" id="1">
-    <h1>Web Services Contract-First</h1>
+    <h1>Web Services</h1>
 </div>
 
 <div class="objectivos">
 
     <h2>Objetivos</h2>
     <ul>
-        <li>Desenvolver Web Services usando a abordagem <i>contract-first</i></li>
+        <li>Desenvolver Web Services na plataforma Java</li>
     </ul>
 </div>
 
@@ -166,8 +166,7 @@ Mais informação:
 <h1>Exercício</h1>
 
 <p>
-Partindo do exemplo acima,
-foi construído um novo Web Service Tic Tac Toe (jogo do galo).<br />
+Construi-se um novo Web Service Tic Tac Toe (jogo do galo).<br />
 <img src="ttt.png" alt="Tic Tac Toe" height="75" />
 </p>
 <ul>
@@ -181,6 +180,13 @@ O ponto de chegada consiste em dois programas:
 <b>cliente</b> <a href="ttt-ws-cli.zip">ttt-ws-cli</a>.
     </li>
 </ul>
+
+<p>
+A interface <tt>TTT</tt> foi anotada com <tt>@WebService</tt> e
+o WSDL é depois gerado automaticamente quando o servidor é lançado, numa abordagem que se designa por <i>implementation-first</i>
+</p>
+
+
 <ul>
     <li>
 A estrutura dos projetos está montada mas,

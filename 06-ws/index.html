@@ -1,0 +1,818 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>UDDI (Web Services II)</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo" id="1">
+    <h1>Web Services II: UDDI</h1>
+</div>
+
+<div class="objectivos">
+    <h2>Objetivos</h2>
+    <ul>
+        <li>
+        Publicar e pesquisar <i>Web Services</i> no servidor de nomes jUDDI
+        </li>
+    </ul>
+    <h3>Projeto:</h3>
+    <ul>
+        <li>Lançar várias instâncias de <tt>park</tt></li>
+        <li>Concretizar a operação <tt>ping</tt> do <tt>ecar-ws</tt> para contactar todos os parques que encontrar</li>
+    </ul>
+</div>
+
+<div class="indice">
+</div>
+
+
+<div class="corpo">
+
+<h2>UDDI</h2>
+
+<p>
+Para a publicação e pesquisa de <i>Web Services</i>
+usa-se um servidor de nomes que implementa a norma
+UDDI (<i>Universal Description, Discovery and Integration</i>).
+</p>
+<p>
+Comparando com as outras tecnologias de chamada remota:
+no Sun RPC usa-se o <tt>rpcbind</tt>,
+no Java RMI usa-se o <tt>rmiregistry</tt>,
+nos Web Services usa-se o <tt>UDDI</tt>.
+</p>
+
+Mais informação:
+<!--ul>
+    <li--><a href="uddi/index.html">UDDI</a><!--/li>
+</ul-->
+
+<h3>JAX-R</h3>
+
+<p>
+Para comunicar com servidores UDDI,
+existe a biblioteca JAX-R (Java API for XML Registries),
+que permite publicar, pesquisar e eliminar registos de <i>Web Services</i>.
+</p>
+
+<p>
+O esquema de dados do UDDI é consideravelmente mais rico do que o habitual num servidor de nomes,
+com diversas entidades e relações,
+que permitem guardar informação de negócio sobre a organização e os seus serviços.
+Como consequência, o JAX-R é uma biblioteca verbosa,
+que obriga a escrever muitas linhas de código para realizar as tarefas mais habituais de registo e de pesquisa.
+</p>
+
+Mais informação:
+<!--ul>
+    <li--><a href="jaxr/index.html">JAX-R</a><!--/li>
+</ul-->
+
+<h3>UDDI Naming</h3>
+
+<p>
+Para tornar a utilização do UDDI mais simples
+foi criada a biblioteca <tt>UDDINaming</tt> que simplifica o esquema de dados para suportar apenas:
+1 organização, 1 serviço e 1 implementação.<br />
+Esta biblioteca torna o registo e pesquisa de serviços mais sucinto.
+O código fonte está disponível para consulta e modificação.
+</p>
+
+Mais informação:
+<!--ul>
+    <li--><a href="uddi-naming/apidocs/index.html">UDDINaming JavaDoc</a><!--/li>
+</ul-->
+
+<p>
+&nbsp;
+</p>
+<hr />
+
+
+<h2>Exemplo</h2>
+
+<p>
+O exemplo seguinte é um <i>Web Service</i> que se regista no UDDI:
+<ul>
+    <li>
+    <a href="hello-ws_juddi.zip">Web Service <img src="../_img/zip.png" alt="ZIP" ></a>
+    </li>
+    <li>
+    <a href="hello-ws-cli_juddi.zip">client <img src="../_img/zip.png" alt="ZIP" ></a>
+    </li>
+</ul>
+
+<p>
+Seguem-se instruções detalhadas para construir e
+executar o exemplo.
+<!-- de um <i>Web Service</i> feito em Java,
+que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.-->
+</p>
+
+<p>
+<b>jUDDI (<i>Java UDDI</i>)</b>
+</p>
+<!--ol>
+    <li>
+    O servidor de nomes a utilizar é o jUDDI
+    alojado na RNL.
+    </li>
+    <ul>
+        <li>
+        Para usar basta configurar a propriedade
+        <tt>uddi.url</tt> com o seguinte valor:
+        <tt>http://user:pass@uddi.sd.rnl.tecnico.ulisboa.pt:9090/</tt>
+        </li>
+        <li>
+        Os valores de <i>user</i> e <i>pass</i> para acesso ao UDDI devem ser pedidos ao professor no laboratório.
+        </li>
+    </ul>
+    <li>
+    Para que a configuração seja feita para todos os exemplos,
+    pode-se criar um perfil Maven que sobrepõe o valor da propriedade para todos os projetos do utilizador.
+    Para isso, criar um ficheiro <tt><a href="settings.xml">settings.xml</a></tt> na pasta <tt>.m2</tt> da <i>home</i> do utilizador.
+    </li>
+</ol-->
+<ul>
+    <li>
+    <!-- Em alternativa ao jUDDI da RNL,--> 
+	O servidor de nomes a usar é o jUDDI local:
+    </li>
+    <ul>
+        <li>
+        O pacote de instalação pode ser encontrado na lista de <a href="../software/index.html">software</a> que se pediu para instalar.
+        </li>
+        <li>
+        Para lançar o servidor,
+        basta executar o seguinte comando na pasta <tt>juddi-.../bin</tt>:
+        </li>
+        <ul>
+            <li>
+            <tt>startup.sh</tt> (Linux e Mac)
+            </li>
+            <li>
+            <tt>startup.bat</tt> (Windows)
+            </li>
+        </ul>
+        <ul>
+            <li>
+            <tt>juddi-startup</tt> / <tt>juddi-shutdown</tt> (laboratórios das aulas)
+            </li>
+        </ul>
+        <!--li>
+        Para confirmar o funcionamento do servidor,
+        aceder à página de índice do jUDDI,
+        que dá também acesso à interface de administração<br />
+        <a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a>
+        </li>
+        <ul>
+            <li>utilizador:senha <tt>uddiadmin:da_password1</tt></li>
+        </ul-->
+    </ul>
+</ul>
+
+<p>
+<b>UDDINaming</b>
+</p>
+<ol>
+    <li>
+    Obter o código da biblioteca <tt>UDDINaming</tt>:
+    </li>
+    <ul>
+        <li>
+        <a href="uddi-naming.zip">Biblioteca uddi-naming
+        <img src="../_img/zip.png" alt="ZIP"></a>
+        </li>
+    </ul>
+    <li>
+    Instalar o módulo no repositório Maven local:
+    </li>
+    <ul>
+        <li>
+        <tt>cd uddi-naming</tt>
+        </li>
+        <li>
+        <tt>mvn install</tt>
+        </li>
+        <li>
+        A biblioteca inclui testes de integração
+        (IT - <i>Integration Tests</i>)<br />
+        que verificam o funcionamento correto do jUDDI antes de instalar o módulo.
+        </li>
+        <li>
+        Uma vez instalado o módulo no repositório Maven local,
+        a biblioteca pode ser usada como dependência em qualquer <tt>pom.xml</tt>.
+        </li>
+    </ul>
+</ol>
+
+<p>
+<b>Servidor JAX-WS</b>
+</p>
+<ol>
+    <li>
+    Construir e executar o servidor:
+    </li>
+    <ul>
+        <li>
+        <tt>cd hello-ws_juddi</tt>
+        </li>
+        <li>
+        <tt>mvn compile exec:java</tt><br />
+        O nome da classe a executar e
+        os argumentos estão definidos no <tt>pom.xml</tt><br />
+        O servidor deve executar sem erros,
+        disponibilizando o <i>endpoint address</i> e
+        registando-se no UDDI.
+        </li>
+    </ul>
+    <li>
+    Para confirmar que o servidor está a funcionar e à espera de pedidos,
+    consultar o contrato que é gerado automaticamente:
+    </li>
+    <ul>
+        <li>
+        <a href="http://localhost:8080/hello-ws/endpoint?wsdl">http://localhost:8080/hello-ws/endpoint?<b>wsdl</b></a>
+        </li>
+        <li>
+        <a href="http://localhost:8080/hello-ws/endpoint?xsd=1">http://localhost:8080/hello-ws/endpoint?<b>xsd</b>=1</a>
+        </li>
+    </ul>
+</ol>
+
+<p>
+<b>Cliente JAX-WS</b>
+</p>
+<ol>
+    <li>
+    Construir o cliente:
+    </li>
+    <ul>
+        <li>
+        <tt>cd hello-ws-cli_juddi</tt>
+        </li>
+        <li>
+        <tt>mvn compile</tt><br />
+        Executa previamente <tt>generate-sources</tt> onde
+        o cliente obtém o contrato WSDL a partir do servidor e<br />
+        usa a ferramenta <tt>wsimport</tt> para gerar as classes de invocação do serviço
+        (em <tt>target/</tt>)<br />
+        </li>
+    </ul>
+    <li>
+    Executar o cliente:
+    </li>
+    <ul>
+        <li>
+        <tt>mvn exec:java</tt><br />
+        O cliente deve executar sem erros,
+        consultando o UDDI para descobrir o endereço do servidor,<br />
+        e fazendo uma invocação remota.
+        </li>
+    </ul>
+</ol>
+
+<p>
+Resumindo:<br />
+primeiro foi lançado <!--configurado--> o servidor de nomes jUDDI local. <!--da RNL.--><br />
+Depois foi instalada a biblioteca UDDINaming no repositório Maven local,
+que testa também o funcionamento do servidor jUDDI.<br />
+Em seguida,
+foi construído e iniciado o servidor,
+que se regista no jUDDI e
+fica à espera de pedidos no <i>endpoint address</i>.<br />
+Finalmente,
+o cliente obtém o WSDL a partir do servidor e
+gera o código de invocação que permite depois fazer invocações remotas.
+</p>
+<p>
+<a href="../05-ws/ping/uml_full.png">Visão global do exemplo Hello World <img src="../_img/uml.png" alt="UML" ></a>
+</p>
+<!--p>
+Depois de testado o Exemplo,
+passar ao Exercício.
+</p-->
+
+<p>
+&nbsp;
+</p>
+<hr />
+
+<h1>Exercício</h1>
+<h2>Desenvolvimento do Projeto</h2>
+<h3>Park</h3>
+
+<p>
+O ponto de partida é o <a href="../proj/P1_start.zip">projeto base</a>.<br />
+A primeira tarefa, para prevenir conflitos de módulos Maven,
+é alterar todos os <tt>pom.xml</tt> substituindo as referências
+<b><tt>CXX</tt></b> pelo identificador do grupo.
+</p>
+
+<p>
+O servidor de parque funciona complementamente e tem os respetivos testes de integração.
+Agora, pretende-se ter múltiplos parques e desenvolver também o 
+serviço <tt>ecar-ws</tt> que vai comunicar com eles.
+Assim sendo, o UDDI torna-se útil e necessário.
+</p>
+
+<p>
+Pretende-se agora confirmar que <tt>park-ws</tt>
+<a href="../proj/uml/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>
+se regista no UDDI.
+</p>
+<ol>
+    <li>
+    Confirmar a dependência para a biblioteca UDDINaming:<br />
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;!-- UDDI Naming --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;pt.ulisboa.tecnico.sdis&lt;/groupId&gt;
+        &lt;artifactId&gt;uddi-naming&lt;/artifactId&gt;
+        &lt;version&gt;1.2.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    ...
+</pre>
+    </li>
+    <li>
+    A <tt>ParkApp</tt> deverá receber o endereço do UDDI e o nome do serviço como argumento.
+    </li>
+    <li>
+    O <tt>ParkEndpointManager</tt> deverá ter um construtor que recebe o endereço do UDDI e
+    o nome do serviço, e
+    que efetua o registo
+    (e apaga quando o serviço termina).
+    </li>
+    <li>
+    Feitas as alterações,
+    o servidor deverá iniciar-se,
+    registar-se no UDDI e depois ficar à espera de pedidos.
+    </li>
+</ol>
+
+<p>
+    Lançar mais do que uma instância do <tt>park-ws</tt>.
+</p>
+<ol>
+    <li>
+    A forma mais simples de permitir múltiplas instâncias da estação é
+    parametrizar as propriedades de configuração com um número de instância.
+    </li>
+    <li>
+    No <tt>pom.xml</tt> é possível ver as seguintes definições
+    (substituir CXX pelo identificador do grupo):<br />
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;ws.i&gt;1&lt;/ws.i&gt;
+
+    &lt;ws.host&gt;localhost&lt;/ws.host&gt;
+    &lt;ws.port&gt;808${ws.i}&lt;/ws.port&gt;
+    &lt;ws.url&gt;http://${ws.host}:${ws.port}/park-ws/endpoint&lt;/ws.url&gt;
+
+    &lt;ws.name&gt;CXX_Park${ws.i}&lt;/ws.name&gt;
+    ...
+</pre>
+    </li>
+    <li>
+    Para lançar um parque:
+    </li>
+    <ul>
+        <li>
+        <tt>mvn compile</tt>
+        </li>
+        <li>
+        <tt>mvn exec:java</tt><br />
+        Por omissão, será a instância 1,
+        que fica à escuta de pedidos no porto 8081 e
+        que se regista com o nome CXX_Park1.
+        </li>
+    </ul>
+    <li>
+    Para lançar outro parque:
+    </li>
+    <ul>
+        <li>
+        <tt>mvn exec:java <b>-Dws.i=2</b></tt><br />
+        A instância <b>2</b> fica à escuta de pedidos no porto 808<b>2</b> e
+        regista-se com o nome CXX_Park<b>2</b>.
+        </li>
+    </ul>
+</ol>
+
+<p>
+Pretende-se agora confirmar como <tt>park-ws-cli</tt>
+<a href="../proj/uml/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>
+pesquisa no UDDI.
+</p>
+<ol>
+    <li>
+    Confirmar a dependência para a biblioteca UDDINaming.
+    </li>
+    <li>
+    O <tt>ParkClient</tt> deverá ter um construtor que recebe o endereço do UDDI e
+    o nome do serviço a contactar, e
+    que efetua a pesquisa para localizar o servidor.
+    </li>
+    <li>
+    A <tt>ParkClientApp</tt> deverá receber o endereço do UDDI e
+    o nome do serviço como argumento.
+    </li>
+</ol>
+
+
+<h3>ECar</h3>
+
+<p>
+Antes de continuar é necessário completar o esqueleto do <i>web service</i> <tt>ECar</tt> que faz parte do ponto de partida para o projeto.
+</p>
+
+<p>
+O ponto de partida inclui o servidor ECar incompleto
+(<tt>ecar-ws</tt>) e
+o cliente incompleto
+(<tt>ecar-ws-cli</tt>).<br />
+</p>
+
+<p>
+Vamos começar pelo <b>servidor</b> <tt>ecar-ws</tt>:<br />
+</p>
+<ol>
+    <li>
+    A estrutura do servidor está representada neste
+    <a href="../proj/uml/uml_server.png">diagrama de classes <img src="../_img/uml.png" alt="UML" ></a>.
+    <ul>
+        <li>O pacote à esquerda contém as classes que são geradas a partir do contrato WSDL.</li>
+        <li>O pacote à direita contém as classes do servidor:</li>
+        <ul>
+            <li>a <tt>App</tt> onde a aplicação arranca,</li>
+            <li>o <tt>EndpointManager</tt> que disponibiliza o endereço do serviço,</li>
+            <li>o <tt>PortImpl</tt> que concretiza as operações definidas no WSDL, e</li>
+            <li>as classes de <i>domínio</i> que representam a informação armazenada pelo serviço.</li>
+        </ul>
+    </ul>
+    </li>
+    <li>
+    As classes de domínio da aplicação devem depois ser implementadas.
+	Apenas existe o objeto inicial, o <i>Domain root</i>.
+    </li>
+    <li>
+    De seguida,
+    consultar o contrato WSDL do serviço a implementar:
+    </li>
+    <ul>
+		<li><a href="../proj/ecar.1_0.wsdl">ECar WSDL</a></li>
+        <li>
+        Analise o contrato para ver que operações define e
+        quais os respectivos parâmetros e exceções.
+        </li>
+    </ul>
+    <li>
+    Vamos gerar código Java a partir do WSDL.
+	O WSDL está na pasta <tt>ecar-contract</tt>.
+    O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
+    </li>
+    <ol type="a">
+        <li>
+        <tt>cd ecar-ws</tt>
+        </li>
+        <li>
+        <tt>mvn generate-sources</tt><br />
+        Caso o WSDL esteja bem formado e válido,
+        a ferramenta <tt>wsimport</tt> gera vários ficheiros que suportam o web service.
+        Entre eles, estarão as classes para os tipos complexos usados como parâmetros
+        e a interface Java que define o Web Service.
+        </li>
+        <li>
+        Faça <i>refresh</i>
+        (<i>right-click</i>, Maven, Update Project..., Force Update of Snapshots/Releases, OK)
+        no Eclipse e
+        consulte as classes geradas na pasta:
+        <tt>target/generated-sources/wsimport</tt>.<br />
+        Em especial,
+        consulte a classe <tt>...Service</tt>, e
+        descubra a interface Java <tt>...PortType</tt> que foi gerada a partir do WSDL.
+        </li>
+    </ol>
+    <li>
+    Vamos agora concretizar o serviço.
+    </li>
+    <ol type="a">
+        <li>
+        Crie a classe de implementação do serviço <tt>...PortImpl</tt>,
+        que deverá implementar a interface Java gerada.
+        </li>
+        <li>
+        Deverá associar a classe <tt>PortImpl</tt> ao WSDL através da
+        anotação <tt>@WebService</tt> com os seguintes atributos:
+        <i>endpoint interface</i> (nome do tipo Java do PortType),
+        <i>wsdlLocation</i> (nome do ficheiro WSDL),
+        <i>name</i> (definido no WSDL),
+        <i>portName</i> (WSDL),
+        <i>targetNamespace</i> (WSDL) e
+        <i>serviceName</i> (WSDL).
+        </li>
+        <li>
+        Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
+        devem ser implementados na classe do serviço.
+        Algumas partes estão comentadas e podem ser descomentadas.
+        Cada método é uma operação do Web Service,
+        com entradas, saídas e excepções.<br />
+        Para cada operação, confira se está corretamente implementada.<br />
+        Adicione a anotação <tt>@Override</tt> antes de cada método de operação,
+        para que o compilador confirme que está a implementar corretamente
+        o método definido na interface.<br />
+        Para já vamos compilar e executar o servidor sem estas operações estarem concluídas.
+		Coloque apenas um corpo vazio ou um retorno simples (e.g. return null).
+        </li>
+    </ol>
+<li>
+Executar o servidor:
+</li>
+    <ol type="a">
+        <li>
+        <tt>mvn compile exec:java</tt><br />
+        O nome da classe a executar e
+        os argumentos estão definidos no <tt>pom.xml</tt><br />
+        O servidor deve executar sem erros,
+        disponibilizando o <i>endpoint address</i>.
+        </li>
+        <li>
+Confirmar que o servidor está à espera de pedidos no endereço:
+        </li>
+        <ul>
+            <li>
+<a href="http://localhost:8080/ecar-ws/endpoint?wsdl">http://localhost:8080/ecar-ws/endpoint?wsdl</a>
+            </li>
+            <li>
+            O contrato disponibilizado deve ser o documento original,
+            com os respetivos comentários.
+            </li>
+        </ul>
+    </ol>
+</ol>
+
+<p>
+Vamos agora usar o <b>cliente</b> <tt>ecar-ws-cli</tt> para testar o servidor.
+</p>
+<ol>
+    <li>
+    A estrutura do cliente está representada neste
+    <a href="../proj/uml/uml_client.png">diagrama de classes <img src="../_img/uml.png" alt="UML" ></a>.
+    <ul>
+        <li>O pacote à direita contém as classes que são geradas a partir do contrato WSDL.</li>
+        <li>O pacote à esquerda contém as classes do servidor:</li>
+        <ul>
+            <li>a <tt>ClientApp</tt> onde a aplicação arranca, e</li>
+            <li>o <tt>Client</tt> que usa o <i>stub</i> gerado para fazer invocações remotas.</li>
+        </ul>
+    </ul>
+    Existem também os testes de integração, em que cada classe de testes se destina a testar uma operação remota.
+    </li>
+
+    <li>
+    Vamos gerar o código Java para invocação do serviço.
+    </li>
+    <ol type="a">
+            <!-- <li>
+            Consultar o <tt>pom.xml</tt> do cliente para )
+            </li> -->
+        <li>
+            Consultar o <tt>pom.xml</tt> do cliente para:<ul>
+                <li>confirmar que o WSDL está a ser corretamente referenciado</li>
+                <li>confirmar que a fase de wsimport está configurada.</li>
+            </ul>
+        </li>
+        <li>
+        <tt>cd ecar-ws-cli</tt>
+        </li>
+        <li>
+        <tt>mvn generate-sources</tt><br />
+        As classes são geradas na pasta:
+        <tt>target/generated-sources/wsimport</tt>.
+        </li>
+    </ol>
+    <li>
+    Vamos fazer uma chamada simples, correndo a aplicação cliente.
+    </li>
+    <ul>
+        <li>
+        <tt>mvn compile exec:java</tt><br />
+        A operação auxiliar <tt>ping</tt> deverá ser invocada.
+        </li>
+    </ul>
+    <li>
+    Depois do teste pontual, vamos correr os testes de integração já existentes.
+    </li>
+    <ul>
+        <li>
+        <tt>mvn verify</tt><br />
+        O Maven executa todos os testes contidos em classes <tt>...IT</tt> e
+        um resumo é apresentado.
+        </li>
+    </ul>
+</ol>
+
+<p>
+Vamos agora implementar uma operação simples do servidor <tt>ecar-ws</tt> que contacta as estações através de um <i>PING</i>.
+</p>
+
+<ol>
+    <li>
+    O <tt>ecar-ws</tt> vai ser cliente de <tt>park-ws</tt>.<br />
+    Em vez de repetir código,
+    vamos usar o objeto <tt>ParkClient</tt>,
+    já desenvolvido e testado.<br /><br />
+    </li>
+    <ol type="a">
+        <li>
+        Em primeiro lugar, instalar o módulo do cliente do parque:<br />
+        <tt>cd park-ws-cli</tt><br />
+        <tt>mvn install</tt><br />
+        <!--tt>mvn install -Dtest.skip=true</tt-->
+        </li>
+        <li>
+        Depois,
+        acrescentar a dependência Maven no <tt>ecar-ws/pom.xml</tt>
+        (substituir CXX pelo identificador do grupo):
+<pre class="prettyprint lang-xml">
+    ...
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.ecar.CXX&lt;/groupId&gt;
+        &lt;artifactId&gt;park-ws-cli&lt;/artifactId&gt;
+        &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+    &lt;/dependency&gt;
+    ...
+</pre>
+        O sistema em funcionamento terá três processos:
+        </li>
+        <ul>
+            <li>
+            O cliente de testes do ECar;
+            </li>
+            <li>
+            O ECar
+            (que engloba o código dos módulos
+            <tt>ecar-ws</tt> e <tt>park-ws-cli</tt>);
+            </li>
+            <li>
+            Os servidores dos parques.
+            </li>
+            <a href="../proj/uml/uml_servers_structure.png">Diagrama da estrutura dos vários <i>web services</i> e como se ligam entre eles (<i>deployment</i>) <img src="../_img/uml.png" alt="UML" ></a>
+        </ul>
+        <br />
+
+        </li>
+    </ol>
+    <li>
+    Concretizar a operação <tt>test_ping</tt> do ECar.
+    </li>
+    <ul>
+        <li>
+        Consultar o UDDI para pesquisar parques.
+        </li>
+        <li>
+        Criar um <tt>ParkClient</tt> para cada estação encontrada.
+        </li>
+        <li>
+        Chamar a operação <tt>ping</tt> de cada um.</li>
+        <li>
+        Juntar as respostas e
+        devolver como resultado.
+        </li>
+    </ul>
+</ol>
+
+<p>
+Finalmente,
+usar o <tt>ecar-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao próprio ECar e a todos os parques.
+</p>
+<ul>
+    <li>
+    Abrir consola para o Park 1:
+    </li>
+    <ul>
+        <li>
+        <tt>cd park-ws</tt>
+        </li>
+        <li>
+        <tt>mvn compile exec:java</tt>
+        </li>
+    </ul>
+    <li>
+    Abrir consola para o Park 2:
+    </li>
+    <ul>
+        <li>
+            <tt>cd park-ws</tt>
+        </li>
+        <li>
+        <tt>mvn compile exec:java -Dws.i=2</tt>
+        </li>
+    </ul>
+    <li>
+    Park 3
+    </li>
+    <ul>
+        <li>
+        <tt>mvn compile exec:java -Dws.i=3</tt>
+        </li>
+    </ul>
+    <li>
+    Abrir consola para o ECar:
+    </li>
+    <ul>
+        <li>
+        <tt>cd ecar-ws</tt>
+        </li>
+        <li>
+        <tt>mvn compile exec:java</tt>
+        </li>
+    </ul>
+    <li>
+    Finalmente, na consola para o cliente do ECar:
+    </li>
+    <ul>
+        <li>
+        <tt>cd ecar-ws-cli</tt>
+        </li>
+        <li>
+        <tt>mvn compile exec:java</tt><br />
+        O resultado final do <tt>ping</tt> deverá ser impresso nesta consola.
+        </li>
+    </ul>
+</ul>
+
+<p>
+<b>O que falta fazer?</b>
+</p>
+<ul>
+    <li>
+    No <tt>ecar-ws</tt>:
+    </li>
+    <ul>
+        <li>
+        Implementar todas as operações de acordo com o enunciado
+        </li>
+        <li>
+        Fazer um bom tratamento de <a href="../01-tools/exceptions/index.html">exceções</a>
+        </li>
+        <li>
+        Não esquecer também que o servidor é multi-tarefa (<i>thread</i>) e
+        que os acessos a dados partilhados devem ser <a href="../01-tools/java-synch/index.html">devidamente sincronizados</a>
+        </li>
+    </ul>
+    <li>
+    No <tt>ecar-ws-cli</tt>:
+    </li>
+    <ul>
+        <li>
+        Fazer testes de integração das operações principais
+        </li>
+        <ul>
+            <li>
+            Testar casos mais importantes
+            <li>
+            Não esquecer os casos com entradas incorretas: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc
+            </li>
+        </ul>
+        <li>
+        Os testes de integração correm com <tt>mvn verify</tt>
+        </li>
+    </ul>
+</ul>
+
+<p>
+<b>Continuação de bom trabalho!</b>
+</p>
+
+</div>
+
+<hr />
+
+
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

@@ -1,0 +1,5 @@
+example\ws\handler\LogHandler.class
+example\ws\handler\MessageContextHandler.class
+example\ws\handler\PrettyLogHandler.class
+example\ws\handler\EndpointAddressHandler.class
+example\ws\handler\HeaderHandler.class

@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>Criptografia</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<body>
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo" id="1">
+    <h1>Criptografia</h1>
+</div>
+
+<div class="objectivos">
+    <h2>Objectivos</h2>
+    <ul>
+        <li>Utilizar os mecanismos criptogr&aacute;ficos da plataforma Java</li>
+        <li>Utilizar os SOAP Handlers para intercetar as mensagens SOAP</li>
+    </ul>
+</div>
+<!--/br-->
+<div class="laboratorio">
+    <h2>No laborat&oacute;rio:</h2>
+    <ul>
+        <li>Testar a criptografia Java, em especial, a cifra simétrica</li>
+    </ul>
+</div>
+
+<div class="indice">
+</div>
+
+<div class="corpo">
+    <!--h2 id="conteudos">Conte&uacute;dos</h2-->
+    <p class="textos"><h3>Resumos:</h3>
+        <ul>
+            <li><a href="criptografia/index.html">Mecanismos criptogr&aacute;ficos</a></li>
+            <li><a href="seguranca-java/index.html">Seguran&ccedil;a na plataforma Java</a></li>
+            <li><a href="binarios-texto/index.html">Representa&ccedil;&atilde;o de dados bin&aacute;rios em texto</a></li>
+        </ul>
+    </p>
+    <p class="exemplos"><h3>Exemplos:</h3>
+        <ul>
+            <a href="crypto.zip">Testes de Criptografia em Java
+            <img src="../_img/zip.png" alt="ZIP" ></a>
+            </li>
+            <ul>
+                <li>Cifra sim&eacute;trica</li>
+                <li>Cifra assim&eacute;trica</li>
+                <li>Resumo (<i>digest</i>)</li>
+                <li>Gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios seguros</li>
+                <li>Assinaturas digitais</li>
+                <li>Leitura e escrita de chaves criptogr&aacute;ficas</li>
+                <li>Criptografia em texto (XML)</li>
+            </ul>
+        </ul>
+&nbsp;&nbsp;&nbsp;&nbsp;Para executar apenas o teste da cifra simétrica, escrever:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<tt>mvn test -Dtest=SymCrypto*#testSymCrypto*</tt><br />
+        &nbsp;<br />
+    </p>
+
+<p>
+&nbsp;
+</p>
+
+<h2 id="exercicio"> Exercício</h2>
+<h3>Terceira parte do projeto</h3>
+
+<p>
+No <a href="../09-ws/index.html">laboratório dos SOAP Handlers</a> vimos como se podem intercetar mensagens SOAP no cliente e no servidor.
+Hoje vamos implementar a cifra de mensagens SOAP trocadas entre <tt>ecar-ws-cli</tt> e <tt>ecar-ws</tt>.
+O cliente e o servidor partilham uma chave simétrica com valor constante (para já).
+</p>
+
+<p>&nbsp;</p>
+
+
+<h4>Cifra e decifra com a mesma chave</h4>
+
+<p>
+Começar por estudar as funções de cifra do Java.
+</p>
+
+<p>
+Criar uma chave constante no código de forma semelhante à seguinte:
+</p>
+<pre class="prettyprint lang-java">
+
+    private static byte[] encodedKey = { (byte) 0x13, (byte) 0x45, (byte) 0x02 }; // , ... add as many as you need for the required key size
+                                                                                  // 128 bit = 8 bytes
+                                                                                  // 256 bit = 16 bytes
+    SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+
+
+</pre>
+
+<p>
+Adaptar o exemplo para fazer um programa que obtém a chave, cifra informação, e depois a decifra.<br />
+Confirmar que a informação é recuperada.
+</p>
+<p>
+A cifra de dados opera sobre <i>bytes</i>.
+É sempre necessário <a href="binarios-texto/index.html">converter de texto para binário</a>.
+</p>
+
+<p>&nbsp;</p>
+
+
+<h4>Confidencialidade das comunicações</h4>
+
+<p>
+O principal requisito de segurança descrito no enunciado consiste em garantir a <i>confidencialidade</i> das mensagens.
+</p>
+<ul>
+    <li>
+    Identificar que alterações são necessárias às mensagens SOAP.
+    </li>
+    <ul>
+        <li>
+        O que se deve fazer à saída da mensagem?
+        </li>
+        <li>
+        O que se deve fazer à chegada?
+        </li>
+        <ul>
+            <li>
+            O que fazer quando a mensagem não corresponde ao esperado?<br />
+            <tt>return true</tt> para continuar, ou atirar <tt>RuntimeException</tt> para devolver mensagem de erro?
+            </li>
+        </ul>
+    </ul>
+    <li>
+    O objetivo é criar um <i>Handler</i> para fazer as alterações necessárias, de forma gradual.
+    </li>
+</ul>
+
+<p>&nbsp;</p>
+
+
+<h4>Configuração dos <i>handlers</i> no servidor e no cliente</h4>
+
+<p>
+Começar por adicionar a biblioteca <a href="../09-ws/ws-handlers.zip"><tt>ws-handlers</tt> <img src="../_img/zip.png" alt="ZIP" ></a> ao projeto <tt>ecar</tt>.
+</p>
+<ol>
+    <li>
+    Editar o <tt>pom.xml</tt> para que o <tt>groupId</tt> passe a conter o identificador do grupo <tt>CXX</tt>.
+    </li>
+    <li>
+    Compilar e instalar o módulo:
+    <ul>
+        <li><tt>cd ws-handlers</tt></li>
+        <li><tt>mvn clean install</tt></li>
+    </ul>
+    Sempre que se atualizar o código dos <i>handlers</i> será necessário reinstalar.
+    <li>
+    Adicionar o módulo ws-handlers ao POM principal
+</ol>
+
+<p>
+Prosseguir com o <tt>ecar-ws</tt>:
+</p>
+<ol>
+    <li>
+    Adicionar a dependência para a biblioteca <tt>ws-handlers</tt> no <tt>pom.xml</tt>.
+    </li>
+    <li>
+    Na pasta <tt>src/main/resources</tt>
+    adicionar ficheiro <tt>ecar-ws_handler-chain.xml</tt> com configuração da cadeia de interceção.<br />
+    O <tt>LogHandler</tt> deve ser chamado no início e no fim da cadeia.
+    Alternativamente, pode ser usado o <tt>PrettyLogHandler</tt>.
+    </li>
+    <li>
+    Adicionar a seguinte anotação ao <tt>PortImpl</tt>:<br />
+<pre class="prettyprint lang-java">
+@HandlerChain(file = "/ecar-ws_handler-chain.xml")
+</pre>
+        Para ver ficheiros de configuração semelhantes,
+        consultar o servidor
+        <a href="../09-ws/index.html#exemplo">exemplo <tt>hello-ws_handlers</tt></a>.
+    </li>
+    <li>
+    Lançar o servidor.
+    </li>
+    <ul>
+        <li><tt>cd ecar-ws</tt></li>
+        <li><tt>mvn compile exec:java</tt></li>
+    </ul>
+    <li>
+    Usar o cliente para chamar o <tt>testPing</tt>.
+    </li>
+    <ul>
+        <li><tt>cd ecar-ws-cli</tt></li>
+        <li><tt>mvn compile exec:java</tt></li>
+    </ul>
+    <li>
+    Agora, ao receber mensagens, estas serão capturadas e
+    impressas para a consola do servidor.
+    </li>
+</ol>
+
+<p>
+Concluir com o <tt>ecar-ws-cli</tt>:
+</p>
+<ol>
+    <li>
+    Adicionar também a dependência para a biblioteca <tt>ws-handlers</tt> ao <tt>pom.xml</tt>.
+    </li>
+    <li>
+    Criar os ficheiros de configuração
+    da cadeia de <i>handlers</i> na pasta <tt>src/jaxws</tt><br />
+
+    Para ver ficheiros de configuração semelhantes,
+    consultar o cliente do
+    <a href="../09-ws/index.html#exemplo">exemplo <tt>hello-ws-cli_handlers</tt></a>.
+    </li>
+    <li>
+    Configurar a cadeia de <i>handlers</i>, acrescentando o <tt>LogHandler</tt> no início e no fim da cadeia.
+    </li>
+    <li>
+    Para verificar se a configuração ficou bem feita,
+    fazer uma chamada à operação <tt>testPing</tt> e
+    confirmar que as mensagens são também capturadas e
+    impressas na consola do lado do cliente.
+    </li>
+    <!--ul>
+        <li>
+        Não é necessário parar o servidor, apenas o cliente muda
+        </li>
+    </ul>
+    <li>
+    </li-->
+</ol>
+<p>
+Neste ponto, o cliente e o servidor têm as suas mensagens SOAP a ser capturadas e impressas para a consola.
+</p>
+
+<p>&nbsp;</p>
+
+<h4>Cifra de mensagens SOAP</h4>
+
+<p>
+Vai ser necessário criar um <i>handler</i> para cifrar/decifrar a mensagem:
+<ul>
+<li><tt><b>CipherHandler</b></tt></li>
+</ul>
+</p>
+
+<p>
+Este <i>handler</i> cifra mensagens à saída (<i>outbound</i>) e decifra mensagens à chegada (<i>inbound</i>).
+</p>
+
+<p>
+A primeira versão solução a construir assume uma chave fixa entre cliente e servidor.
+O passo seguinte será incorporar a autenticação Kerberos e usar uma chave de sessão para a cifra.
+</p>
+
+
+<p>&nbsp;</p>
+<p>
+<b>Bom trabalho!</b>
+</p>
+
+<p>&nbsp;</p>
+
+<!--h4>Extra</h4>
+
+
+É necessário substituir a mensagem SOAP por outra nova.
+Internamente a biblioteca de Web Services guarda a referência para o objecto SOAPMessage original.
+Se se substituir a original por uma nova mensagem, não é lançada nenhuma excepção, mas a nova mensagem é ignorada e é usada a original (ou seja, aquela que continua a ser referenciada pelo Web Service).
+A forma de resolver este problema é manter a mensagem original mas substituir-lhe o conteúdo pelo da nova mensagem.
+Assim a referência interna da biblioteca de Web Services continua a ser válida.
+
+<pre class="prettyprint lang-java">
+
+MessageFactory factory = MessageFactory.newInstance();
+SOAPMessage newMessage = factory.createMessage(oldMessage.getMimeHeaders(), inputByteArray);
+oldMessage.getSOAPPart().setContent(newMessage.getSOAPPart().getContent());
+
+
+</pre-->
+
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

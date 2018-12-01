@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>Projeto ECar - parte 3</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo" id="1">
+    <h1>Projeto ECar - parte 3</h1>
+</div>
+
+<!--div class="objectivos">
+    <h2>Objectivos</h2>
+    <ul>
+        <li>Utilizar o Kerberos simplificado</li>
+    </ul>
+</div-->
+
+<div class="corpo">
+    <!--h2 id="conteudos">Conte&uacute;dos</h2>
+    <p class="textos"><h3>Resumo:</h3>
+        <ul>
+            <li><a href="kerberos/index.html">Kerberos</a></li>
+        </ul>
+    </p>
+
+<hr /-->
+
+<h2>Exercício</h2>
+<h3>Terceira parte do projeto - Kerberos simplificado</h3>
+
+<p>
+O objetivo deste exercício é fazer uma autenticação no Kerberos e depois usar a chave de sessão para proteger dados.<br />
+</p>
+
+<p>
+Comece por se familiarizar com o <a href="kerberos/index.html">Kerberos simplificado</a>, tal como apresentado nas aulas teóricas.
+</p>
+
+<p>&nbsp;</p>
+
+<p>
+<b>Instalação dos módulos</b>
+</p>
+
+<p>
+Descarregar e descompactar o ficheiro <a href="./kerby.zip">kerby.zip <img src="../_img/zip.png" alt="ZIP" ></a><br />
+<br />
+Para compilar e instalar os módulos, fazer:<br />
+<tt>cd kerby</tt><br />
+<tt>mvn clean install -DskipTests</tt>
+</p>
+
+<p>
+O servidor Kerberos a utilizar está disponível no seguinte endereço:
+<a href="http://sec.sd.rnl.tecnico.ulisboa.pt:8888/kerby?WSDL">http://sec.sd.rnl.tecnico.ulisboa.pt:8888/kerby</a>.
+</p>
+
+<p>
+Cada grupo já tem um conjunto de utilizadores criados à partida.
+As senhas de utilizadores foram distribuídas no ficheiro <tt>CXX-secrets.txt</tt>.
+Os utilizadores existentes são: <tt>alice@CXX.binas.org</tt>, <tt>binas@CXX.binas.org</tt>, <tt>charlie@CXX.binas.org</tt> e <tt>eve@CXX.binas.org</tt>.<br />
+O utilizador <tt>alice@CXX.binas.org</tt> é a identidade do cliente <tt>ecar-ws-cli</tt>.<br />
+O utilizador <tt>charlie@CXX.binas.org</tt> é a identidade do Web Service <tt>ecar-ws</tt>.<br />
+<br />
+Nota: estão a reutilizar-se os utilizadores do Binas (um serviço de partilha de bicicletas) para evitar criar novos utilizadores e senhas.
+</p>
+
+<p>&nbsp;</p>
+
+<p>
+<b>Vamos então experimentar o Kerberos simplificado.</b>
+</p>
+
+<p>
+O módulo <tt>kerby-experiment</tt> deve ser usado para testar a biblioteca e usar o servidor Kerberos a correr na RNL.<br />
+A dependência <tt>kerby-lib</tt> vai trazer consigo todas as bibliotecas necessárias, como se pode ver:<br />
+<tt>cd kerby-experiment</tt><br />
+<tt>mvn dependency:tree</tt><br />
+</p>
+<p>
+A classe <tt>KerbyExperiment</tt> é executável:<br />
+<tt>mvn clean package exec:java</tt><br />
+<br />
+Será necessário agora fazer o código correspondente ao papel do "cliente" no protocolo, e depois o "servidor".<br />
+O código deve ser feito gradualmente, passo a passo, compilando e executando regularmente para testar o funcionamento.
+</p>
+
+<p>
+A ideia é que, antes de se tentar implementar um sistema cliente-servidor realmente distribuído e que recorra à autenticação via Kerberos, vamos começar por construir um programa meramente local que implementa os principais passos da autenticação Kerberos mas sem trocar mensagens. 
+Este programa permitir-nos-á aprender e dominar as técnicas bases, antes de depois as aplicarmos num sistema efetivamente distribuído (em que cliente e servidor são processos distintos que trocam mensagens segundo o protocolo de autenticação).
+</p>
+
+<p>
+Esse programa simplificado encontra-se esboçado no método <tt>main</tt> da classe <tt>KerbyExperiment</tt> do módulo <tt>kerby-experiment</tt>. 
+No entanto, o código que fornecemos para este método está incompleto. 
+Pretende-se neste exercício completá-lo.
+Como resultado final, o programa criado permitirá testar a biblioteca kerby-lib e usar o servidor Kerberos a correr na RNL.
+</p>
+
+<p>
+<b>Parte cliente</b>.
+</p>
+
+<ol>
+<li>
+O cliente autentica-se e recebe chave de sessão e ticket.
+<li>
+Deve abrir a chave de sessão (Kcs) com a sua chave (Kc).
+<li>
+Depois deve guardar o ticket, para mais tarde "enviar" para o servidor.
+<li>
+Deve criar um autenticador também para enviar.
+</ol>
+
+<p>
+A classe <i>RequestTicketIT.java</i> nos testes de <i>kerby-lib</i> exemplifica como interagir com o Kerberos.
+</p>
+
+
+<p>
+
+</p>
+
+<p>
+<b>Parte servidor</b>
+</p>
+
+<ol>
+<li>
+O servidor abre o ticket com a sua chave (Ks) e deve validá-lo.
+<li>
+Depois deve abrir o autenticador com a chave de sessão (Kcs) e validá-lo.
+<li>
+O servidor "responde" ao cliente com uma instância da classe RequestTime (da kerby-lib).
+</ol>
+
+<p>
+&nbsp;
+</p>
+
+<p>
+<b>O que falta fazer?</b>
+</p>
+
+<p>
+Este código permite experimentar a biblioteca e o servidor Kerberos,
+para implementar as partes "cliente" e "servidor" do protocolo sem que exista real comunicação entre os dois
+(tudo se passa no mesmo processo, para já).
+</p>
+
+<p>
+Vai ser necessário criar dois <i>handlers</i> para interagir com o servidor Kerberos:
+<ul>
+<li>KerberosClientHandler</li>
+<li>KerberosServerHandler</li>
+</ul>
+</p>
+
+<p>
+Os elementos adicionais a transportar entre cliente e servidor devem ser transportados no <i>header</i> da mensagem SOAP.
+</p>
+
+<p>
+A chave de sessão, Kcs, deve ser usada para proteger a confidencialidade do <i>body</i> da mensagem SOAP.
+<ul>
+<li>
+O cliente deve cifrar a mensagem.
+<li>
+O servidor deve decifrar a mensagem.
+</ul>
+</p>
+
+<p>&nbsp;</p>
+<p>
+<b>Bom trabalho!</b>
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+</div>
+
+<hr />
+
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

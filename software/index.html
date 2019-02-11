@@ -62,9 +62,9 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <li>Obter</li>
         <ul>
             <li>
-                <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8u181</a>
-                <small>(preferência por esta versão mas qualquer JDK 8 recente deverá funcionar)</small><br />
-				<small>(não usar Java 9 ou seguintes)</small>
+                <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK 8</a>
+                <small>(versão mais recente disponível)</small><br />
+				<small>(<b>não</b> usar Java 9 ou seguintes)</small>
             </li>
         </ul>
         <li>Instalar</li>
@@ -106,7 +106,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <li>Obter</li>
         <ul>
             <li><a href="http://git-scm.com/download/">Git 2.x</a>
-            <small>(escolher a versão estável mais recente disponível para a plataforma)</small>
+            <small>(escolher a versão estável mais recente disponível)</small>
             <!--li>Alternativa: <a href="https://desktop.github.com/">GitHub Desktop</a></li-->
         </ul>
         <li>Instalar</li>
@@ -125,7 +125,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <ul>
         <li>Obter o arquivo que contém o executável de Eclipse e ficheiros associados:</li>
         <ul>
-            <li><a href="https://www.eclipse.org/downloads/packages/release/photon/r/eclipse-ide-java-ee-developers">Eclipse JEE  ‎4.8 - Photon</a>
+            <li><a href="https://www.eclipse.org/downloads/packages/release/2018-12/r">Eclipse JEE  ‎4.10 - 2018-12 R</a>
 			<small></small></li>
 			<ul>
 				<li>Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
@@ -148,13 +148,13 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
             <ul>
                 <li>Window -> Preferences -> Java -> Installed JREs -> Add...</li>
                 <li>Indicar o caminho até ao diretório do JDK:
-                    ex. <tt>C:\Java\jdk1.8.0_181</tt></li>
+                    ex. <tt>C:\Java\jdk1.8.0_191</tt></li>
                 <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
             </ul>
             <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
             <li><b>Conectores m2e</b> (maven 2 eclipse)</li>
             <ul>
-                <li>Window -> Preferences -> Maven -> Discovery, "Open catalog".</li>
+                <li>Window -> Preferences -> Maven -> Discovery e clicar em "Open catalog".</li>
                 <li>Seleccionar:</li>
                 <ul>
                     <li>m2e connector for jaxws-maven-plugin</li><!-- if not installed, handlers config file may not be found on Run As, Maven, exec:java<!-->
@@ -180,7 +180,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <li>Obter</li>
         <ul>
             <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.5/">jUDDI distro</a></li-->
-            <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2017-2018/download/juddi-3.3.5_tomcat-7.0.82_9090.zip">jUDDI 3.3.5</a> <small>(configured for port <b>9090</b>)</small></li>
+            <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2018-2019/download/juddi-3.3.6_tomcat_9090.zip">jUDDI 3.3.6</a> <small>(configured for port <b>9090</b>)</small></li>
         </ul>
         <li>Instalar</li>
         <ul>
@@ -189,7 +189,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
             <li>Acrescentar CATALINA_HOME/bin à variável de ambiente PATH</li-->
             <li>Em Linux ou Mac,
                 tornar os <i>scripts</i> de lançamento executáveis:<br />
-                <tt>chmod +x juddi-3.3.5_tomcat-7.0.82_9090/bin/*.sh</tt>
+                <tt>chmod +x juddi-3.3.6_tomcat_9090/bin/*.sh</tt>
             <!--li><b>IMPORTANTE</b>: Configurar o jUDDI para escutar no porto <b>9090</b></li>
             <ul>
                 <li>Abrir o ficheiro '...\juddi-distro-3.3.5\juddi-tomcat-3.3.5\conf\server.xml' e alterar a linha 71 para:<br>
@@ -201,7 +201,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                 </ul>
             </ul-->
             <li>Para lançar o servidor,
-                basta executar o seguinte comando na pasta <tt>juddi-3.3.5_tomcat-7.0.82_9090/bin</tt>:</li>
+                basta executar o seguinte comando na pasta <tt>juddi-3.3.6_tomcat_9090/bin</tt>:</li>
                 <ul>
                     <li><tt>startup.sh</tt> (Linux e Mac)</li>
                     <li><tt>startup.bat</tt> (Windows)</li>

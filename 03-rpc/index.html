@@ -3,184 +3,224 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+  <meta http-equiv="Content-Type"
+        content="text/html;charset=utf-8" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="../_css/labs-sd.css" />
 
-    <title>Invocação de procedimentos remotos com SUN RPC</title>
+  <title>Invocação de procedimentos remotos com gRPC</title>
 </head>
 
 <body>
+  <div class="contexto">
+    <p><a href="../index.html">Labs SD</a> &gt;</p>
+  </div>
 
-<div class="contexto">
-    <p>
-        <a href="../index.html">Labs SD</a> &gt;
-    </p>
-</div>
+  <div class="titulo"
+       id="1">
+    <h1>Invocação de procedimentos remotos com gRPC</h1>
+  </div>
 
-<div class="titulo" id="1">
-    <h1>Invocação de procedimentos remotos com SUN RPC</h1>
-</div>
-
-<div class="objectivos">
+  <div class="objectivos">
     <h2>Objectivos da semana</h2>
     <ul>
-        <li>Distribuir uma aplicação originalmente centralizada usando o SUN RPC</li>
-        <li>Aprofundar os conhecimentos sobre RPC</li>
+      <li>
+        Distribuir uma aplicação originalmente centralizada usando o gRPC
+      </li>
+      <li>Aprofundar os conhecimentos sobre RPC</li>
     </ul>
-</div>
+  </div>
 
-<div class="indice">
-</div>
+  <div class="indice"></div>
 
-<div class="corpo">
+  <div class="corpo">
     <h2 id="conteudos">Materiais de apoio à aula</h2>
 
-    <p class="exemplos">
-        </p><ul>
-            <li><a href="http://www.cdk4.net/wo/additional/rmi/Ed2/SunRPC.pdf">Capítulo sobre SUN RPC da 2ª Edição do livro "Distributed Systems: Concepts and Design"</a></li>
-        </ul>
+    <p class="exemplos"></p>
+    <ul>
+      <li>
+        <a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial da
+          API de gRPC para Java</a>
+      </li>
+      <a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação
+        de Protocol Buffers</a>
+      </li>
+      <li>
+        <a href="https://grpc.io/grpc-java/javadoc/index.html">Documentação da
+          API de gRPC para Java</a>
+      </li>
+    </ul>
     <p></p>
 
-    <p class="exercicios">
-    </p><h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
+    <p class="exercicios"></p>
+    <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
 
     <ol>
-        <li>Numa máquina Linux/Unix, descarregue e
-            descomprima o código fonte de um <a href="./ttt.zip">cliente e servidor do Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP" ></a>, baseado em Sun RPC .<br>
-        <img src="./ttt.png" alt="Tic Tac Toe" height="75"><br>
-        Sugestões:</li>
-        <ul>
-            <li>Caso não disponha de máquina Unix/Linux,
-                use a sua conta no <tt>sigma.tecnico.ulisboa.pt</tt>.<br />
-            Pode usar qualquer um dos vários editores de texto no terminal:
-            <tt>nano</tt>, <tt>vi</tt>, <tt>emacs</tt>, <tt>pico</tt>, <tt>joe</tt>, ...</li>
-            <li>Para evitar conflitos com outros RPC na mesma máquina
-            deverá editar o identificador do programa (<tt>ttt.x</tt>) e substituir os últimos
-            5 dígitos pelo seu número de aluno</li>
-            <li>Se quiser correr o laboratório no seu próprio computador
-            é necessário instalar os seguintes pacotes Linux
-            (os nomes exactos variam conforme a distribuição usada):
-            <tt>rpcbind</tt> e <tt>nfs-kernel-server</tt>. <br />
-            Em algumas máquinas, que recorrem ao <i>rpcbind</i>,
-            pode ser necessário lancar esta aplicação usando <tt>rpcbind -wi</tt>
-            ou então usando privilégios de administração <tt>(sudo)</tt>
-            no caso de obter a seguinte mensagem de erro:
-            <i>"Cannot register service: RPC: Authentication error; why = Client credential too weak"</i></li>
-        </ul>
-        <br/>
-        <li>Estude a interface remota deste servidor (ficheiro <tt>ttt.x</tt>) e
-            explore a implementação do servidor para compreender como cada procedimento remoto está implementado.<br />
-            Observe também os restantes ficheiros com nome iniciado por <tt>ttt</tt>.<br />
-            <br />
-        </li>
+      <li>
+        Descarregue e descomprima o código fonte de um
+        <a href="./ttt.zip">cliente e servidor do Jogo do Galo/Tic Tac Toe<img
+               src="../_img/zip.png"
+               alt="ZIP" /></a>,
+        baseado em gRPC .<br />
+        <img src="./ttt.png"
+             alt="Tic Tac Toe"
+             height="75" /><br />
+        Caso a porta 8080 esteja a ser utilizada por outro programa, deverá
+        editar
+        a propriedade <ttt>server.port</ttt> no <ttt>pom.xml</ttt>.
+      </li>
 
-        <li>Execute na consola:<br />
-        <tt>&gt rpcgen ttt.x</tt><br />
-        para que o SUN RPC gere os vários ficheiros de suporte à aplicação distribuída.<br />
-        Depois execute: <br />
-        <tt>&gt rpcgen -Sc ttt.x > ttt_client.c</tt><br />
-        para gerar um exemplo de um cliente.
-        (existe também a opção <tt>-Ss</tt> para gerar um exemplo de servidor)<br />
+      <br />
+      <li>
+        Estude a interface remota deste servidor (ficheiro <tt>ttt.proto</tt>)
+        e
+        explore a implementação do servidor para compreender como cada
+        procedimento remoto está implementado.<br />
+        Observe também o código do cliente para compreender como é realizada a
+        invocação de procedimentos remotos.<br />
         <br />
-        </li>
+      </li>
 
-        <li>Tente responder às seguintes questões:
-            <ol type="a">
-                <li>Para que serve o <i>mutex</i> usado no ficheiro ttt_lib.c?</li>
-                <li>Em que ficheiro estão as rotinas de conversão de tipos de dados?</li>
-                <li>Onde é chamada a função <tt>clnt_call()</tt>?</li>
-                <li>Que ficheiros pertencem ao cliente?
-E ao servidor? E a ambos?<br>
-                (consulte também a <tt>Makefile</tt>)</li>
-                <li>Que ficheiros estão incompletos e devem ser alterados pelo programador?</li>
-                <li>Qual o protocolo que o cliente e servidor usam para comunicar?</li>
-            </ol>
-        <br>
-        </li>
+      <li>
+        Dentro da pasta <ttt>contract</ttt>, execute na consola:<br />
+        <tt>&gt mvn install</tt><br />
+        para que sejam gerados e compilados os vários ficheiros de suporte à
+        aplicação
+        distribuída, e sejam instalados para utilização no cliente e servidor.<br />
+        <br />
+      </li>
 
-        <li>Pretende-se também que haja um processo cliente
-        (que possivelmente corre em máquina diferente que o servidor)
-        que interage com os jogadores e que
-        invoca as funções do servidor remotamente, via SUN RPC.<br />
+      <li>
+        Tente responder às seguintes questões:
+        <ol type="a">
+          <li>Porque é que há sincronização no ficheiro TTTGame.java?</li>
+          <li>
+            Em que ficheiros estão as rotinas de conversão de tipos de dados?
+          </li>
+          <li>Onde são realizadas as invocações remotas no cliente?</li>
+          <li>
+            Que ficheiros pertencem ao cliente? E ao servidor? E a ambos?<br />
+          </li>
+          <li>
+            Onde é que o servidor responde ao cliente?
+          </li>
+          <li>
+            Para que serve o argumento do tipo <ttt>StreamObserver</ttt> nos
+            métodos da implementação do serviço?
+          </li>
+        </ol>
         <br />
-        A lógica desse cliente já está programada em <tt>local_main.c</tt>, mas esse ficheiro está feito assumindo chamadas locais.<br>
-        Com base no <tt>local_main.c</tt>, modifique o ficheiro <tt>ttt_client.c</tt>
-        por forma a obter um cliente do servidor remoto. <br/>
-        <br />
-        <i>Sugestão:
-        i) copie o código da função main do <tt>local_main.c</tt> para dentro do método <tt>ttt_1</tt> de <tt>ttt_client.c</tt>;
-        ii) procure as linhas onde existem chamadas locais às funções <tt>currentBoard</tt>, <tt>play</tt> e
-        <tt>checkWinner</tt> e substitua essas chamadas pelos exemplos de chamadas remotas que já existem no ficheiro <tt>ttt_client.c</tt> gerado;</i>
-        iii) Não se esqueça de verificar o retorno da chamada remota ao servidor e
-        garantir o tratamento adequado em caso de erro.<br />
-        Utilize o comando <tt>make</tt> para compilar.<br />
-        <br />
-        </li>
+      </li>
 
-        <li>Lance o servidor e experimente jogar remotamente através do cliente construído.<br />
-        Para tal, execute na consola:<br />
-        <tt>&gt ./ttt_server &</tt><br />
+      <li>
+        Pretende-se também que haja um segundo processo cliente (que
+        possivelmente
+        corre em máquinas diferentes do servidor e outro cliente), sendo que
+        cada cliente apenas pode jogar no seu turno. Para simplificar, cada
+        cliente recebe o seu identificador (0 ou 1) através de um argumento na
+        linha de comandos, após o endereço e porta do servidor.
+        <br />
+        A lógica do cliente já está programada em <ttt>TTTClient.java</ttt>,
+        mas esse ficheiro está feito assumindo que há apenas um cliente.<br />
+        Modifique o ficheiro por forma a obter um segundo cliente do servidor
+        remoto.
+        <br />
+        <br />
+        <i>Sugestão: i) aproveite a propriedade <ttt>client.player</ttt>
+          no ficheiro <ttt>pom.xml</ttt> do cliente e adicione-o aos argumentos
+          do plugin <ttt>exec-maven-plugin</ttt>.
+          ii) leia o argumento como inteiro e utilize-o como identificador do
+          jogador, em vez de ser um inteiro que alterna entre 0 e 1.</i><br />
+        <br />
+      </li>
+
+      <li>
+        Lance o servidor e experimente jogar remotamente através dos clientes
+        construídos.<br />
+        entre na pasta <ttt>server</ttt> e execute na consola:<br />
+        <ttt>&gt mvn compile exec:java &</ttt><br />
         (lança o servidor em segundo plano <i>background</i>)<br />
-        <tt>&gt ./ttt_client localhost</tt><br />
-        (lança o cliente para jogar em servidor registado na própria máquina (localhost)<br />
-        <br />
-        </li>
+        Entre na pasta <ttt>client</ttt> e execute na consola:<br />
+        <ttt>&gt mvn compile exec:java</ttt><br />
+        (lança o cliente para jogar em servidor registado na própria máquina
+        (localhost) como o jogador 0)<br />
+        Abra uma segunda consola e execute (na pasta <ttt>client</ttt>)::<br />
+        <ttt>&gt mvn compile exec:java -Dclient.player=1</ttt> <br />
+        (faz o mesmo que o comando anterior, mas substitui o valor de
+        <ttt>client.player</ttt> para que aja como o jogador 2);
+      </li>
 
-        <li>Pode consultar o estado dos processos com o comando <tt>ps</tt> e
-        terminar instâncias com o comando <tt>kill</tt>.</li>
+      <li>
+        Pode consultar o estado dos processos com o comando <tt>ps</tt> e
+        terminar instâncias com o comando <tt>kill</tt>.
+      </li>
     </ol>
 
     <p>
-    O resto do enunciado será entregue na aula. O objectivo será estender a solução resultante do enunciado acima com mais procedimentos ou modificar alguns dos seus procedimentos actuais.
+      O resto do enunciado será entregue na aula. O objectivo será estender a
+      solução resultante do enunciado acima com mais procedimentos ou
+      modificar alguns dos seus procedimentos actuais.
     </p>
+  </div>
 
-</div>
-
-<div class="objectivos">
+  <div class="objectivos">
     <h2>Entrega da solução</h2>
 
     <p>Fénix, Avaliação, Projetos, <b>mini Exercício 1 - Sun RPC</b></p>
 
     <p>
-	A solução completa deverá ser submetida no Fénix
-    <b>antes do fim da sua aula de laboratório</b>.<br />
-	Trabalhos submetidos depois da hora de fim da aula não serão considerados.<br>
+      A solução completa deverá ser submetida no Fénix
+      <b>antes do fim da sua aula de laboratório</b>.<br />
+      Trabalhos submetidos depois da hora de fim da aula não serão
+      considerados.<br />
     </p>
 
     <p>
-	<b>Ter atenção ao seguinte:</b>
-	</p>
-	<ul>
-		<li>Só serão aceites trabalhos de estudantes que estiveram presentes no laboratório.</li>
-		<li>Assegure-se que a solução é enviada em formato ZIP e
-		    que não contém código compilado
-            (faça <tt>make clean</tt> antes de criar o zip)</li>
-        <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
-        com resumo da funcionalidade implementada e
-        com instruções para colocar o programa a funcionar como esperado.<br />
-        Por exemplo:</li>
-        <ul>
-            <li>A funcionalidade pedida foi total/parcialmente implementada <b>...</b></li>
-            <li>Para compilar: <tt>make</tt></li>
-            <li>O servidor deve executar com o comando:
-                <tt>./ttt_server &amp;</tt>
-            </li>
-            <li>O cliente deve executar com o comando:
-                <tt>./ttt_client localhost</tt>
-            </li>
-        </ul>
-	</ul>
-</div>
+      <b>Ter atenção ao seguinte:</b>
+    </p>
+    <ul>
+      <li>
+        Só serão aceites trabalhos de estudantes que estiveram presentes no
+        laboratório.
+      </li>
+      <li>
+        Assegure-se que a solução é enviada em formato ZIP e que não contém
+        código compilado (faça <tt>make clean</tt> antes de criar o zip)
+      </li>
+      <li>
+        Deverá também incluir um ficheiro <tt>instrucoes.txt</tt> com resumo
+        da funcionalidade implementada e com instruções para colocar o
+        programa a funcionar como esperado.<br />
+        Por exemplo:
+      </li>
+      <ul>
+        <li>
+          A funcionalidade pedida foi total/parcialmente implementada
+          <b>...</b>
+        </li>
+        <li>Para compilar: <tt>make</tt></li>
+        <li>
+          O servidor deve executar com o comando:
+          <tt>./ttt_server &amp;</tt>
+        </li>
+        <li>
+          O cliente deve executar com o comando:
+          <tt>./ttt_client localhost</tt>
+        </li>
+      </ul>
+    </ul>
+  </div>
 
-<hr />
+  <hr />
 
-<div class="rodape">
-<p>
-&copy; Docentes de Sistemas Distribu&iacute;dos,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-<a href="http://www.ist.eu">Técnico Lisboa</a><br />
-</p>
-</div>
-
+  <div class="rodape">
+    <p>
+      &copy; Docentes de Sistemas Distribu&iacute;dos,
+      <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+      <a href="http://www.ist.eu">Técnico Lisboa</a><br />
+    </p>
+  </div>
 </body>
+
 </html>

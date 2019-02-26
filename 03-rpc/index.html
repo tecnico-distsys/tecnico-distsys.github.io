@@ -3,11 +3,8 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type"
-        content="text/html;charset=utf-8" />
-  <link rel="stylesheet"
-        type="text/css"
-        href="../_css/labs-sd.css" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css" />
 
   <title>Invocação de procedimentos remotos com gRPC</title>
 </head>
@@ -17,8 +14,7 @@
     <p><a href="../index.html">Labs SD</a> &gt;</p>
   </div>
 
-  <div class="titulo"
-       id="1">
+  <div class="titulo" id="1">
     <h1>Invocação de procedimentos remotos com gRPC</h1>
   </div>
 
@@ -58,102 +54,98 @@
 
     <ol>
       <li>
-        Descarregue e descomprima o código fonte de um
-        <a href="./ttt.zip">cliente e servidor do Jogo do Galo/Tic Tac Toe<img
-               src="../_img/zip.png"
-               alt="ZIP" /></a>,
+        Descarregue e descomprima o código fonte de uma
+        <a href="./ttt-base.zip">implementação do Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP" /></a>,
         baseado em gRPC .<br />
-        <img src="./ttt.png"
-             alt="Tic Tac Toe"
-             height="75" /><br />
-        Caso a porta 8080 esteja a ser utilizada por outro programa, deverá
-        editar
-        a propriedade <ttt>server.port</ttt> no <ttt>pom.xml</ttt>.
+        <img src="./ttt.png" alt="Tic Tac Toe" height="75" /><br />
       </li>
 
       <br />
       <li>
-        Estude a interface remota deste servidor (ficheiro <tt>ttt.proto</tt>)
-        e
-        explore a implementação do servidor para compreender como cada
-        procedimento remoto está implementado.<br />
-        Observe também o código do cliente para compreender como é realizada a
-        invocação de procedimentos remotos.<br />
+        Antes de o fazer, analise o código do jogo
+        de forma a compreender a implementação.
+        Compile e execute o código (com o comando <ttt>mvn compile exec:java</ttt>).
+        <br />
         <br />
       </li>
 
       <li>
-        Dentro da pasta <ttt>contract</ttt>, execute na consola:<br />
-        <tt>&gt mvn install</tt><br />
-        para que sejam gerados e compilados os vários ficheiros de suporte à
-        aplicação
-        distribuída, e sejam instalados para utilização no cliente e servidor.<br />
+        Pretende-se que o programa seja dividido em dois processos (servidor e
+        cliente), através do gRPC.
         <br />
-      </li>
-
-      <li>
-        Tente responder às seguintes questões:
+        Descarregue e descomprima o código fonte de uma <a href="./grpc-hello-world.zip">aplicação de exemplo com gRPC<img
+            src="../_img/zip.png" alt="ZIP" /></a>. Familiarize-se com o código e tente responder às seguintes
+        questões:
         <ol type="a">
-          <li>Porque é que há sincronização no ficheiro TTTGame.java?</li>
+          <li>Onde estão definidas as mensagens trocadas entre o cliente e o servidor?</li>
+          <li>Onde estão definidas as operações remotas no servidor?</li>
+          <li>Onde são feitas as invocações remotas no cliente?</li>
+          <li>As invocações remotas são bloqueantes ou assíncronas?</li>
+          <li>O que teria de alterar para que a resposta à pergunta anterior mudasse?</li>
+        </ol>
+        Execute o código (as instruções estão no ficheiro <ttt>README.md</ttt> de cada módulo).
+        <br />
+        <br />
+      </li>
+
+      <li>
+        Baseando-se no módulo <ttt>contract</ttt> da aplicação de exemplo,
+        crie um novo projeto Maven, e crie um ficheiro <ttt>.proto</ttt> com
+        a definição das mensagens e procedimentos necessários para as
+        invocações remotas das funções já definidas (<ttt>play</ttt>,
+        <ttt>checkWinner</ttt> e <ttt>currentBoard</ttt>)
+        <br />
+        <i>Sugestão: consulte a <a href="https://developers.google.com/protocol-buffers/docs/overview">documentação dos
+            Protocol Buffers</a></i>
+        <br />
+        <br />
+      </li>
+
+      <li>
+        Baseando-se no módulo <ttt>server</ttt> da aplicação de exemplo, Crie um novo projeto para conter a
+        implementação do servidor.
+        <ol type="a">
           <li>
-            Em que ficheiros estão as rotinas de conversão de tipos de dados?
+            Adicione os projetos anteriores (com o código base e o contrato) como dependências
+            do novo projeto.
           </li>
-          <li>Onde são realizadas as invocações remotas no cliente?</li>
-          <li>
-            Que ficheiros pertencem ao cliente? E ao servidor? E a ambos?<br />
+          <li>Crie uma classe que implemente as operações remotas declaradas no contrato,
+            utilizando a classe <ttt>Game</ttt> definida no código base.
           </li>
-          <li>
-            Onde é que o servidor responde ao cliente?
-          </li>
-          <li>
-            Para que serve o argumento do tipo <ttt>StreamObserver</ttt> nos
-            métodos da implementação do serviço?
+          <li>Modifique o módulo <ttt>ttt-base</ttt> de forma a que o acesso às variáveis partilhadas seja
+            sincronizado.</li>
+          <ol type="a">
+            <li>Porque é que esta sincronização é necessária? Onde é que haverá a possibilidade de concorrência?</li>
+          </ol>
+          <li>Crie uma classe que contenha a função <ttt>main</ttt> e que inicia um servidor
+            numa porta que recebe como argumento.
           </li>
         </ol>
         <br />
       </li>
 
       <li>
-        Pretende-se também que haja um segundo processo cliente (que
-        possivelmente
-        corre em máquinas diferentes do servidor e outro cliente), sendo que
-        cada cliente apenas pode jogar no seu turno. Para simplificar, cada
-        cliente recebe o seu identificador (0 ou 1) através de um argumento na
-        linha de comandos, após o endereço e porta do servidor.
-        <br />
-        A lógica do cliente já está programada em <ttt>TTTClient.java</ttt>,
-        mas esse ficheiro está feito assumindo que há apenas um cliente.<br />
-        Modifique o ficheiro por forma a obter um segundo cliente do servidor
-        remoto.
-        <br />
-        <br />
-        <i>Sugestão: i) aproveite a propriedade <ttt>client.player</ttt>
-          no ficheiro <ttt>pom.xml</ttt> do cliente e adicione-o aos argumentos
-          do plugin <ttt>exec-maven-plugin</ttt>.
-          ii) leia o argumento como inteiro e utilize-o como identificador do
-          jogador, em vez de ser um inteiro que alterna entre 0 e 1.</i><br />
+        Por fim, com base no módulo <ttt>client</ttt> da aplicação de
+        exemplo, crie um projeto Maven para conter a implementação do
+        cliente.
+        <ol type="a">
+          <li>Adicione o contrato como dependência do projeto</li>
+          <li>
+            Crie uma classe que instancia um stub do serviço TTT (através de um endereço e porta recebidos como
+            argumentos)
+            e permite ao utilizador jogar o jogo.
+            <br />
+            <i>Sugestão: utilize uma adaptação do código do ficheiro <ttt>Game.java</ttt> do código base.</i>
+          </li>
+        </ol>
         <br />
       </li>
 
       <li>
-        Lance o servidor e experimente jogar remotamente através dos clientes
-        construídos.<br />
-        entre na pasta <ttt>server</ttt> e execute na consola:<br />
-        <ttt>&gt mvn compile exec:java &</ttt><br />
-        (lança o servidor em segundo plano <i>background</i>)<br />
-        Entre na pasta <ttt>client</ttt> e execute na consola:<br />
-        <ttt>&gt mvn compile exec:java</ttt><br />
-        (lança o cliente para jogar em servidor registado na própria máquina
-        (localhost) como o jogador 0)<br />
-        Abra uma segunda consola e execute (na pasta <ttt>client</ttt>)::<br />
-        <ttt>&gt mvn compile exec:java -Dclient.player=1</ttt> <br />
-        (faz o mesmo que o comando anterior, mas substitui o valor de
-        <ttt>client.player</ttt> para que aja como o jogador 2);
-      </li>
-
-      <li>
-        Pode consultar o estado dos processos com o comando <tt>ps</tt> e
-        terminar instâncias com o comando <tt>kill</tt>.
+        Lance o servidor e experimente jogar remotamente através do cliente
+        construído.
+        <br />
+        <br />
       </li>
     </ol>
 
@@ -167,7 +159,7 @@
   <div class="objectivos">
     <h2>Entrega da solução</h2>
 
-    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 1 - Sun RPC</b></p>
+    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 1 - gRPC</b></p>
 
     <p>
       A solução completa deverá ser submetida no Fénix
@@ -186,7 +178,7 @@
       </li>
       <li>
         Assegure-se que a solução é enviada em formato ZIP e que não contém
-        código compilado (faça <tt>make clean</tt> antes de criar o zip)
+        código compilado (faça <tt>mvn clean</tt> antes de criar o zip)
       </li>
       <li>
         Deverá também incluir um ficheiro <tt>instrucoes.txt</tt> com resumo
@@ -199,14 +191,15 @@
           A funcionalidade pedida foi total/parcialmente implementada
           <b>...</b>
         </li>
-        <li>Para compilar: <tt>make</tt></li>
+        <li>Para compilar: <ttt>mvn compile</ttt>
+        </li>
         <li>
           O servidor deve executar com o comando:
-          <tt>./ttt_server &amp;</tt>
+          <ttt>mvn exec:java &amp;</ttt>
         </li>
         <li>
           O cliente deve executar com o comando:
-          <tt>./ttt_client localhost</tt>
+          <ttt>mvn exec:java -Dserver.port=8080</ttt>
         </li>
       </ul>
     </ul>

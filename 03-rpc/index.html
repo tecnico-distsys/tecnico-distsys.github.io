@@ -55,8 +55,7 @@
     <ol>
       <li>
         Descarregue e descomprima o código fonte de uma
-        <a href="./ttt-base.zip">implementação do Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP" /></a>,
-        baseado em gRPC .<br />
+        <a href="./ttt-base.zip">implementação do Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP" /></a>.<br />
         <img src="./ttt.png" alt="Tic Tac Toe" height="75" /><br />
       </li>
 
@@ -64,7 +63,7 @@
       <li>
         Antes de o fazer, analise o código do jogo
         de forma a compreender a implementação.
-        Compile e execute o código (com o comando <ttt>mvn compile exec:java</ttt>).
+        Compile e execute o código (com o comando <tt>mvn compile exec:java</tt>).
         <br />
         <br />
       </li>
@@ -89,11 +88,11 @@
       </li>
 
       <li>
-        Baseando-se no módulo <ttt>contract</ttt> da aplicação de exemplo,
-        crie um novo projeto Maven, e crie um ficheiro <ttt>.proto</ttt> com
+        Baseando-se no módulo <tt>contract</tt> da aplicação de exemplo,
+        crie um novo projeto Maven, e crie um ficheiro <tt>.proto</tt> com
         a definição das mensagens e procedimentos necessários para as
-        invocações remotas das funções já definidas (<ttt>play</ttt>,
-        <ttt>checkWinner</ttt> e <ttt>currentBoard</ttt>)
+        invocações remotas das funções já definidas (<tt>play</tt>,
+        <tt>checkWinner</tt> e <tt>currentBoard</tt>)
         <br />
         <i>Sugestão: consulte a <a href="https://developers.google.com/protocol-buffers/docs/overview">documentação dos
             Protocol Buffers</a></i>
@@ -102,7 +101,7 @@
       </li>
 
       <li>
-        Baseando-se no módulo <ttt>server</ttt> da aplicação de exemplo, crie um novo projeto para conter a
+        Baseando-se no módulo <tt>server</tt> da aplicação de exemplo, crie um novo projeto para conter a
         implementação do servidor.
         <ol type="a">
           <li>
@@ -110,14 +109,14 @@
             do novo projeto.
           </li>
           <li>Crie uma classe que implemente as operações remotas declaradas no contrato,
-            utilizando a classe <ttt>Game</ttt> definida no código base.
+            utilizando a classe <tt>Game</tt> definida no código base.
           </li>
-          <li>Modifique o módulo <ttt>ttt-base</ttt> de forma a que o acesso às variáveis partilhadas seja
+          <li>Modifique o módulo <tt>ttt-base</tt> de forma a que o acesso às variáveis partilhadas seja
             sincronizado.</li>
           <ol type="a">
             <li>Porque é que esta sincronização é necessária? Onde é que haverá a possibilidade de concorrência?</li>
           </ol>
-          <li>Crie uma classe que contenha a função <ttt>main</ttt> e que inicia um servidor
+          <li>Crie uma classe que contenha a função <tt>main</tt> e que inicia um servidor
             numa porta que recebe como argumento.
           </li>
         </ol>
@@ -125,17 +124,17 @@
       </li>
 
       <li>
-        Por fim, com base no módulo <ttt>client</ttt> da aplicação de
+        Por fim, com base no módulo <tt>client</tt> da aplicação de
         exemplo, crie um projeto Maven para conter a implementação do
         cliente.
         <ol type="a">
           <li>Adicione o contrato como dependência do projeto</li>
           <li>
-            Crie uma classe que instancia um stub do serviço TTT (através de um endereço e porta recebidos como
+            Crie uma classe que instancia um <i>stub</i> do serviço TTT (através de um endereço e porta recebidos como
             argumentos)
             e permite ao utilizador jogar o jogo.
             <br />
-            <i>Sugestão: utilize uma adaptação do código do ficheiro <ttt>Game.java</ttt> do código base.</i>
+            <i>Sugestão: utilize uma adaptação do código do ficheiro <tt>Game.java</tt> do código base.</i>
           </li>
         </ol>
         <br />

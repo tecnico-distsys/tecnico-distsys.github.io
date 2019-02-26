@@ -39,8 +39,9 @@
         <a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial da
           API de gRPC para Java</a>
       </li>
-      <a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação
-        de Protocol Buffers</a>
+      <li>
+        <a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação
+          de Protocol Buffers</a>
       </li>
       <li>
         <a href="https://grpc.io/grpc-java/javadoc/index.html">Documentação da
@@ -52,6 +53,8 @@
     <p class="exercicios"></p>
     <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
 
+    <p>Neste exercício iremos transformar uma pequena implementação do Jogo do Galo numa aplicação distribuida
+      utilizando o gRPC.</p>
     <ol>
       <li>
         Descarregue e descomprima o código fonte de uma
@@ -61,7 +64,7 @@
 
       <br />
       <li>
-        Antes de o fazer, analise o código do jogo
+        Analise o código do jogo
         de forma a compreender a implementação.
         Compile e execute o código (com o comando <tt>mvn compile exec:java</tt>).
         <br />
@@ -69,7 +72,7 @@
       </li>
 
       <li>
-        Pretende-se que o programa seja dividido em dois processos (servidor e
+        Pretende-se que a nova versão do programa seja dividida em dois processos (servidor e
         cliente), através do gRPC.
         <br />
         Descarregue e descomprima o código fonte de uma <a href="./grpc-hello-world.zip">aplicação de exemplo com gRPC<img
@@ -82,7 +85,7 @@
           <li>As invocações remotas são bloqueantes ou assíncronas?</li>
           <li>O que teria de alterar para que a resposta à pergunta anterior mudasse?</li>
         </ol>
-        Execute o código (as instruções estão no ficheiro <ttt>README.md</ttt> de cada módulo).
+        Execute o código, seguindo as instruções dos ficheiros <tt>README.md</tt> de cada módulo.
         <br />
         <br />
       </li>
@@ -94,8 +97,11 @@
         invocações remotas das funções já definidas (<tt>play</tt>,
         <tt>checkWinner</tt> e <tt>currentBoard</tt>)
         <br />
-        <i>Sugestão: consulte a <a href="https://developers.google.com/protocol-buffers/docs/overview">documentação dos
-            Protocol Buffers</a></i>
+        <i>Sugestão: i) consulte a <a href="https://developers.google.com/protocol-buffers/docs/overview">documentação
+            dos
+            Protocol Buffers</a>; ii) Verifique que o seu <tt>pom.xml</tt> contém as dependências do gRPC, bem como o
+          plugin que permite gerar
+          classes a partir do contrato definido no ficheiro <tt>.proto</tt>. </i>
         <br />
         <br />
       </li>
@@ -190,15 +196,15 @@
           A funcionalidade pedida foi total/parcialmente implementada
           <b>...</b>
         </li>
-        <li>Para compilar: <ttt>mvn compile</ttt>
+        <li>Para compilar: <kbd>mvn compile</kbd>
         </li>
         <li>
           O servidor deve executar com o comando:
-          <ttt>mvn exec:java &amp;</ttt>
+          <kbd>mvn exec:java &amp;</kbd>
         </li>
         <li>
           O cliente deve executar com o comando:
-          <ttt>mvn exec:java -Dserver.port=8080</ttt>
+          <kbd>mvn exec:java -Dserver.port=8080</kbd>
         </li>
       </ul>
     </ul>

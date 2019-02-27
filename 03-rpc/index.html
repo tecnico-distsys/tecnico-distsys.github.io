@@ -1,255 +1,314 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css" />
 
-    <title>Invocação de procedimentos remotos com gRPC</title>
-  </head>
+<head>
+  <meta http-equiv="Content-Type"
+        content="text/html;charset=utf-8" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="../_css/labs-sd.css" />
 
-  <body>
-    <div class="contexto">
-      <p><a href="../index.html">Labs SD</a> &gt;</p>
-    </div>
+  <link href="../_prettify/prettify.css"
+        type="text/css"
+        rel="stylesheet" />
+  <script type="text/javascript"
+          src="../_prettify/prettify.js"></script>
 
-    <div class="titulo" id="1">
-      <h1>Invocação de procedimentos remotos com gRPC</h1>
-    </div>
+  <title>Invocação de procedimentos remotos com gRPC</title>
+</head>
 
-    <div class="objectivos">
-      <h2>Objectivos da semana</h2>
-      <ul>
-        <li>
-          Distribuir uma aplicação originalmente centralizada usando o gRPC
-        </li>
-        <li>Aprofundar os conhecimentos sobre RPC</li>
-      </ul>
-    </div>
+<body onload="prettyPrint()">
+  <div class="contexto">
+    <p><a href="../index.html">Labs SD</a> &gt;</p>
+  </div>
 
-    <div class="indice"></div>
+  <div class="titulo"
+       id="1">
+    <h1>Invocação de procedimentos remotos com gRPC</h1>
+  </div>
 
-    <div class="corpo">
-      <h2 id="conteudos">Materiais de apoio à aula</h2>
+  <div class="objectivos">
+    <h2>Objectivos da semana</h2>
+    <ul>
+      <li>
+        Distribuir uma aplicação originalmente centralizada usando o gRPC
+      </li>
+      <li>Aprofundar os conhecimentos sobre RPC</li>
+    </ul>
+  </div>
 
-      <p class="exemplos"></p>
-      <ul>
-        <li>
-          <a href="https://grpc.io/docs/tutorials/basic/java.html"
-            >Tutorial da API de gRPC para Java</a
-          >
-        </li>
-        <li>
-          <a href="https://developers.google.com/protocol-buffers/docs/overview"
-            >Documentação de Protocol Buffers</a
-          >
-        </li>
-        <li>
-          <a href="https://grpc.io/grpc-java/javadoc/index.html"
-            >Documentação da API de gRPC para Java</a
-          >
-        </li>
-      </ul>
-      <p></p>
+  <div class="indice"></div>
 
-      <p class="exercicios"></p>
-      <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
+  <div class="corpo">
+    <h2 id="conteudos">Materiais de apoio à aula</h2>
 
-      <p>
-        Neste exercício iremos transformar uma pequena implementação do Jogo do
-        Galo numa aplicação distribuída utilizando o gRPC.
-      </p>
-      <ol>
-        <li>
-          Descarregue e descomprima o código fonte de uma
-          <a href="./ttt-base.zip"
-            >implementação do Jogo do Galo/Tic Tac Toe<img
-              src="../_img/zip.png"
-              alt="ZIP"/></a
-          >.<br />
-          <img src="./ttt.png" alt="Tic Tac Toe" height="75" /><br />
-        </li>
+    <p class="exemplos"></p>
+    <ul>
+      <li>
+        <a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial da
+          API de gRPC para Java</a>
+      </li>
+      <li>
+        <a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação
+          de Protocol Buffers</a>
+      </li>
+      <li>
+        <a href="https://grpc.io/grpc-java/javadoc/index.html">Documentação da
+          API de gRPC para Java</a>
+      </li>
+    </ul>
+    <p></p>
 
+    <p class="exercicios"></p>
+    <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
+
+    <p>
+      Neste exercício iremos transformar uma pequena implementação do Jogo do
+      Galo numa aplicação distribuída utilizando o gRPC.
+    </p>
+    <ol>
+      <li>
+        Descarregue e descomprima o código fonte de uma
+        <a href="./ttt-base.zip">implementação do Jogo do Galo/Tic Tac Toe<img
+               src="../_img/zip.png"
+               alt="ZIP" /></a>.<br />
+        <img src="./ttt.png"
+             alt="Tic Tac Toe"
+             height="75" /><br />
+      </li>
+
+      <br />
+      <li>
+        Analise o código do jogo de forma a compreender a implementação.
+        Compile e execute o código (com o comando
+        <kbd>compile exec:java</kbd>).
         <br />
-        <li>
-          Analise o código do jogo de forma a compreender a implementação.
-          Compile e execute o código (com o comando
-          <tt>mvn compile exec:java</tt>).
-          <br />
-          <br />
-        </li>
+        <br />
+      </li>
 
-        <li>
-          Pretende-se que a nova versão do programa seja dividida em dois
-          processos (servidor e cliente), através do gRPC.
-          <br />
-          Descarregue e descomprima o código fonte de uma
-          <a href="./grpc-hello-world.zip"
-            >aplicação de exemplo com gRPC<img
-              src="../_img/zip.png"
-              alt="ZIP"/></a
-          >. Familiarize-se com o código e tente responder às seguintes
-          questões:
-          <ol type="a">
-            <li>
-              Onde estão definidas as mensagens trocadas entre o cliente e o
-              servidor?
-            </li>
-            <li>Onde estão definidas as operações remotas no servidor?</li>
-            <li>Onde são feitas as invocações remotas no cliente?</li>
-            <li>As invocações remotas são bloqueantes ou assíncronas?</li>
-            <li>
-              O que teria de alterar para que a resposta à pergunta anterior
-              mudasse?
-            </li>
-          </ol>
-          Execute o código, seguindo as instruções dos ficheiros
-          <tt>README.md</tt> de cada módulo.
-          <br />
-          <br />
-        </li>
+      <li>
+        Pretende-se que a nova versão do programa seja dividida em dois
+        processos (servidor e cliente), através do gRPC.
+        <br />
+        Descarregue e descomprima o código fonte de uma
+        <a href="./grpc-hello-world.zip">aplicação de exemplo com gRPC<img src="../_img/zip.png"
+               alt="ZIP" /></a>. Compile e instale o código da pasta <tt>contract</tt>
+        usando o
+        comando <kbd>mvn install</kbd>, de forma a que todo o código seja
+        gerado. Familiarize-se com o código e tente responder às seguintes
+        questões:
+        <ol type="a">
+          <li>
+            Onde estão definidas as mensagens trocadas entre o cliente e o
+            servidor?
+          </li>
+          <li>Onde estão definidas as operações remotas no servidor?</li>
+          <li>
+            Onde estão os ficheiros gerados pelo compilador de Protocol
+            Buffers?
+          </li>
+          <li>Onde são feitas as invocações remotas no cliente?</li>
+          <li>As invocações remotas são bloqueantes ou assíncronas?</li>
+          <li>
+            O que teria de alterar para que a resposta à pergunta anterior
+            mudasse?
+          </li>
+        </ol>
+        Execute o código, seguindo as instruções dos ficheiros
+        <tt>README.md</tt> de cada módulo.
+        <br />
+        <br />
+      </li>
 
-        <li>
-          Baseando-se no módulo <tt>contract</tt> da aplicação de exemplo, crie
-          um novo projeto Maven, e crie um ficheiro <tt>.proto</tt> com a
-          definição das mensagens e procedimentos necessários para as invocações
-          remotas das funções já definidas (<tt>play</tt>,
-          <tt>checkWinner</tt> e <tt>currentBoard</tt>)
-          <br />
-          <i
-            >Sugestão: i) consulte a
-            <a
-              href="https://developers.google.com/protocol-buffers/docs/overview"
-              >documentação dos Protocol Buffers</a
-            >; ii) Verifique que o seu <tt>pom.xml</tt> contém as dependências
-            do gRPC, bem como o plugin que permite gerar classes a partir do
-            contrato definido no ficheiro <tt>.proto</tt>.
-          </i>
-          <br />
-          <br />
-        </li>
-
-        <li>
-          Baseando-se no módulo <tt>server</tt> da aplicação de exemplo, crie um
-          novo projeto para conter a implementação do servidor.
-          <ol type="a">
-            <li>
-              Adicione os módulos anteriores (o ttt-base e o contrato criado no
-              ponto anterior) como dependências do novo projeto.
-            </li>
-            <li>
-              Crie uma classe que implemente as operações remotas declaradas no
-              contrato, utilizando a classe <tt>Game</tt> definida no código
-              base.
-            </li>
-            <li>
-              Modifique o módulo <tt>ttt-base</tt> de forma a que o acesso às
-              variáveis partilhadas seja sincronizado.
-            </li>
-            <ol type="a">
-              <li>
-                Porque é que esta sincronização é necessária? Onde é que haverá
-                a possibilidade de concorrência?
-              </li>
+      <li>
+        Baseando-se no módulo <tt>contract</tt> da aplicação de exemplo, crie
+        um novo projeto Maven, e crie um ficheiro <tt>.proto</tt> com a
+        definição das mensagens e procedimentos necessários para as invocações
+        remotas das funções já definidas (<tt>play</tt>,
+        <tt>checkWinner</tt> e <tt>currentBoard</tt>)
+        <br />
+        <i>Sugestão: i) consulte a
+          <a href="https://developers.google.com/protocol-buffers/docs/overview">documentação
+            dos Protocol Buffers</a>; ii) Verifique que o seu <tt>pom.xml</tt>
+          contém as dependências
+          do gRPC, bem como o plugin que permite gerar classes a partir do
+          contrato definido no ficheiro <tt>.proto</tt>.
+        </i>
+        <ol type="a">
+          <li>
+            Declare todas as mensagens de pedido e resposta para cada operação
+            do jogo. Note que algumas mensagens podem ser vazias, mas devem
+            ser declaradas na mesma.
+          </li>
+          <li>
+            Declare um serviço com as definições das operações necessárias,
+            usando as mensagens definidas na alínea anterior
+          </li>
+          <li>
+            Instale o módulo com o comando <kdb>mvn install</kdb>. Analise o
+            código gerado (na pasta
+            <tt>target/generated-sources/protobuf</tt>).
+            <ol type="i">
+              <li>Onde estão definidas as mensagens?</li>
+              <li>E as operações?</li>
             </ol>
+          </li>
+        </ol>
+        <br />
+      </li>
+
+      <li>
+        Baseando-se no módulo <tt>server</tt> da aplicação de exemplo, crie um
+        novo projeto para conter a implementação do servidor.
+        <ol type="a">
+          <li>
+            Modifique o módulo <tt>ttt-base</tt> de forma a que o acesso às
+            variáveis partilhadas seja
+            <a href="../01-tools/java-synch/">sincronizado.</a>
+          </li>
+          <ol type="i">
             <li>
-              Crie uma classe que contenha a função <tt>main</tt> e que inicia
-              um servidor numa porta que recebe como argumento.
+              Porque é que esta sincronização é necessária? Onde é que haverá
+              a possibilidade de concorrência?
             </li>
           </ol>
-          <br />
-        </li>
+          <li>
+            Adicione os módulos anteriores (o ttt-base e o contrato criado no
+            ponto anterior) como dependências do novo projeto.
+          </li>
+          <li>
+            Crie uma classe que implemente as operações remotas declaradas no
+            contrato, utilizando a classe <tt>TTT</tt> (que implementa a lógica
+            do jogo)
+            definida no código
+            base. Esta nova classe deve estender a classe do serviço definido
+            no
+            contrato e fazer <i>override</i> das operações declaradas no
+            contrato. Exemplo de um método possível:
+            <pre class="prettyprint lang-java">
+  public class TTTServiceImpl extends TTTGrpc.TTTImplBase {
+    private TTT ttt = new TTT();
 
-        <li>
-          Por fim, com base no módulo <tt>client</tt> da aplicação de exemplo,
-          crie um projeto Maven para conter a implementação do cliente.
-          <ol type="a">
-            <li>Adicione o contrato como dependência do projeto.</li>
-            <li>
-              Crie uma classe que instancia um <i>stub</i> do serviço TTT
-              (através de um endereço e porta recebidos como argumentos) e
-              permite ao utilizador jogar o jogo.
-              <br />
-              <i
-                >Sugestão: utilize uma adaptação do código do ficheiro
-                <tt>Game.java</tt> do código base.</i
-              >
-            </li>
-          </ol>
-          <br />
-        </li>
+    @Override
+    public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
+        // StreamObserver is used to represent the gRPC stream between the server and client
+        // in order to send the appropriate responses (or errors, if any occur)
+        CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(ttt.currentBoard()).build();
+        // Send a single response through the stream (for simple operations like this one, this must be called at most once)
+        responseObserver.onNext(response);
+        // Notify the client that the operation has been completed
+        responseObserver.onCompleted();
+    }
+  }
+</pre>
+          </li>
+          <li>
+            Crie uma classe que contenha a função <tt>main</tt> e que inicia
+            um servidor numa porta que recebe como argumento, instanciando a
+            classe criada na alínea anterior.
+          </li>
+        </ol>
+        <br />
+      </li>
 
-        <li>
-          Lance o servidor e experimente jogar remotamente através do cliente
-          construído.
-          <br />
-          <br />
-        </li>
-      </ol>
+      <li>
+        Por fim, com base no módulo <tt>client</tt> da aplicação de exemplo,
+        crie um projeto Maven para conter a implementação do cliente.
+        <ol type="a">
+          <li>Adicione o contrato como dependência do projeto.</li>
+          <li>
+            Crie uma classe que instancia um <i>stub</i> do serviço TTT
+            (através de um endereço e porta recebidos como argumentos).
+          </li>
+          <li>
+            Usando o código do ficheiro <tt>Game.java</tt> do módulo <tt>ttt-base</tt>,
+            adicione métodos para jogar o jogo remotamente através do stub
+            instanciado.
+            Exemplo de adaptação:
+            <pre class="prettyprint lang-java">
+  // Local call
+  winner = ttt.checkWinner();
+  // Remote call
+  winner = stub.checkWinner(CheckWinnerRequest.getDefaultInstance()).getResult();
+</pre>
+          </li>
+        </ol>
+        <br />
+      </li>
 
-      <p>
-        O resto do enunciado será entregue na aula. O objectivo será estender a
-        solução resultante do enunciado acima com mais procedimentos ou
-        modificar alguns dos seus procedimentos actuais.
-      </p>
-    </div>
+      <li>
+        Lance o servidor e experimente jogar remotamente através do cliente
+        construído.
+        <br />
+        <br />
+      </li>
+    </ol>
 
-    <div class="objectivos">
-      <h2>Entrega da solução</h2>
+    <p>
+      O resto do enunciado será entregue na aula. O objectivo será estender a
+      solução resultante do enunciado acima com mais procedimentos ou
+      modificar alguns dos seus procedimentos actuais.
+    </p>
+  </div>
 
-      <p>Fénix, Avaliação, Projetos, <b>mini Exercício 1 - gRPC</b></p>
+  <div class="objectivos">
+    <h2>Entrega da solução</h2>
 
-      <p>
-        A solução completa deverá ser submetida no Fénix
-        <b>antes do fim da sua aula de laboratório</b>.<br />
-        Trabalhos submetidos depois da hora de fim da aula não serão
-        considerados.<br />
-      </p>
+    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 1 - gRPC</b></p>
 
-      <p>
-        <b>Ter atenção ao seguinte:</b>
-      </p>
+    <p>
+      A solução completa deverá ser submetida no Fénix
+      <b>antes do fim da sua aula de laboratório</b>.<br />
+      Trabalhos submetidos depois da hora de fim da aula não serão
+      considerados.<br />
+    </p>
+
+    <p>
+      <b>Ter atenção ao seguinte:</b>
+    </p>
+    <ul>
+      <li>
+        Só serão aceites trabalhos de estudantes que estiveram presentes no
+        laboratório.
+      </li>
+      <li>
+        Assegure-se que a solução é enviada em formato ZIP e que não contém
+        código compilado (faça <tt>mvn clean</tt> antes de criar o zip)
+      </li>
+      <li>
+        Deverá também incluir um ficheiro <tt>instrucoes.txt</tt> com resumo
+        da funcionalidade implementada e com instruções para colocar o
+        programa a funcionar como esperado.<br />
+        Por exemplo:
+      </li>
       <ul>
         <li>
-          Só serão aceites trabalhos de estudantes que estiveram presentes no
-          laboratório.
+          A funcionalidade pedida foi total/parcialmente implementada
+          <b>...</b>
+        </li>
+        <li>Para compilar: <kbd>mvn compile</kbd></li>
+        <li>
+          O servidor deve executar com o comando:
+          <kbd>mvn exec:java &amp;</kbd>
         </li>
         <li>
-          Assegure-se que a solução é enviada em formato ZIP e que não contém
-          código compilado (faça <tt>mvn clean</tt> antes de criar o zip)
+          O cliente deve executar com o comando:
+          <kbd>mvn exec:java -Dserver.port=8080</kbd>
         </li>
-        <li>
-          Deverá também incluir um ficheiro <tt>instrucoes.txt</tt> com resumo
-          da funcionalidade implementada e com instruções para colocar o
-          programa a funcionar como esperado.<br />
-          Por exemplo:
-        </li>
-        <ul>
-          <li>
-            A funcionalidade pedida foi total/parcialmente implementada
-            <b>...</b>
-          </li>
-          <li>Para compilar: <kbd>mvn compile</kbd></li>
-          <li>
-            O servidor deve executar com o comando:
-            <kbd>mvn exec:java &amp;</kbd>
-          </li>
-          <li>
-            O cliente deve executar com o comando:
-            <kbd>mvn exec:java -Dserver.port=8080</kbd>
-          </li>
-        </ul>
       </ul>
-    </div>
+    </ul>
+  </div>
 
-    <hr />
+  <hr />
 
-    <div class="rodape">
-      <p>
-        &copy; Docentes de Sistemas Distribu&iacute;dos,
-        <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-        <a href="http://www.ist.eu">Técnico Lisboa</a><br />
-      </p>
-    </div>
-  </body>
+  <div class="rodape">
+    <p>
+      &copy; Docentes de Sistemas Distribu&iacute;dos,
+      <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+      <a href="http://www.ist.eu">Técnico Lisboa</a><br />
+    </p>
+  </div>
+</body>
+
 </html>

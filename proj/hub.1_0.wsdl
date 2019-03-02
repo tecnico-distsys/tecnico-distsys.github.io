@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  WSDL contract for ForkExec Hub.
+
+  This WSDL defines the operations provided by the Web Service, and should not be modified.
+  For more information, see sections
+  wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
+-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.hub.forkexec.com/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HubService" targetNamespace="http://ws.hub.forkexec.com/">
+
+  <!--  XML Schema Definition (XSD) of data types. -->
+  <types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.hub.forkexec.com/" version="1.0">
+      <xs:element name="EmptyCartFault" type="tns:EmptyCartFault" />
+      <xs:element name="InvalidCreditCardFault" type="tns:InvalidCreditCardFault" />
+      <xs:element name="InvalidFoodIdFault" type="tns:InvalidFoodIdFault" />
+      <xs:element name="InvalidFoodQuantityFault" type="tns:InvalidFoodQuantityFault" />
+      <xs:element name="InvalidInitFault" type="tns:InvalidInitFault" />
+      <xs:element name="InvalidMoneyFault" type="tns:InvalidMoneyFault" />
+      <xs:element name="InvalidTextFault" type="tns:InvalidTextFault" />
+      <xs:element name="InvalidUserIdFault" type="tns:InvalidUserIdFault" />
+      <xs:element name="NotEnoughPointsFault" type="tns:NotEnoughPointsFault" />
+      <xs:element name="accountBalance" type="tns:accountBalance" />
+      <xs:element name="accountBalanceResponse" type="tns:accountBalanceResponse" />
+      <xs:element name="activateAccount" type="tns:activateAccount" />
+      <xs:element name="activateAccountResponse" type="tns:activateAccountResponse" />
+      <xs:element name="addFoodToCart" type="tns:addFoodToCart" />
+      <xs:element name="addFoodToCartResponse" type="tns:addFoodToCartResponse" />
+      <xs:element name="clearCart" type="tns:clearCart" />
+      <xs:element name="clearCartResponse" type="tns:clearCartResponse" />
+      <xs:element name="ctrlClear" type="tns:ctrlClear" />
+      <xs:element name="ctrlClearResponse" type="tns:ctrlClearResponse" />
+      <xs:element name="ctrlInitFood" type="tns:ctrlInitFood" />
+      <xs:element name="ctrlInitFoodResponse" type="tns:ctrlInitFoodResponse" />
+      <xs:element name="ctrlInitUserPoints" type="tns:ctrlInitUserPoints" />
+      <xs:element name="ctrlInitUserPointsResponse" type="tns:ctrlInitUserPointsResponse" />
+      <xs:element name="ctrlPing" type="tns:ctrlPing" />
+      <xs:element name="ctrlPingResponse" type="tns:ctrlPingResponse" />
+      <xs:element name="loadAccount" type="tns:loadAccount" />
+      <xs:element name="loadAccountResponse" type="tns:loadAccountResponse" />
+      <xs:element name="orderCart" type="tns:orderCart" />
+      <xs:element name="orderCartResponse" type="tns:orderCartResponse" />
+      <xs:element name="searchDeal" type="tns:searchDeal" />
+      <xs:element name="searchDealResponse" type="tns:searchDealResponse" />
+      <xs:element name="searchHungry" type="tns:searchHungry" />
+      <xs:element name="searchHungryResponse" type="tns:searchHungryResponse" />
+      <xs:complexType name="searchHungry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="searchHungryResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:food" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="food">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="tns:foodId" />
+          <xs:element minOccurs="0" name="entree" type="xs:string" />
+          <xs:element minOccurs="0" name="plate" type="xs:string" />
+          <xs:element minOccurs="0" name="dessert" type="xs:string" />
+          <xs:element name="price" type="xs:int" />
+          <xs:element name="preparationTime" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="foodId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="restaurantId" type="xs:string" />
+          <xs:element minOccurs="0" name="menuId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidTextFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="loadAccount">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+          <xs:element name="moneyToAdd" type="xs:int" />
+          <xs:element minOccurs="0" name="creditCardNumber" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="loadAccountResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InvalidUserIdFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidMoneyFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidCreditCardFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ctrlInitFood">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="initialFoods" type="tns:food" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ctrlInitFoodResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InvalidInitFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ctrlClear">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="ctrlClearResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="addFoodToCart">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+          <xs:element minOccurs="0" name="foodId" type="tns:foodId" />
+          <xs:element name="foodQuantity" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addFoodToCartResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InvalidFoodIdFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvalidFoodQuantityFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderCart">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderCartResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:foodOrder" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="foodOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="foodOrderId" type="tns:foodOrderId" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="items" nillable="true" type="tns:foodOrderItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="foodOrderId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="foodOrderItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="foodId" type="tns:foodId" />
+          <xs:element name="foodQuantity" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmptyCartFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NotEnoughPointsFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activateAccount">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activateAccountResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="accountBalance">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="accountBalanceResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="searchDeal">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="searchDealResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:food" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="clearCart">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="clearCartResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="ctrlPing">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ctrlPingResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ctrlInitUserPoints">
+        <xs:sequence>
+          <xs:element name="startPoints" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ctrlInitUserPointsResponse">
+        <xs:sequence />
+      </xs:complexType>
+    </xs:schema>
+  </types>
+
+  <!--  Messages use elements defined in the schema. -->
+  <message name="clearCart">
+    <part element="tns:clearCart" name="parameters" />
+  </message>
+  <message name="clearCartResponse">
+    <part element="tns:clearCartResponse" name="parameters" />
+  </message>
+  <message name="InvalidUserIdFault">
+    <part element="tns:InvalidUserIdFault" name="fault" />
+  </message>
+  <message name="loadAccount">
+    <part element="tns:loadAccount" name="parameters" />
+  </message>
+  <message name="loadAccountResponse">
+    <part element="tns:loadAccountResponse" name="parameters" />
+  </message>
+  <message name="InvalidMoneyFault">
+    <part element="tns:InvalidMoneyFault" name="fault" />
+  </message>
+  <message name="InvalidCreditCardFault">
+    <part element="tns:InvalidCreditCardFault" name="fault" />
+  </message>
+  <message name="searchDeal">
+    <part element="tns:searchDeal" name="parameters" />
+  </message>
+  <message name="searchDealResponse">
+    <part element="tns:searchDealResponse" name="parameters" />
+  </message>
+  <message name="InvalidTextFault">
+    <part element="tns:InvalidTextFault" name="fault" />
+  </message>
+  <message name="ctrlClear">
+    <part element="tns:ctrlClear" name="parameters" />
+  </message>
+  <message name="ctrlClearResponse">
+    <part element="tns:ctrlClearResponse" name="parameters" />
+  </message>
+  <message name="accountBalance">
+    <part element="tns:accountBalance" name="parameters" />
+  </message>
+  <message name="accountBalanceResponse">
+    <part element="tns:accountBalanceResponse" name="parameters" />
+  </message>
+  <message name="searchHungry">
+    <part element="tns:searchHungry" name="parameters" />
+  </message>
+  <message name="searchHungryResponse">
+    <part element="tns:searchHungryResponse" name="parameters" />
+  </message>
+  <message name="ctrlPing">
+    <part element="tns:ctrlPing" name="parameters" />
+  </message>
+  <message name="ctrlPingResponse">
+    <part element="tns:ctrlPingResponse" name="parameters" />
+  </message>
+  <message name="addFoodToCart">
+    <part element="tns:addFoodToCart" name="parameters" />
+  </message>
+  <message name="addFoodToCartResponse">
+    <part element="tns:addFoodToCartResponse" name="parameters" />
+  </message>
+  <message name="InvalidFoodIdFault">
+    <part element="tns:InvalidFoodIdFault" name="fault" />
+  </message>
+  <message name="InvalidFoodQuantityFault">
+    <part element="tns:InvalidFoodQuantityFault" name="fault" />
+  </message>
+  <message name="activateAccount">
+    <part element="tns:activateAccount" name="parameters" />
+  </message>
+  <message name="activateAccountResponse">
+    <part element="tns:activateAccountResponse" name="parameters" />
+  </message>
+  <message name="orderCart">
+    <part element="tns:orderCart" name="parameters" />
+  </message>
+  <message name="orderCartResponse">
+    <part element="tns:orderCartResponse" name="parameters" />
+  </message>
+  <message name="EmptyCartFault">
+    <part element="tns:EmptyCartFault" name="fault" />
+  </message>
+  <message name="NotEnoughPointsFault">
+    <part element="tns:NotEnoughPointsFault" name="fault" />
+  </message>
+  <message name="ctrlInitFood">
+    <part element="tns:ctrlInitFood" name="parameters" />
+  </message>
+  <message name="ctrlInitFoodResponse">
+    <part element="tns:ctrlInitFoodResponse" name="parameters" />
+  </message>
+  <message name="InvalidInitFault">
+    <part element="tns:InvalidInitFault" name="fault" />
+  </message>
+  <message name="ctrlInitUserPoints">
+    <part element="tns:ctrlInitUserPoints" name="parameters" />
+  </message>
+  <message name="ctrlInitUserPointsResponse">
+    <part element="tns:ctrlInitUserPointsResponse" name="parameters" />
+  </message>
+
+  <!--  Port type (interface). -->
+  <!--  Each operation has input, output and fault messages. -->
+  <portType name="HubPortType">
+    <operation name="clearCart">
+      <input message="tns:clearCart" wsam:Action="http://ws.hub.forkexec.com/HubPortType/clearCartRequest" />
+      <output message="tns:clearCartResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/clearCartResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/clearCart/Fault/InvalidUserIdFault" />
+    </operation>
+    <operation name="loadAccount">
+      <input message="tns:loadAccount" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccountRequest" />
+      <output message="tns:loadAccountResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccountResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccount/Fault/InvalidUserIdFault" />
+      <fault message="tns:InvalidMoneyFault" name="InvalidMoneyFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccount/Fault/InvalidMoneyFault" />
+      <fault message="tns:InvalidCreditCardFault" name="InvalidCreditCardFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccount/Fault/InvalidCreditCardFault" />
+    </operation>
+    <operation name="searchDeal">
+      <input message="tns:searchDeal" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchDealRequest" />
+      <output message="tns:searchDealResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchDealResponse" />
+      <fault message="tns:InvalidTextFault" name="InvalidTextFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchDeal/Fault/InvalidTextFault" />
+    </operation>
+    <operation name="ctrlClear">
+      <input message="tns:ctrlClear" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlClearRequest" />
+      <output message="tns:ctrlClearResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlClearResponse" />
+    </operation>
+    <operation name="accountBalance">
+      <input message="tns:accountBalance" wsam:Action="http://ws.hub.forkexec.com/HubPortType/accountBalanceRequest" />
+      <output message="tns:accountBalanceResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/accountBalanceResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/accountBalance/Fault/InvalidUserIdFault" />
+    </operation>
+    <operation name="searchHungry">
+      <input message="tns:searchHungry" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchHungryRequest" />
+      <output message="tns:searchHungryResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchHungryResponse" />
+      <fault message="tns:InvalidTextFault" name="InvalidTextFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchHungry/Fault/InvalidTextFault" />
+    </operation>
+    <operation name="ctrlPing">
+      <input message="tns:ctrlPing" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlPingRequest" />
+      <output message="tns:ctrlPingResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlPingResponse" />
+    </operation>
+    <operation name="addFoodToCart">
+      <input message="tns:addFoodToCart" wsam:Action="http://ws.hub.forkexec.com/HubPortType/addFoodToCartRequest" />
+      <output message="tns:addFoodToCartResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/addFoodToCartResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/addFoodToCart/Fault/InvalidUserIdFault" />
+      <fault message="tns:InvalidFoodIdFault" name="InvalidFoodIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/addFoodToCart/Fault/InvalidFoodIdFault" />
+      <fault message="tns:InvalidFoodQuantityFault" name="InvalidFoodQuantityFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/addFoodToCart/Fault/InvalidFoodQuantityFault" />
+    </operation>
+    <operation name="activateAccount">
+      <input message="tns:activateAccount" wsam:Action="http://ws.hub.forkexec.com/HubPortType/activateAccountRequest" />
+      <output message="tns:activateAccountResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/activateAccountResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/activateAccount/Fault/InvalidUserIdFault" />
+    </operation>
+    <operation name="orderCart">
+      <input message="tns:orderCart" wsam:Action="http://ws.hub.forkexec.com/HubPortType/orderCartRequest" />
+      <output message="tns:orderCartResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/orderCartResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/orderCart/Fault/InvalidUserIdFault" />
+      <fault message="tns:EmptyCartFault" name="EmptyCartFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/orderCart/Fault/EmptyCartFault" />
+      <fault message="tns:NotEnoughPointsFault" name="NotEnoughPointsFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/orderCart/Fault/NotEnoughPointsFault" />
+    </operation>
+    <operation name="ctrlInitFood">
+      <input message="tns:ctrlInitFood" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitFoodRequest" />
+      <output message="tns:ctrlInitFoodResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitFoodResponse" />
+      <fault message="tns:InvalidInitFault" name="InvalidInitFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitFood/Fault/InvalidInitFault" />
+    </operation>
+    <operation name="ctrlInitUserPoints">
+      <input message="tns:ctrlInitUserPoints" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitUserPointsRequest" />
+      <output message="tns:ctrlInitUserPointsResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitUserPointsResponse" />
+      <fault message="tns:InvalidInitFault" name="InvalidInitFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitUserPoints/Fault/InvalidInitFault" />
+    </operation>
+  </portType>
+
+  <!--  Binding defines the actual technologies to use. -->
+  <binding name="HubPortBinding" type="tns:HubPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="clearCart">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="loadAccount">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+      <fault name="InvalidMoneyFault">
+        <soap:fault name="InvalidMoneyFault" use="literal" />
+      </fault>
+      <fault name="InvalidCreditCardFault">
+        <soap:fault name="InvalidCreditCardFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="searchDeal">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidTextFault">
+        <soap:fault name="InvalidTextFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="ctrlClear">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="accountBalance">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="searchHungry">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidTextFault">
+        <soap:fault name="InvalidTextFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="ctrlPing">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="addFoodToCart">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+      <fault name="InvalidFoodIdFault">
+        <soap:fault name="InvalidFoodIdFault" use="literal" />
+      </fault>
+      <fault name="InvalidFoodQuantityFault">
+        <soap:fault name="InvalidFoodQuantityFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="activateAccount">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="orderCart">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+      <fault name="EmptyCartFault">
+        <soap:fault name="EmptyCartFault" use="literal" />
+      </fault>
+      <fault name="NotEnoughPointsFault">
+        <soap:fault name="NotEnoughPointsFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="ctrlInitFood">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidInitFault">
+        <soap:fault name="InvalidInitFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="ctrlInitUserPoints">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="InvalidInitFault">
+        <soap:fault name="InvalidInitFault" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+
+  <!--  Service defines ports. -->
+  <!--  Each port is an abstract port type, made concrete by a binding. -->
+  <service name="HubService">
+    <port binding="tns:HubPortBinding" name="HubPort">
+      <soap:address location="http://forkexec.com:8080/hub" />
+    </port>
+  </service>
+</definitions>

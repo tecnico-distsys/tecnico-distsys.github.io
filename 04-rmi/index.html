@@ -29,7 +29,7 @@
 <ul>
     <li>
     Distribuir uma aplicação originalmente centralizada usando o
-    Java RMI
+    Java RMI (<i>Remote Method Invocation</i>)
     </li>
     <li>
     Aprofundar os conhecimentos sobre Java RMI
@@ -63,10 +63,14 @@
     </li>
 </ul>
 
-<h2>Enunciado</h2>
-
+<h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
 <p>
-Partindo de um Jogo do Galo (Tic Tac Toe) feito para um cenário local, 
+No laboratório anterior transformamos uma implementação do Jogo do Galo (<i>Tic Tac Toe</i>) numa aplicação distribuída utilizando o gRPC.
+Analogamente, neste exercício iremos utilizar o Java RMI para estudar outra forma de transformar uma implementação do Jogo do Galo numa aplicação distribuída.
+</p>
+<p>
+Partindo de uma versão Jogo do Galo feita para um cenário local,
+semelhante à versão utilizada no laboratório anterior,
 pretende-se desenvolver uma variante do jogo onde a parte
 computacionalmente mais pesada é realizada por um servidor remoto.
 O servidor guarda as variáveis do jogo.
@@ -99,6 +103,15 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
         </li>
         <li>Estude os principais ficheiros com a implementação do jogo 
         (<tt>Game.java</tt> e <tt>TTT.java</tt> do módulo <i>server</i>).
+        <ol type="a">
+            <li>
+            Esta implementação é muito semelhante à utilizada como base no laboratório anterior.
+            <br />No entanto, alguns métodos são sincronizados.
+            </li>
+            <li>
+            Porque é que esta sincronização é necessária?
+            </li>
+        </ol>
         </li>
         <li>
         Compile e experimente o jogo na sua versão centralizada 

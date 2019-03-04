@@ -80,14 +80,14 @@ numa máquina não partilhada com outros grupos para evitar conflitos.
 Use uma máquina pessoal ou do laboratório e não o sigma.
 </em></p>
 
-<ol>
+<ol type="I">
     <li>
     Descarregue e descomprima o código fonte da aplicação 
     Jogo do Galo/Tic Tac Toe <br /> 
     (<a href="./ttt-rmi-server.zip">servidor<img src="../_img/zip.png" alt="ZIP"></a>, 
      <a href="./ttt-rmi-client.zip">cliente<img src="../_img/zip.png" alt="ZIP"></a>).
     </li>
-    <ol type="i">
+    <ol type="1">
         <li>
         Importe os projectos no Eclipse, recorrendo a <i> File > Import > Maven > Existing Maven Projects</i>.
         </li>
@@ -113,7 +113,7 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
     que interage com os jogadores e que invoca as funções do servidor via 
     Java RMI (<i>Remote Method Invocation</i>).
     </li>
-    <ol type="a">
+    <ol type="1">
         <li>
         Comece por desenhar os métodos remotos do servidor numa
         interface chamada <tt>TTTService</tt>.<br />
@@ -122,7 +122,7 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
         cada um dos seus métodos deve lançar uma <tt>java.rmi.RemoteException</tt>.<br>
         Consulte o <a href="./ShapeList.java">exemplo de interface remota apresentado no livro</a> para ajuda.
         </li>
-        <ol type="i">
+        <ol type="a">
             <li>
             Coloque a nova interface num módulo
             <a href="./ttt-rmi-interface.zip">interface<img src="../_img/zip.png" alt="ZIP"></a>
@@ -167,7 +167,7 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
         onde correrá o servidor.<br />
         No método <tt>main</tt> deverá:
         </li>
-        <ol type="i">
+        <ol type="a">
             <li>
             Instanciar um objecto remoto do tipo TTT
             </li>
@@ -183,7 +183,7 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
         <li>
         Deverá agora proceder à modificação do cliente para chamar remotamente os métodos definidos anteriormente.
         </li>
-        <ol type="i">
+        <ol type="a">
             <li>
             Mover a classe <tt>ttt.Game</tt> do servidor para o cliente.
             Implemente um cliente remoto que, 
@@ -229,7 +229,7 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
     <li>
     Responda às seguintes questões:
     </li>
-    <ol type="i">
+    <ol type="1">
         <li>
         Quando se usa SUN RPC é gerado código para converter os dados de e 
         para um formato de rede. 

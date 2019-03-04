@@ -75,27 +75,30 @@ O cliente faz a interface com o utilizador.<br />
 </p>
 
 <p><em>
-Sugestão: nas alíneas seguintes, corra os programas cliente e servidor
+Sugestão: nas alíneas seguintes, corra os módulos cliente e servidor
 numa máquina não partilhada com outros grupos para evitar conflitos.
 Use uma máquina pessoal ou do laboratório e não o sigma.
 </em></p>
 
 <ol type="I">
     <li>
-    Descarregue e descomprima o código fonte da aplicação 
-    Jogo do Galo/Tic Tac Toe <br /> 
-    (<a href="./ttt-rmi-server.zip">servidor<img src="../_img/zip.png" alt="ZIP"></a>, 
-     <a href="./ttt-rmi-client.zip">cliente<img src="../_img/zip.png" alt="ZIP"></a>).
+    Descarregue e descomprima o <a href="./ttt-rmi.zip">código fonte da aplicação
+    Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP"></a> adaptada a este exercício.<br />
     </li>
     <ol type="1">
         <li>
-        Importe os projectos no Eclipse, recorrendo a <i> File > Import > Maven > Existing Maven Projects</i>.
+        Veja como o programa está estruturado em três módulos: <i>server</i>, <i>client</i> e <i>interface</i>.
+        <br />Cada módulo tem um POM próprio.
         </li>
         <li>
-        No ponto de partida o código está todo centralizado no servidor, estando o cliente vazio.
+        Importe os projectos no Eclipse, recorrendo a <i> File > Import > Maven > Existing Maven Projects</i>
+        </li>
+        <li>
+        No ponto de partida, o código está todo centralizado no módulo <i>server</i>, estando o <i>client</i> vazio.
+        <br />O módulo <i>interface</i> será usado num próximo passo.
         </li>
         <li>Estude os principais ficheiros com a implementação do jogo 
-        (<tt>Game.java</tt> e <tt>TTT.java</tt>).
+        (<tt>Game.java</tt> e <tt>TTT.java</tt> do módulo <i>server</i>).
         </li>
         <li>
         Compile e experimente o jogo na sua versão centralizada 
@@ -124,8 +127,7 @@ Use uma máquina pessoal ou do laboratório e não o sigma.
         </li>
         <ol type="a">
             <li>
-            Coloque a nova interface num módulo
-            <a href="./ttt-rmi-interface.zip">interface<img src="../_img/zip.png" alt="ZIP"></a>
+            Coloque a nova interface no módulo <i>interface</i> (ficheiro <tt>TTTService.java</tt>).
             </li>
             <li>
             Depois de codificar a interface,

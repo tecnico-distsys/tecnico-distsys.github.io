@@ -25,7 +25,7 @@
 
 <div class="objectivos">
 
-<h2>Objectivos</h2>
+<h2>Objetivos</h2>
 <ul>
     <li>
     Distribuir uma aplicação originalmente centralizada usando o
@@ -59,7 +59,7 @@
 <ul>
     <li>
     Capítulo 5.5 Java RMI do livro principal da cadeira
-    (Coulouris, "Distributed Systems: Concepts and Design")
+    (Coulouris, <i>"Distributed Systems: Concepts and Design"</i>)
     </li>
 </ul>
 
@@ -75,7 +75,7 @@ pretende-se desenvolver uma variante do jogo onde a parte
 computacionalmente mais pesada é realizada por um servidor remoto.
 O servidor guarda as variáveis do jogo.
 O cliente faz a interface com o utilizador.<br />
-<img src="ttt.png" alt="Tic Tac Toe" height="75" /><br />
+<img src="ttt.png" alt="Tic Tac Toe" height="90" /><br />
 </p>
 
 <p><em>
@@ -87,12 +87,12 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
 <ol type="I">
     <li>
     Descarregue e descomprima o <a href="./ttt-rmi.zip">código fonte da aplicação
-    Jogo do Galo/Tic Tac Toe<img src="../_img/zip.png" alt="ZIP"></a> adaptada a este exercício.<br />
+    Jogo do Galo/Tic Tac Toe <img src="../_img/zip.png" alt="ZIP"></a> adaptada a este exercício.<br />
     </li>
     <ol type="1">
         <li>
-        Veja como o programa está estruturado em três módulos: <i>server</i>, <i>client</i> e <i>interface</i>.
-        <br />Cada módulo tem um POM próprio.
+        Veja como o programa está estruturado em três módulos: <i>server</i>, <i>client</i> e <i>interface</i>.<br />
+		Cada módulo tem um POM próprio.
         </li>
         <li>
         Importe os projectos no Eclipse, recorrendo a <i> File &gt; Import &gt; Maven &gt; Existing Maven Projects</i>
@@ -105,8 +105,8 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
         (<tt>Game.java</tt> e <tt>TTT.java</tt> do módulo <i>server</i>).
         <ol type="a">
             <li>
-            Esta implementação é muito semelhante à utilizada como base no laboratório anterior.
-            <br />No entanto, alguns métodos são <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html">sincronizados</a>.
+            Esta implementação é muito semelhante à utilizada como base no laboratório anterior.<br />
+			No entanto, alguns métodos já são <a href="../01-tools/java-synch/index.html">sincronizados</a>.
             </li>
             <li>
             Porque é que esta sincronização é necessária?
@@ -115,28 +115,27 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
         </li>
         <li>
         Compile e experimente o jogo na sua versão centralizada 
-        (executando <kbd>mvn compile exec:java</kbd>).
+        (executando <kbd>mvn compile exec:java</kbd>).<br />
+		<br />
         </li>
     </ol>
     
-    <p>&nbsp;</p>
     <li>
     Pretende-se que a classe <tt>TTT.java</tt>, que implementa o jogo, 
-    passe a ser invocável remotamente. <br /> 
-    Dessa forma,
-    permitir-se-á que haja um cliente remoto
+    passe a ser invocável remotamente.<br /> 
+    Dessa forma, permitir-se-á que haja um cliente remoto
     que interage com os jogadores invocando os métodos do servidor via
-    Java RMI (<i>Remote Method Invocation</i>).
+    Java RMI (<i>Remote Method Invocation</i>).<br />
     Naturalmente, o cliente poderá correr numa máquina diferente da máquina que serve o jogo.
     </li>
     <ol type="1">
         <li>
-        Comece por desenhar os métodos remotos do servidor numa
-        interface chamada <tt>TTTService</tt>.<br />
+        Comece por desenhar os métodos remotos do servidor numa interface chamada <tt>TTTService</tt>.<br />
         A interface deve expor todas as funções remotas que o cliente precisa de invocar. 
         Para ser uma interface remota, precisa também de herdar de <tt>java.rmi.Remote</tt> e
-        cada um dos seus métodos deve lançar uma <tt>java.rmi.RemoteException</tt>.<br>
-        Consulte o <a href="./ShapeList.java">exemplo de interface remota apresentado no livro</a> para ajuda.
+        cada um dos seus métodos deve lançar uma <tt>java.rmi.RemoteException</tt>.<br />
+        Consulte o <a href="./ShapeList.java">exemplo de interface remota apresentado no livro</a> para referência.<br />
+		<br />
         </li>
         <ol type="a">
             <li>
@@ -145,7 +144,7 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
             <li>
             Depois de codificar a interface,
             compile o código e instale o módulo no seu repositório local:<br />
-            <kbd>cd ttt-rmi/interface</kbd><br />
+            <kbd>cd interface</kbd><br />
             <kbd>mvn install</kbd><br />
             </li>
             <li>
@@ -163,7 +162,8 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
             </li>
             <li>
             Depois de editar os <tt>pom.xml</tt>, refresque as dependências do Maven no projeto Eclipse:<br />
-            <tt><i>right-click</i> &gt; Maven &gt; Update Project... &gt; Force Update of Snapshots/Releases &gt; OK</tt>
+            <tt><i>right-click</i> &gt; Maven &gt; Update Project... &gt; Force Update of Snapshots/Releases &gt; OK</tt><br />
+			<br />
             </li>
         </ol>
         <li>
@@ -171,15 +171,16 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
         implementar a interface remota <tt>TTTService</tt> criada anteriormente.
         <ol type="a">
             <li>
-            Para que as instâncias desta classe possam ser objectos remotos,
+            Para que as instâncias desta classe possam ser objetos remotos,
             modifique a definição da classe <tt>TTT</tt> de forma a herdar de
             <tt>java.rmi.server.UnicastRemoteObject</tt>
             e acrescente um construtor que lance excepção <tt>RemoteException</tt>.
             </li>
             <li>
-            Esta classe deverá implementar a lógica dos métodos que o cliente irá chamar posteriormente, tal como definidos na interface <tt>TTTService</tt>.
+            Esta classe deverá implementar a lógica dos métodos que o cliente irá chamar posteriormente, tal como definidos na interface <tt>TTTService</tt>.<br />
             Consulte o <a href="./ShapeListServant.java">exemplo da classe
-            shapeListServant apresentado no livro</a> para ajuda.
+            shapeListServant apresentado no livro</a> para referência.<br />
+			<br />
             </li>
         </ol>
         </li>
@@ -190,17 +191,19 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
         </li>
         <ol type="a">
             <li>
-            Instanciar um objecto remoto do tipo <tt>TTT</tt>.
+            Instanciar um objeto remoto do tipo <tt>TTT</tt>.
             </li>
             <li>
             Lançar um <tt>rmiregistry</tt> (serviço de nomes do RMI) e
-            registar o objecto remoto nesse <tt>rmiregistry</tt> utilizando a classe <a href="https://docs.oracle.com/javase/8/docs/api/java/rmi/registry/LocateRegistry.html">java.rmi.registry.LocateRegistry</a>.
+            registar o objeto remoto nesse <tt>rmiregistry</tt> utilizando a classe <a href="https://docs.oracle.com/javase/8/docs/api/java/rmi/registry/LocateRegistry.html">java.rmi.registry.LocateRegistry</a>.
             </li>
+			<li>
+			Atualize a <tt>mainclass</tt> definida no <tt>pom.xml</tt> para refletir a classe que possui o método <tt>main</tt>.
+			</li>
         </ol>
         Consulte o <a href="./ShapeListServer.java">exemplo da classe
-        ShapeListServer apresentado no livro</a> para ajuda.<br /> 
-        Não se esqueça de actualizar a <tt>mainclass</tt> do ficheiro <tt>pom.xml</tt> 
-        de modo a reflectir a classe que possui o método <tt>main</tt>.
+        ShapeListServer apresentado no livro</a> para referência.<br />
+		<br />
         <li>
         Deverá agora proceder à modificação do cliente de forma a chamar remotamente os métodos definidos anteriormente na interface <tt>TTTServer</tt>.
         </li>
@@ -209,31 +212,31 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
             Mova a classe <tt>ttt.Game</tt> do servidor para o cliente.
             Implemente um cliente remoto que, 
             com base nos comandos recebidos pela consola local, 
-            invoca métodos do jogo remoto. 
+            invoca métodos do jogo remoto.<br />
             Assuma que ambos os jogadores de cada jogo usam o mesmo cliente.<br />
             Consulte o <a href="./ShapeListClient.java">exemplo do cliente
-            apresentado no livro</a> para ajuda.
+            apresentado no livro</a> para referência.<br />
+			<br />
             </li>
             <li>
             Não se esqueça de, na chamada ao método <tt>Naming.lookup</tt>,
-            definir correctamente o URL que localiza o objecto, na forma: 
+            definir correctamente o URL que localiza o objeto, na forma: 
             <tt>//host:port/name</tt>,
             em que <tt>host</tt> e <tt>port</tt> definem a máquina e o porto
             onde corre o <tt>rmiregistry</tt> onde foi
-            registado o objecto remoto e <tt>name</tt> é o nome que foi
-            atribuído ao objecto pelo servidor quando chamou <tt>rebind</tt>.
+            registado o objeto remoto e <tt>name</tt> é o nome que foi
+            atribuído ao objeto pelo servidor quando chamou <tt>rebind</tt>.
             </li>
             <li>
-            Adicione o tratamento adequado às exceções lançadas quando acontece
+            Adicione o tratamento adequado às <a href="../01-tools/exceptions/index.html">exceções</a> lançadas quando acontece
             algo inesperado numa invocação remota. <br />
-            Eis algumas das excepções que podem ocorrer:
-            <ol type="i">
+			As exceções de comunicação e tratamento de dados que podem ocorrer são todas subclasses de <tt>java.rmi.RemoteException</tt>. Exemplos:
+            <ul>
                 <li><tt>java.rmi.UnknownHostException</tt></li>
+                <li><tt>java.rmi.ConnectException</tt></li>
                 <li><tt>java.rmi.UnmarshalException</tt></li>
                 <li><tt>java.rmi.MarshalException</tt></li>
-                <li><tt>java.rmi.RemoteException</tt></li>
-                <li><tt>java.rmi.ConnectException</tt></li>
-            </ol>
+            </ul>
             </li>
         </ol>
     </ol>
@@ -243,12 +246,14 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
     a partir da directoria onde se encontram as classes compiladas.
     </li-->
 
-    <p>&nbsp;</p>
+	<br />
+
     <li>
     Experimente lançar o servidor e depois um cliente para jogar.
     </li>
 
-    <p>&nbsp;</p>
+	<br />
+
     <li>
     Responda às seguintes questões:
     </li>
@@ -266,7 +271,8 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
     </ol>
 </ol>
 
-<p>&nbsp;</p>
+<br />
+
 <p>
 O resto do enunciado será entregue na aula. 
 O objectivo será estender a solução resultante do enunciado acima com mais
@@ -328,23 +334,23 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
     algumas simplificações importantes que normalmente não se observam
     num projecto real de Java RMI. Entre elas:
 <ol>
-    <li><i>Existe apenas uma instância de objecto remoto.</i><br />
+    <li><i>Existe apenas uma instância de objeto remoto.</i><br />
         Normalmente pode existir um número variado de interfaces e classes
         remotas, assim como de suas instâncias.
     </li>
-    <li><i>Há um processo que aloja o objecto remoto e outro processo
-        que obtém referência remota para essa objecto, numa clara distinção
+    <li><i>Há um processo que aloja o objeto remoto e outro processo
+        que obtém referência remota para essa objeto, numa clara distinção
     entre servidor e cliente.</i><br /> 
         Na prática, um processo pode
-        simultaneamente ser servidor de alguns objectos remotos e ter outras
-        referências remotas (para objectos remotos noutros processos), sobre
+        simultaneamente ser servidor de alguns objetos remotos e ter outras
+        referências remotas (para objetos remotos noutros processos), sobre
         as quais invoca métodos (agindo também como cliente).
     </li>
     <li><i>No projecto acima nunca ocorre nenhuma situação de
     carregamento dinâmico de classes.</i> <br />
         Essa situação poderia, por exemplo, 
         acontecer se um método remoto recebesse ou retornasse um
-        objecto por valor. Nesse caso seria necessário definir alguns
+        objeto por valor. Nesse caso seria necessário definir alguns
         aspectos de segurança da JVM (em particular, um Security Manager e
         uma Security Policy).
     </li>
@@ -352,11 +358,11 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
         <i>O RMIRegistry é lançado internamente pelo servidor na mesma JVM.</i><br /> 
         (<tt>LocateRegistry.createRegistry()</tt>). 
         O RMI Registry é normalmente um serviço autónomo que corre numa máquina virtual Java (JVM)
-        separada do processo que instancia e solitica o registo de um objecto remoto.
+        separada do processo que instancia e solitica o registo de um objeto remoto.
         Neste caso, é necessário que os ficheiros com as interfaces remotas
-        dos objectos a registar no Registry estejam disponíveis num URL definido
+        dos objetos a registar no Registry estejam disponíveis num URL definido
         no parâmetro "codebase" da JVM do processo servidor.
-        Poderá descarregar e analisar um <a href="./hello-rmi.zip">exemplo que usa RMI Registry como serviço autónomo<img src="../_img/zip.png" alt="ZIP"></a>.
+        Poderá descarregar e analisar um <a href="./hello-rmi.zip">exemplo que usa RMI Registry como serviço autónomo <img src="../_img/zip.png" alt="ZIP"></a>.
     </li>
 </ol>
 

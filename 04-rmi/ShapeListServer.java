@@ -14,7 +14,7 @@ public class ShapeListServer {
             Registry reg = LocateRegistry.createRegistry(registryPort);
             reg.rebind("ShapeList", aShapelist);
 
-            // A more realistic would be having an autonomous RMI Registry
+            // A more realistic approach would be having an autonomous RMI Registry
             // available at the default port
             // (implies defining a 'codebase' to allow the RMI Registry
             // to remotely obtain the interfaces for the

@@ -1,431 +1,400 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+        <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="../_prettify/prettify.js"></script>
+        <title>Web Services Contract-First & SOAP Handlers</title>
+    </head>
+    <body onload="prettyPrint()">
+        <div class="contexto">
+            <p>
+                <a href="../index.html">Labs SD</a> &gt;
+            </p>
+        </div>
+        <div class="titulo" id="1">
+            <h1>Web Services: Contract-First & SOAP Handlers</h1>
+        </div>
+        <div class="objectivos">
+            <h2>Objetivos</h2>
+            <ul>
+                <li>Desenvolver Web Services na plataforma Java usando a abordagem contract-first</li>
+                <li>Construir e modificar mensagens SOAP</li>
+                <li>Desenvolver SOAP Handlers para modificar as mensagens XML do Web Service</li>
+            </ul>
+        </div>
+        <div class="indice"></div>
+        <div class="corpo">
+        <h2>Web Services</h2>
+        <p>
+            Um serviço é uma funcionalidade de um sistema informático que pode ser invocada remotamente através da rede.<br />
+            Um <i>Web Service</i> é um serviço que usa os protocolos de comunicação da <i>World Wide Web</i>
+            - HTTP sobre TCP sobre IP -
+            e protocolos adicionais para descrever mensagens e dados
+            - SOAP sobre XML.<br />
+            Para permitir uma definição rigorosa das operações e dos tipos de dados dos <i>Web Services</i>
+            são usadas as linguagens WSDL (<i>Web Services Description Language</i>) e
+            XSD (<i>XML Schema Definition</i>),
+            respetivamente.
+        </p>
+        <h3>Web Service contract</h3>
+        <p>
+            Os <i>Web Services</i> também têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
+            A <b>WSDL</b> permite especificar a interface funcional (<i>port type</i>)
+            - operações com entradas, saídas e erros -
+            e também a vinculação (<i>binding</i>) com tecnologias concretas
+            - habitualmente SOAP sobre HTTP.<br />
+            A WSDL é baseada em XML de forma a ser independente da plataforma e
+            usa XSD para definir o detalhe dos tipos de dados de entrada e saída (e erros) em cada operação.
+        </p>
+        <p>
+            Exemplo:
+        <ul>
+            <li><a href="ping/Ping.wsdl">Ping.wsdl</a> -
+                os comentários numerados explicam as diferentes seções do documento:<br />
+                <i>namespaces</i>,
+                <i>service definition</i>,
+                <i>binding definitions</i>,
+                <i>port type definitions</i>,
+                <i>message definitions</i> e
+                <i>type definitions</i>.
+            </li>
+        </ul>
+        </p>
+        Mais informação:
+        <ul>
+            <li>
+                <a href="wsdl/index.html">WSDL</a>
+            </li>
+            </li>
+            <li>
+                <a href="xml/index.html">XML</a> e
+                <a href="xsd/index.html">XSD</a>
+            </li>
+            <li>
+                Livro Couloris, Capítulo 9
+            </li>
+        </ul>
+        <h3>Java API for XML Web Services</h3>
+        <p>
+            As bibliotecas JAX (<i>Java API for XML</i>) são a família de bibliotecas da plataforma Java que lidam com tecnologias baseadas em XML,
+            como é o caso dos <i>Web Services</i>.<br />
+            A JAX-WS (Java API for XML Web Services) é uma biblioteca para Java que permite implementar <i>Web Services</i>,
+            usando as normas:<br />
+            HTTP/TCP/IP para mensagens,
+            SOAP/XML para mensagens,
+            WSDL e XSD para descrição.
+        </p>
+        <p>
+            É possível implementar Web Services partindo de um contrato WSDL (e XSD) já existente.<br />
+            Esta abordagem ao desenvolvimento de serviços é chamada <i>contract-first</i>.
+        </p>
+        <p>
+            Exemplo Ping Web Service:
+        <ul>
+            <li>
+                <a href="ping/ping-ws.zip">server
+                <img src="../_img/zip.png" alt="ZIP" ></a>
+                <a href="ping/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>
+            </li>
+            <li>
+                <a href="ping/ping-ws-cli.zip">client
+                <img src="../_img/zip.png" alt="ZIP" ></a>
+                <a href="ping/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>
+            </li>
+        </ul>
+        </p>
+        <p><small>
+            Nota: As pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
+            </small>
+        </p>
+        Mais informação:
+        <!--ul>
+            <li--><a href="jaxws/index.html">JAX-WS</a><!--/li>
+            </ul-->
+        <h3>JUnit Integration Tests</h3>
+        <p>
+            Para garantir a qualidade do código do Web Service,
+            é necessário produzir testes de integração (<tt>IT</tt>)
+            que verificam o comportamento de todo o sistema através de invocações <i>remotas</i>.
+        </p>
+        <!--p>
+            O JUnit pode também ser usado para fazer testes de integração.
+            </p-->
+        <p>
+            No contexto dos Web Services,
+            os testes de integração são um programa cliente (<tt>ws-cli</tt>) que faz invocações remotas a um programa servidor (<tt>ws</tt>),
+            verificando o contrato das operações remotas definidas no WSDL.<br />
+            Assume-se que todos os Web Services já foram previamente lançados antes de correr os testes de integração.
+        </p>
+        Mais informação:
+        <!--ul>
+            <li--><a href="junit-it/index.html">JUnit Integration Tests</a><!--/li>
+            </ul-->
+        <p>
+            &nbsp;
+        </p>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+        <h3>SOAP Handlers</h3>
+        <p>
+            Os SOAP handlers são o mecanismo da biblioteca JAX-WS que permite efectuar o tratamento das mensagens SOAP que entam ou saem de uma componente do Web Service. 
+        </p>
+            Uma mensagem SOAP pode ser interceptada e processada sequencialmente por vários handlers até o seu conteúdo ser utilizado pela componente em si.
+        <p>
+            
+        </p>
+        Mais informação:
+        <!--ul>
+            <li--><a href="handlers/index.html">SOAP Handlers</a><!--/li>
+            </ul-->
+        <p>
+            &nbsp;
+        </p>
 
-    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+        <hr />
+        <h1>Exercício</h1>
 
-    <title>Web Services Contract-First</title>
-</head>
+        <p>
+            O ponto de partida é o Web Service Ping (links para o servidor e cliente acima).
+        </p>
+        <p>
+            A classe <tt>PingPortImpl</tt>, que concretiza as operações definidas no WSDL, foi anotada com <tt>@WebService</tt>.
+        </p>
 
-<body onload="prettyPrint()">
-
-<div class="contexto">
-    <p>
-        <a href="../index.html">Labs SD</a> &gt;
-    </p>
-</div>
-
-<div class="titulo" id="1">
-    <h1>Web Services</h1>
-</div>
-
-<div class="objectivos">
-
-    <h2>Objetivos</h2>
-    <ul>
-        <li>Desenvolver Web Services na plataforma Java</li>
-    </ul>
-</div>
-
-<div class="indice">
-</div>
-
-<div class="corpo">
-
-<h2>Web Services</h2>
-
-<p>
-Um serviço é uma funcionalidade de um sistema informático que pode ser invocada remotamente através da rede.<br />
-Um <i>Web Service</i> é um serviço que usa os protocolos de comunicação da <i>World Wide Web</i>
-- HTTP sobre TCP sobre IP -
-e protocolos adicionais para descrever mensagens e dados
-- SOAP sobre XML.<br />
-Para permitir uma definição rigorosa das operações e dos tipos de dados dos <i>Web Services</i>
-são usadas as linguagens WSDL (<i>Web Services Description Language</i>) e
-XSD (<i>XML Schema Definition</i>),
-respetivamente.
-</p>
-
-
-<h3>Web Service contract</h3>
-
-<p>
-Os <i>Web Services</i> também têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
-A <b>WSDL</b> permite especificar a interface funcional (<i>port type</i>)
-- operações com entradas, saídas e erros -
-e também a vinculação (<i>binding</i>) com tecnologias concretas
-- habitualmente SOAP sobre HTTP.<br />
-A WSDL é baseada em XML de forma a ser independente da plataforma e
-usa XSD para definir o detalhe dos tipos de dados de entrada e saída (e erros) em cada operação.
-</p>
-
-<p>
-Exemplo:
-<ul>
-<li><a href="ping/Ping.wsdl">Ping.wsdl</a> -
-os comentários numerados explicam as diferentes seções do documento:<br />
-<i>namespaces</i>,
-<i>service definition</i>,
-<i>binding definitions</i>,
-<i>port type definitions</i>,
-<i>message definitions</i> e
-<i>type definitions</i>.
-</li>
-</ul>
-</p>
-
-Mais informação:
-<ul>
-    <li>
-<a href="wsdl/index.html">WSDL</a></li>
-    </li>
-    <li>
-<a href="xml/index.html">XML</a> e
-<a href="xsd/index.html">XSD</a>
-    </li>
-    <li>
-    Livro Couloris, Capítulo 9
-    </li>
-</ul>
-
-
-<h3>Java API for XML Web Services</h3>
-
-<p>
-As bibliotecas JAX (<i>Java API for XML</i>) são a família de bibliotecas da plataforma Java que lidam com tecnologias baseadas em XML,
-como é o caso dos <i>Web Services</i>.<br />
-A JAX-WS (Java API for XML Web Services) é uma biblioteca para Java que permite implementar <i>Web Services</i>,
-usando as normas:<br />
-HTTP/TCP/IP para mensagens,
-SOAP/XML para mensagens,
-WSDL e XSD para descrição.
-</p>
-<p>
-É possível implementar Web Services partindo de um contrato WSDL (e XSD) já existente.<br />
-Esta abordagem ao desenvolvimento de serviços é chamada <i>contract-first</i>.
-</p>
-
-<p>
-Exemplo Ping Web Service:
-<ul>
-    <li>
-    <a href="ping/ping-ws.zip">server
-    <img src="../_img/zip.png" alt="ZIP" ></a>
-    <a href="ping/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>
-    </li>
-
-    <li>
-    <a href="ping/ping-ws-cli.zip">client
-    <img src="../_img/zip.png" alt="ZIP" ></a>
-    <a href="ping/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>
-    </li>
-</ul>
-</p>
-
-<p><small>
-Nota: As pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
-</small></p>
-
-Mais informação:
-<!--ul>
-    <li--><a href="jaxws/index.html">JAX-WS</a><!--/li>
-</ul-->
-
-
-<h3>JUnit Integration Tests</h3>
-
-<p>
-Para garantir a qualidade do código do Web Service,
-é necessário produzir testes de integração (<tt>IT</tt>)
-que verificam o comportamento de todo o sistema através de invocações <i>remotas</i>.
-</p>
-<!--p>
-O JUnit pode também ser usado para fazer testes de integração.
-</p-->
-<p>
-No contexto dos Web Services,
-os testes de integração são um programa cliente (<tt>ws-cli</tt>) que faz invocações remotas a um programa servidor (<tt>ws</tt>),
-verificando o contrato das operações remotas definidas no WSDL.<br />
-Assume-se que todos os Web Services já foram previamente lançados antes de correr os testes de integração.
-</p>
-
-Mais informação:
-<!--ul>
-    <li--><a href="junit-it/index.html">JUnit Integration Tests</a><!--/li>
-</ul-->
-
-<p>
-&nbsp;
-</p>
-<hr />
-
-<h1>Exercício</h1>
-
-<p>
-Construi-se um novo Web Service Tic Tac Toe (jogo do galo).<br />
-<img src="ttt.png" alt="Tic Tac Toe" height="75" />
-</p>
-<ul>
-    <li>
-O ponto de partida foi o programa
-<a href="ttt-local.zip">ttt-local</a>
-    </li>
-    <li>
-O ponto de chegada consiste em dois programas:
-<b>servidor</b> <a href="ttt-ws.zip">ttt-ws</a> e 
-<b>cliente</b> <a href="ttt-ws-cli.zip">ttt-ws-cli</a>.
-    </li>
-</ul>
-
-<p>
-A interface <tt>TTT</tt> foi anotada com <tt>@WebService</tt> e
-o WSDL é depois gerado automaticamente quando o servidor é lançado, numa abordagem que se designa por <i>implementation-first</i>
-</p>
-
-
-<ul>
-    <li>
-A estrutura dos projetos está montada mas,
-<b>atenção</b>,<br />
-<b>faltam ainda alterações importantes assinaladas com "..."</b>,<br />
-quer no <tt>pom.xml</tt>, 
-quer no código Java!
-    </li>
-</ul>
-<ul>
-    <li>
-O <b>objetivo</b> do exercício é acrescentar o que falta e 
-colocar o servidor e cliente a funcionar.
-    </li>
-</ul>
-
-<p>&nbsp;</p>
+        <p>
+            O objectivo é criar um novo Web Service <tt>ping-ws_handler</tt> que faça uso de handlers para tratamento das mensagens SOAP.
+        </p>
 
 <ol>
     <li>
-No <b>servidor</b> (<tt>ttt-ws</tt>):
-    </li>
+    A estrutura do servidor está representada neste
+    <a href="../proj/uml/uml_server.png" class="hoverZoomLink">diagrama de classes <img src="../_img/uml.png" alt="UML"></a>.
     <ul>
-        <li>
-Configurar no ficheiro <tt>pom.xml</tt>:
-        </li>
+        <li>O pacote à esquerda contém as classes que são geradas a partir do contrato WSDL.</li>
+        <li>O pacote à direita contém as classes do servidor:</li>
         <ul>
-            <li>
-O endereço do serviço a disponibilizar (<tt>ws.url</tt>)<br />
-Por exemplo, <tt>http://localhost:8080/ttt-ws/endpoint</tt>
-            </li>
+            <li>a <tt>App</tt> onde a aplicação arranca,</li>
+            <li>o <tt>EndpointManager</tt> que disponibiliza o endereço do serviço,</li>
+            <li>o <tt>PortImpl</tt> que concretiza as operações definidas no WSDL, e</li>
+            <li>as classes de <i>domínio</i> que representam a informação armazenada pelo serviço.</li>
         </ul>
     </ul>
-    <ul>
-        <li>
-Consultar a interface <tt>TTT</tt> e
-respectiva implementação <tt>TTTImpl</tt>
-        </li>
-        <li>
-            Completar as anotações <tt>javax.jws.WebService</tt>,
-            indicando a interface implementada: <tt>ttt.TTT</tt>
-        </li>
-        <pre class="prettyprint lang-java">
-
-    @WebService(endpointInterface="...")
-    public class TTTImpl implements TTT {
-
-</pre>
-        <li>
-Depois de efectuadas as alterações:<br />
-<tt>mvn compile exec:java</tt><br />
-(a classe a executar e os argumentos estão definidos no <tt>pom.xml</tt>)<br />
-        </li>
-        <li>
-Consultar o WSDL gerado dinamicamente,
-que deverá estar disponível no endereço<br />
-<a href="http://localhost:8080/ttt-ws/endpoint?WSDL">http://localhost:8080/ttt-ws/endpoint?WSDL</a>.
-        </li>
-    </ul>
-
-<p>&nbsp;</p>
-
+    </li>
+    
     <li>
-No <b>cliente</b> (<tt>ttt-ws-cli</tt>):
+    De seguida,
+    consultar o contrato WSDL do serviço a implementar:
     </li>
     <ul>
+        <li><a href="pint/Ping.wsdl">Ping WSDL</a></li>
         <li>
-Configurar no ficheiro <tt>pom.xml</tt>:
-        </li>
-        <ul>
-            <li>
-A localização do servidor (<tt>ws.url</tt>)<br />
-            </li>
-        </ul>
-        <li>
-Gerar o código necessário às invocações remotas a partir do WSDL:<br />
-<tt>mvn generate-sources</tt><br />
-O WSDL é necessário para a compilação do cliente,
-pelo que o servidor deverá estar a correr.<br />
-Caso se pretenda gerar novamente as classes,
-deve fazer-se:<br />
-<tt>mvn clean generate-sources</tt><br />		
-        </li>
-        <li>
-Consultar <tt>./target/generated-sources/wsimport</tt> ou
-faça <em>refresh</em> no <em>package explorer</em> do Eclipse.<br />
-        </li>
-        <ul>
-            <li>
-Verificar que alterações ocorreram nas pastas do projeto
-em resultado da geração de código a partir do WSDL.<br />
-Inspeccione o conteúdo dos novos ficheiros gerados e
-tente compreender a função de cada um.
-            </li>
-            <li>
-Abrir e
-analisar o ficheiro cujo nome termina em <tt>...Service.java</tt>.<br />
-A classe <tt>...Service</tt> estende a classe
-<tt>javax.xml.ws.Service</tt>,
-que é a classe que o JAX-WS fornece para acesso ao serviço remoto.<br />
-A classe gerada já está configurada para o <i>Web Service</i> em causa,
-logo é mais fácil de usar que usando a classe Service diretamente.
-            </li>
-        </ul>
-        <li>
-No método <tt>main()</tt> do cliente,
-criar uma instância de <tt>...Service</tt> e
-chamar o método <tt>get...Port()</tt>,
-que retorna uma instância da interface (remota) do seu Web Service.
-A partir daí,
-pode invocar qualquer operação chamando métodos dessa interface.
-        </li>
-        <pre class="prettyprint lang-java">
-
-    public Game() {
-        ...
-
-        ...Service service = new ...Service();
-        ... port = service.get...Port();
-
-
-</pre>
-        <li>
-            Agora já deverá ser possível compilar a aplicação sem erros:<br />
-            <tt>mvn compile</tt>
-        </li>
-        <li>E jogar:<br />
-          <tt>mvn exec:java</tt>
+        Analise o contrato para ver que operações define e
+        quais os respectivos parâmetros e exceções.
         </li>
     </ul>
-</ol>
-
-<h2>Perguntas</h2>
-
-<ol type="1">
     <li>
-        Estude o WSDL gerado.
-        Consegue mapear o código Java para as definições WSDL e XSD?
-    </li>
-    <li>
-        Onde, no WSDL,
-        é especificado o tipo de argumentos do Web Service?
-    </li>
-    <li>
-        Compare o WSDL gerado com o ficheiro <tt>ttt.x</tt> do servidor SUN RPC do ttt.
+    Vamos gerar código Java a partir do WSDL.
+    O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
     </li>
     <ol type="a">
         <li>
-            Que informação é comum a ambos os ficheiros?
+        O ficheiro WSDL do serviço a implementar já se encontra na pasta
+        <tt>src/main/resources</tt> do servidor
         </li>
         <li>
-            Que informação existe no WSDL mas não existe no .x?
+        <tt>cd ping-ws</tt>
+        </li>
+        <li>
+        <tt>mvn generate-sources</tt><br>
+        Caso o WSDL esteja bem formado e válido,
+        a ferramenta <tt>wsimport</tt> gera vários ficheiros que suportam o web service.
+        Entre eles, estarão as classes para os tipos complexos usados como parâmetros
+        e a interface Java que define o Web Service.
+        </li>
+        <li>
+        Faça <i>refresh</i>
+        (<i>right-click</i>, Maven, Update Project..., Force Update of Snapshots/Releases, OK)
+        no Eclipse e
+        consulte as classes geradas na pasta:
+        <tt>target/generated-sources/wsimport</tt>.<br>
+        Em especial,
+        consulte a classe <tt>...Service</tt>, e
+        descubra a interface Java <tt>...PortType</tt> que foi gerada a partir do WSDL.
         </li>
     </ol>
     <li>
-        Identifique a função de cada ficheiro gerado no cliente
-        (ignore os ficheiros <tt>ObjectFactory.java</tt> e <tt>package-info.java</tt> na sua resposta).
+    Vamos agora concretizar o serviço.
     </li>
-
-	<li>
-		As mensagens SOAP são impressas na consola do servidor.<br />
-		A captura e impressão são feitas por um <i>handler</i> que será estudado em detalhe numa aula futura.
-    </li>
-	<ol type="a">
+    <ol type="a">
         <li>
-            Qual é a estrutura da mensagem SOAP?<br />
-			Pode indentar o texto XML para ser mais fácil de ler.
+        Consulte a classe de implementação do serviço <tt>...PortImpl</tt>,
+        que deverá implementar a interface Java gerada.
         </li>
         <li>
-            Identifique uma mensagem SOAP que seja um pedido e outra que seja uma resposta.<br />
-			Consegue ver a informação útil do pedido?
+        A classe <tt>PortImpl</tt> já se encontra associada ao WSDL através da
+        anotação <tt>@WebService</tt> com os seguintes atributos:
+        <i>endpoint interface</i> (nome do tipo Java do PortType),
+        <i>wsdlLocation</i> (nome do ficheiro WSDL),
+        <i>name</i> (definido no WSDL),
+        <i>portName</i> (WSDL),
+        <i>targetNamespace</i> (WSDL) e
+        <i>serviceName</i> (WSDL).
         </li>
+        <li>
+        Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
+        devem ser implementados na classe do serviço.
+        Cada método é uma operação do Web Service,
+        com entradas, saídas e excepções.<br>
+        A anotação <tt>@Override</tt> antes de cada método de operação obriga o compilador a confirmar que está a implementar corretamente o método definido na interface.<br>
+        </li>
+    </ol>
+<li>
+Executar o servidor:
+</li>
+    <ol type="a">
+        <li>
+        <tt>mvn compile exec:java</tt><br>
+        O nome da classe a executar e
+        os argumentos estão definidos no <tt>pom.xml</tt><br>
+        O servidor deve executar sem erros,
+        disponibilizando o <i>endpoint address</i>.
+        </li>
+        <li>
+Confirmar que o servidor está à espera de pedidos no endereço:
+        </li>
+        <ul>
+            <li>
+<a href="http://localhost:8080/ping-ws/endpoint?wsdl">http://localhost:8080/ping-ws/endpoint?wsdl</a>
+            </li>
+            <li>
+            O contrato disponibilizado deve ser o documento original,
+            com os respetivos comentários.
+            </li>
+        </ul>
     </ol>
 </ol>
 
+
 <p>
-O resto do enunciado será entregue na aula.<br />
-O objetivo será estender ou
-modificar as funcionalidades disponíveis.
+Vamos agora usar o <b>cliente</b> <tt>station-ws-cli</tt> para testar o servidor.
 </p>
 
 
-<p>
-<b>Bom trabalho!</b>
-</p>
+<ol>
+    <li>
+    A estrutura do cliente está representada neste
+    <a href="../proj/uml/uml_client.png" class="hoverZoomLink">diagrama de classes <img src="../_img/uml.png" alt="UML"></a>.
+    <ul>
+        <li>O pacote à direita contém as classes que são geradas a partir do contrato WSDL.</li>
+        <li>O pacote à esquerda contém as classes do cliente:</li>
+        <ul>
+            <li>a <tt>ClientApp</tt> onde a aplicação arranca, e</li>
+            <li>o <tt>Client</tt> que usa o <i>stub</i> gerado para fazer invocações remotas.</li>
+        </ul>
+    </ul>
+    </li>
 
-<div class="objectivos">
-<h2>Entrega da solução</h2>
-
-<p>
-    Fénix, Avaliação, Projetos, <b>mini Exercício 3 - Web Services</b>
-</p>
-
-<p>
-    A solução completa deverá ser submetida no Fénix
-    <b>antes do fim da sua aula de laboratório</b>.
-    Trabalhos submetidos depois da hora de fim da aula não serão considerados.<br>
-</p>
-
-<p>
-    <b>Ter atenção ao seguinte:</b>
-</p>
-<ul>
-    <li>Só são aceites trabalhos de estudantes que estiveram
-        presentes no laboratório.</li>
-    <!--li>Deverá incluir um ficheiro <tt>respostas.txt</tt> com as
-        respostas às perguntas do enunciado do exercício.
-    </li-->
-    <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
-        com resumo da funcionalidade implementada e com instruções para
-        colocar o programa a funcionar como esperado.<br /> Por exemplo:
+    <li>
+    Vamos gerar o código Java para invocação do serviço.
+    </li>
+    <ol type="a">
+            <!-- <li>
+            Consultar o <tt>pom.xml</tt> do cliente para )
+            </li> -->
+        <li>
+            Consultar o <tt>pom.xml</tt> do cliente para:<ul>
+                <li>confirmar que o WSDL está a ser corretamente referenciado
+                (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt></li>
+                <li>confirmar que a fase de wsimport está configurada.</li>
+            </ul>
+        </li>
+        <li>
+        <tt>cd ping-ws-cli</tt>
+        </li>
+        <li>
+        <tt>mvn generate-sources</tt><br>
+        As classes são geradas na pasta:
+        <tt>target/generated-sources/wsimport</tt>.
+        </li>
+    </ol>
+    <li>
+    Vamos fazer uma chamada simples, correndo a aplicação cliente.
     </li>
     <ul>
-        <li>A funcionalidade pedida foi total/parcialmente implementada
-            <b>...</b>
-        </li>
-        <li>O servidor deve executar com o seguinte comando:<br />
-        <tt>mvn clean install exec:java</tt>
-        </li>
-        <li>O cliente deve executar com o comando:<br />
-        <!--tt>mvn compile exec:java</tt-->
-        <tt>mvn clean verify</tt>
+        <li>
+        <tt>mvn compile exec:java</tt><br>
+        A operação auxiliar <tt>ping</tt> deverá ser invocada. 
+        (A operação devolve propositadamente uma PingFault cerca de 1 em cada 3 vezes.)
         </li>
     </ul>
-    <li>Assegure-se que a solução é enviada em formato ZIP e que não
-        contém código compilado (faça <tt>mvn clean</tt> antes de
-        comprimir).
-    </li>
-</ul>
-</div>
-
-<hr />
-
-<div class="rodape">
-<p>
-&copy; Docentes de Sistemas Distribuídos,
-<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</ol>
+        
+        <p>
+Vamos agora adicionar um SOAP handler ao servidor.
 </p>
-</div>
 
-</body></html>
+<ol>
+    <li>
+        Comece por descarregar e analisar a <a href="ws-handlers.zip">Biblioteca <tt>ws-handlers</tt></a>. Em particular, analise o código do <tt>logHandler</tt>
+    </li>
+    <li>
+        De seguida, instale a biblioteca.
+        <ul>
+            <li>Fazer <tt>mvn install</tt> para compilar e instalar o módulo no respositório local do Maven</li>
+            <li>Sempre que se atualizar o código dos handlers será necessário reinstalar.</li>
+        </ul>
+    </li>
+    <li>
+        Adicione a dependência para o módulo no <tt>pom.xml</tt> do projecto que vai usar os Handlers (o servidor).
+    </li>
+    <li>
+        Consulte o exemplo <tt>hello-ws_handlers</tt> proporcionado na página de <a href="handlers/index.html">Handlers</a>
+    </li>
+    <li>
+    Na pasta <tt>src/main/resources</tt>
+    adicionar um ficheiro <tt>ping-ws_handler-chain.xml</tt> com a configuração da cadeia de interceção.<br>
+    O <tt>LogHandler</tt> deve ser chamado no início e no fim da cadeia.
+    Alternativamente, pode ser usado o <tt>PrettyLogHandler</tt>.
+    </li>
+    <li>
+    Adicionar a seguinte anotação ao <tt>PortImpl</tt>:
+    <br>
+    <pre class="prettyprint lang-java prettyprinted" style=""><span class="lit">@HandlerChain</span><span class="pun">(</span><span class="pln">file </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/ping-ws_handler-chain.xml"</span><span class="pun">)</span></pre>
+    </li>
+    <li>
+        Lançar o servidor.
+        <ul>
+            <li><tt>cd ping-ws</tt></li>
+            <li><tt>mvn compile exec:java</tt></li>
+        </ul>
+    </li>
+    <li>
+        Usar o cliente para chamar o <tt>ping</tt>.
+        <ul>
+            <li><tt>cd ping-ws-cli</tt></li>
+            <li><tt>mvn compile exec:java</tt></li>
+        </ul>
+    </li>
+
+    Agora, ao receber mensagens, estas serão capturadas e
+    impressas para a consola do servidor.
+
+    <li>
+        Modifique o Handler para que imprima na consola a data e hora de recepção da mensagem SOAP.
+    </li>
+
+
+
+</ol>
+
+        <hr />
+        <div class="rodape">
+            <p>
+                &copy; Docentes de Sistemas Distribuídos,
+                <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+                <a href="http://www.ist.eu">Técnico Lisboa</a><br />
+            </p>
+        </div>
+    </body>
+</html>

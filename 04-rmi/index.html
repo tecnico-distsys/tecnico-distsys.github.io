@@ -131,8 +131,10 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
     <ol type="1">
         <li>
         Comece por desenhar os métodos remotos do servidor numa interface chamada <tt>TTTService</tt>.<br />
-        A interface deve expor todas as funções remotas que o cliente precisa de invocar. 
-        Para ser uma interface remota, precisa também de herdar de <tt>java.rmi.Remote</tt> e
+        A interface deve expor todas as funções remotas que o cliente precisa de invocar,
+		ou seja, <tt>play</tt>, <tt>checkWinner</tt> e <tt>currentBoard</tt>.<br />
+		<br />
+        Para ser uma interface remota, precisa de herdar de <tt>java.rmi.Remote</tt> e
         cada um dos seus métodos deve lançar uma <tt>java.rmi.RemoteException</tt>.<br />
         Consulte o <a href="./ShapeList.java">exemplo de interface remota apresentado no livro</a> para referência.<br />
 		<br />
@@ -205,7 +207,7 @@ Utilize uma máquina pessoal ou do laboratório e não o sigma.
         ShapeListServer apresentado no livro</a> para referência.<br />
 		<br />
         <li>
-        Deverá agora proceder à modificação do cliente de forma a chamar remotamente os métodos definidos anteriormente na interface <tt>TTTServer</tt>.
+        Deverá agora proceder à modificação do cliente de forma a chamar remotamente os métodos definidos anteriormente na interface <tt>TTTService</tt>.
         </li>
         <ol type="a">
             <li>

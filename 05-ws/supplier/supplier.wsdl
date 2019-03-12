@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+WSDL contract for a Komparator Supplier service
+
+This WSDL defines the operations provided by the Web Service,
+and should not be modified.
+
+For more information, see sections
+wsdl:service, wsdl:portType, wsdl:types and wsdl:binding below
+-->
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:tns="http://ws.supplier.komparator.org/"
+    targetNamespace="http://ws.supplier.komparator.org/"
+    name="SupplierWebService">
+
+    <types>
+        <xs:schema
+            targetNamespace="http://ws.supplier.komparator.org/"
+            version="1.0" >
+            <xs:element name="BadProductId" type="tns:BadProductId"/>
+
+            <xs:element name="BadProduct" type="tns:BadProduct"/>
+
+            <xs:element name="BadQuantity" type="tns:BadQuantity"/>
+
+            <xs:element name="BadText" type="tns:BadText"/>
+
+            <xs:element name="InsufficientQuantity" type="tns:InsufficientQuantity"/>
+
+            <xs:element name="buyProduct" type="tns:buyProduct"/>
+
+            <xs:element name="buyProductResponse" type="tns:buyProductResponse"/>
+
+            <xs:element name="clear" type="tns:clear"/>
+
+            <xs:element name="clearResponse" type="tns:clearResponse"/>
+
+            <xs:element name="createProduct" type="tns:createProduct"/>
+
+            <xs:element name="createProductResponse" type="tns:createProductResponse"/>
+
+            <xs:element name="getProduct" type="tns:getProduct"/>
+
+            <xs:element name="getProductResponse" type="tns:getProductResponse"/>
+
+            <xs:element name="listProducts" type="tns:listProducts"/>
+
+            <xs:element name="listProductsResponse" type="tns:listProductsResponse"/>
+
+            <xs:element name="listPurchases" type="tns:listPurchases"/>
+
+            <xs:element name="listPurchasesResponse" type="tns:listPurchasesResponse"/>
+
+            <xs:element name="ping" type="tns:ping"/>
+
+            <xs:element name="pingResponse" type="tns:pingResponse"/>
+
+            <xs:element name="searchProducts" type="tns:searchProducts"/>
+
+            <xs:element name="searchProductsResponse" type="tns:searchProductsResponse"/>
+
+            <xs:complexType name="ping">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="pingResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="createProduct">
+                <xs:sequence>
+                    <xs:element name="productToCreate" type="tns:productView" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="productView">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:string" minOccurs="0"/>
+                    <xs:element name="desc" type="xs:string" minOccurs="0"/>
+                    <xs:element name="quantity" type="xs:int"/>
+                    <xs:element name="price" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="createProductResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="BadProductId">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="BadProduct">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="listProducts">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="listProductsResponse">
+                <xs:sequence>
+                    <xs:element name="products" type="tns:productView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="listPurchases">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="listPurchasesResponse">
+                <xs:sequence>
+                    <xs:element name="purchases" type="tns:purchaseView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="purchaseView">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:string" minOccurs="0"/>
+                    <xs:element name="productId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="quantity" type="xs:int"/>
+                    <xs:element name="unitPrice" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getProduct">
+                <xs:sequence>
+                    <xs:element name="productId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getProductResponse">
+                <xs:sequence>
+                    <xs:element name="product" type="tns:productView" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="buyProduct">
+                <xs:sequence>
+                    <xs:element name="productId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="quantity" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="buyProductResponse">
+                <xs:sequence>
+                    <xs:element name="purchaseId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="BadQuantity">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="InsufficientQuantity">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="clear">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="clearResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="searchProducts">
+                <xs:sequence>
+                    <xs:element name="descText" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="searchProductsResponse">
+                <xs:sequence>
+                    <xs:element name="products" type="tns:productView" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="BadText">
+                <xs:sequence>
+                    <xs:element name="message" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </types>
+
+    <!--  Messages (use elements defined in the schema) -->
+    <message name="clear">
+        <part name="parameters" element="tns:clear"/>
+    </message>
+    <message name="clearResponse">
+        <part name="parameters" element="tns:clearResponse"/>
+    </message>
+    <message name="ping">
+        <part name="parameters" element="tns:ping"/>
+    </message>
+    <message name="pingResponse">
+        <part name="parameters" element="tns:pingResponse"/>
+    </message>
+    <message name="buyProduct">
+        <part name="parameters" element="tns:buyProduct"/>
+    </message>
+    <message name="buyProductResponse">
+        <part name="parameters" element="tns:buyProductResponse"/>
+    </message>
+    <message name="BadProductId">
+        <part name="fault" element="tns:BadProductId"/>
+    </message>
+    <message name="BadProduct">
+        <part name="fault" element="tns:BadProduct"/>
+    </message>
+    <message name="BadQuantity">
+        <part name="fault" element="tns:BadQuantity"/>
+    </message>
+    <message name="InsufficientQuantity">
+        <part name="fault" element="tns:InsufficientQuantity"/>
+    </message>
+    <message name="listPurchases">
+        <part name="parameters" element="tns:listPurchases"/>
+    </message>
+    <message name="listPurchasesResponse">
+        <part name="parameters" element="tns:listPurchasesResponse"/>
+    </message>
+    <message name="getProduct">
+        <part name="parameters" element="tns:getProduct"/>
+    </message>
+    <message name="getProductResponse">
+        <part name="parameters" element="tns:getProductResponse"/>
+    </message>
+    <message name="searchProducts">
+        <part name="parameters" element="tns:searchProducts"/>
+    </message>
+    <message name="searchProductsResponse">
+        <part name="parameters" element="tns:searchProductsResponse"/>
+    </message>
+    <message name="BadText">
+        <part name="fault" element="tns:BadText"/>
+    </message>
+    <message name="createProduct">
+        <part name="parameters" element="tns:createProduct"/>
+    </message>
+    <message name="createProductResponse">
+        <part name="parameters" element="tns:createProductResponse"/>
+    </message>
+    <message name="listProducts">
+        <part name="parameters" element="tns:listProducts"/>
+    </message>
+    <message name="listProductsResponse">
+        <part name="parameters" element="tns:listProductsResponse"/>
+    </message>
+
+    <!-- Port Type (Interface) -->
+    <portType name="SupplierPortType">
+        <operation name="clear">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/clearRequest" message="tns:clear"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/clearResponse" message="tns:clearResponse"/>
+        </operation>
+        <operation name="ping">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/pingRequest" message="tns:ping"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/pingResponse" message="tns:pingResponse"/>
+        </operation>
+        <operation name="buyProduct">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/buyProductRequest" message="tns:buyProduct"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/buyProductResponse" message="tns:buyProductResponse"/>
+            <fault message="tns:BadProductId" name="BadProductId" wsam:Action="http://ws.supplier.komparator.org/Supplier/buyProduct/Fault/BadProductId"/>
+            <fault message="tns:BadQuantity" name="BadQuantity" wsam:Action="http://ws.supplier.komparator.org/Supplier/buyProduct/Fault/BadQuantity"/>
+            <fault message="tns:InsufficientQuantity" name="InsufficientQuantity" wsam:Action="http://ws.supplier.komparator.org/Supplier/buyProduct/Fault/InsufficientQuantity"/>
+        </operation>
+        <operation name="listPurchases">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/listPurchasesRequest" message="tns:listPurchases"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/listPurchasesResponse" message="tns:listPurchasesResponse"/>
+        </operation>
+        <operation name="getProduct">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/getProductRequest" message="tns:getProduct"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/getProductResponse" message="tns:getProductResponse"/>
+            <fault message="tns:BadProductId" name="BadProductId" wsam:Action="http://ws.supplier.komparator.org/Supplier/getProduct/Fault/BadProductId"/>
+        </operation>
+        <operation name="searchProducts">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/searchProductsRequest" message="tns:searchProducts"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/searchProductsResponse" message="tns:searchProductsResponse"/>
+            <fault message="tns:BadText" name="BadText" wsam:Action="http://ws.supplier.komparator.org/Supplier/searchProducts/Fault/BadText"/>
+        </operation>
+        <operation name="createProduct">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/createProductRequest" message="tns:createProduct"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/createProductResponse" message="tns:createProductResponse"/>
+            <fault message="tns:BadProductId" name="BadProductId" wsam:Action="http://ws.supplier.komparator.org/Supplier/createProduct/Fault/BadProductId"/>
+            <fault message="tns:BadProduct" name="BadProduct" wsam:Action="http://ws.supplier.komparator.org/Supplier/createProduct/Fault/BadProduct"/>
+        </operation>
+        <operation name="listProducts">
+            <input wsam:Action="http://ws.supplier.komparator.org/Supplier/listProductsRequest" message="tns:listProducts"/>
+            <output wsam:Action="http://ws.supplier.komparator.org/Supplier/listProductsResponse" message="tns:listProductsResponse"/>
+        </operation>
+    </portType>
+
+    <!-- SOAP/HTTP Binding -->
+    <binding name="SupplierPortSoapHttpBinding" type="tns:SupplierPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="clear">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="ping">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="buyProduct">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="BadProductId">
+                <soap:fault name="BadProductId" use="literal"/>
+            </fault>
+            <fault name="BadQuantity">
+                <soap:fault name="BadQuantity" use="literal"/>
+            </fault>
+            <fault name="InsufficientQuantity">
+                <soap:fault name="InsufficientQuantity" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="listPurchases">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getProduct">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="BadProductId">
+                <soap:fault name="BadProductId" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="searchProducts">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="BadText">
+                <soap:fault name="BadText" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="createProduct">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="BadProductId">
+                <soap:fault name="BadProductId" use="literal"/>
+            </fault>
+            <fault name="BadProduct">
+                <soap:fault name="BadProduct" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="listProducts">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="SupplierService">
+        <port name="SupplierPort" binding="tns:SupplierPortSoapHttpBinding">
+            <soap:address location="http://localhost:8081/supplier-ws/endpoint"/>
+        </port>
+    </service>
+
+</definitions>

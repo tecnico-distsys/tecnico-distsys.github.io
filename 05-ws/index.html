@@ -135,14 +135,12 @@
         <p>
             &nbsp;
         </p>
-
         <h3>SOAP Handlers</h3>
         <p>
             Os SOAP handlers são o mecanismo da biblioteca JAX-WS que permite efectuar o tratamento das mensagens SOAP que entam ou saem de uma componente do Web Service. 
         </p>
-            Uma mensagem SOAP pode ser interceptada e processada sequencialmente por vários handlers até o seu conteúdo ser utilizado pela componente em si.
+        Uma mensagem SOAP pode ser interceptada e processada sequencialmente por vários handlers até o seu conteúdo ser utilizado pela componente em si.
         <p>
-            
         </p>
         Mais informação:
         <!--ul>
@@ -151,243 +149,242 @@
         <p>
             &nbsp;
         </p>
-
         <hr />
         <h1>Exercício</h1>
-
         <p>
-            O ponto de partida é o Web Service Ping (links para o servidor e cliente acima).
-        </p>
-        <p>
-            A classe <tt>PingPortImpl</tt>, que concretiza as operações definidas no WSDL, foi anotada com <tt>@WebService</tt>.
-        </p>
-
-        <p>
-            O objectivo é criar um novo Web Service <tt>ping-ws_handler</tt> que faça uso de handlers para tratamento das mensagens SOAP.
+            O ponto de partida é um web service de um <a href="supplier/supplier-ws.zip">fornecedor de produtos</a> e um <a href="supplier/supplier-ws-cli.zip">cliente para o mesmo</a>.
+            O código fornecido inclui um servidor incompleto 
+            (<tt>supplier-ws</tt> <a href="../proj/uml/uml_server.png" class="hoverZoomLink"><img src="../_img/uml.png" alt="UML"></a>) e
+            um cliente incompleto 
+            (<tt>supplier-ws-cli</tt> <a href="../proj/uml/uml_client.png" class="hoverZoomLink"><img src="../_img/uml.png" alt="UML"></a>).
         </p>
 
-<ol>
-    <li>
-    A estrutura do servidor está representada neste
-    <a href="../proj/uml/uml_server.png" class="hoverZoomLink">diagrama de classes <img src="../_img/uml.png" alt="UML"></a>.
-    <ul>
-        <li>O pacote à esquerda contém as classes que são geradas a partir do contrato WSDL.</li>
-        <li>O pacote à direita contém as classes do servidor:</li>
-        <ul>
-            <li>a <tt>App</tt> onde a aplicação arranca,</li>
-            <li>o <tt>EndpointManager</tt> que disponibiliza o endereço do serviço,</li>
-            <li>o <tt>PortImpl</tt> que concretiza as operações definidas no WSDL, e</li>
-            <li>as classes de <i>domínio</i> que representam a informação armazenada pelo serviço.</li>
-        </ul>
-    </ul>
-    </li>
-    
-    <li>
-    De seguida,
-    consultar o contrato WSDL do serviço a implementar:
-    </li>
-    <ul>
-        <li><a href="ping/Ping.wsdl">Ping WSDL</a></li>
-        <li>
-        Analise o contrato para ver que operações define e
-        quais os respectivos parâmetros e exceções.
-        </li>
-    </ul>
-    <li>
-    Vamos gerar código Java a partir do WSDL.
-    O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
-    </li>
-    <ol type="a">
-        <li>
-        O ficheiro WSDL do serviço a implementar já se encontra na pasta
-        <tt>src/main/resources</tt> do servidor
-        </li>
-        <li>
-        <tt>cd ping-ws</tt>
-        </li>
-        <li>
-        <tt>mvn generate-sources</tt><br>
-        Caso o WSDL esteja bem formado e válido,
-        a ferramenta <tt>wsimport</tt> gera vários ficheiros que suportam o web service.
-        Entre eles, estarão as classes para os tipos complexos usados como parâmetros
-        e a interface Java que define o Web Service.
-        </li>
-        <li>
-        Faça <i>refresh</i>
-        (<i>right-click</i>, Maven, Update Project..., Force Update of Snapshots/Releases, OK)
-        no Eclipse e
-        consulte as classes geradas na pasta:
-        <tt>target/generated-sources/wsimport</tt>.<br>
-        Em especial,
-        consulte a classe <tt>...Service</tt>, e
-        descubra a interface Java <tt>...PortType</tt> que foi gerada a partir do WSDL.
-        </li>
-    </ol>
-    <li>
-    Vamos agora concretizar o serviço.
-    </li>
-    <ol type="a">
-        <li>
-        Consulte a classe de implementação do serviço <tt>...PortImpl</tt>,
-        que deverá implementar a interface Java gerada.
-        </li>
-        <li>
-        A classe <tt>PortImpl</tt> já se encontra associada ao WSDL através da
-        anotação <tt>@WebService</tt> com os seguintes atributos:
-        <i>endpoint interface</i> (nome do tipo Java do PortType),
-        <i>wsdlLocation</i> (nome do ficheiro WSDL),
-        <i>name</i> (definido no WSDL),
-        <i>portName</i> (WSDL),
-        <i>targetNamespace</i> (WSDL) e
-        <i>serviceName</i> (WSDL).
-        </li>
-        <li>
-        Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
-        devem ser implementados na classe do serviço.
-        Cada método é uma operação do Web Service,
-        com entradas, saídas e excepções.<br>
-        A anotação <tt>@Override</tt> antes de cada método de operação obriga o compilador a confirmar que está a implementar corretamente o método definido na interface.<br>
-        </li>
-    </ol>
-<li>
-Executar o servidor:
-</li>
-    <ol type="a">
-        <li>
-        <tt>mvn compile exec:java</tt><br>
-        O nome da classe a executar e
-        os argumentos estão definidos no <tt>pom.xml</tt><br>
-        O servidor deve executar sem erros,
-        disponibilizando o <i>endpoint address</i>.
-        </li>
-        <li>
-Confirmar que o servidor está à espera de pedidos no endereço:
-        </li>
-        <ul>
+        <ol>
             <li>
-<a href="http://localhost:8080/ping-ws/endpoint?wsdl">http://localhost:8080/ping-ws/endpoint?wsdl</a>
+                As classes de domínio da aplicação já estão implementadas.
             </li>
+            <ol type="a">
+                <li>
+                    Consulte o pacote <tt>domain</tt>.
+                </li>
+                <li>
+                    Identifique o <i>Domain Root</i> e 
+                    as restantes entidades representadas nas classes.
+                </li>
+                <li>
+                    Veja os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
+                </li>
+            </ol>
             <li>
-            O contrato disponibilizado deve ser o documento original,
-            com os respetivos comentários.
+                De seguida,
+                consultar o contrato WSDL do serviço a implementar:
             </li>
-        </ul>
-    </ol>
-</ol>
-
-
-<p>
-Vamos agora usar o <b>cliente</b> <tt>station-ws-cli</tt> para testar o servidor.
-</p>
-
-
-<ol>
-    <li>
-    A estrutura do cliente está representada neste
-    <a href="../proj/uml/uml_client.png" class="hoverZoomLink">diagrama de classes <img src="../_img/uml.png" alt="UML"></a>.
-    <ul>
-        <li>O pacote à direita contém as classes que são geradas a partir do contrato WSDL.</li>
-        <li>O pacote à esquerda contém as classes do cliente:</li>
-        <ul>
-            <li>a <tt>ClientApp</tt> onde a aplicação arranca, e</li>
-            <li>o <tt>Client</tt> que usa o <i>stub</i> gerado para fazer invocações remotas.</li>
-        </ul>
-    </ul>
-    </li>
-
-    <li>
-    Vamos gerar o código Java para invocação do serviço.
-    </li>
-    <ol type="a">
-            <!-- <li>
-            Consultar o <tt>pom.xml</tt> do cliente para )
-            </li> -->
-        <li>
-            Consultar o <tt>pom.xml</tt> do cliente para:<ul>
-                <li>confirmar que o WSDL está a ser corretamente referenciado
-                (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt></li>
-                <li>confirmar que a fase de wsimport está configurada.</li>
+            <ul>
+                <li><a href="supplier/supplier.wsdl">Supplier WSDL</a></li>
+                <li>
+                    Analise o contrato para ver que operações define e 
+                    quais os respectivos parâmetros e exceções.
+                </li>
             </ul>
-        </li>
-        <li>
-        <tt>cd ping-ws-cli</tt>
-        </li>
-        <li>
-        <tt>mvn generate-sources</tt><br>
-        As classes são geradas na pasta:
-        <tt>target/generated-sources/wsimport</tt>.
-        </li>
-    </ol>
-    <li>
-    Vamos fazer uma chamada simples, correndo a aplicação cliente.
-    </li>
-    <ul>
-        <li>
-        <tt>mvn compile exec:java</tt><br>
-        A operação auxiliar <tt>ping</tt> deverá ser invocada. 
-        (A operação devolve propositadamente uma PingFault cerca de 1 em cada 3 vezes.)
-        </li>
-    </ul>
-</ol>
-        
+            <li>
+                Vamos gerar código Java a partir do WSDL.
+                O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
+            </li>
+            <ol type="a">
+                <li>
+                    Copie o ficheiro WSDL do serviço a implementar para a pasta 
+                    <tt>src/main/resources</tt> do servidor
+                </li>
+                <li>
+                    <tt>cd supplier-ws</tt>
+                </li>
+                <li>
+                    <tt>mvn generate-sources</tt><br>
+                    Caso o WSDL esteja bem formado e válido,
+                    a ferramenta <tt>wsimport</tt> gera vários ficheiros que suportam o web service.
+                    Entre eles, estarão as classes para os tipos complexos usados como parâmetros
+                    e a interface Java que define o Web Service.
+                </li>
+                <li>
+                    Faça <i>refresh</i> no Eclipse e
+                    consulte as classes geradas na pasta:
+                    <tt>target/generated-sources/wsimport</tt>.<br>
+                    Em especial,
+                    consulte a classe <tt>...Service</tt>, e
+                    descubra a interface Java <tt>...PortType</tt> que foi gerada a partir do WSDL.
+                </li>
+            </ol>
+            <li>
+                Vamos agora concretizar o serviço.
+            </li>
+            <ol type="a">
+                <li>
+                    Consulte a classe de implementação do serviço <tt>...PortImpl</tt>,
+                    que deverá implementar a interface Java gerada.
+                </li>
+                <li>
+                    Deverá associar a classe <tt>PortImpl</tt> ao WSDL através da 
+                    anotação <tt>@WebService</tt> com os seguintes atributos:
+                    <i>endpoint interface</i> (nome do tipo Java do PortType), 
+                    <i>wsdlLocation</i> (nome do ficheiro WSDL),
+                    <i>name</i> (definido no WSDL), 
+                    <i>portName</i> (WSDL),
+                    <i>targetNamespace</i> (WSDL) e
+                    <i>serviceName</i> (WSDL).
+                </li>
+                <li>
+                    Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
+                    devem ser implementados na classe do serviço.
+                    Cada método é uma operação do Web Service,
+                    com entradas, saídas e excepções.<br>
+                    Para cada operação, confira se está corretamente implementada.<br>
+                    Adicione a anotação <tt>@Override</tt> antes de cada método de operação,
+                    para que o compilador confirme que está a implementar corretamente 
+                    o método definido na interface.<br>
+                    Note que as operações <tt>searchProducts</tt> e <tt>buyProducts</tt> 
+                    não estão implementadas.
+                    Para já vamos compilar e executar o servidor sem estas operações estarem concluídas.
+                </li>
+            </ol>
+            <li>
+                Executar o servidor:
+            </li>
+            <ol type="a">
+                <li>
+                    <tt>mvn compile exec:java</tt><br>
+                    O nome da classe a executar e 
+                    os argumentos estão definidos no <tt>pom.xml</tt><br>
+                    O servidor deve executar sem erros,
+                    disponibilizando o <i>endpoint address</i>.
+                </li>
+                <li>
+                    Confirmar que o servidor está à espera de pedidos no endereço:
+                </li>
+                <ul>
+                    <li>
+                        <a href="http://localhost:8081/supplier-ws/endpoint?wsdl">http://localhost:8081/supplier-ws/endpoint?wsdl</a>
+                    </li>
+                    <li>
+                        O contrato disponibilizado deve ser o documento original,
+                        com os respetivos comentários.
+                    </li>
+                </ul>
+            </ol>
+        </ol>
         <p>
-Vamos agora adicionar um SOAP handler ao servidor.
-</p>
+            Vamos agora usar o <b>cliente</b> <tt>supplier-ws-cli</tt> para testar o servidor.
+        </p>
+        <ol>
+            <li>
+                Vamos gerar o código Java para invocação do serviço.
+            </li>
+            <ol type="a">
+                <li>
+                    Consultar o <tt>pom.xml</tt> do cliente para confirmar que o WSDL está a ser corretamente referenciado 
+                    (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt>)
+                </li>
+                <li>
+                    <tt>cd supplier-ws-cli</tt>
+                </li>
+                <li>
+                    <tt>mvn generate-sources</tt><br>
+                    As classes são geradas na pasta:
+                    <tt>target/generated-sources/wsimport</tt>.
+                </li>
+            </ol>
+            <li>
+                Vamos fazer uma chamada simples, correndo a aplicação cliente.
+            </li>
+            <ul>
+                <li>
+                    <tt>mvn compile exec:java</tt><br>
+                    A operação auxiliar <tt>ping</tt> deverá ser invocada.
+                </li>
+            </ul>
+            <li>
+                Depois do teste pontual, vamos correr os testes de integração já existentes.
+            </li>
+            <ul>
+                <li>
+                    <tt>mvn verify</tt><br>
+                    O Maven executa todos os testes contidos em classes <tt>...IT</tt> e 
+                    um resumo é apresentado.
+                </li>
+            </ul>
+        </ol>
+        <p>
+            Vamos agora adicionar um SOAP handler ao servidor.
+        </p>
+        <ol>
+            Neste exercício, o servidor irá processar as mensagens SOAP com o auxílio do <tt>logHandler</tt> e do <tt>prettyLogHandler</tt>. Ambos os handlers já se encontram no código do servidor. 
 
-<ol>
-    <li>
-        Comece por descarregar e analisar a <a href="handlers/ws-handlers.zip">Biblioteca <tt>ws-handlers</tt></a>. Em particular, analise o código do <tt>logHandler</tt>
-    </li>
-    <li>
-        De seguida, instale a biblioteca.
+            <li>
+                Consulte o exemplo <tt>hello-ws_handlers</tt> proporcionado na página de <a href="handlers/index.html">Handlers</a>
+            </li>
+            <li>
+                Na pasta <tt>src/main/resources</tt>
+                já se encontra um ficheiro <tt>supplier-ws_handler-chain.xml</tt> com a configuração da cadeia de interceção.<br>
+                
+            </li>
+            <li>
+                Para activarmos o handler, temos que adicionar a seguinte anotação ao <tt>PortImpl</tt>:
+                <br>
+                <pre class="prettyprint lang-java prettyprinted" style=""><span class="lit">@HandlerChain</span><span class="pun">(</span><span class="pln">file </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/supplier-ws_handler-chain.xml"</span><span class="pun">)</span></pre>
+            </li>
+            <li>
+                Lançar o servidor.
+                <ul>
+                    <li><tt>cd supplier-ws</tt></li>
+                    <li><tt>mvn compile exec:java</tt></li>
+                </ul>
+            </li>
+            <li>
+                Usar o cliente para chamar o <tt>ping</tt>.
+                <ul>
+                    <li><tt>cd supplier-ws-cli</tt></li>
+                    <li><tt>mvn compile exec:java</tt></li>
+                </ul>
+            </li>
+            Agora, ao receber mensagens, estas serão capturadas e
+            impressas para a consola do servidor.
+            <li>
+                Tente modificar o handler utilizado para que imprima na consola a data e hora de recepção da mensagem SOAP.
+            </li>
+        </ol>
+
+        <p>
+            <b>O que falta fazer?</b>
+        </p>
         <ul>
-            <li>Fazer <tt>mvn install</tt> para compilar e instalar o módulo no respositório local do Maven</li>
-            <li>Sempre que se atualizar o código dos handlers será necessário reinstalar.</li>
+            <li>
+            No servidor:
+            </li>
+            <ul>
+                <li>
+                Implementar <tt>searchProducts</tt> e <tt>buyProduct</tt>
+                <br>
+                <small>Sugestão: Comece por analisar bem as partes do WSDL referentes a estas funções</small>
+                </li>
+            </ul>
+            <li>
+            No cliente:
+            </li>
+            <ul>
+                <li>
+                Fazer testes de integração das operações implementadas
+                </li>
+                <ul>
+                    <li>
+                    Testar casos mais importantes
+                    </li><li>
+                    Não esquecer os casos com entradas incorretas: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc
+                    </li>
+                </ul>
+                <li>
+                Os testes de integração correm com <tt>mvn verify</tt>
+                </li>
+            </ul>
         </ul>
-    </li>
-    <li>
-        Adicione a dependência para o módulo no <tt>pom.xml</tt> do projecto que vai usar os Handlers (o servidor).
-    </li>
-    <li>
-        Consulte o exemplo <tt>hello-ws_handlers</tt> proporcionado na página de <a href="handlers/index.html">Handlers</a>
-    </li>
-    <li>
-    Na pasta <tt>src/main/resources</tt>
-    adicionar um ficheiro <tt>ping-ws_handler-chain.xml</tt> com a configuração da cadeia de interceção.<br>
-    O <tt>LogHandler</tt> deve ser chamado no início e no fim da cadeia.
-    Alternativamente, pode ser usado o <tt>PrettyLogHandler</tt>.
-    </li>
-    <li>
-    Adicionar a seguinte anotação ao <tt>PortImpl</tt>:
-    <br>
-    <pre class="prettyprint lang-java prettyprinted" style=""><span class="lit">@HandlerChain</span><span class="pun">(</span><span class="pln">file </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/ping-ws_handler-chain.xml"</span><span class="pun">)</span></pre>
-    </li>
-    <li>
-        Lançar o servidor.
-        <ul>
-            <li><tt>cd ping-ws</tt></li>
-            <li><tt>mvn compile exec:java</tt></li>
-        </ul>
-    </li>
-    <li>
-        Usar o cliente para chamar o <tt>ping</tt>.
-        <ul>
-            <li><tt>cd ping-ws-cli</tt></li>
-            <li><tt>mvn compile exec:java</tt></li>
-        </ul>
-    </li>
-
-    Agora, ao receber mensagens, estas serão capturadas e
-    impressas para a consola do servidor.
-
-    <li>
-        Modifique o Handler para que imprima na consola a data e hora de recepção da mensagem SOAP.
-    </li>
-
-
-
-</ol>
-
         <hr />
         <div class="rodape">
             <p>

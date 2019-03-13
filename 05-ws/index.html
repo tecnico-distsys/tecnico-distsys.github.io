@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
         <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
         <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src="../_prettify/prettify.js"></script>
-        <title>Web Services Contract-First & SOAP Handlers</title>
+        <title>Web Services Contract-First</title>
     </head>
     <body onload="prettyPrint()">
         <div class="contexto">
@@ -14,22 +15,22 @@
             </p>
         </div>
         <div class="titulo" id="1">
-            <h1>Web Services: Contract-First & SOAP Handlers</h1>
+            <h1>Web Services: Contract-First</h1>
         </div>
         <div class="objectivos">
             <h2>Objetivos</h2>
             <ul>
-                <li>Desenvolver Web Services na plataforma Java usando a abordagem contract-first</li>
-                <li>Construir e modificar mensagens SOAP</li>
-                <li>Desenvolver SOAP Handlers para modificar as mensagens XML do Web Service</li>
+                <li>Desenvolver Web Services na plataforma Java usando a abordagem <i>contract-first</i></li>
+                <li>Inspecionar mensagens SOAP</li>
             </ul>
         </div>
         <div class="indice"></div>
         <div class="corpo">
         <h2>Web Services</h2>
         <p>
-            Um serviço é uma funcionalidade de um sistema informático que pode ser invocada remotamente através da rede.<br />
-            Um <i>Web Service</i> é um serviço que usa os protocolos de comunicação da <i>World Wide Web</i>
+            Um serviço é uma funcionalidade de um sistema informático que pode ser invocada remotamente através da rede,
+			usando protocolos de comunicação da <i>World Wide Web</i>.
+			<!--
             - HTTP sobre TCP sobre IP -
             e protocolos adicionais para descrever mensagens e dados
             - SOAP sobre XML.<br />
@@ -37,16 +38,19 @@
             são usadas as linguagens WSDL (<i>Web Services Description Language</i>) e
             XSD (<i>XML Schema Definition</i>),
             respetivamente.
+			-->
         </p>
         <h3>Web Service contract</h3>
         <p>
-            Os <i>Web Services</i> também têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
+            Os <i>Web Services</i> têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
             A <b>WSDL</b> permite especificar a interface funcional (<i>port type</i>)
             - operações com entradas, saídas e erros -
-            e também a vinculação (<i>binding</i>) com tecnologias concretas
+            e também a escolha (<i>binding</i>) de tecnologias concretas
             - habitualmente SOAP sobre HTTP.<br />
+			<!--
             A WSDL é baseada em XML de forma a ser independente da plataforma e
             usa XSD para definir o detalhe dos tipos de dados de entrada e saída (e erros) em cada operação.
+			-->
         </p>
         <p>
             Exemplo:
@@ -62,29 +66,22 @@
             </li>
         </ul>
         </p>
-        Mais informação:
-        <ul>
-            <li>
-                <a href="wsdl/index.html">WSDL</a>
-            </li>
-            </li>
-            <li>
-                <a href="xml/index.html">XML</a> e
-                <a href="xsd/index.html">XSD</a>
-            </li>
-            <li>
-                Livro Couloris, Capítulo 9
-            </li>
-        </ul>
         <h3>Java API for XML Web Services</h3>
         <p>
-            As bibliotecas JAX (<i>Java API for XML</i>) são a família de bibliotecas da plataforma Java que lidam com tecnologias baseadas em XML,
+            As bibliotecas JAX (<i>Java API for XML</i>) lidam com tecnologias baseadas em XML,
             como é o caso dos <i>Web Services</i>.<br />
-            A JAX-WS (Java API for XML Web Services) é uma biblioteca para Java que permite implementar <i>Web Services</i>,
+            A JAX-WS (Java API for XML Web Services) permite implementar <i>Web Services</i>.
+			<!--,
             usando as normas:<br />
             HTTP/TCP/IP para mensagens,
             SOAP/XML para mensagens,
             WSDL e XSD para descrição.
+			-->
+        </p>
+        <p>
+            A JAX-WS tem os </i>handlers</i>, que são um mecanismo de interceção das mensagens SOAP que estão a ser enviadas ou recebidas pelo cliente ou servidor.
+			Esta funcionalidade permite analisar o tráfego em detalhe.
+			Pode também ser usados para modificar as mensagens.
         </p>
         <p>
             É possível implementar Web Services partindo de um contrato WSDL (e XSD) já existente.<br />
@@ -106,53 +103,54 @@
         </ul>
         </p>
         <p><small>
-            Nota: As pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
-            </small>
-        </p>
-        Mais informação:
-        <!--ul>
-            <li--><a href="jaxws/index.html">JAX-WS</a><!--/li>
-            </ul-->
+            Nota: as pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
+        </small></p>
+
         <h3>JUnit Integration Tests</h3>
         <p>
             Para garantir a qualidade do código do Web Service,
-            é necessário produzir testes de integração (<tt>IT</tt>)
+            é necessário produzir <a href="junit-it/index.html">testes de integração</a> (<tt>IT</tt>)
             que verificam o comportamento de todo o sistema através de invocações <i>remotas</i>.
         </p>
-        <!--p>
-            O JUnit pode também ser usado para fazer testes de integração.
-            </p-->
         <p>
             No contexto dos Web Services,
             os testes de integração são um programa cliente (<tt>ws-cli</tt>) que faz invocações remotas a um programa servidor (<tt>ws</tt>),
             verificando o contrato das operações remotas definidas no WSDL.<br />
             Assume-se que todos os Web Services já foram previamente lançados antes de correr os testes de integração.
         </p>
-        Mais informação:
-        <!--ul>
-            <li--><a href="junit-it/index.html">JUnit Integration Tests</a><!--/li>
-            </ul-->
-        <p>
-            &nbsp;
-        </p>
-        <h3>SOAP Handlers</h3>
-        <p>
-            Os SOAP handlers são o mecanismo da biblioteca JAX-WS que permite efectuar o tratamento das mensagens SOAP que entam ou saem de uma componente do Web Service. 
-        </p>
-        Uma mensagem SOAP pode ser interceptada e processada sequencialmente por vários handlers até o seu conteúdo ser utilizado pela componente em si.
-        <p>
-        </p>
-        Mais informação:
-        <!--ul>
-            <li--><a href="handlers/index.html">SOAP Handlers</a><!--/li>
-            </ul-->
-        <p>
+
+        h3>Informação adicional</h3>
+        <ul>
+            <li>
+                Livro Couloris, Capítulo 9
+            </li>
+            <li>
+				Apresentação das normas principais
+				<ul>
+				<li>
+					<a href="xml/index.html">XML</a> e
+					<a href="xsd/index.html">XSD</a>
+				</li>
+				<li>
+					<a href="wsdl/index.html">WSDL</a>
+				</li>
+				</ul>
+			</li>
+			<li>
+				Apresentação da implementação
+			</li>
+			<ul>
+				<li><a href="jaxws/index.html">JAX-WS</a></li>
+			</ul>
+		</ul>
+
+		<p>
             &nbsp;
         </p>
         <hr />
         <h1>Exercício</h1>
         <p>
-            O ponto de partida é um web service de um <a href="supplier/supplier-ws.zip">fornecedor de produtos</a> e um <a href="supplier/supplier-ws-cli.zip">cliente para o mesmo</a>.
+            O ponto de partida é um Web Service de um <a href="supplier/supplier-ws.zip">fornecedor de produtos</a> e um <a href="supplier/supplier-ws-cli.zip">cliente para o mesmo</a>.
             O código fornecido inclui um servidor incompleto 
             (<tt>supplier-ws</tt> <a href="../proj/uml/uml_server.png" class="hoverZoomLink"><img src="../_img/uml.png" alt="UML"></a>) e
             um cliente incompleto 
@@ -165,14 +163,14 @@
             </li>
             <ol type="a">
                 <li>
-                    Consulte o pacote <tt>domain</tt>.
+                    Consulte o pacote <tt>domain</tt> do servidor.
                 </li>
                 <li>
                     Identifique o <i>Domain Root</i> e 
                     as restantes entidades representadas nas classes.
                 </li>
                 <li>
-                    Veja os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
+                    Analise os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
                 </li>
             </ol>
             <li>
@@ -193,9 +191,14 @@
             <ol type="a">
                 <li>
                     Copie o ficheiro WSDL do serviço a implementar para a pasta 
-                    <tt>src/main/resources</tt> do servidor
+                    <tt>supplier-contract</tt>, ao mesmo nível do cliente e do servidor.
                 </li>
+				<li>
+					Configure o <tt>pom.xml</tt> do servidor para referenciar o WSDL.
+					Use um caminho relativo (<tt>../supplier-contract</tt>).
+			    </li>
                 <li>
+				    Vamos agora gerar o código Java do servidor a partir do WSDL:<br />
                     <tt>cd supplier-ws</tt>
                 </li>
                 <li>
@@ -265,7 +268,7 @@
                         <a href="http://localhost:8081/supplier-ws/endpoint?wsdl">http://localhost:8081/supplier-ws/endpoint?wsdl</a>
                     </li>
                     <li>
-                        O contrato disponibilizado deve ser o documento original,
+                        O contrato disponibilizado quando se dá o parâmetro <tt>?wsdl</tt> deve ser o documento original,
                         com os respetivos comentários.
                     </li>
                 </ul>
@@ -313,21 +316,21 @@
             </ul>
         </ol>
         <p>
-            Vamos agora adicionar um SOAP handler ao servidor.
+            Vamos agora inspecionar as mensagens SOAP, ativando um SOAP handler no servidor.
         </p>
         <ol>
             Neste exercício, o servidor irá processar as mensagens SOAP com o auxílio do <tt>logHandler</tt> e do <tt>prettyLogHandler</tt>. Ambos os handlers já se encontram no código do servidor. 
 
-            <li>
+            <!--li>
                 Consulte o exemplo <tt>hello-ws_handlers</tt> proporcionado na página de <a href="handlers/index.html">Handlers</a>
-            </li>
+            </li-->
             <li>
                 Na pasta <tt>src/main/resources</tt>
                 já se encontra um ficheiro <tt>supplier-ws_handler-chain.xml</tt> com a configuração da cadeia de interceção.<br>
                 
             </li>
             <li>
-                Para activarmos o handler, temos que adicionar a seguinte anotação ao <tt>PortImpl</tt>:
+                Para ativarmos o <i>handler</i>, temos que adicionar a seguinte anotação ao <tt>PortImpl</tt>:
                 <br>
                 <pre class="prettyprint lang-java prettyprinted" style=""><span class="lit">@HandlerChain</span><span class="pun">(</span><span class="pln">file </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/supplier-ws_handler-chain.xml"</span><span class="pun">)</span></pre>
             </li>
@@ -347,8 +350,14 @@
             </li>
             Agora, ao receber mensagens, estas serão capturadas e
             impressas para a consola do servidor.
+			<li>
+			Qual é a etiqueta principal da mensagem SOAP?
+			</li>
+			<li>
+			Onde são transportados os argumentos das operações?
+			</li>
             <li>
-                Tente modificar o handler utilizado para que imprima na consola a data e hora de recepção da mensagem SOAP.
+                Modifique o <i>handler</i> para que imprima na consola a data e hora de recepção da mensagem SOAP.
             </li>
         </ol>
 
@@ -381,7 +390,7 @@
                     </li>
                 </ul>
                 <li>
-                Os testes de integração correm com <tt>mvn verify</tt>
+                Os testes de integração correm com <tt>mvn verify</tt> no cliente
                 </li>
             </ul>
         </ul>

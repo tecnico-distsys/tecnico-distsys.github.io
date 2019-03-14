@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../_css/labs-sd.css"><!--/link-->
+
+    <link href="../../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../../_prettify/prettify.js"></script>
+
+    <title>Configuração de handlers</title>
+
+    <meta name="Generator" content="UltraEdit">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="Código">
+    <p>
+        <a href="../../../index.html">Labs SD</a> &gt;
+        <a href="../index.html">SOAP Handlers</a>
+    </p>
+</div>
+
+<h2 id="config">Configuração de <i>handlers</i></h2>
+
+<h3 id="chain">Cadeias de processamento</h2>
+
+<p>
+Os <i>handlers</i> são configurados numa cadeia.
+A cadeia de processamento é especificada num ficheiro como a seguinte.
+Neste caso, serão chamados três <i>handlers</i> para cada mensagem:
+um para imprimir a mensagem na consola, outro para cifrar a mensagem, e 
+outro para imprimir a mensagem cifrada na consola.
+</p>
+
+<p>
+<pre class="prettyprint">
+&lt;handler-chains xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;&gt;
+    &lt;handler-chain&gt;
+        &lt;handler&gt;
+            &lt;handler-class&gt;example.ws.handler.LogHandler&lt;/handler-class&gt;
+        &lt;/handler&gt;
+        &lt;handler&gt;
+            &lt;handler-class&gt;example.ws.handler.CipherHandler&lt;/handler-class&gt;
+        &lt;/handler&gt;
+        &lt;handler&gt;
+            &lt;handler-class&gt;example.ws.handler.LogHandler&lt;/handler-class&gt;
+        &lt;/handler&gt;
+    &lt;/handler-chain&gt;
+&lt;/handler-chains&gt;
+</pre>
+<p>
+A configuração dos <i>handlers</i> é diferente no servidor e no cliente.
+Em ambos os casos não são necessárias alterações aos <tt>pom.xml</tt>.
+<ul>
+<li>
+No <b>servidor</b>:
+    <ul>
+    <li>
+    Colocar o ficheiro de configuração <tt>handler-chain.xml</tt> na pasta
+    <tt>src/main/resources</tt>
+    </li>
+    <li>
+    Acrescentar a seguinte anotação na classe de implementação:
+    <pre class="prettyprint lang-java">
+@HandlerChain(file = "/handler-chain.xml")
+    </pre>
+    </li>
+    </ul>
+</li>
+<li>
+No <b>cliente</b>:
+    <ul>
+    <li>
+    Colocar o ficheiro de configuração <tt>handler-chain-binding.xml</tt> na pasta
+    <tt>src/jaxws</tt> (definida por convenção)
+    </li>
+    <!--li>
+    <small>Nota: a definição do <i>handler</i> pode ter que ficar num fragmento XML à parte
+    - <tt>HelloImplService_handler.xml</tt>, no exemplo abaixo -
+    devido a problemas de compatibilidade com versões mais antigas do JAX-WS</small>
+    </li-->
+    </ul>
+</li>
+</ul>
+</p>
+
+<p>&nbsp;</p>
+<h3 id="params">Parâmetros</h3>
+<p>
+Os <i>handlers</i> são classes Java como quaisquer outras.
+No entanto, 
+como são instanciadas pelo <i>run-time</i> e não pela aplicação em si, 
+não há forma direta de lhes aceder.
+Por este motivo,
+não se conseguem "passar" argumentos diretamente para os <i>handlers</i>.<br />
+As formas possíveis de parametrizar são as seguintes:
+</p>
+<ul>
+    <li>
+    Receber parâmetros via variáveis globais 
+    <!--à instância da JVM-->
+    </li>
+    <ul>
+        <li>
+        Por exemplo, um objeto <tt>Singleton</tt> 
+		<!--         e.g. <tt>HandlersContext</tt>.-->
+        </li>
+        <li>
+        Variáveis <tt>static</tt> nas próprias classes dos <i>Handlers</i>
+        </li>
+        <li>
+        <i>JVM System properties</i>,
+        acessíveis depois por <tt>System.getProperty()</tt>
+        </li>
+        <!--li>
+        <i>Environment variables</i> (variáveis de ambiente do sistema operativo),
+        acessíveis depois por <tt>System.getenv();</tt>
+        </li-->
+    </ul>
+    <li>
+    Receber parâmetros via contexto (<tt>SOAPMessageContext</tt>)<br />
+	colocados pela aplicação cliente ou servidor, para um dado pedido.
+	Esta técnica é ilustrada no exemplo <a href="../relay/index.html"><tt>handlers_relay</tt></a>
+    </li>
+</ul>
+<p>
+As variáveis são globais à instância da Java Virtual Machine (JVM)
+que corresponde a um processo no sistema operativo;
+por isso, diferentes programas em execução 
+-- um cliente e um servidor -- 
+terão diferentes valores nas variáveis.
+</p>
+<p>
+As variáveis globais podem ser preenchidas, por exemplo, 
+no método <tt>main()</tt> do programa que vai usar os <i>handlers</i>.
+</p>
+
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+
+</body>
+</html>

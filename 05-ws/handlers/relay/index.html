@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../_css/labs-sd.css"><!--/link-->
+
+    <link href="../../../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../../_prettify/prettify.js"></script>
+
+    <title>SOAP Handlers - estafeta de dados</title>
+
+    <meta name="Generator" content="UltraEdit">
+    <meta name="Author" content="Miguel Pardal">
+    <meta name="Keywords" content="Exception in Java, tutorial">
+    <meta name="Description" content="">
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="SOAP">
+    <p>
+        <a href="../../../index.html">Labs SD</a> &gt;
+        <a href="../index.html">SOAP Handlers</a>
+    </p>
+</div>
+
+
+<h2 id="context">MessageContext</h3>
+
+<p>
+Para cada invocação de um Web Service, 
+é criado um <tt>MessageContext</tt> no cliente que acompanha o processamento da mensagem do pedido, passando pelos <tt>stubs</tt> e <tt>handlers</tt>,
+e que depois acompanha o processamento da mensagem de resposta respetiva.<br />
+
+Do lado do servidor, existe um outro <tt>MessageContext</tt> que acompanha o processamento do pedido e da resposta.<br />
+
+O objeto <tt>MessageContext</tt> do cliente é uma instância diferente do objeto do servidor. 
+Não há partilha de dados entre eles, por serem objetos locais às respetivas máquinas virtuais.
+</p>
+
+<p>
+A escrita e leitura de uma propriedade de contexto é feita através da interface <tt>java.util.Map</tt>:
+</p>
+<pre class="prettyprint lang-java">
+    ...
+// put property in message context
+soapMessageContext.<b>put</b>("property.name", newValue);
+    ...
+// get property from message context
+String value = (String) soapMessageContext.<b>get</b>("property.name");
+    ...
+</pre>
+
+<p>&nbsp;</p>
+
+<h3 id="relay">Exemplo de <i>handlers</i> estafetas de dados</h3>
+<img src="relay.png" height="75" />
+<p>
+Este exemplo demonstra todos os mecanismos de passagem de dados entre as diversas camadas de um Web Service:<br />
+<ol>
+    <li>
+        do cliente para o <i>handler</i> cliente (via contexto do pedido, que é obtido a partir do <i>stub</i>),
+    </li>
+    <li>
+        do <i>handler</i> cliente para o <i>handler</i> servidor (via cabeçalho na mensagem SOAP),
+    </li>
+    <li>
+        do <i>handler</i> servidor para o servidor (via contexto das mensagens que é fornecido como argumento),
+    </li>
+    <li>
+        do servidor para o <i>handler</i> servidor
+        (novamente via contexto das mensagens que é fornecido pela biblioteca através da anotação <tt>@Resource</tt>),
+    </li>
+    <li>
+        do <i>handler</i> servidor para o <i>handler</i> cliente (via cabeçalho na mensagem SOAP),
+    </li>
+    <li>
+        e finalmente,
+        do <i>handler</i> cliente para o servidor (via contexto da resposta).
+    </li>
+</ol>
+</p>
+
+<p>
+O código do exemplo tem comentários numerados <tt>#1, #2, #3, ...</tt> que seguem a sequência de uma invocação remota começando no cliente, passando pelo servidor e voltando ao cliente.
+Pelo caminho o item de informação vai acumulando mais dados.
+<ul>
+    <li>
+        <a href="hello-ws_handlers_relay.zip">Web Service Relay
+        <img src="../../../_img/zip.png" alt="ZIP" ></a><br />
+    </li>
+    <li>
+        <a href="hello-ws-cli_handlers_relay.zip">Web Service client Relay
+        <img src="../../../_img/zip.png" alt="ZIP" ></a><br />
+    </li>
+</ul>
+
+</div>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+
+</body>
+</html>

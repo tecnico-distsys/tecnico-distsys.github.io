@@ -29,34 +29,23 @@
         <h2>Web Services</h2>
         <p>
             Um serviço é uma funcionalidade de um sistema informático que pode ser invocada remotamente através da rede,
-			usando protocolos de comunicação da <i>World Wide Web</i>.
-			<!--
-            - HTTP sobre TCP sobre IP -
-            e protocolos adicionais para descrever mensagens e dados
-            - SOAP sobre XML.<br />
-            Para permitir uma definição rigorosa das operações e dos tipos de dados dos <i>Web Services</i>
-            são usadas as linguagens WSDL (<i>Web Services Description Language</i>) e
-            XSD (<i>XML Schema Definition</i>),
-            respetivamente.
-			-->
+			usando protocolos de comunicação da World Wide Web, nomeadamente, HTTP.
+			A tecnologia permite também a utilização de outros transportes.
         </p>
-        <h3>Web Service contract</h3>
+        <h3>WSDL</h3>
         <p>
-            Os <i>Web Services</i> têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
-            A <b>WSDL</b> permite especificar a interface funcional (<i>port type</i>)
-            - operações com entradas, saídas e erros -
-            e também a escolha (<i>binding</i>) de tecnologias concretas
-            - habitualmente SOAP sobre HTTP.<br />
-			<!--
-            A WSDL é baseada em XML de forma a ser independente da plataforma e
-            usa XSD para definir o detalhe dos tipos de dados de entrada e saída (e erros) em cada operação.
-			-->
+            Os Web Services têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
+            A WSDL permite especificar a interface funcional, chamada <i>port type</i>, que define as
+            operações com entradas, saídas e erros.
+			A WSDL define também a interface concreta, com escolhas de tecnologias concretas a usar.
+			Cada escolha é representada num <i>binding</i>.
         </p>
         <p>
-            Exemplo:
+            Exemplo de um contrato WSDL:
+        </p>
         <ul>
             <li><a href="ping/Ping.wsdl">Ping.wsdl</a> -
-                os comentários numerados explicam as diferentes seções do documento:<br />
+                o documento contém comentários numerados que explicam as diferentes secções do documento:<br />
                 <i>namespaces</i>,
                 <i>service definition</i>,
                 <i>binding definitions</i>,
@@ -65,27 +54,22 @@
                 <i>type definitions</i>.
             </li>
         </ul>
-        </p>
-        <h3>Java API for XML Web Services</h3>
+        <h3>Web Services em Java</h3>
         <p>
-            As bibliotecas JAX (<i>Java API for XML</i>) lidam com tecnologias baseadas em XML,
-            como é o caso dos <i>Web Services</i>.<br />
-            A JAX-WS (Java API for XML Web Services) permite implementar <i>Web Services</i>.
-			<!--,
-            usando as normas:<br />
-            HTTP/TCP/IP para mensagens,
-            SOAP/XML para mensagens,
-            WSDL e XSD para descrição.
-			-->
-        </p>
-        <p>
-            A JAX-WS tem os </i>handlers</i>, que são um mecanismo de interceção das mensagens SOAP que estão a ser enviadas ou recebidas pelo cliente ou servidor.
-			Esta funcionalidade permite analisar o tráfego em detalhe.
-			Pode também ser usados para modificar as mensagens.
-        </p>
-        <p>
-            É possível implementar Web Services partindo de um contrato WSDL (e XSD) já existente.<br />
+            A plataforma Java inclui uma implementação dos Web Services.
+			A biblioteca chama-se JAX-WS, que significa Java API for XML Web Services.
+		</p>
+		<p>
+            É possível implementar Web Services partindo de um contrato WSDL existente.<br />
             Esta abordagem ao desenvolvimento de serviços é chamada <i>contract-first</i>.
+		</p>
+		<p>
+			A ferramenta <tt>wsimport</tt> permite gerar código a partir do contrato WSDL, 
+			para clientes e para servidores.
+        </p>
+        <p>
+            A JAX-WS também permite intercetar as mensagens SOAP que são enviadas ou recebidas pelo serviço,
+			através de objetos chamados </i>handlers</i>.
         </p>
         <p>
             Exemplo Ping Web Service:
@@ -106,20 +90,23 @@
             Nota: as pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
         </small></p>
 
-        <h3>JUnit Integration Tests</h3>
+        <h3>JUnit Integration Tests (IT)</h3>
         <p>
-            Para garantir a qualidade do código do Web Service,
-            é necessário produzir <a href="junit-it/index.html">testes de integração</a> (<tt>IT</tt>)
-            que verificam o comportamento de todo o sistema através de invocações <i>remotas</i>.
-        </p>
-        <p>
-            No contexto dos Web Services,
-            os testes de integração são um programa cliente (<tt>ws-cli</tt>) que faz invocações remotas a um programa servidor (<tt>ws</tt>),
-            verificando o contrato das operações remotas definidas no WSDL.<br />
-            Assume-se que todos os Web Services já foram previamente lançados antes de correr os testes de integração.
+			Os <a href="junit-it/index.html">testes de integração</a> de Web Services permitem verificar 
+			se o contrato das operações remotas definidas no WSDL está a ser respeitado por um servidor.
+		</p>
+		<p>
+			Os IT são definidos no cliente (<tt>ws-cli</tt>) e fazem invocações remotas ao servidor (<tt>ws</tt>).
+            Assume-se que todos os servidores foram lançados antes de correr os testes de integração.
+		</p>
+
+		<p>
+            &nbsp;
         </p>
 
-        h3>Informação adicional</h3>
+        <hr />
+
+        <h3>Informação adicional sobre Web Services</h3>
         <ul>
             <li>
                 Livro Couloris, Capítulo 9
@@ -147,10 +134,12 @@
 		<p>
             &nbsp;
         </p>
+
         <hr />
+
         <h1>Exercício</h1>
         <p>
-            O ponto de partida é um Web Service de um <a href="supplier/supplier-ws.zip">fornecedor de produtos</a> e um <a href="supplier/supplier-ws-cli.zip">cliente para o mesmo</a>.
+            O ponto de partida do exercício é um Web Service de um <a href="supplier/supplier-ws.zip">fornecedor de produtos</a> e um <a href="supplier/supplier-ws-cli.zip">cliente para o mesmo</a>.<br />
             O código fornecido inclui um servidor incompleto 
             (<tt>supplier-ws</tt> <a href="../proj/uml/uml_server.png" class="hoverZoomLink"><img src="../_img/uml.png" alt="UML"></a>) e
             um cliente incompleto 
@@ -190,7 +179,7 @@
             </li>
             <ol type="a">
                 <li>
-                    Copie o ficheiro WSDL do serviço a implementar para a pasta 
+                    Copie o ficheiro WSDL do serviço a implementar para uma pasta 
                     <tt>supplier-contract</tt>, ao mesmo nível do cliente e do servidor.
                 </li>
 				<li>
@@ -237,7 +226,8 @@
                 </li>
                 <li>
                     Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
-                    devem ser implementados na classe do serviço.
+                    devem ser implementados na classe do serviço.<br />
+					<br />
                     Cada método é uma operação do Web Service,
                     com entradas, saídas e excepções.<br>
                     Para cada operação, confira se está corretamente implementada.<br>
@@ -275,7 +265,7 @@
             </ol>
         </ol>
         <p>
-            Vamos agora usar o <b>cliente</b> <tt>supplier-ws-cli</tt> para testar o servidor.
+            Vamos agora usar o cliente <tt>supplier-ws-cli</tt> para testar o servidor.
         </p>
         <ol>
             <li>
@@ -284,6 +274,7 @@
             <ol type="a">
                 <li>
                     Consultar o <tt>pom.xml</tt> do cliente para confirmar que o WSDL está a ser corretamente referenciado 
+					na pasta <tt>supplier-contract</tt>
                     (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt>)
                 </li>
                 <li>
@@ -305,29 +296,25 @@
                 </li>
             </ul>
             <li>
-                Depois do teste pontual, vamos correr os testes de integração já existentes.
+                Depois deste teste pontual, vamos correr os testes de integração já existentes.
             </li>
             <ul>
                 <li>
                     <tt>mvn verify</tt><br>
                     O Maven executa todos os testes contidos em classes <tt>...IT</tt> e 
-                    um resumo é apresentado.
+                    apresenta um resumo dos resultados obtidos.
+					Se tudo correr bem, os testes passaram todos.
                 </li>
             </ul>
         </ol>
         <p>
-            Vamos agora inspecionar as mensagens SOAP, ativando um SOAP handler no servidor.
-        </p>
+            Vamos agora analisar, em detalhe, as mensagens SOAP usadas para comunicação entre cliente e servidor.
+			Vamos ativar um <i>handler</i> no servidor (classe <tt>PrintSOAPHandler</tt>) que vai intercetar e imprimir as mensagens SOAP para a consola.
+		</p>
         <ol>
-            Neste exercício, o servidor irá processar as mensagens SOAP com o auxílio do <tt>logHandler</tt> e do <tt>prettyLogHandler</tt>. Ambos os handlers já se encontram no código do servidor. 
-
-            <!--li>
-                Consulte o exemplo <tt>hello-ws_handlers</tt> proporcionado na página de <a href="handlers/index.html">Handlers</a>
-            </li-->
             <li>
                 Na pasta <tt>src/main/resources</tt>
                 já se encontra um ficheiro <tt>supplier-ws_handler-chain.xml</tt> com a configuração da cadeia de interceção.<br>
-                
             </li>
             <li>
                 Para ativarmos o <i>handler</i>, temos que adicionar a seguinte anotação ao <tt>PortImpl</tt>:
@@ -335,7 +322,7 @@
                 <pre class="prettyprint lang-java prettyprinted" style=""><span class="lit">@HandlerChain</span><span class="pun">(</span><span class="pln">file </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/supplier-ws_handler-chain.xml"</span><span class="pun">)</span></pre>
             </li>
             <li>
-                Lançar o servidor.
+                Recompilar e relançar o servidor.
                 <ul>
                     <li><tt>cd supplier-ws</tt></li>
                     <li><tt>mvn compile exec:java</tt></li>
@@ -354,11 +341,8 @@
 			Qual é a etiqueta principal da mensagem SOAP?
 			</li>
 			<li>
-			Onde são transportados os argumentos das operações?
+			Onde são transportados os argumentos das operações? E os resultados?
 			</li>
-            <li>
-                Modifique o <i>handler</i> para que imprima na consola a data e hora de recepção da mensagem SOAP.
-            </li>
         </ol>
 
         <p>
@@ -371,8 +355,6 @@
             <ul>
                 <li>
                 Implementar <tt>searchProducts</tt> e <tt>buyProduct</tt>
-                <br>
-                <small>Sugestão: Comece por analisar bem as partes do WSDL referentes a estas funções</small>
                 </li>
             </ul>
             <li>
@@ -386,7 +368,7 @@
                     <li>
                     Testar casos mais importantes
                     </li><li>
-                    Não esquecer os casos com entradas incorretas: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc
+                    Não esquecer os casos com argumentos incorretos: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc
                     </li>
                 </ul>
                 <li>

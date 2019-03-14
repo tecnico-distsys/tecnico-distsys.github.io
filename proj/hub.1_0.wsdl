@@ -191,14 +191,28 @@
           <xs:element minOccurs="0" name="message" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="searchDeal">
+      <xs:complexType name="ctrlInitUserPointsResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="ctrlClear">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="ctrlClearResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="addFoodToCart">
         <xs:sequence>
-          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="userId" type="xs:string" />
+          <xs:element minOccurs="0" name="foodId" type="tns:foodId" />
+          <xs:element name="foodQuantity" type="xs:int" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="searchDealResponse">
+      <xs:complexType name="addFoodToCartResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="InvalidFoodIdFault">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:food" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ctrlInitUserPoints">
@@ -349,14 +363,35 @@
   <message name="clearCartResponse">
     <part element="tns:clearCartResponse" name="parameters" />
   </message>
-  <message name="ctrlInitFood">
-    <part element="tns:ctrlInitFood" name="parameters" />
+  <message name="loadAccount">
+    <part element="tns:loadAccount" name="parameters" />
   </message>
-  <message name="ctrlInitFoodResponse">
-    <part element="tns:ctrlInitFoodResponse" name="parameters" />
+  <message name="loadAccountResponse">
+    <part element="tns:loadAccountResponse" name="parameters" />
   </message>
-  <message name="InvalidInitFault">
-    <part element="tns:InvalidInitFault" name="fault" />
+  <message name="InvalidMoneyFault">
+    <part element="tns:InvalidMoneyFault" name="fault" />
+  </message>
+  <message name="InvalidCreditCardFault">
+    <part element="tns:InvalidCreditCardFault" name="fault" />
+  </message>
+  <message name="ctrlClear">
+    <part element="tns:ctrlClear" name="parameters" />
+  </message>
+  <message name="ctrlClearResponse">
+    <part element="tns:ctrlClearResponse" name="parameters" />
+  </message>
+  <message name="activateAccount">
+    <part element="tns:activateAccount" name="parameters" />
+  </message>
+  <message name="activateAccountResponse">
+    <part element="tns:activateAccountResponse" name="parameters" />
+  </message>
+  <message name="searchHungry">
+    <part element="tns:searchHungry" name="parameters" />
+  </message>
+  <message name="searchHungryResponse">
+    <part element="tns:searchHungryResponse" name="parameters" />
   </message>
   <message name="accountBalance">
     <part element="tns:accountBalance" name="parameters" />
@@ -436,10 +471,26 @@
       <output message="tns:clearCartResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/clearCartResponse" />
       <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/clearCart/Fault/InvalidUserIdFault" />
     </operation>
-    <operation name="ctrlInitFood">
-      <input message="tns:ctrlInitFood" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitFoodRequest" />
-      <output message="tns:ctrlInitFoodResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitFoodResponse" />
-      <fault message="tns:InvalidInitFault" name="InvalidInitFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlInitFood/Fault/InvalidInitFault" />
+    <operation name="loadAccount">
+      <input message="tns:loadAccount" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccountRequest" />
+      <output message="tns:loadAccountResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccountResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccount/Fault/InvalidUserIdFault" />
+      <fault message="tns:InvalidMoneyFault" name="InvalidMoneyFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccount/Fault/InvalidMoneyFault" />
+      <fault message="tns:InvalidCreditCardFault" name="InvalidCreditCardFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/loadAccount/Fault/InvalidCreditCardFault" />
+    </operation>
+    <operation name="ctrlClear">
+      <input message="tns:ctrlClear" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlClearRequest" />
+      <output message="tns:ctrlClearResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/ctrlClearResponse" />
+    </operation>
+    <operation name="activateAccount">
+      <input message="tns:activateAccount" wsam:Action="http://ws.hub.forkexec.com/HubPortType/activateAccountRequest" />
+      <output message="tns:activateAccountResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/activateAccountResponse" />
+      <fault message="tns:InvalidUserIdFault" name="InvalidUserIdFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/activateAccount/Fault/InvalidUserIdFault" />
+    </operation>
+    <operation name="searchHungry">
+      <input message="tns:searchHungry" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchHungryRequest" />
+      <output message="tns:searchHungryResponse" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchHungryResponse" />
+      <fault message="tns:InvalidTextFault" name="InvalidTextFault" wsam:Action="http://ws.hub.forkexec.com/HubPortType/searchHungry/Fault/InvalidTextFault" />
     </operation>
     <operation name="accountBalance">
       <input message="tns:accountBalance" wsam:Action="http://ws.hub.forkexec.com/HubPortType/accountBalanceRequest" />
@@ -501,6 +552,9 @@
       <output>
         <soap:body use="literal" />
       </output>
+      <fault name="InvalidInitFault">
+        <soap:fault name="InvalidInitFault" use="literal" />
+      </fault>
     </operation>
     <operation name="cartContents">
       <soap:operation soapAction="" />
@@ -514,7 +568,7 @@
         <soap:fault name="InvalidUserIdFault" use="literal" />
       </fault>
     </operation>
-    <operation name="searchHungry">
+    <operation name="cartContents">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -522,8 +576,8 @@
       <output>
         <soap:body use="literal" />
       </output>
-      <fault name="InvalidTextFault">
-        <soap:fault name="InvalidTextFault" use="literal" />
+      <fault name="InvalidUserIdFault">
+        <soap:fault name="InvalidUserIdFault" use="literal" />
       </fault>
     </operation>
     <operation name="searchDeal">
@@ -538,7 +592,7 @@
         <soap:fault name="InvalidTextFault" use="literal" />
       </fault>
     </operation>
-    <operation name="addFoodToCart">
+    <operation name="orderCart">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -549,14 +603,17 @@
       <fault name="InvalidUserIdFault">
         <soap:fault name="InvalidUserIdFault" use="literal" />
       </fault>
-      <fault name="InvalidFoodIdFault">
-        <soap:fault name="InvalidFoodIdFault" use="literal" />
+      <fault name="EmptyCartFault">
+        <soap:fault name="EmptyCartFault" use="literal" />
+      </fault>
+      <fault name="NotEnoughPointsFault">
+        <soap:fault name="NotEnoughPointsFault" use="literal" />
       </fault>
       <fault name="InvalidFoodQuantityFault">
         <soap:fault name="InvalidFoodQuantityFault" use="literal" />
       </fault>
     </operation>
-    <operation name="activateAccount">
+    <operation name="loadAccount">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -566,6 +623,12 @@
       </output>
       <fault name="InvalidUserIdFault">
         <soap:fault name="InvalidUserIdFault" use="literal" />
+      </fault>
+      <fault name="InvalidMoneyFault">
+        <soap:fault name="InvalidMoneyFault" use="literal" />
+      </fault>
+      <fault name="InvalidCreditCardFault">
+        <soap:fault name="InvalidCreditCardFault" use="literal" />
       </fault>
     </operation>
     <operation name="loadAccount">
@@ -598,7 +661,7 @@
         <soap:fault name="InvalidUserIdFault" use="literal" />
       </fault>
     </operation>
-    <operation name="ctrlInitFood">
+    <operation name="searchHungry">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -606,8 +669,8 @@
       <output>
         <soap:body use="literal" />
       </output>
-      <fault name="InvalidInitFault">
-        <soap:fault name="InvalidInitFault" use="literal" />
+      <fault name="InvalidTextFault">
+        <soap:fault name="InvalidTextFault" use="literal" />
       </fault>
     </operation>
     <operation name="accountBalance">

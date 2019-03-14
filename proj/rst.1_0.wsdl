@@ -57,6 +57,7 @@
           <xs:element minOccurs="0" name="plate" type="xs:string" />
           <xs:element minOccurs="0" name="dessert" type="xs:string" />
           <xs:element name="price" type="xs:int" />
+          <xs:element name="quantity" type="xs:int" />
           <xs:element name="preparationTime" type="xs:int" />
         </xs:sequence>
       </xs:complexType>

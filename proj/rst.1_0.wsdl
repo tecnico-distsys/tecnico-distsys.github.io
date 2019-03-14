@@ -126,7 +126,13 @@
       </xs:complexType>
       <xs:complexType name="ctrlInit">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="initialMenus" type="tns:menu" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="initialMenus" type="tns:menuInit" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="menuInit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="menu" type="tns:menu" />
+          <xs:element name="quantity" type="xs:int" />
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ctrlInitResponse">
@@ -141,21 +147,6 @@
   </types>
 
   <!--  Messages use elements defined in the schema. -->
-  <message name="ctrlInit">
-    <part element="tns:ctrlInit" name="parameters" />
-  </message>
-  <message name="ctrlInitResponse">
-    <part element="tns:ctrlInitResponse" name="parameters" />
-  </message>
-  <message name="BadInitFault">
-    <part element="tns:BadInitFault" name="fault" />
-  </message>
-  <message name="ctrlClear">
-    <part element="tns:ctrlClear" name="parameters" />
-  </message>
-  <message name="ctrlClearResponse">
-    <part element="tns:ctrlClearResponse" name="parameters" />
-  </message>
   <message name="getMenu">
     <part element="tns:getMenu" name="parameters" />
   </message>
@@ -165,20 +156,11 @@
   <message name="BadMenuIdFault">
     <part element="tns:BadMenuIdFault" name="fault" />
   </message>
-  <message name="searchMenus">
-    <part element="tns:searchMenus" name="parameters" />
+  <message name="ctrlClear">
+    <part element="tns:ctrlClear" name="parameters" />
   </message>
-  <message name="searchMenusResponse">
-    <part element="tns:searchMenusResponse" name="parameters" />
-  </message>
-  <message name="BadTextFault">
-    <part element="tns:BadTextFault" name="fault" />
-  </message>
-  <message name="ctrlPing">
-    <part element="tns:ctrlPing" name="parameters" />
-  </message>
-  <message name="ctrlPingResponse">
-    <part element="tns:ctrlPingResponse" name="parameters" />
+  <message name="ctrlClearResponse">
+    <part element="tns:ctrlClearResponse" name="parameters" />
   </message>
   <message name="orderMenu">
     <part element="tns:orderMenu" name="parameters" />
@@ -192,32 +174,42 @@
   <message name="InsufficientQuantityFault">
     <part element="tns:InsufficientQuantityFault" name="fault" />
   </message>
+  <message name="ctrlInit">
+    <part element="tns:ctrlInit" name="parameters" />
+  </message>
+  <message name="ctrlInitResponse">
+    <part element="tns:ctrlInitResponse" name="parameters" />
+  </message>
+  <message name="BadInitFault">
+    <part element="tns:BadInitFault" name="fault" />
+  </message>
+  <message name="ctrlPing">
+    <part element="tns:ctrlPing" name="parameters" />
+  </message>
+  <message name="ctrlPingResponse">
+    <part element="tns:ctrlPingResponse" name="parameters" />
+  </message>
+  <message name="searchMenus">
+    <part element="tns:searchMenus" name="parameters" />
+  </message>
+  <message name="searchMenusResponse">
+    <part element="tns:searchMenusResponse" name="parameters" />
+  </message>
+  <message name="BadTextFault">
+    <part element="tns:BadTextFault" name="fault" />
+  </message>
 
   <!--  Port type (interface). -->
   <!--  Each operation has input, output and fault messages. -->
   <portType name="RestaurantPortType">
-    <operation name="ctrlInit">
-      <input message="tns:ctrlInit" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlInitRequest" />
-      <output message="tns:ctrlInitResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlInitResponse" />
-      <fault message="tns:BadInitFault" name="BadInitFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlInit/Fault/BadInitFault" />
-    </operation>
-    <operation name="ctrlClear">
-      <input message="tns:ctrlClear" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlClearRequest" />
-      <output message="tns:ctrlClearResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlClearResponse" />
-    </operation>
     <operation name="getMenu">
       <input message="tns:getMenu" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/getMenuRequest" />
       <output message="tns:getMenuResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/getMenuResponse" />
       <fault message="tns:BadMenuIdFault" name="BadMenuIdFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/getMenu/Fault/BadMenuIdFault" />
     </operation>
-    <operation name="searchMenus">
-      <input message="tns:searchMenus" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/searchMenusRequest" />
-      <output message="tns:searchMenusResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/searchMenusResponse" />
-      <fault message="tns:BadTextFault" name="BadTextFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/searchMenus/Fault/BadTextFault" />
-    </operation>
-    <operation name="ctrlPing">
-      <input message="tns:ctrlPing" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlPingRequest" />
-      <output message="tns:ctrlPingResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlPingResponse" />
+    <operation name="ctrlClear">
+      <input message="tns:ctrlClear" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlClearRequest" />
+      <output message="tns:ctrlClearResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlClearResponse" />
     </operation>
     <operation name="orderMenu">
       <input message="tns:orderMenu" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/orderMenuRequest" />
@@ -226,32 +218,25 @@
       <fault message="tns:BadQuantityFault" name="BadQuantityFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/orderMenu/Fault/BadQuantityFault" />
       <fault message="tns:InsufficientQuantityFault" name="InsufficientQuantityFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/orderMenu/Fault/InsufficientQuantityFault" />
     </operation>
+    <operation name="ctrlInit">
+      <input message="tns:ctrlInit" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlInitRequest" />
+      <output message="tns:ctrlInitResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlInitResponse" />
+      <fault message="tns:BadInitFault" name="BadInitFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlInit/Fault/BadInitFault" />
+    </operation>
+    <operation name="ctrlPing">
+      <input message="tns:ctrlPing" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlPingRequest" />
+      <output message="tns:ctrlPingResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/ctrlPingResponse" />
+    </operation>
+    <operation name="searchMenus">
+      <input message="tns:searchMenus" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/searchMenusRequest" />
+      <output message="tns:searchMenusResponse" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/searchMenusResponse" />
+      <fault message="tns:BadTextFault" name="BadTextFault" wsam:Action="http://ws.rst.forkexec.com/RestaurantPortType/searchMenus/Fault/BadTextFault" />
+    </operation>
   </portType>
 
   <!--  Binding defines the actual technologies to use. -->
   <binding name="RestaurantPortBinding" type="tns:RestaurantPortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="ctrlInit">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-      <fault name="BadInitFault">
-        <soap:fault name="BadInitFault" use="literal" />
-      </fault>
-    </operation>
-    <operation name="ctrlClear">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="getMenu">
       <soap:operation soapAction="" />
       <input>
@@ -264,19 +249,7 @@
         <soap:fault name="BadMenuIdFault" use="literal" />
       </fault>
     </operation>
-    <operation name="searchMenus">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-      <fault name="BadTextFault">
-        <soap:fault name="BadTextFault" use="literal" />
-      </fault>
-    </operation>
-    <operation name="ctrlPing">
+    <operation name="ctrlClear">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -301,6 +274,39 @@
       </fault>
       <fault name="InsufficientQuantityFault">
         <soap:fault name="InsufficientQuantityFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="ctrlInit">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="BadInitFault">
+        <soap:fault name="BadInitFault" use="literal" />
+      </fault>
+    </operation>
+    <operation name="ctrlPing">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="searchMenus">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="BadTextFault">
+        <soap:fault name="BadTextFault" use="literal" />
       </fault>
     </operation>
   </binding>

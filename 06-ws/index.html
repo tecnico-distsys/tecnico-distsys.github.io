@@ -32,8 +32,8 @@
     </ul>
     <h3>Projeto:</h3>
     <ul>
-        <li>Lançar várias instâncias de <tt>park</tt></li>
-        <li>Concretizar a operação <tt>ping</tt> do <tt>ecar-ws</tt> para contactar todos os parques que encontrar</li>
+        <li>Lançar várias instâncias de <tt>rst</tt></li>
+        <li>Concretizar a operação <tt>ping</tt> do <tt>hub-ws</tt> para contactar todos os restaurantes que encontrar</li>
     </ul>
 </div>
 
@@ -314,7 +314,7 @@ passar ao Exercício.
 
 <h1>Exercício</h1>
 <h2>Desenvolvimento do Projeto</h2>
-<h3>Park</h3>
+<h3>Restaurant</h3>
 
 <p>
 O ponto de partida é o <a href="../proj/P1_start.zip">projeto base</a>.<br />
@@ -324,14 +324,14 @@ A primeira tarefa, para prevenir conflitos de módulos Maven,
 </p>
 
 <p>
-O servidor de parque funciona complementamente e tem os respetivos testes de integração.
-Agora, pretende-se ter múltiplos parques e desenvolver também o 
-serviço <tt>ecar-ws</tt> que vai comunicar com eles.
+O servidor de restaurante funciona complementamente e tem os respetivos testes de integração.
+Agora, pretende-se ter múltiplos restaurantes e desenvolver também o 
+serviço <tt>hub-ws</tt> que vai comunicar com eles.
 Assim sendo, o UDDI torna-se útil e necessário.
 </p>
 
 <p>
-Pretende-se agora confirmar que <tt>park-ws</tt>
+Pretende-se agora confirmar que <tt>rst-ws</tt>
 <a href="../proj/uml/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>
 se regista no UDDI.
 </p>
@@ -350,10 +350,10 @@ se regista no UDDI.
 </pre>
     </li>
     <li>
-    A <tt>ParkApp</tt> deverá receber o endereço do UDDI e o nome do serviço como argumento.
+    A <tt>RestaurantApp</tt> deverá receber o endereço do UDDI e o nome do serviço como argumento.
     </li>
     <li>
-    O <tt>ParkEndpointManager</tt> deverá ter um construtor que recebe o endereço do UDDI e
+    O <tt>RestaurantEndpointManager</tt> deverá ter um construtor que recebe o endereço do UDDI e
     o nome do serviço, e
     que efetua o registo
     (e apaga quando o serviço termina).
@@ -366,7 +366,7 @@ se regista no UDDI.
 </ol>
 
 <p>
-    Lançar mais do que uma instância do <tt>park-ws</tt>.
+    Lançar mais do que uma instância do <tt>rst-ws</tt>.
 </p>
 <ol>
     <li>
@@ -382,14 +382,14 @@ se regista no UDDI.
 
     &lt;ws.host&gt;localhost&lt;/ws.host&gt;
     &lt;ws.port&gt;808${ws.i}&lt;/ws.port&gt;
-    &lt;ws.url&gt;http://${ws.host}:${ws.port}/park-ws/endpoint&lt;/ws.url&gt;
+    &lt;ws.url&gt;http://${ws.host}:${ws.port}/rst-ws/endpoint&lt;/ws.url&gt;
 
-    &lt;ws.name&gt;CXX_Park${ws.i}&lt;/ws.name&gt;
+    &lt;ws.name&gt;CXX_Restaurant${ws.i}&lt;/ws.name&gt;
     ...
 </pre>
     </li>
     <li>
-    Para lançar um parque:
+    Para lançar um restaurante:
     </li>
     <ul>
         <li>
@@ -399,23 +399,23 @@ se regista no UDDI.
         <tt>mvn exec:java</tt><br />
         Por omissão, será a instância 1,
         que fica à escuta de pedidos no porto 8081 e
-        que se regista com o nome CXX_Park1.
+        que se regista com o nome CXX_Restaurant1.
         </li>
     </ul>
     <li>
-    Para lançar outro parque:
+    Para lançar outro restaurante:
     </li>
     <ul>
         <li>
         <tt>mvn exec:java <b>-Dws.i=2</b></tt><br />
         A instância <b>2</b> fica à escuta de pedidos no porto 808<b>2</b> e
-        regista-se com o nome CXX_Park<b>2</b>.
+        regista-se com o nome CXX_Restaurant<b>2</b>.
         </li>
     </ul>
 </ol>
 
 <p>
-Pretende-se agora confirmar como <tt>park-ws-cli</tt>
+Pretende-se agora confirmar como <tt>rst-ws-cli</tt>
 <a href="../proj/uml/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>
 pesquisa no UDDI.
 </p>
@@ -424,32 +424,32 @@ pesquisa no UDDI.
     Confirmar a dependência para a biblioteca UDDINaming.
     </li>
     <li>
-    O <tt>ParkClient</tt> deverá ter um construtor que recebe o endereço do UDDI e
+    O <tt>RestaurantClient</tt> deverá ter um construtor que recebe o endereço do UDDI e
     o nome do serviço a contactar, e
     que efetua a pesquisa para localizar o servidor.
     </li>
     <li>
-    A <tt>ParkClientApp</tt> deverá receber o endereço do UDDI e
+    A <tt>RestaurantClientApp</tt> deverá receber o endereço do UDDI e
     o nome do serviço como argumento.
     </li>
 </ol>
 
 
-<h3>ECar</h3>
+<h3>Hub</h3>
 
 <p>
-Antes de continuar é necessário completar o esqueleto do <i>web service</i> <tt>ECar</tt> que faz parte do ponto de partida para o projeto.
+Antes de continuar é necessário completar o esqueleto do <i>web service</i> <tt>Hub</tt> que faz parte do ponto de partida para o projeto.
 </p>
 
 <p>
-O ponto de partida inclui o servidor ECar incompleto
-(<tt>ecar-ws</tt>) e
+O ponto de partida inclui o servidor Hub incompleto
+(<tt>hub-ws</tt>) e
 o cliente incompleto
-(<tt>ecar-ws-cli</tt>).<br />
+(<tt>hub-ws-cli</tt>).<br />
 </p>
 
 <p>
-Vamos começar pelo <b>servidor</b> <tt>ecar-ws</tt>:<br />
+Vamos começar pelo <b>servidor</b> <tt>hub-ws</tt>:<br />
 </p>
 <ol>
     <li>
@@ -475,7 +475,7 @@ Vamos começar pelo <b>servidor</b> <tt>ecar-ws</tt>:<br />
     consultar o contrato WSDL do serviço a implementar:
     </li>
     <ul>
-		<li><a href="../proj/ecar.1_0.wsdl">ECar WSDL</a></li>
+		<li><a href="../proj/hub.1_0.wsdl">Hub WSDL</a></li>
         <li>
         Analise o contrato para ver que operações define e
         quais os respectivos parâmetros e exceções.
@@ -483,12 +483,12 @@ Vamos começar pelo <b>servidor</b> <tt>ecar-ws</tt>:<br />
     </ul>
     <li>
     Vamos gerar código Java a partir do WSDL.
-	O WSDL está na pasta <tt>ecar-contract</tt>.
+	O WSDL está na pasta <tt>hub-contract</tt>.
     O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
     </li>
     <ol type="a">
         <li>
-        <tt>cd ecar-ws</tt>
+        <tt>cd hub-ws</tt>
         </li>
         <li>
         <tt>mvn generate-sources</tt><br />
@@ -556,7 +556,7 @@ Confirmar que o servidor está à espera de pedidos no endereço:
         </li>
         <ul>
             <li>
-<a href="http://localhost:8080/ecar-ws/endpoint?wsdl">http://localhost:8080/ecar-ws/endpoint?wsdl</a>
+<a href="http://localhost:8080/hub-ws/endpoint?wsdl">http://localhost:8080/hub-ws/endpoint?wsdl</a>
             </li>
             <li>
             O contrato disponibilizado deve ser o documento original,
@@ -567,7 +567,7 @@ Confirmar que o servidor está à espera de pedidos no endereço:
 </ol>
 
 <p>
-Vamos agora usar o <b>cliente</b> <tt>ecar-ws-cli</tt> para testar o servidor.
+Vamos agora usar o <b>cliente</b> <tt>hub-ws-cli</tt> para testar o servidor.
 </p>
 <ol>
     <li>
@@ -598,7 +598,7 @@ Vamos agora usar o <b>cliente</b> <tt>ecar-ws-cli</tt> para testar o servidor.
             </ul>
         </li>
         <li>
-        <tt>cd ecar-ws-cli</tt>
+        <tt>cd hub-ws-cli</tt>
         </li>
         <li>
         <tt>mvn generate-sources</tt><br />
@@ -628,32 +628,32 @@ Vamos agora usar o <b>cliente</b> <tt>ecar-ws-cli</tt> para testar o servidor.
 </ol>
 
 <p>
-Vamos agora implementar uma operação simples do servidor <tt>ecar-ws</tt> que contacta as estações através de um <i>PING</i>.
+Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que contacta as estações através de um <i>PING</i>.
 </p>
 
 <ol>
     <li>
-    O <tt>ecar-ws</tt> vai ser cliente de <tt>park-ws</tt>.<br />
+    O <tt>hub-ws</tt> vai ser cliente de <tt>rst-ws</tt>.<br />
     Em vez de repetir código,
-    vamos usar o objeto <tt>ParkClient</tt>,
+    vamos usar o objeto <tt>RestaurantClient</tt>,
     já desenvolvido e testado.<br /><br />
     </li>
     <ol type="a">
         <li>
-        Em primeiro lugar, instalar o módulo do cliente do parque:<br />
-        <tt>cd park-ws-cli</tt><br />
+        Em primeiro lugar, instalar o módulo do cliente do restaurante:<br />
+        <tt>cd rst-ws-cli</tt><br />
         <tt>mvn install</tt><br />
         <!--tt>mvn install -Dtest.skip=true</tt-->
         </li>
         <li>
         Depois,
-        acrescentar a dependência Maven no <tt>ecar-ws/pom.xml</tt>
+        acrescentar a dependência Maven no <tt>hub-ws/pom.xml</tt>
         (substituir CXX pelo identificador do grupo):
 <pre class="prettyprint lang-xml">
     ...
     &lt;dependency&gt;
-        &lt;groupId&gt;com.ecar.CXX&lt;/groupId&gt;
-        &lt;artifactId&gt;park-ws-cli&lt;/artifactId&gt;
+        &lt;groupId&gt;com.hub.CXX&lt;/groupId&gt;
+        &lt;artifactId&gt;rst-ws-cli&lt;/artifactId&gt;
         &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
     &lt;/dependency&gt;
     ...
@@ -662,15 +662,15 @@ Vamos agora implementar uma operação simples do servidor <tt>ecar-ws</tt> que 
         </li>
         <ul>
             <li>
-            O cliente de testes do ECar;
+            O cliente de testes do Hub;
             </li>
             <li>
-            O ECar
+            O Hub
             (que engloba o código dos módulos
-            <tt>ecar-ws</tt> e <tt>park-ws-cli</tt>);
+            <tt>hub-ws</tt> e <tt>rst-ws-cli</tt>);
             </li>
             <li>
-            Os servidores dos parques.
+            Os servidores dos restaurantes.
             </li>
             <a href="../proj/uml/uml_servers_structure.png">Diagrama da estrutura dos vários <i>web services</i> e como se ligam entre eles (<i>deployment</i>) <img src="../_img/uml.png" alt="UML" ></a>
         </ul>
@@ -679,14 +679,14 @@ Vamos agora implementar uma operação simples do servidor <tt>ecar-ws</tt> que 
         </li>
     </ol>
     <li>
-    Concretizar a operação <tt>test_ping</tt> do ECar.
+    Concretizar a operação <tt>test_ping</tt> do Hub.
     </li>
     <ul>
         <li>
-        Consultar o UDDI para pesquisar parques.
+        Consultar o UDDI para pesquisar restaurantes.
         </li>
         <li>
-        Criar um <tt>ParkClient</tt> para cada estação encontrada.
+        Criar um <tt>RestaurantClient</tt> para cada estação encontrada.
         </li>
         <li>
         Chamar a operação <tt>ping</tt> de cada um.</li>
@@ -699,33 +699,33 @@ Vamos agora implementar uma operação simples do servidor <tt>ecar-ws</tt> que 
 
 <p>
 Finalmente,
-usar o <tt>ecar-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao próprio ECar e a todos os parques.
+usar o <tt>hub-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao próprio Hub e a todos os restaurantes.
 </p>
 <ul>
     <li>
-    Abrir consola para o Park 1:
+    Abrir consola para o Restaurant 1:
     </li>
     <ul>
         <li>
-        <tt>cd park-ws</tt>
+        <tt>cd rst-ws</tt>
         </li>
         <li>
         <tt>mvn compile exec:java</tt>
         </li>
     </ul>
     <li>
-    Abrir consola para o Park 2:
+    Abrir consola para o Restaurant 2:
     </li>
     <ul>
         <li>
-            <tt>cd park-ws</tt>
+            <tt>cd rst-ws</tt>
         </li>
         <li>
         <tt>mvn compile exec:java -Dws.i=2</tt>
         </li>
     </ul>
     <li>
-    Park 3
+    Restaurant 3
     </li>
     <ul>
         <li>
@@ -733,22 +733,22 @@ usar o <tt>ecar-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr
         </li>
     </ul>
     <li>
-    Abrir consola para o ECar:
+    Abrir consola para o Hub:
     </li>
     <ul>
         <li>
-        <tt>cd ecar-ws</tt>
+        <tt>cd hub-ws</tt>
         </li>
         <li>
         <tt>mvn compile exec:java</tt>
         </li>
     </ul>
     <li>
-    Finalmente, na consola para o cliente do ECar:
+    Finalmente, na consola para o cliente do Hub:
     </li>
     <ul>
         <li>
-        <tt>cd ecar-ws-cli</tt>
+        <tt>cd hub-ws-cli</tt>
         </li>
         <li>
         <tt>mvn compile exec:java</tt><br />
@@ -762,7 +762,7 @@ usar o <tt>ecar-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr
 </p>
 <ul>
     <li>
-    No <tt>ecar-ws</tt>:
+    No <tt>hub-ws</tt>:
     </li>
     <ul>
         <li>
@@ -777,7 +777,7 @@ usar o <tt>ecar-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr
         </li>
     </ul>
     <li>
-    No <tt>ecar-ws-cli</tt>:
+    No <tt>hub-ws-cli</tt>:
     </li>
     <ul>
         <li>

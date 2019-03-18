@@ -8,7 +8,7 @@
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="../_prettify/prettify.js"></script>
 
-    <title>UDDI (Web Services II)</title>
+    <title>Web Services: UDDI</title>
 </head>
 
 <body onload="prettyPrint()">
@@ -30,9 +30,9 @@
         Publicar e pesquisar <i>Web Services</i> no servidor de nomes jUDDI
         </li>
     </ul>
-    <h3>Projeto:</h3>
+    <h3>Projeto ForkExec:</h3>
     <ul>
-        <li>Lançar várias instâncias de <tt>rst</tt></li>
+        <li>Lançar várias instâncias de <tt>rst</tt> (restaurante)</li>
         <li>Concretizar a operação <tt>ping</tt> do <tt>hub-ws</tt> para contactar todos os restaurantes que encontrar</li>
     </ul>
 </div>
@@ -50,12 +50,12 @@ Para a publicação e pesquisa de <i>Web Services</i>
 usa-se um servidor de nomes que implementa a norma
 UDDI (<i>Universal Description, Discovery and Integration</i>).
 </p>
-<p>
+<!--p>
 Comparando com as outras tecnologias de chamada remota:
 no Sun RPC usa-se o <tt>rpcbind</tt>,
 no Java RMI usa-se o <tt>rmiregistry</tt>,
 nos Web Services usa-se o <tt>UDDI</tt>.
-</p>
+</p-->
 
 Mais informação:
 <!--ul>
@@ -66,7 +66,7 @@ Mais informação:
 
 <p>
 Para comunicar com servidores UDDI,
-existe a biblioteca JAX-R (Java API for XML Registries),
+existe a biblioteca JAX-R (<i>Java API for XML Registries</i>),
 que permite publicar, pesquisar e eliminar registos de <i>Web Services</i>.
 </p>
 
@@ -87,16 +87,17 @@ Mais informação:
 
 <p>
 Para tornar a utilização do UDDI mais simples
-foi criada a biblioteca <tt>UDDINaming</tt> que simplifica o esquema de dados para suportar apenas:
+foi criada a biblioteca <tt>UDDINaming</tt> que reduziu o esquema de dados para suportar registos simplificados com apenas:
 1 organização, 1 serviço e 1 implementação.<br />
 Esta biblioteca torna o registo e pesquisa de serviços mais sucinto.
 O código fonte está disponível para consulta e modificação.
 </p>
 
-Mais informação:
-<!--ul>
-    <li--><a href="uddi-naming/apidocs/index.html">UDDINaming JavaDoc</a><!--/li>
-</ul-->
+Mais informação: 
+<ul>
+    <li><a href="uddi-naming/apidocs/index.html">JavaDoc</a></li>
+    <li><a href="https://github.com/tecnico-distsys/uddi-naming">Código fonte</li>
+</ul>
 
 <p>
 &nbsp;
@@ -150,11 +151,11 @@ que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.
 </ol>
 <ul>
     <li>
-    Em alternativa ao jUDDI da RNL, pode-se usar um jUDDI local:
+    Como alternativa ao jUDDI da RNL, pode-se usar um jUDDI local:
     </li>
     <ul>
         <li>
-        O pacote de instalação pode ser encontrado na lista de <a href="../software/index.html">software</a> que se pediu para instalar.
+        O pacote de instalação pode ser encontrado na lista de <a href="../software/index.html"><i>software</i></a> que se pediu para instalar.
         </li>
         <li>
         Para lançar o servidor,
@@ -242,7 +243,7 @@ que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.
     </ul>
     <li>
     Para confirmar que o servidor está a funcionar e à espera de pedidos,
-    consultar o contrato que é gerado automaticamente:
+    consultar o contrato que é gerado automaticamente, através dos seguintes endereços:
     </li>
     <ul>
         <li>
@@ -252,6 +253,9 @@ que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.
         <a href="http://localhost:8080/hello-ws/endpoint?xsd=1">http://localhost:8080/hello-ws/endpoint?<b>xsd</b>=1</a>
         </li>
     </ul>
+	<li>
+	Este exemplo usa a abordagem de desenvolvimento <i>implementation-first</i>, que gera o WSDL e XSD necessários.
+	</li>
 </ol>
 
 <p>
@@ -288,15 +292,12 @@ que usa a biblioteca <tt>UDDINaming</tt> para comunicar com o servidor de nomes.
 
 <p>
 Resumindo:<br />
-primeiro foi lançado <!--configurado--> o servidor de nomes jUDDI local. <!--da RNL.--><br />
+primeiro foi configurado o servidor de nomes jUDDI da RNL.<br />
 Depois foi instalada a biblioteca UDDINaming no repositório Maven local,
 que testa também o funcionamento do servidor jUDDI.<br />
-Em seguida,
-foi construído e iniciado o servidor,
-que se regista no jUDDI e
+Em seguida, foi construído e iniciado o servidor, que se regista no jUDDI e
 fica à espera de pedidos no <i>endpoint address</i>.<br />
-Finalmente,
-o cliente obtém o WSDL a partir do servidor e
+Finalmente, o cliente obtém o WSDL a partir do servidor e
 gera o código de invocação que permite depois fazer invocações remotas.
 </p>
 <p>
@@ -313,20 +314,22 @@ passar ao Exercício.
 <hr />
 
 <h1>Exercício</h1>
-<h2>Desenvolvimento do Projeto</h2>
-<h3>Restaurant</h3>
+<h2>Desenvolvimento do Projeto ForkExec</h2>
 
 <p>
 O ponto de partida é o <a href="../proj/P1_start.zip">projeto base</a>.<br />
-A primeira tarefa, para prevenir conflitos de módulos Maven,
-é alterar todos os <tt>pom.xml</tt> substituindo as referências
-<b><tt>CXX</tt></b> pelo identificador do grupo.
+Caso já tenha o repositório de GitHub criado (confirme junto do professor), poderá também obter o código base a partir do GitHub:<br />
+<tt>git clone   https://github.com/tecnico-distsys/CXX-ForkExec</tt><br />
+(substituir CXX pelo identificador do grupo)<br />
+</p>
+<p>
+A primeira tarefa a realizar, para prevenir conflitos de módulos Maven,
+é alterar todos os <tt>pom.xml</tt> para substituir as referências ao grupo <b><tt>CXX</tt></b> pelo identificador do grupo.
 </p>
 
 <p>
-O servidor de restaurante funciona complementamente e tem os respetivos testes de integração.
-Agora, pretende-se ter múltiplos restaurantes e desenvolver também o 
-serviço <tt>hub-ws</tt> que vai comunicar com eles.
+O servidor de restaurante tem um esqueleto funcional com a operação <tt>ping</tt> <!--funciona completamente--> e tem um teste de integração.
+Agora, pretende-se ter múltiplos restaurantes e desenvolver também o serviço <tt>hub-ws</tt> que vai comunicar com eles.
 Assim sendo, o UDDI torna-se útil e necessário.
 </p>
 
@@ -353,15 +356,11 @@ se regista no UDDI.
     A <tt>RestaurantApp</tt> deverá receber o endereço do UDDI e o nome do serviço como argumento.
     </li>
     <li>
-    O <tt>RestaurantEndpointManager</tt> deverá ter um construtor que recebe o endereço do UDDI e
-    o nome do serviço, e
-    que efetua o registo
+    O <tt>RestaurantEndpointManager</tt> deverá ter um construtor que recebe o endereço do UDDI e o nome do serviço, e que efetua o registo
     (e apaga quando o serviço termina).
     </li>
     <li>
-    Feitas as alterações,
-    o servidor deverá iniciar-se,
-    registar-se no UDDI e depois ficar à espera de pedidos.
+    Feitas as alterações, o servidor deverá iniciar-se, registar-se no UDDI e depois ficar à espera de pedidos.
     </li>
 </ol>
 

@@ -33,7 +33,7 @@
     <h3>Projeto ForkExec:</h3>
     <ul>
         <li>Lançar várias instâncias de <tt>rst</tt> (restaurante)</li>
-        <li>Concretizar a operação <tt>ping</tt> do <tt>hub-ws</tt> para contactar todos os restaurantes que encontrar</li>
+        <li>Concretizar a operação <tt>ctrlPing</tt> do <tt>hub-ws</tt> para contactar todos os restaurantes que encontrar</li>
     </ul>
 </div>
 
@@ -319,19 +319,24 @@ passar ao Exercício.
 <p>
 O ponto de partida é o <a href="../proj/P1_start.zip">projeto base</a>.<br />
 Caso já tenha o repositório de GitHub criado (confirme junto do professor), poderá também obter o código base a partir do GitHub:<br />
-<tt>git clone   https://github.com/tecnico-distsys/CXX-ForkExec</tt><br />
+<tt>git clone https://github.com/tecnico-distsys/CXX-ForkExec</tt><br />
 (substituir CXX pelo identificador do grupo)<br />
 </p>
 <p>
 A primeira tarefa a realizar, para prevenir conflitos de módulos Maven,
-é alterar todos os <tt>pom.xml</tt> para substituir as referências ao grupo <b><tt>CXX</tt></b> pelo identificador do grupo.
+é alterar todos os <tt>pom.xml</tt> para substituir as referências ao grupo <b><tt>CXX</tt></b> pelo identificador do grupo.<br />
+Preencher também todos os ficheiros <tt>README.md</tt> com a identificação do grupo e dos autores.
 </p>
 
 <p>
-O servidor de restaurante tem um esqueleto funcional com a operação <tt>ping</tt> <!--funciona completamente--> e tem um teste de integração.
-Agora, pretende-se ter múltiplos restaurantes e desenvolver também o serviço <tt>hub-ws</tt> que vai comunicar com eles.
+O servidor de restaurante tem um esqueleto funcional com a operação <tt>ctrlPing</tt> <!--funciona completamente--> e tem um teste de integração.
+Agora, pretende-se ter múltiplos restaurantes e desenvolver também o serviço <tt>hub-ws</tt> que vai descobrir e comunicar com todos eles.
 Assim sendo, o UDDI torna-se útil e necessário.
 </p>
+
+<p>
+Para começar, fazer a instalação do módulo principal.
+
 
 <p>
 Pretende-se agora confirmar que <tt>rst-ws</tt>
@@ -436,9 +441,9 @@ pesquisa no UDDI.
 
 <h3>Hub</h3>
 
-<p>
+<!--p>
 Antes de continuar é necessário completar o esqueleto do <i>web service</i> <tt>Hub</tt> que faz parte do ponto de partida para o projeto.
-</p>
+</p-->
 
 <p>
 O ponto de partida inclui o servidor Hub incompleto
@@ -512,11 +517,11 @@ Vamos começar pelo <b>servidor</b> <tt>hub-ws</tt>:<br />
     </li>
     <ol type="a">
         <li>
-        Crie a classe de implementação do serviço <tt>...PortImpl</tt>,
-        que deverá implementar a interface Java gerada.
+        Confirme que a classe de implementação do serviço <tt>...PortImpl</tt>,
+        que implementa a interface Java gerada.
         </li>
         <li>
-        Deverá associar a classe <tt>PortImpl</tt> ao WSDL através da
+        Confirmar a associação da classe <tt>PortImpl</tt> ao WSDL através da
         anotação <tt>@WebService</tt> com os seguintes atributos:
         <i>endpoint interface</i> (nome do tipo Java do PortType),
         <i>wsdlLocation</i> (nome do ficheiro WSDL),
@@ -526,6 +531,7 @@ Vamos começar pelo <b>servidor</b> <tt>hub-ws</tt>:<br />
         <i>serviceName</i> (WSDL).
         </li>
         <li>
+		<!--
         Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
         devem ser implementados na classe do serviço.
         Algumas partes estão comentadas e podem ser descomentadas.
@@ -535,8 +541,9 @@ Vamos começar pelo <b>servidor</b> <tt>hub-ws</tt>:<br />
         Adicione a anotação <tt>@Override</tt> antes de cada método de operação,
         para que o compilador confirme que está a implementar corretamente
         o método definido na interface.<br />
+		-->
         Para já vamos compilar e executar o servidor sem estas operações estarem concluídas.
-		Coloque apenas um corpo vazio ou um retorno simples (e.g. return null).
+		Coloque apenas um corpo vazio ou um retorno simples (e.g. <tt>return null</tt>).
         </li>
     </ol>
 <li>
@@ -611,7 +618,7 @@ Vamos agora usar o <b>cliente</b> <tt>hub-ws-cli</tt> para testar o servidor.
     <ul>
         <li>
         <tt>mvn compile exec:java</tt><br />
-        A operação auxiliar <tt>ping</tt> deverá ser invocada.
+        A operação auxiliar <tt>ctrlPing</tt> deverá ser invocada.
         </li>
     </ul>
     <li>
@@ -627,7 +634,7 @@ Vamos agora usar o <b>cliente</b> <tt>hub-ws-cli</tt> para testar o servidor.
 </ol>
 
 <p>
-Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que contacta as estações através de um <i>PING</i>.
+Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que contacta as estações através de um <i>ctrlPing</i>.
 </p>
 
 <ol>
@@ -657,7 +664,7 @@ Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que c
     &lt;/dependency&gt;
     ...
 </pre>
-        O sistema em funcionamento terá três processos:
+        O sistema em funcionamento terá três processos neste exercício:
         </li>
         <ul>
             <li>
@@ -678,7 +685,7 @@ Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que c
         </li>
     </ol>
     <li>
-    Concretizar a operação <tt>test_ping</tt> do Hub.
+    Concretizar a operação <tt>ctrlPing</tt> do Hub.
     </li>
     <ul>
         <li>
@@ -688,7 +695,7 @@ Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que c
         Criar um <tt>RestaurantClient</tt> para cada estação encontrada.
         </li>
         <li>
-        Chamar a operação <tt>ping</tt> de cada um.</li>
+        Chamar a operação <tt>ctrlPing</tt> de cada um.</li>
         <li>
         Juntar as respostas e
         devolver como resultado.
@@ -698,7 +705,7 @@ Vamos agora implementar uma operação simples do servidor <tt>hub-ws</tt> que c
 
 <p>
 Finalmente,
-usar o <tt>hub-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao próprio Hub e a todos os restaurantes.
+usar o <tt>hub-ws-cli</tt> para chamar o <tt>ctrlPing</tt> que vai fazer ping ao próprio Hub e a todos os restaurantes.
 </p>
 <ul>
     <li>
@@ -751,7 +758,7 @@ usar o <tt>hub-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr�
         </li>
         <li>
         <tt>mvn compile exec:java</tt><br />
-        O resultado final do <tt>ping</tt> deverá ser impresso nesta consola.
+        O resultado final do <tt>ctrlPing</tt> deverá ser impresso nesta consola.
         </li>
     </ul>
 </ul>
@@ -761,7 +768,7 @@ usar o <tt>hub-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr�
 </p>
 <ul>
     <li>
-    No <tt>hub-ws</tt>:
+    No <tt>rst-ws</tt>:
     </li>
     <ul>
         <li>
@@ -776,7 +783,7 @@ usar o <tt>hub-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr�
         </li>
     </ul>
     <li>
-    No <tt>hub-ws-cli</tt>:
+    No <tt>rst-ws-cli</tt>:
     </li>
     <ul>
         <li>
@@ -793,6 +800,9 @@ usar o <tt>hub-ws-cli</tt> para chamar o <tt>ping</tt> que vai fazer ping ao pr�
         Os testes de integração correm com <tt>mvn verify</tt>
         </li>
     </ul>
+	<li>
+	Continuar para os restantes serviços...
+	</li>
 </ul>
 
 <p>

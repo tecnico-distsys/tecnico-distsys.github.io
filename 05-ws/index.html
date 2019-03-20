@@ -179,12 +179,10 @@ um cliente incompleto
             </li>
             <ol type="a">
                 <li>
-                    Copie o ficheiro WSDL do serviço a implementar para uma pasta 
-                    <tt>supplier-contract</tt>, ao mesmo nível do cliente e do servidor.
+                    Copie o ficheiro WSDL do serviço a implementar para a pasta <tt>src/main/resources</tt> do servidor.
                 </li>
 				<li>
-					Configure o <tt>pom.xml</tt> do servidor para referenciar o WSDL.
-					Use um caminho relativo (<tt>../supplier-contract</tt>).
+					Configure o <tt>pom.xml</tt> do servidor para referenciar o WSDL (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt>).
 			    </li>
                 <li>
 				    Vamos agora gerar o código Java do servidor a partir do WSDL:<br />
@@ -274,7 +272,6 @@ um cliente incompleto
             <ol type="a">
                 <li>
                     Consultar o <tt>pom.xml</tt> do cliente para confirmar que o WSDL está a ser corretamente referenciado 
-					na pasta <tt>supplier-contract</tt>
                     (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt>)
                 </li>
                 <li>

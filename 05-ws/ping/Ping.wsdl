@@ -18,7 +18,7 @@
          The targetNamespace (prefix tns) is the namespace of the Web Service
          that is being defined by this WSDL document.
 
-         A WSDL file is better read from the end of the file to be beginning.
+         A WSDL file is better read from the end of the file to the beginning.
          Next, read the service definition #( 2 )
     -->
 

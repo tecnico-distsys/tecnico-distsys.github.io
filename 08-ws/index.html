@@ -216,12 +216,9 @@ um método desse objecto é invocado. Este funcionamento é semelhante ao atendi
 </pre>
 <br/>
 <p>
-Em ambos os casos,
-a resposta é obtida invocando o método <tt>response.get()</tt> que lança uma exceção caso esta tenha sido retornada pelo método remoto.
-Caso o método remoto retorne <tt>Void</tt>,
-este método lançará uma <tt>NullPointerException</tt>.
-Caso contrário,
-o objecto retornado pode ser obtido com o método <tt>getReturn()</tt>.
+Em ambos os casos, a resposta é obtida invocando o método <tt>response.get()</tt>, que pode lançar uma exceção caso esta tenha sido retornada pelo método remoto.
+Caso o método remoto retorne <tt>Void</tt>, este método lançará uma <tt>NullPointerException</tt>.
+Caso contrário, o objecto retornado pode ser obtido com o método <tt>getReturn()</tt>.
 </p>
 
 <p>Consultar o exemplo de Cliente-Servidor com invocações assíncronas:</p>

@@ -39,6 +39,7 @@
     <li><a href="#timeout">Limite de tempo</a></li>
     <li><a href="#oneway">Operações unidireccionais</a></li>
     <li><a href="#async">Operações assíncronas</a></li>
+    <li><a href="#exercicio">Exercício</a></li>
 </ul>
 </div>
 
@@ -251,6 +252,147 @@ Repare que não é preciso alterar o servidor para que o cliente possa fazer inv
 </div>
 
 <hr />
+
+<h1 id="exercicio">Exercício</h1>
+<p>
+    O objetivo deste exercício é adaptar o código do módulo pts do projeto, de forma a que as chamadas passem a ser feitas assíncronamente. 
+</p>
+<ol>
+    <li>
+    Clonar o código da 1ª entrega do projeto <br />
+    </li>
+    <li>
+    Criar pasta jaxws (caso ainda não exista) na diretoria: pts-ws-cli/src <br />
+    </li>
+    <li>
+    Adicionar um ficheiro binding.xml à pasta jaxws <br />
+
+    <pre class="prettyprint lang-xml">
+    &lt;bindings
+        xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+        xmlns:wsdl=&quot;http://schemas.xmlsoap.org/wsdl/&quot;
+        xmlns=&quot;http://java.sun.com/xml/ns/jaxws&quot; &gt;
+         &lt;bindings node=&quot;wsdl:definitions&quot;&gt;
+             &lt;enableAsyncMapping&gt;true&lt;/enableAsyncMapping&gt;
+         &lt;/bindings&gt;
+    &lt;/bindings&gt;
+    </pre>
+    </li>
+    <li>Modificar a classe PointsClient (A razão deste passo é evitar ser necessário implementar todos os métodos definidos no WSDL)
+        <pre class="prettyprint lang-java">
+    public class PointsClient{
+        </pre>
+    </li>
+    <li>Comentar todas as anotações @Override da classe PointsClient</li>
+</ol>
+<h3>Invocação com <i>polling</i></h3>
+<ol>
+    <li>Adicionar o seguinte método à classe PointsClient:</li>
+    <pre class="prettyprint lang-java">
+    public Response&lt;PointsBalanceResponse> pointsBalanceAsync(String userEmail) {
+        return port.pointsBalanceAsync(userEmail);
+    }
+    </pre>
+    <li>Adicionar no método main da classe PointsClientApp</li>
+    <pre class="prettyprint lang-java">
+    import javax.xml.ws.Response;
+    import java.util.concurrent.ExecutionException;
+
+    // ... (Acrescentar no fim do método)
+
+    String userEmail = "lab8@polling";
+    client.activateUser(userEmail);
+    // asynchronous call with polling
+    Response<PointsBalanceResponse> response = client.pointsBalanceAsync(userEmail);
+
+    while (!response.isDone()) {
+        Thread.sleep(100 /* milliseconds */);
+        System.out.print("Waiting... ");
+    }
+
+    try {
+        System.out.println("(Polling) Asynchronous call result: " + response.get().getReturn());
+    } catch (ExecutionException e) {
+        System.out.println("Caught execution exception.");
+        System.out.print("Cause: ");
+        System.out.println(e.getCause());
+    }
+    </pre>
+    <li>Na pasta pts-ws-cli fazer:<ul>
+        <li>mvn install -DskipITs</li>
+    </ul></li>
+    <li>Lançar um pts-ws:<ul>
+        <li>mvn compile exec:java</li>
+    </ul></li>
+    <li>Lançar um pts-ws-cli:<ul>
+        <li>mvn exec:java -Dexec.cleanupDaemonThreads=false</li> 
+    </ul></li>
+    <li>Analisar o resultado</li>
+    <li>Exprimentar introduzir um delay no pts-ws e verificar resultado</li>
+    <li>Qual a diferença de fazer <i>polling</i> dado que tal como nos métodos síncronos, se espera pela resposta?</li>
+</ol>
+<h3>Invocação com <i>callback</i></h3>
+<ol>
+    <li>Adicionar o seguinte método à classe PointsClient:</li>
+    <pre class="prettyprint lang-java">
+    public Future&lt;?> pointsBalanceAsync(String userEmail, AsyncHandler&lt;PointsBalanceResponse> asyncHandler) {
+        return port.pointsBalanceAsync(userEmail, asyncHandler);
+    }
+    </pre>
+    <li>Adicionar na classe PointsClientApp:</li>
+    <pre class="prettyprint lang-java">
+    import javax.xml.ws.Response;
+
+    public class PointsClientApp {
+        static boolean received = false;
+        
+        public static void main(String[] args) throws Exception {
+    
+            // ... (Acrescentar no fim do método)
+
+            String userEmail1 = "lab8@callback";
+            client.activateUser(userEmail1);
+            client.addPoints(userEmail1, 1100);
+
+            // asynchronous call with callback
+            client.pointsBalanceAsync(userEmail1, new AsyncHandler&lt;PointsBalanceResponse>() {
+                @Override
+                public void handleResponse(Response&lt;PointsBalanceResponse> response) {
+                    try {
+                        System.out.println();
+                        System.out.print("(Callback) Asynchronous call result arrived: ");
+                        System.out.println(response.get().getReturn());
+                        received = true;
+                    } catch (InterruptedException e) {
+                        System.out.println("Caught interrupted exception.");
+                        System.out.print("Cause: ");
+                        System.out.println(e.getCause());
+                    } catch (ExecutionException e) {
+                        System.out.println("Caught execution exception.");
+                        System.out.print("Cause: ");
+                        System.out.println(e.getCause());
+                    }
+                }
+            });
+
+            while (!received) {
+                Thread.sleep(100);
+                System.out.print(".");
+                System.out.flush();
+            }i
+    </pre>
+    <li>Porque é que a variável <i>received</i> necessita de ser <i>static</i>?</li>
+    <li>Na pasta pts-ws-cli fazer:<ul>
+        <li>mvn install -DskipITs</li>
+    </ul></li>
+    <li>Lançar um pts-ws:<ul>
+        <li>mvn compile exec:java</li>
+    </ul></li>
+    <li>Lançar um pts-ws-cli:<ul>
+        <li>mvn exec:java -Dexec.cleanupDaemonThreads=false</li> 
+    </ul></li>
+    <li>Quais as diferenças entre usar <i>callback</i> em vez de <i>pooling</i>?</li>
+</ol>
 
 
 <div class="rodape">

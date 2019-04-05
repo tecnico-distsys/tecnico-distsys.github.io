@@ -131,7 +131,7 @@ Em situações em que o cliente não pretenda ficar bloqueado à espera da respo
 <p>
 Uma possível forma de fazer invocações assíncronas é através dos métodos com sufixo <tt>Async</tt>.
 Para que estes métodos sejam gerados é necessário do lado do cliente indicar um ficheiro de <i>binding</i>, na pasta src/jaxws.
-Os <i>stubs</i> assim gerados passam a incluir tanto os métodos para invocação sincrona como assíncrona.
+Os <i>stubs</i> assim gerados passam a incluir tanto os métodos para invocação síncrona como assíncrona.
 </p>
 
 <pre class="prettyprint lang-xml">
@@ -153,7 +153,7 @@ Para uma invocação assíncrona,
 o cliente deve executar um método com o sufixo <tt>Async</tt> e
 de seguida usar o método <tt>Response.isDone()</tt> para verificar se a resposta já chegou.
 Nesta solução o cliente invoca o método remoto sem ficar bloqueado,
-ficando responsável por verificar, periódicamente, se o servidor já respondeu (através do objecto <tt>Response</tt>).
+ficando responsável por verificar, periodicamente, se o servidor já respondeu (através do objecto <tt>Response</tt>).
 Só depois da resposta ter chegado,
 pode então o cliente obter o seu resultado através do objecto <tt>Response</tt>.
 </p>
@@ -219,7 +219,7 @@ um método desse objecto é invocado. Este funcionamento é semelhante ao atendi
 Em ambos os casos,
 a resposta é obtida invocando o método <tt>response.get()</tt> que lança uma exceção caso esta tenha sido retornada pelo método remoto.
 Caso o método remoto retorne <tt>Void</tt>,
-este método lancará uma <tt>NullPointerException</tt>.
+este método lançará uma <tt>NullPointerException</tt>.
 Caso contrário,
 o objecto retornado pode ser obtido com o método <tt>getReturn()</tt>.
 </p>
@@ -255,7 +255,7 @@ Repare que não é preciso alterar o servidor para que o cliente possa fazer inv
 
 <h1 id="exercicio">Exercício</h1>
 <p>
-    O objetivo deste exercício é adaptar o código do módulo pts do projeto, de forma a que as chamadas passem a ser feitas assíncronamente. 
+    O objetivo deste exercício é adaptar o código do módulo pts do projeto de forma a que as chamadas passem a ser feitas assincronamente. Como será discutido nas aulas teóricas, esta extensão permitirá implementar o protocolo de replicação do 2º projeto de forma mais eficiente.
 </p>
 <ol>
     <li>
@@ -278,7 +278,7 @@ Repare que não é preciso alterar o servidor para que o cliente possa fazer inv
     &lt;/bindings&gt;
     </pre>
     </li>
-    <li>Modificar a classe PointsClient (A razão deste passo é evitar ser necessário implementar todos os métodos definidos no WSDL)
+    <li>Modificar a definição da classe PointsClient (A razão deste passo é evitar ser necessário implementar todos os métodos definidos no WSDL)
         <pre class="prettyprint lang-java">
     public class PointsClient{
         </pre>
@@ -328,7 +328,7 @@ Repare que não é preciso alterar o servidor para que o cliente possa fazer inv
         <li>mvn exec:java -Dexec.cleanupDaemonThreads=false</li> 
     </ul></li>
     <li>Analisar o resultado</li>
-    <li>Exprimentar introduzir um delay no pts-ws e verificar resultado</li>
+    <li>Experimentar introduzir um delay no pts-ws e verificar resultado</li>
     <li>Qual a diferença de fazer <i>polling</i> dado que tal como nos métodos síncronos, se espera pela resposta?</li>
 </ol>
 <h3>Invocação com <i>callback</i></h3>
@@ -391,7 +391,7 @@ Repare que não é preciso alterar o servidor para que o cliente possa fazer inv
     <li>Lançar um pts-ws-cli:<ul>
         <li>mvn exec:java -Dexec.cleanupDaemonThreads=false</li> 
     </ul></li>
-    <li>Quais as diferenças entre usar <i>callback</i> em vez de <i>pooling</i>?</li>
+    <li>Quais as diferenças entre usar <i>callback</i> em vez de <i>polling</i>?</li>
 </ol>
 
 

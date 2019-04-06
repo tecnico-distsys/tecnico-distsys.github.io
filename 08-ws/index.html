@@ -313,7 +313,8 @@ as anotações <tt>@Override</tt>.
 
     while (!response.isDone()) {
         Thread.sleep(10 /* milliseconds */);
-        System.out.println("Waiting... ");
+        System.out.print(".");
+		System.out.flush();
     }
 
     try {
@@ -385,7 +386,7 @@ as anotações <tt>@Override</tt>.
             });
 
             while (!received) {
-                Thread.sleep(10);
+                Thread.sleep(10 /* milliseconds */);
                 System.out.print(".");
                 System.out.flush();
             }

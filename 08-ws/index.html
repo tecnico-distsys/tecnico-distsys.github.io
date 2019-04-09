@@ -309,7 +309,7 @@ as anotações <tt>@Override</tt>.
     String userEmail = "user@example.com";
     client.activateUser(userEmail);
     // asynchronous call with polling
-    Response<PointsBalanceResponse> response = client.pointsBalanceAsync(userEmail);
+    Response&lt;PointsBalanceResponse> response = client.pointsBalanceAsync(userEmail);
 
     while (!response.isDone()) {
         Thread.sleep(10 /* milliseconds */);

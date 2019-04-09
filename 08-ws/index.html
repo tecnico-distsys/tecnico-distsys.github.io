@@ -164,7 +164,7 @@ pode então o cliente obter o seu resultado através do objecto <tt>Response</tt
 
 <pre class="prettyprint lang-java">
     // asynchronous call with polling
-    Response<EchoResponse> response = port.echoAsync(name);
+    Response&lt;EchoResponse> response = port.echoAsync(name);
 
     while (!response.isDone()) {
         Thread.sleep(10 /* milliseconds */);

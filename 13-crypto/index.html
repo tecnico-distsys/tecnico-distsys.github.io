@@ -84,7 +84,72 @@
 &nbsp;
 </p>
 
-<h2 id="exercicio"> Exercício</h2>
+<h2 id="exercicio">Mini-Exercício</h2>
+
+<p>
+Neste exercício vamos acrescentar segurança a uma aplicação distribuída que usa gRPC.
+Nomeadamente, vamos garantir <b>integridade</b> da comunicação entre servidor e cliente.
+</p>
+
+
+<ol type="I">
+	<li>
+<b>Fornecedor gRPC / Supplier</b><br />
+<br />
+O ponto de partida para o exercício é um programa cliente-servidor que usa gRPC.<br />
+O servidor é um fornecedor de produtos para venda.
+O cliente contacta o servidor, chamando a operação remota <tt>listProducts</tt>, e o servidor responde com uma lista de produtos.
+	</li>
+	<ol type="1">
+		<li>
+Descarregue e descomprima o <a href="./grpc-supplier.zip">código fonte <img src="../_img/zip.png" alt="ZIP" /></a>.
+		</li>
+		<li>
+Leia os README e analise o código, começando pelo <tt>contract</tt>, depois pelo <tt>server</tt> e finalmente o <tt>client</tt>.
+		</li>
+		<li>
+Para construir e executar:
+		</li>
+		<ul>
+			<li>Contrato</li>
+			<ul>
+				<li>Compilar o Protobuf e gerar código Java</li>
+				<li>Disponibilizar módulo Maven no repositório local, para poder ser usado como dependência</li>
+				<li><tt>mvn install</tt></li>
+			</ul>
+			<li>Servidor</li>
+			<ul>
+				<li>Compilar e executar o servidor</li>
+				<li>Fica à espera de pedidos de clientes</li>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+			<li>Cliente</li>
+			<ul>
+				<li>Abrir outro terminal</li>
+				<li>Compilar e executar o cliente</li>
+				<li>Prepara o pedido, imprime-o na consola, faz a chamada remota, e imprime o resultado na consola</li>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+		</ul>
+		<li>
+Perguntas
+		</li>
+		<ol type="a">
+			<li>
+Onde estão definidas as operações remotas e respetivas mensagens?
+			</li>
+			<li>
+Para que servem os objetos <i>Builder</i> usados no cliente e no servidor?
+			</li>
+			<li>
+Em que porto fica o servidor à escuta de pedidos? Onde está definido?
+			</li>
+		</ol><!-- type="a" -->
+	</ol><!-- type="1" -->
+
+</ol><!-- type="I" -->
+
+
 
 <i>(enunciado disponível brevemente)</i>
 

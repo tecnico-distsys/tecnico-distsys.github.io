@@ -52,7 +52,7 @@
             <li><a href="binarios-texto/index.html">Representa&ccedil;&atilde;o de dados bin&aacute;rios em texto</a></li>
         </ul>
     </p>
-    <p class="exemplos"><h3>Exemplos:</h3>
+    <p class="exemplos" id="crypto"><h3>Exemplos:</h3>
         <ul>
 			<li>
             <a href="crypto.zip">Criptografia em Java
@@ -94,7 +94,7 @@ Nomeadamente, vamos garantir <b>integridade</b> da comunicação entre servidor 
 
 <ol type="I">
 	<li>
-<b>Fornecedor gRPC / Supplier</b><br />
+<b>Fornecedor gRPC / <i>Supplier</i></b><br />
 <br />
 O ponto de partida para o exercício é um programa cliente-servidor que usa gRPC.<br />
 O servidor é um fornecedor de produtos para venda.
@@ -113,8 +113,8 @@ Para construir e executar:
 		<ul>
 			<li>Contrato</li>
 			<ul>
-				<li>Compilar o Protobuf e gerar código Java</li>
-				<li>Disponibilizar módulo Maven no repositório local, para poder ser usado como dependência</li>
+				<li>Compilar o <i>Protobuf</i> e gerar código Java</li>
+				<li>Instalar o módulo Maven no repositório local, para poder ser usado como dependência</li>
 				<li><tt>mvn install</tt></li>
 			</ul>
 			<li>Servidor</li>
@@ -132,7 +132,7 @@ Para construir e executar:
 			</ul>
 		</ul>
 		<li>
-Perguntas
+<b>Perguntas</b>
 		</li>
 		<ol type="a">
 			<li>
@@ -147,23 +147,322 @@ Em que porto fica o servidor à escuta de pedidos? Onde está definido?
 		</ol><!-- type="a" -->
 	</ol><!-- type="1" -->
 
-</ol><!-- type="I" -->
+	<p>&nbsp;</p>
+
+	<!-- II -->
+	<li>
+<b>Distribuição de chaves</b><br />
+<br />
+A lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante.<br />
+É necessário acrescentar uma <b>assinatura</b> para proteger a resposta do servidor.<br />
+<br />
+Vamos fazer uma assinatura baseada numa cifra simétrica, um MAC (<i>Message Authentication Code</i>).<br />
+O servidor e o cliente vão partilhar uma chave para permitir assinar e verificar a mensagem.<br />
+A chave foi gerada e guardada num ficheiro.
+	</li>
+	<ol type="1">
+		<li>
+Descarregue e descomprima as <a href="./secret.key">chaves de exemplo <img src="../_img/zip.png" alt="ZIP" /></a>.
+		</li>
+		<li>
+Copie a chave secreta para o servidor (pasta <tt>/src/main/resources</tt>).
+		</li>
+		<li>
+Copie a mesma chave para o cliente (pasta <tt>/src/main/resources</tt>).
+		</li>
+		<li>
+Quando precisar da chave, no servidor ou no cliente, pode usar um código semelhante ao seguinte para ler a partir do recurso da aplicação:
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+import java.security.Key;
+
+import static javax.xml.bind.DatatypeConverter.printHexBinary;
+
+...
+
+	public static Key readKey(String resourcePath) throws Exception {
+		System.out.println("Reading key from resource " + keyPath + " ...");
+		
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath);
+		byte[] encoded = new byte[fis.available()];
+		fis.read(encoded);
+		fis.close();
+		
+		System.out.println("Key:");
+		System.out.println(printHexBinary(encoded));
+		SecretKeySpec keySpec = new SecretKeySpec(encoded, "AES");
+
+		return keySpec;
+	}
+
+...
+</pre>
+		<li>
+<b>Perguntas</b>
+		</li>
+		<ol type="a">
+			<li>
+Qual é o tamanho da chave?
+			</li>
+			<li>
+Porque é necessário copiar a mesma chave para o cliente e para o servidor?
+			</li>
+		</ol><!-- type="a" -->
+
+	</li>
+
+	</ol><!-- type="1" -->
+
+	<p>&nbsp;</p>
+
+	<!-- III -->
+	<li>
+<b>Acrescentar assinatura à definição da operação</b><br />
+<br />
+Vamos agora acrescentar uma assinatura à definição da operação RPC.
+	</li>
+	<ol type="1">
+		<li>
+Aceder à definição <i>Protobuf</i> no <tt>contract</tt>.
+		</li>
+		<li>
+Acrescentar a definição de uma nova estrutura de dados para a assinatura, 
+composta por identificador do assinante e o valor a calcular.
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+message Signature {
+  string signerId = 1;
+  bytes value = 2;
+}
+
+...
+</pre>
+		<li>
+Acrescentar a definição de uma mensagem para a resposta original com uma assinatura:
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+message SignedResponse {
+  ProductsResponse response = 1;
+  Signature signature = 2;
+}
+
+...
+</pre>
+		<li>
+Modificar o tipo do resultado da operação RPC:
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+  rpc listProducts(ProductsRequest) returns <b>SignedResponse</b>;
+
+...
+</pre>
+		<li>
+Para reconstruir:
+		</li>
+		<ul>
+			<li>Compilar o <i>Protobuf</i> e gerar código Java</li>
+			<li>Reinstalar o módulo Maven no repositório local</li>
+			<li><tt>mvn install</tt></li>
+		</ul>
+		<li>
+Consulte o código Java gerado para verificar o que mudou.
+		</li>
+		<p>&nbsp;</p>
+		<li>
+Atualizar o código do servidor para refletir a modificação:
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+import ...
+
+...
+    @Override
+    public void listProducts(ProductsRequest request, StreamObserver&lt;<b>SignedResponse</b>&gt; responseObserver) {
+...
+</pre>
+        <li>
+Atualizar também a chamada do lado do cliente:
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+import ...
+
+...
+        <b>SignedResponse</b> response = stub.greeting(request);
+...
+</pre>
+	</ol><!-- type="1" -->		
 
 
 
-<i>(enunciado disponível brevemente)</i>
+	<p>&nbsp;</p>
 
+	<!-- IV -->
+	<li>
+<b>Assinar a resposta a enviar</b><br />
+<br />
+Uma das implementações possíveis de um MAC é um resumo cifrado.<br />
+Vamos então calcular o resumo da resposta e depois cifrar esse resumo com a chave secreta.
+	</li>
+	<ol type="1">
+		<li>
+Aceder à classe de implementação do serviço no <tt>server</tt>.
+		</li>
+		<li>
+Para calcular o resumo, criar um objecto <tt>MessageDigest</tt> com o algoritmo <tt>SHA-256</tt><br />
+(consultar os <a href="#crypto">exemplos de criptografia</a> para mais detalhes sobre este objeto).
+		</li>
+		<li>
+Para obter os dados a resumir, serializar o resultado com o seguinte método:
+		</li>
+<pre class="prettyprint lang-java">
+...
+
+        byte[] responseBinary = response.toByteArray[];
+
+...
+</pre>
+		<li>
+Para cifrar o resumo, criar um objecto <tt>Cipher</tt> com o algoritmo <tt>AES/ECB/PKCS5Padding</tt> e 
+inicializar em <tt>ENCRYPT_MODE</tt> com a chave<br />
+(consultar os <a href="#crypto">exemplos de criptografia</a> para mais detalhes sobre este objeto).
+		</li>
+		<li>
+Preencher a assinatura e devolver a resposta que engloba a resposta anterior e a assinatura.
+		</li>
+		<li>
+Para testar:
+		</li>
+		<ul>
+			<li>Servidor</li>
+			<ul>
+				<li>Compilar e executar o servidor</li>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+			<li>Cliente</li>
+			<ul>
+				<li><tt>mvn compile exec:java</tt></li>
+				<li>Consultar a consola para ver o que foi acrescentado à resposta.</li>
+			</ul>
+		</ul>
+
+	</ol><!-- type="1" -->		
+
+	<p>&nbsp;</p>
+
+	<!-- V -->
+	<li>
+<b>Verificar a assinatura da resposta recebida</b><br />
+<br />
+Para verificar a assinatura é necessário calcular o resumo da mensagem recebida e comparar com a decifra do resumo recebido na assinatura.
+	</li>
+	<ol type="1">
+		<li>
+Aceder à classe do <tt>client</tt>.
+		</li>
+		<li>
+Para decifrar o resumo cifrado recebido na assinatura, criar um objecto <tt>Cipher</tt> com o algoritmo <tt>AES/ECB/PKCS5Padding</tt>,
+e inicializar em <tt>DECRYPT_MODE</tt> com a chave.
+		</li>
+		<li>
+Para recalcular o resumo, criar um objecto <tt>MessageDigest</tt> com o algoritmo <tt>SHA-256</tt>.
+Calcular o resumo a partir dos dados recebidos.
+		</li>
+		<li>
+Comparar o resumo decifrado com o resumo calculado:
+		</li>
+<pre class="prettyprint lang-java">
+...
+        if (Arrays.equals(digest, decipheredDigest))
+            System.out.println("Signature is valid! Message accepted! :)");
+        else
+            System.out.println("Signature is invalid! Message rejected! :(");
+...
+</pre>
+		<li>
+Para testar:
+		</li>
+		<ul>
+			<li>Servidor</li>
+			<ul>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+			<li>Cliente</li>
+			<ul>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+		</ul>
+	</ol><!-- type="1" -->		
+
+	<p>&nbsp;</p>
+
+	<!-- VI -->
+	<li>
+<b>Verificar eficácia da assinatura</b><br />
+<br />
+Vamos modificar o conteúdo da mensagem de resposta depois de assinada, 
+para confirmar que o cliente é capaz de detetar a alteração.
+	</li>
+	<ol type="1">
+		<li>
+No servidor, após a realização da assinatura, modificar um dos campos de um dos produtos.
+		</li>
+		<li>
+Para testar:
+		</li>
+		<ul>
+			<li>Servidor</li>
+			<ul>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+			<li>Cliente</li>
+			<ul>
+				<li><tt>mvn compile exec:java</tt></li>
+			</ul>
+		</ul>
+		<li>
+<b>Perguntas</b>
+		</li>
+		<ol type="a">
+			<li>
+O cliente conseguiu detetar a alteração ao verificar a assinatura?
+			</li>
+			<li>
+Em caso afirmativo, a solução construída garante a frescura da assinatura? <br />
+Ou seja, a assinatura resiste a um ataque de repetição?
+			</li>
+		</ol>
+	</ol>
+	
+	<p>&nbsp;</p>
+
+	<!-- VII -->
+	<li>
+<b>Alínea secreta</b>
+	</li>
     <p>
 O resto do enunciado será entregue na aula. <br />
 O objectivo será estender a solução resultante do enunciado acima.<br />
 <br />
     </p>
-  </div>
+
+</ol><!-- type="I" -->
+
 
   <div class="objectivos">
     <h2>Entrega da solução</h2>
 
-    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 3 - gRPC security</b></p>
+    <p>Fénix, Avaliação, Projetos, <b>mini Exercício 3</b></p>
 
     <p>
       A solução completa deverá ser submetida no Fénix
@@ -184,7 +483,7 @@ O objectivo será estender a solução resultante do enunciado acima.<br />
         Assegure-se que a solução é enviada em formato ZIP e que não contém
         código compilado (faça <tt>mvn clean</tt> antes de criar o zip)
       </li>
-      <li>
+      <!--li>
         Deverá também incluir um ficheiro <tt>instrucoes.txt</tt> com resumo
         da funcionalidade implementada e com instruções para colocar o
         programa a funcionar como esperado.<br />
@@ -204,13 +503,13 @@ O objectivo será estender a solução resultante do enunciado acima.<br />
           O cliente deve executar com o comando:
           <kbd>mvn exec:java -Dserver.port=8080</kbd>
         </li>
-      </ul>
+      </ul-->
     </ul>
   </div>
 
-  <hr />
-
 </div>
+
+<p>&nbsp;</p>
 
 <hr />
 

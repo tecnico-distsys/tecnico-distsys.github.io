@@ -311,7 +311,7 @@ import ...
 	<li>
 <b>Assinar a resposta a enviar</b><br />
 <br />
-Uma das implementações possíveis de um MAC é um resumo cifrado.<br />
+Uma das implementações possíveis de um MAC é um resumo cifrado com a chave simétrica.<br />
 Vamos então calcular o resumo da resposta e depois cifrar esse resumo com a chave secreta.
 	</li>
 	<ol type="1">
@@ -327,9 +327,7 @@ Para obter os dados a resumir, serializar o resultado com o seguinte método:
 		</li>
 <pre class="prettyprint lang-java">
 ...
-
         byte[] responseBinary = response.toByteArray[];
-
 ...
 </pre>
 		<li>
@@ -355,7 +353,19 @@ Para testar:
 				<li>Consultar a consola para ver o que foi acrescentado à resposta.</li>
 			</ul>
 		</ul>
-
+		<li>
+<b>Perguntas</b>
+		</li>
+		<ol type="a">
+			<li>
+O que significa cada campo na expressão <tt>AES/ECB/PKCS5Padding</tt>?
+			</li>
+			<li>
+Concorda com a escolha?<br /> 
+Consulte a <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#Cipher">documentação do JCE</a> para fundamentar a sua resposta. 
+Caso discorde, escolha uma alternativa mais segura.
+			</li>
+		</ol><!-- type="a" -->
 	</ol><!-- type="1" -->		
 
 	<p>&nbsp;</p>

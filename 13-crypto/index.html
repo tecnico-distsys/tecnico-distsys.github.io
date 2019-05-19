@@ -180,12 +180,14 @@ import java.security.Key;
 
 import static javax.xml.bind.DatatypeConverter.printHexBinary;
 
+import java.io.InputStream;
+
 ...
 
 	public static Key readKey(String resourcePath) throws Exception {
-		System.out.println("Reading key from resource " + keyPath + " ...");
+		System.out.println("Reading key from resource " + resourcePath + " ...");
 		
-		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath);
+		InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath);
 		byte[] encoded = new byte[fis.available()];
 		fis.read(encoded);
 		fis.close();
@@ -260,7 +262,7 @@ Modificar o tipo do resultado da operação RPC:
 <pre class="prettyprint lang-java">
 ...
 
-  rpc listProducts(ProductsRequest) returns <b>SignedResponse</b>;
+  rpc listProducts(ProductsRequest) returns (<b>SignedResponse</b>);
 
 ...
 </pre>
@@ -283,6 +285,8 @@ Atualizar o código do servidor para refletir a modificação:
 ...
 
 import ...
+import example.grpc.SignedResponse;
+import example.grpc.Signature;
 
 ...
     @Override
@@ -296,9 +300,11 @@ Atualizar também a chamada do lado do cliente:
 ...
 
 import ...
+import example.grpc.SignedResponse;
+import example.grpc.Signature;
 
 ...
-        <b>SignedResponse</b> response = stub.greeting(request);
+        <b>SignedResponse</b> response = stub.listProducts(request);
 ...
 </pre>
 	</ol><!-- type="1" -->		
@@ -327,7 +333,7 @@ Para obter os dados a resumir, serializar o resultado com o seguinte método:
 		</li>
 <pre class="prettyprint lang-java">
 ...
-        byte[] responseBinary = response.toByteArray[];
+        byte[] responseBytes = response.toByteArray();
 ...
 </pre>
 		<li>

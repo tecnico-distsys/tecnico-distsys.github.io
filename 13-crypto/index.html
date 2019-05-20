@@ -353,11 +353,10 @@ Para testar:
 				<li>Compilar e executar o servidor</li>
 				<li><tt>mvn compile exec:java</tt></li>
 			</ul>
-			<li>Cliente</li>
+			<!--li>Cliente</li>
 			<ul>
 				<li><tt>mvn compile exec:java</tt></li>
-				<li>Consultar a consola para ver o que foi acrescentado à resposta.</li>
-			</ul>
+			</ul-->
 		</ul>
 		<li>
 <b>Perguntas</b>
@@ -416,6 +415,7 @@ Para testar:
 			<li>Cliente</li>
 			<ul>
 				<li><tt>mvn compile exec:java</tt></li>
+				<li>Consultar a consola para ver o que foi acrescentado à resposta.</li>
 			</ul>
 		</ul>
 	</ol><!-- type="1" -->		
@@ -433,6 +433,14 @@ para confirmar que o cliente é capaz de detetar a alteração.
 		<li>
 No servidor, após a realização da assinatura, modificar um dos campos de um dos produtos.
 		</li>
+		<ul>
+			<li>
+Para criar um objeto modificado a partir de um objeto existente pode-se usar o método <tt>newBuilderForType()</tt>.
+<!--
+os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos.
+-->
+			</li>
+		</ul>
 		<li>
 Para testar:
 		</li>
@@ -455,7 +463,7 @@ O cliente conseguiu detetar a alteração ao verificar a assinatura?
 			</li>
 			<li>
 Em caso afirmativo, a solução construída garante a frescura da assinatura? <br />
-Ou seja, a assinatura resiste a um ataque de repetição?
+Ou seja, é resistente a um ataque de repetição?
 			</li>
 		</ol>
 	</ol>
@@ -522,6 +530,20 @@ O objectivo será estender a solução resultante do enunciado acima.<br />
       </ul-->
     </ul>
   </div>
+
+<p>&nbsp;</p>
+
+<span style="color:grey">
+<ol type="I" start="10">
+	<li>
+<b>Alínea extra: criptografia assimétrica</b><br />
+<br />
+O exercício usou cifra simétrica para calcular um MAC (<i>Message Authentication Code</i>).<br />
+Modifique a solução para usar cifra assimétrica RSA na assinatura digital:<br />
+o servidor deve assinar com a sua chave privada;<br />
+o cliente deve verificar com a chave pública do servidor.
+</ol>
+</span>
 
 </div>
 

@@ -63,8 +63,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <ul>
             <li>
                 <a href="https://adoptopenjdk.net/">JDK 11 LTS</a>
-                <small>(versão mais recente disponível)</small><br />
-				<!--<small>(<b>não</b> usar Java 9 ou seguintes)</small>-->
+                <small>(versão LTS - <i>Long Term Support</i> - mais recente disponível)</small><br />
             </li>
         </ul>
         <li>Instalar</li>
@@ -84,7 +83,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <li>Obter</li>
         <ul>
             <li>
-                <a href="http://maven.apache.org/download.cgi">MVN 3.5.3</a>
+                <a href="http://maven.apache.org/download.cgi">MVN 3.6.1</a>
                 <small>(preferência por esta versão por ser a que é utilizada internamente no Eclipse recomendado)</small>
             </li>
         </ul>
@@ -125,7 +124,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     <ul>
         <li>Obter o arquivo que contém o executável de Eclipse e ficheiros associados:</li>
         <ul>
-            <li><a href="https://www.eclipse.org/downloads/packages/release/2019-06/r">Eclipse JEE 2019-06 R</a>
+            <li><a href="https://www.eclipse.org/downloads/packages/release/2019-06/r">Eclipse JEE 2019-06 R< (4.12)/a>
 			<small></small></li>
 			<ul>
 				<li>Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
@@ -157,12 +156,12 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                 <li>Window -> Preferences -> Maven -> Discovery e clicar em "Open catalog".</li>
                 <li>Seleccionar:</li>
                 <ul>
-                    <li>m2e connector for jaxws-maven-plugin</li><!-- if not installed, handlers config file may not be found on Run As, Maven, exec:java<!--> <!--Repository not found-->
-					<li>m2e connector for maven-dependency-plugin</li>
-                    <li>m2e connector for maven-remote-resources-plugin</li> <!--Repository not found-->
-					<li>m2e connector for org.codehaus.mojo:jaxb2-maven-plugin and org.jvnet.jaxb2.maven2:maven-jaxb2-plugin</li>
-                    <li>m2e-apt</li>
-                    <li>m2e-egit <small>&#x26A0; not working on 2018-08-10. Try to install. If there is an <a href="2018-08-10_maven_egit_problem.png">error</a>, skip and try again later.</small></li>
+                    <!--li>m2e connector for jaxws-maven-plugin</li--><!-- if not installed, handlers config file may not be found on Run As, Maven, exec:java<!--> <!--Repository not found-->
+										<li>m2e connector for maven-dependency-plugin</li>
+                    <!--li>m2e connector for maven-remote-resources-plugin</li--> <!--Repository not found-->
+										<!--li>m2e connector for org.codehaus.mojo:jaxb2-maven-plugin and org.jvnet.jaxb2.maven2:maven-jaxb2-plugin</li-->
+                    <!--li>m2e-apt</li-->
+                    <!--li>m2e-egit <small>&#x26A0; not working on 2018-08-10. Try to install. If there is an <a href="2018-08-10_maven_egit_problem.png">error</a>, skip and try again later.</small></li-->
                 </ul>
             </ul>
             <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.

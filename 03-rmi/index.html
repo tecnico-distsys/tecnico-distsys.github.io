@@ -66,7 +66,8 @@
 <h2 id="guiao">Exercício a resolver até ao fim da aula</h2>
 <p>
 Neste exercício iremos transformar uma implementação do Jogo do Galo (<i>Tic Tac Toe</i>) numa aplicação distribuída utilizando o Java RMI.
-
+<br />
+<img src="ttt.png" alt="Tic Tac Toe" height="90" /><br />
 </p>
 <p>
 Partindo de uma versão Jogo do Galo feita para um cenário local,
@@ -74,7 +75,6 @@ pretende-se desenvolver uma variante do jogo onde a parte
 computacionalmente mais pesada é realizada por um servidor remoto.
 O servidor guarda as variáveis do jogo.
 O cliente faz a interface com o utilizador.<br />
-<img src="ttt.png" alt="Tic Tac Toe" height="90" /><br />
 </p>
 
 
@@ -97,17 +97,16 @@ O cliente faz a interface com o utilizador.<br />
 		</li>
 		<li>
 		Compile e execute o código com o comando:<br />
-		<tt>mvn compile exec:java</tt><br />
+		<tt>mvn compile exec:java</tt>
+		<br />
+		</li>
+		<li>
+		Experimente o jogo. Indique a posição escolhida para cada jogador, até terminar o jogo.<br />
 		<br />
 		</li>
 	</ol>
 		
-	<p><em>
-	Sugestão: nas alíneas seguintes, corra os módulos cliente e servidor
-	numa máquina não partilhada com outros grupos para evitar conflitos de portos.
-	Utilize uma máquina pessoal ou do laboratório e não o sigma.
-	</em></p>
-	
+		
 	<li>
 	Pretende-se que a nova versão do programa seja dividida em três processos: servidor, interface e cliente, através do Java RMI.<br />
     Descarregue e descomprima o <a href="./ttt-rmi.zip">código fonte da aplicação
@@ -280,15 +279,9 @@ O cliente faz a interface com o utilizador.<br />
 	<br />
 
     <li>
-    Responda às seguintes questões:
+    Responda à seguinte questão:
     </li>
     <ol type="1">
-        <li>
-		<!-- Outra pergunta para aqui? -->
-        Quando se usa gRPC é gerado código para converter os dados de e
-        para um formato de rede.
-        O que acontece quando se usa RMI?
-        </li>
         <li>
         Das classes e interfaces Java que utilizou, 
         quais são as que pertencem apenas ao cliente, apenas ao servidor e
@@ -312,7 +305,7 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
 <h2>Entrega da solução</h2>
 
 <p>
-    Fénix, Avaliação, Projetos, <b>mini Exercício 2 - Java RMI</b>
+    Fénix, Avaliação, Projetos, <b>mini Exercício 1 - Java RMI</b>
 </p>
 
 <p>
@@ -330,7 +323,7 @@ procedimentos ou modificar alguns dos seus procedimentos actuais.
     <!--li>Deverá incluir um ficheiro <tt>respostas.txt</tt> com as
         respostas às perguntas do enunciado do exercício.
     </li-->
-    <li>Deverá também incluir um ficheiro <tt>instrucoes.txt</tt>
+    <li>Deverá também incluir um ficheiro <tt>README</tt>
         com resumo da funcionalidade implementada e com instruções para
         colocar o programa a funcionar como esperado.<br /> Por exemplo:
     </li>

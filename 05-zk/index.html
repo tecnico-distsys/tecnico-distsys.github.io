@@ -20,7 +20,7 @@
         <div class="objectivos">
             <h2>Objetivos</h2>
             <ul>
-				<li>Instalação da ferramenta ZooKeeper</li>
+								<li>Instalação da ferramenta ZooKeeper</li>
                 <li>Publicar e pesquisar serviços no servidor de nomes ZooKeeper</li>
             </ul>
         </div>
@@ -28,22 +28,22 @@
         <div class="corpo">
         <h2>ZooKeeper</h2>
         <p>
-            O Apache ZooKeeper é um serviço de coordenação distribuido que permite a gestão de um elevado numero de <i>hosts</i>.</br>
-			A coordenação e gestão de um serviço num ambiente distribuido é um processo complicado, nomeadamente quando se utilizam serviços hospedados na <i>cloud</i>.</br>
-			O ZooKeeper permite aos <i>developers</i> focarem-se no desenvolvimento da logica base da aplicação, sem se preocuparem com a natureza distribuida da aplicação.
+O Apache ZooKeeper é um serviço centralizado para resolver nomes, fornecer informação de configuração e sincronizar conjuntos de servidores distribuídos.<br />
+
+O seu objetivo é simplificar a gestão de serviços, com propagação fiável de alterações de configuração.
 						
         </p>
-        <h3>Download e Instalação</h3>
+        <h3>Obtenção e Instalação</h3>
         <p>
             
         <li>Obter</li>
         <ul>
             <li>
                 <a href="https://zookeeper.apache.org/">Apache ZooKeeper</a>
-                <small>(versão stable)</small><br />
+                <small>(versão <i>stable</i>)</small><br />
             </li>
 			<li>
-				Fazer download da versão pré-compilada.
+				Obtenha a versão pré-compilada.
 				<small>(Versão com binários incluidos)</small>
 				<li>exemplo: <i>apache-zookeeper-x.y.z-bin.tar.gz</i></li>
 			</li>
@@ -51,12 +51,14 @@
         <li>Instalar
 		<ul>
 			<li>Descompactar para pasta à escolha.</li>
+			<li>exemplo: <tt>/home/user/zookeeper</tt></li>
 		</ul>
 		</li>
 			
         <li>Configurar</li>
         <ul>
             <li>Criar a pasta <i>data</i> dentro da pasta de instalação do ZooKeeper.
+            	É nesta pasta que o ZooKeeper irá armazenar a informação.
 			<ul>
 				<li>exemplo: <i>/home/user/zookeeper/data</i></li>
 			</ul>
@@ -66,7 +68,7 @@
 				<ul>
 				<li>initLimit=10</li>
 				<li>syncLimit=2</li>
-				<li>dataDir=/caminho/para/pasta/zookeeper/data</li>
+				<li>dataDir=/home/user/zookeeper/data</li>
 				</ul>
 			<li>Repare no campo <i>clientPort</i>
 				<ul>este é o porto em que o ZooKeeper estará disponivel</ul>
@@ -82,12 +84,14 @@
 				<li>Navegue até à pasta <i>zookeeper/bin</i></li>
 				<li>Corra o comando <tt>./zkServer.sh start</tt></li>
 				<li>Deverá obter o seguinte <i>output</i>:</li>
-				<img src="zkServer_OK.png">
+<pre class="prettyprint lang-bash">
+    $ Starting zookeeper ... STARTED
+</pre>
 				<br>
 				<li>O ZooKeeper está agora a correr.</li><br>
 			</ul>
 
-			Consola de interacção com o servidor ZooKeeper
+			Consola de interação com o servidor ZooKeeper
 
 			<ul>
 				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt></li>
@@ -111,7 +115,9 @@
 					<li>verificar com <tt>ls /</tt></li>
 				</ul>
 
-				<li>Para finalizar, correr <tt>quit</tt> para encerrar a consola.</li>
+				<li>Para finalizar, correr <tt>quit</tt> para encerrar a consola do cliente.</li>
+
+				<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt></li>.</li>
 				<br>
 			</ul>
 		</p>

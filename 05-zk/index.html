@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+        <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="../_prettify/prettify.js"></script>
+        <title>Apache ZooKeeper</title>
+    </head>
+    <body onload="prettyPrint()">
+        <div class="contexto">
+            <p>
+                <a href="../index.html">Labs SD</a> &gt;
+            </p>
+        </div>
+        <div class="titulo" id="1">
+            <h1>Apache ZooKeeper</h1>
+        </div>
+        <div class="objectivos">
+            <h2>Objetivos</h2>
+            <ul>
+				<li>Instalação da ferramenta ZooKeeper</li>
+                <li>Publicar e pesquisar serviços no servidor de nomes ZooKeeper</li>
+            </ul>
+        </div>
+        <div class="indice"></div>
+        <div class="corpo">
+        <h2>ZooKeeper</h2>
+        <p>
+            O Apache ZooKeeper é um serviço de coordenação distribuido que permite a gestão de um elevado numero de <i>hosts</i>.</br>
+			A coordenação e gestão de um serviço num ambiente distribuido é um processo complicado, nomeadamente quando se utilizam serviços hospedados na <i>cloud</i>.</br>
+			O ZooKeeper permite aos <i>developers</i> focarem-se no desenvolvimento da logica base da aplicação, sem se preocuparem com a natureza distribuida da aplicação.
+						
+        </p>
+        <h3>Download e Instalação</h3>
+        <p>
+            
+        <li>Obter</li>
+        <ul>
+            <li>
+                <a href="https://zookeeper.apache.org/">Apache ZooKeeper</a>
+                <small>(versão stable)</small><br />
+            </li>
+			<li>
+				Fazer download da versão pré-compilada.
+				<small>(Versão com binários incluidos)</small>
+				<li>exemplo: <i>apache-zookeeper-x.y.z-bin.tar.gz</i></li>
+			</li>
+        </ul>
+        <li>Instalar
+		<ul>
+			<li>Descompactar para pasta à escolha.</li>
+		</ul>
+		</li>
+			
+        <li>Configurar</li>
+        <ul>
+            <li>Criar a pasta <i>data</i> dentro da pasta de instalação do ZooKeeper.
+			<ul>
+				<li>exemplo: <i>/home/user/zookeeper/data</i></li>
+			</ul>
+			</li>
+            <li>Mudar o nome do ficheiro <i>zookeeper/conf/zoo_sample.cfg</i> para <i>zoo.cfg</i> </li>
+            <li>Editar o ficheiro <i>zoo.cfg</i>, alterando as seguintes configurações:
+				<ul>
+				<li>initLimit=10</li>
+				<li>syncLimit=2</li>
+				<li>dataDir=/caminho/para/pasta/zookeeper/data</li>
+				</ul>
+			<li>Repare no campo <i>clientPort</i>
+				<ul>este é o porto em que o ZooKeeper estará disponivel</ul>
+        </ul>
+    
+        </p>
+		
+		<h3>Utilização</h3>
+		<p>
+			Vamos agora iniciar o servidor do ZooKeeper.
+
+			<ul>
+				<li>Navegue até à pasta <i>zookeeper/bin</i></li>
+				<li>Corra o comando <tt>./zkServer.sh start</tt></li>
+				<li>Deverá obter o seguinte <i>output</i>:</li>
+				<img src="zkServer_OK.png">
+				<br>
+				<li>O ZooKeeper está agora a correr.</li><br>
+			</ul>
+
+			Consola de interacção com o servidor ZooKeeper
+
+			<ul>
+				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt></li>
+				<ul><li>Este comando inicializa uma consola que permite interagir com o servidor ZooKeeper.</li></ul>
+				<li>Na consola correr o comando <tt>ls /</tt></li>
+				<ul>Este comando mostra os nós <i>zNodes</i> existentes na <i>raiz (/)</i> do ZooKeeper.</ul>
+				<br>
+				<li>Crie agora um novo nó com o comando <tt>create</tt></li>
+				<ul><li>correr <tt>create /myFirstZnode myFirstData</tt></li>
+					<li>Verificar que o nó foi criado com sucesso.</li>
+				</ul>
+				<li>Verifique que o nó criado contem os dados</li>
+				<ul><li>correr o comando <tt>get /myFirstNode</tt></li>
+					<li>verificar os dados devolvidos</li>
+				</ul>
+				<br>
+
+				<li>Vamos agora eliminar o nó criado</li>
+				<ul>
+					<li>correr o comand <tt>delete /myFirstNode</tt></li>
+					<li>verificar com <tt>ls /</tt></li>
+				</ul>
+
+				<li>Para finalizar, correr <tt>quit</tt> para encerrar a consola.</li>
+				<br>
+			</ul>
+		</p>
+		
+		<h3></h3>
+		
+        <hr />
+        <div class="rodape">
+            <p>
+                &copy; Docentes de Sistemas Distribuídos,
+                <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+                <a href="http://www.ist.eu">Técnico Lisboa</a><br />
+            </p>
+        </div>
+    </body>
+</html>

@@ -122,7 +122,36 @@ O seu objetivo é simplificar a gestão de serviços, com propagação fiável d
 			</ul>
 		</p>
 		
-		<h3></h3>
+<h3>Utilização do ZooKeeper para registo de serviços</h3>
+
+<p>
+Os endereços -- servidor e porto -- de serviços gRPC devem ser descobertos de forma dinâmica, para evitar que fiquem fixos no código das aplicações.
+Isto permite que o endereço mude sempre que necessário, sem recompilação dos clientes.
+Permite também que existam diversas réplicas de servidores para contactar alternativamente.
+</p>
+
+<p>
+As funcionalidades do ZooKeeper vão para além de um simples servidor de nomes.
+Para tornar a utilização do ZooKeeper mais simples foi criada a biblioteca <tt>ZKNaming</tt> que oferece as operações <tt>rebind</tt> e <tt>lookup</tt>.
+Esta biblioteca torna o registo e pesquisa de serviços mais sucinto.
+O código fonte está disponível para consulta e modificação, caso sejam necessárias mais funcionalidades do ZooKeeper.
+</p>
+
+Mais informação:
+<!--ul>
+    <li--><a href="zk-naming/apidocs/index.html">ZKNaming JavaDoc</a><!--/li>
+</ul-->
+
+<h3>Exercício</h3>
+
+<p>
+O objetivo do exercício é usar a biblioteca ZKNaming para que o servidor <tt>grpc-hello</tt> (da aula anterior) se registe no ZooKeeper,
+com o nome <tt>/svc/hello</tt>.
+Depois, o cliente deve obter o <tt>host:port</tt> do servidor, ligando-se ao ZooKeeper.
+</p>
+<p>
+O endereço (e porto) do ZooKeeper deve ser passado como argumento para os programas.
+</p>
 		
         <hr />
         <div class="rodape">

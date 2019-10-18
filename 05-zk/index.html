@@ -31,6 +31,12 @@
 O Apache ZooKeeper é um serviço centralizado para resolver nomes, fornecer informação de configuração e sincronizar conjuntos de servidores distribuídos.<br />
 
 O seu objetivo é simplificar a gestão de serviços, com propagação fiável de alterações de configuração.
+
+<br><br>
+Mais informação:
+<!--ul>
+    <li--><a href="https://zookeeper.apache.org/documentation.html">ZooKeeper Documentation</a><!--/li>
+</ul-->
 						
         </p>
         <h3>Obtenção e Instalação</h3>
@@ -145,13 +151,163 @@ Mais informação:
 <h3>Exercício</h3>
 
 <p>
-O objetivo do exercício é usar a biblioteca ZKNaming para que o servidor <tt>grpc-hello</tt> (da aula anterior) se registe no ZooKeeper,
-com o nome <tt>/svc/hello</tt>.
-Depois, o cliente deve obter o <tt>host:port</tt> do servidor, ligando-se ao ZooKeeper.
+O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o servidor <tt>grpc-hello</tt> (da aula anterior) se registe no ZooKeeper.
 </p>
-<p>
-O endereço (e porto) do ZooKeeper deve ser passado como argumento para os programas.
-</p>
+
+
+<ol type="I">
+		<li>Relembre o exemplo <i>gRPC HelloWorld</i> fornecido na aula anterior. </li>
+		<br>
+		<ol type="1">
+			<li>
+				Descarregue e descomprima o código fonte da <a href="./../04-rpc/grpc-hello-world.zip">aplicação de exemplo com gRPC <img src="../_img/zip.png" alt="ZIP" /></a>
+			</li>
+			<li>
+				Analise o código para relembrar a implementação.
+			</li>
+			<li>
+				Comece pelo módulo <tt>contract</tt>, e execute o comando:<br>
+				<tt>mvn install</tt>
+			</li>
+			<li>
+				Abra uma consola e corra o servidor:<br>
+				<tt>mvn compile exec:java</tt>
+			</li>
+			<li>
+				Abra outra consola e execute o cliente:<br>
+				<tt>mvn compile exec:java</tt>
+			</li>
+		</ol>
+		<br>
+
+		<li>Vamos agora obter a biblioteca <tt>ZKNaming</tt> e instalar no repositório local do <tt>Maven</tt>.</li>
+		<br>
+		<ol type="1">
+			<li>
+				Obtenha o codigo da biblioteca <a href="./zk-naming.zip">zk-naming <img src="../_img/zip.png" alt="ZIP" /></a>
+			</li>
+			<li>
+				Instalar o módulo no repositório Maven Local:<br>
+				Atenção: Para correr os exemplos seguintes, é necessario iniciar o servidor ZooKeeper: <tt>./path/to/zookeeper/bin/zkServer.sh start</tt>
+				 <ol>
+				 	<tt>cd zk-naming</tt> <br>
+				 	<tt>mvn install</tt>
+				 	<li>Uma vez instalado o módulo no repositório Maven local, a biblioteca pode ser usada como dependência em qualquer <tt>
+				 	pom.xml.</tt> </li>
+				 </ol>
+			</li>
+		</ol>
+		<br>
+		<li>Vamos agora adaptar o <i>gRPC HelloWorld</i> para uma aplicação cliente-servidor que utiliza a biblioteca <tt>ZKNaming</tt> para registar e procurar serviços distribuídos.</li>
+		<ol type="1">
+			<li>
+				Observe o <tt>pom.xml</tt> do servidor HelloWorld:
+				<ol>
+					<li>Adicione a dependência para a biblioteca ZKNaming:</li>
+					
+					<pre class="prettyprint lang-xml">
+...
+&lt;!-- ZK Naming --&gt;
+&lt;dependency&gt;
+&lt;groupId&gt;pt.ulisboa.tecnico.sdis&lt;/groupId&gt;
+&lt;artifactId&gt;zk-naming&lt;/artifactId&gt;
+&lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+...
+				</pre>
+					<br>
+					<li>O Servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu proprio <tt>host</tt>, <tt>port</tt> e nome, no formato:</li>
+					<ol><li><tt>/HelloService</tt></li>
+						<li>o argumento nome será referênciado no resto do exercicio como <tt>path</tt>
+					</ol>
+					<pre class="prettyprint lang-xml">
+...
+&lt;properties&gt;
+&lt;zoo.host&gt;localhost&lt;/zoo.host&gt;
+&lt;zoo.port&gt;2181&lt;/zoo.port&gt;
+&lt;server.host&gt;localhost&lt;/server.host&gt;
+&lt;server.port&gt;8080&lt;/server.port&gt;
+&lt;server.path&gt;/HelloService&lt;/server.path&gt;
+...
+...
+&lt;mainClass&gt;${mainclass}&lt;/mainClass&gt;
+	&lt;arguments&gt;
+		&lt;argument&gt;${zoo.host}&lt;/argument&gt;
+		&lt;argument&gt;${zoo.port}&lt;/argument&gt;
+		&lt;argument&gt;${server.host}&lt;/argument&gt;
+		&lt;argument&gt;${server.port}&lt;/argument&gt;
+		&lt;argument&gt;${server.path}&lt;/argument&gt;
+...					</pre>
+
+				</ol>
+			</li>
+			<br>
+
+			<li>
+				Altere o codigo do servidor, de modo a chamar a bliblioteca <tt>zk-naming</tt> para registar o seu <i>host</i> e <i>port</i>.
+				<ol>
+					<li>Adicionar as seguintes linhas de codigo ao servidor:</li>
+					<pre class="prettyprint lang-java">
+...
+ZKNaming zkNaming = new ZKNaming(zooHost,zooPort);
+...
+// publish
+zkNaming.rebind(path,host,port);
+
+...
+// gRPC execution
+...
+
+// remove
+zkNaming.unbind(path,host,port);
+					</pre>
+					<li>Atenção: o metodo <tt>unbind</tt> deve ser chamado no final do metodo <tt>main</tt> do servidor.</li>	
+				</ol>
+			</li>
+			<br>
+
+
+
+			<li>Vamos alterar o <tt>pom.xml</tt> do cliente:</li>
+			<ol>
+				<li>Adicione ao <tt>pom.xml</tt> do cliente o endereço e porto do ZooKeeper, bem como o <tt>path</tt> do servidor.</li>
+				<ol>Este tem que ser igual ao colocado no <tt>pom</tt> do servidor.</ol>
+				<li>Adicione a dependência para a bliblioteca <tt>zk-naming</tt>, no mesmo modo que fez para o servidor.</li>
+			</ol>
+			<br>
+			<li>Altere o codigo do cliente de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.</li>
+
+				
+			
+			<ol>
+				<li>Adicionar as seguintes linhas de codigo ao cliente:</li>
+					<pre class="prettyprint lang-java">
+...
+ZKNaming zkNaming = new ZKNaming(zooHost,zooPort);
+...
+// lookup
+ZKRecord record = zkNaming.lookup(path);
+
+
+// Channel is the abstraction to connect to a service endpoint
+// Let us use plaintext communication because we do not have certificates
+final ManagedChannel channel = ManagedChannelBuilder.forTarget(record.getURI()).usePlaintext().build();
+...
+// gRPC execution
+					</pre>
+				<li>Repare que substituimos o argumento do método <tt>forTarget()</tt> para o par <tt>host:port</tt> obtido através do ZooKeeper.</li>
+			</ol>
+
+		<br>
+		<li>Execute novamente o cliente e servidor: </li>
+		<ol>
+			<li>Inicie o servidor ZooKeeper</li>
+			<li>Corra <tt>mvn compile exec:java</tt> para o servidor e cliente</li> 
+			<li> Observe que o cliente comunica com o servidor, sem ter conhecimento explicito do <tt>host:port</tt> do mesmo</li>
+		</ol>
+		
+</ol>
+
 		
         <hr />
         <div class="rodape">

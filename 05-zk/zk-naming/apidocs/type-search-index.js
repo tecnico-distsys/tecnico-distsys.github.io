@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"pt.ulisboa.tecnico.sdis.zk","l":"ZKNaming"},{"p":"pt.ulisboa.tecnico.sdis.zk","l":"ZKNamingException"},{"p":"pt.ulisboa.tecnico.sdis.zk","l":"ZKRecord"}]

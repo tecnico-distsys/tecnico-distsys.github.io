@@ -188,12 +188,12 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 			</li>
 			<li>
 				Instalar o módulo no repositório Maven Local:<br>
-				Atenção: Para correr os exemplos seguintes, é necessario iniciar o servidor ZooKeeper: <tt>./path/to/zookeeper/bin/zkServer.sh start</tt>
+				Atenção: Para correr os exemplos seguintes, é necessario que o servidor ZooKeeper já tenha sido iniciado: <tt>./path/to/zookeeper/bin/zkServer.sh start</tt>
 				 <ol>
 				 	<tt>cd zk-naming</tt> <br>
 				 	<tt>mvn install</tt>
 				 	<li>Uma vez instalado o módulo no repositório Maven local, a biblioteca pode ser usada como dependência em qualquer <tt>
-				 	pom.xml.</tt> </li>
+				 	pom.xml</tt>. </li>
 				 </ol>
 			</li>
 		</ol>
@@ -216,9 +216,13 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 ...
 				</pre>
 					<br>
-					<li>O Servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu proprio <tt>host</tt>, <tt>port</tt> e nome, no formato:</li>
+					<li>
+						Confirme as dependências, fazendo: <br/>
+						<tt>mvn dependency:tree</tt>
+					</li>
+					<li>O servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu próprio <tt>host</tt>, <tt>port</tt> e nome, no formato:</li>
 					<ol><li><tt>/HelloService</tt></li>
-						<li>o argumento nome será referênciado no resto do exercicio como <tt>path</tt>
+						<li>o argumento nome será referênciado no resto do exercício como <tt>path</tt>
 					</ol>
 					<pre class="prettyprint lang-xml">
 ...
@@ -244,24 +248,38 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 			<br>
 
 			<li>
-				Altere o codigo do servidor, de modo a chamar a bliblioteca <tt>zk-naming</tt> para registar o seu <i>host</i> e <i>port</i>.
+				Altere o código do servidor, de modo a chamar a biblioteca <tt>zk-naming</tt> para registar o seu <i>host</i> e <i>port</i>.
 				<ol>
-					<li>Adicionar as seguintes linhas de codigo ao servidor:</li>
+					<li>Adicionar as seguintes linhas de código ao servidor:</li>
 					<pre class="prettyprint lang-java">
 ...
-ZKNaming zkNaming = new ZKNaming(zooHost,zooPort);
+ZKNaming zkNaming = null;
+try {
 ...
+zkNaming = new ZKNaming(zooHost, zooPort);
+
 // publish
 zkNaming.rebind(path,host,port);
 
 ...
-// gRPC execution
+// start gRPC server
+...
+// await termination
 ...
 
-// remove
-zkNaming.unbind(path,host,port);
+} catch (Exception e) {
+			System.out.printf("Caught exception: %s%n", e);
+
+} finally  {
+...
+    if (zkNaming != null) {
+        // remove
+        zkNaming.unbind(path,host,port);
+    }
+...
+}
 					</pre>
-					<li>Atenção: o metodo <tt>unbind</tt> deve ser chamado no final do metodo <tt>main</tt> do servidor.</li>	
+					<li>Atenção: o método <tt>unbind</tt> deve ser chamado no final do método <tt>main</tt> do servidor.</li>	
 				</ol>
 			</li>
 			<br>
@@ -270,40 +288,38 @@ zkNaming.unbind(path,host,port);
 
 			<li>Vamos alterar o <tt>pom.xml</tt> do cliente:</li>
 			<ol>
+				<li>Adicione a dependência para a bliblioteca <tt>zk-naming</tt>, no mesmo modo que fez para o servidor.</li>
 				<li>Adicione ao <tt>pom.xml</tt> do cliente o endereço e porto do ZooKeeper, bem como o <tt>path</tt> do servidor.</li>
 				<ol>Este tem que ser igual ao colocado no <tt>pom</tt> do servidor.</ol>
-				<li>Adicione a dependência para a bliblioteca <tt>zk-naming</tt>, no mesmo modo que fez para o servidor.</li>
 			</ol>
 			<br>
-			<li>Altere o codigo do cliente de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.</li>
+			<li>Altere o código do cliente de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.</li>
 
-				
-			
 			<ol>
-				<li>Adicionar as seguintes linhas de codigo ao cliente:</li>
+				<li>Adicionar as seguintes linhas de código ao cliente:</li>
 					<pre class="prettyprint lang-java">
 ...
 ZKNaming zkNaming = new ZKNaming(zooHost,zooPort);
 ...
 // lookup
 ZKRecord record = zkNaming.lookup(path);
+String target = record.getURI();
 
-
-// Channel is the abstraction to connect to a service endpoint
-// Let us use plaintext communication because we do not have certificates
-final ManagedChannel channel = ManagedChannelBuilder.forTarget(record.getURI()).usePlaintext().build();
+final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
 ...
-// gRPC execution
+// make gRPC calls
+...
 					</pre>
-				<li>Repare que substituimos o argumento do método <tt>forTarget()</tt> para o par <tt>host:port</tt> obtido através do ZooKeeper.</li>
+				<li>Repare que substituímos o argumento do método <tt>forTarget()</tt> pelo par <tt>host:port</tt> obtido através do ZooKeeper.</li>
 			</ol>
 
 		<br>
 		<li>Execute novamente o cliente e servidor: </li>
 		<ol>
-			<li>Inicie o servidor ZooKeeper</li>
+			<li>Mantenho o servidor ZooKeeper a correr (inicie se estiver parado)</li>
 			<li>Corra <tt>mvn compile exec:java</tt> para o servidor e cliente</li> 
-			<li> Observe que o cliente comunica com o servidor, sem ter conhecimento explicito do <tt>host:port</tt> do mesmo</li>
+			<li>Observe que o cliente comunica com o servidor, sem ter conhecimento explícito do <tt>host:port</tt> do mesmo</li>
+			<li>Pode comprovar, alterando o porto do servidor e testando o cliente sem alterações na sua configuração</li>
 		</ol>
 		
 </ol>

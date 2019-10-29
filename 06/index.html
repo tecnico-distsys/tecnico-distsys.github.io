@@ -23,13 +23,18 @@
         </div>
         <div class="corpo">
 			<p>
-			O objetivo desde laboratório é a implementação das operações do serviço <i>Sentry</i>, <i>feed</i> e <i>ctrl_ping</i>, componente do projeto <a href="../proj/enunciado-proj-SD-1920_1.pdf">SAYF</a>.
-
+			O objetivo desde laboratório é iniciar a realização do <a href="../proj/enunciado-proj-SD-1920_1.pdf"> projeto SAYF</a>.<br />
+			Vamos começar pela implementação da operação mais simples do serviço <i>Sentry</i>: <i>ctrl_ping</i>.
 			</p>
-            <p>
-			Relembre que, caso não o tenha feito, deve se inscrever no <a href="https://piazza.com/tecnico.ulisboa.pt/fall2019/sd20_1">Piazza</a> para esclarecimento de dúvidas fora dos laboratórios. 
-            </p>
-
+      <p>
+			Caso ainda não o tenha feito, aproveite para se inscrever no <a href="https://piazza.com/tecnico.ulisboa.pt/fall2019/sd20_1">Piazza</a> para esclarecimento de dúvidas fora dos laboratórios.
+      </p>
+      <p>
+      Obtenha o ponto de partida para o projeto no repositório <i>GitHub</i> do seu grupo.
+      <ul>
+        	<li>O repositório do grupo CXX está em: <a href="https://github.com/tecnico-distsys/CXX-SAYF">https://github.com/tecnico-distsys/CXX-SAYF</a>, onde CXX deve ser substituído por T de Tagus e os dois dígitos do número do grupo.</li>
+      </ul>     	
+      </p>
             <h3>Tópicos a revisitar / qualidade de código</h3>
             <ul>
                 <li>
@@ -46,29 +51,28 @@
             </ul>
             <h2>Sentry</h2>
             
-	            <p>O servidor <i>sentry</i> recebe observações feitas pelo rádio e depois envia um conjunto de observações acumuladas para armazenamento.</p>
+	            <p>O servidor <i>sentry</i> recebe observações de <i>MAC addresses</i> e depois envia um conjunto de observações acumuladas para armazenamento.</p>
 	            <ul>
 		            <li>Estude a especificação do servidor <i>sentry</i> presente no enunciado do projeto.</li>
-		            <li>Obtenha o esqueleto do projeto do repositório <i>git</i> atribuído a cada grupo.</li>
-		            <ul>
-		            	<li>O repositório do grupo CXX está em: <a href="https://github.com/tecnico-distsys/CXX-SAYF">https://github.com/tecnico-distsys/CXX-SAYF</a>, onde CXX deve ser substituído por T e os dois dígitos do número do grupo.</li>
-		            </ul>
+		  
 	            </ul>
 
 	            <h3>sentry-contract</h3>
 
 	            <p>Comece por detalhar no ficheiro <i>Sentry.proto</i> as operações RPC.</p>
             	<ul>
-            		<li>Crie as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
-            		<li>Relembrar: <a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a>.</li>
+            		<li>Crie a operação <i>ctrl_ping</i>.</li>
+            		<li>Faça <tt>mvn install</tt> para gerar o código Java a partir do protobuf.</li>
+            		<li>Consulte o código gerado na pasta <tt>target/generated-sources/protobuf</tt></li>
+            		<li>Relembrar: <a href="https://grpc.io/docs/tutorials/basic/java.html">tutorial de gRPC para Java</a>.</li>
             	</ul>
 
 	            <h3>sentry-server</h3>
 
 	            <p>Implemente no servidor as operações remotas que definiu no ficheiro <i>Sentry.proto</i>.</p>
 	           	<ul>
+            		<li>Implemente a operação <i>ctrl_ping</i> no servidor. Responda com uma mensagem de diagnóstico.</li>
             		<li>Relembrar: <a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a>.</li>
-            		<li>Implemente a lógica do servidor para as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
             	</ul>
             	
 
@@ -76,7 +80,7 @@
 
 	            <p>Implemente no cliente uma classe que instancia o <i>stub</i> do serviço, e adicione métodos para invocar as operações remotas.</p>
 	            <ul>
-	            	<li>Implemente os métodos para as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
+	            	<li>Implemente os métodos para a operação <i>ctrl_ping</i>.</li>
 	            </ul>
 	            
 	            <p>Implemente testes de integração, de modo a verificar o correto funcionamento do servidor <i>sentry</i>.</p>
@@ -84,20 +88,31 @@
 	            <ul>
 	            	<li>Observe a classe SentryIT. Observe as anotações: <i>@BeforeClass, @AfterClass, @Before, @After, @Test</i>.</li>
 	            	<li>Relembrar: <a href="../01-tools/junit/index.html">Testes de Integração</a></li>
-	            	<li>Crie testes para o serviço RPC. Estes testes devem incluir as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
+	            	<li>Crie um teste para o serviço RPC. Este teste deve verificar se a operação <i>ctrl_ping</i> responde com uma mensagem não vazia.</li>
 	            </ul>
+	            
+	            <p>
+	            Neste ponto, se tudo correu bem, já tem um servidor a correr e um cliente a testá-lo!
+	            </p>
+	            
+	            <p>
+	            O próximo passo é implementar a operação <i>feed</i> e depois realizar testes.<br />
+	            Numa primeira versão, a operação <i>feed</i> deve simplesmente imprimir os dados recebidos na consola.<br />
+	            Depois desta versão estar funcional, deve implementar o comportamento completo descrito no enunciado.
+	            </p>
 
 	            <h3>ZooKeeper Naming</h3>
+	            
 	            <p>Os vários componentes do projeto devem descobrir-se uns aos outros através do servidor de nomes ZooKeeper.</p>
 	            <ul>
-	            	<li>Relembrar <a href="../05-zk/index.html">aula de zookeeper</a>.</li>
+	            	<li>Relembrar a <a href="../05-zk/index.html">aula de zookeeper</a>.</li>
 	            	<li>Para referência, ver <a href="./grpc-zookeeper-hello-world.zip">exemplo de Zookeeper+gRPC<img src="../_img/zip.png" alt="ZIP" />  </a></li>
 	            	<li>Obter biblioteca <a href="../05-zk/zk-naming.zip">zk-naming <span style="color:red;font-size:90%">[atualizado]</span><img src="../_img/zip.png" alt="ZIP" />  </a>.</li>
 	            	<li>Instalar a biblioteca no repositório local <i>maven</i>.</li>
 	            </ul>
 
 	            <br>
-	            <p>No final desta aula deve conseguir correr os testes de integração, verificando que consegue fornecer dados para o servidor <i>Sentry</i> com o comando <i>feed</i> e obter os mesmos com o comando <i>ctrl_ping</i>.</p>
+	            <p>No final desta aula deve conseguir correr os testes de integração, verificando que consegue fornecer dados para o servidor <i>Sentry</i> com o comando <i>feed</i>.</p>
 
 
         </div>

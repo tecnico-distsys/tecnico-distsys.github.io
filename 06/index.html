@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+        <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="../_prettify/prettify.js"></script>
+        <title>Apoio ao Projeto</title>
+
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div class="contexto">
+            <p>
+                <a href="../index.html">Labs SD</a>
+            &gt; </p>
+        </div>
+        <div class="titulo" id="1">
+            <h1>Apoio ao Projeto</h1>
+        </div>
+        <div class="indice">
+        </div>
+        <div class="corpo">
+			<p>
+			O objetivo desde laboratório é a implementação do serviço <i>Sentry</i>, componente do projeto <a href="../proj/enunciado-proj-SD-1920_1.pdf">SAYF</a>.
+
+			</p>
+            <p>
+			Relembre que, caso não o tenha feito, deve se inscrever no <a href="https://piazza.com/tecnico.ulisboa.pt/fall2019/sd20_1">Piazza</a> para esclarecimento de dúvidas fora dos laboratórios. 
+            </p>
+
+            <h3>Tópicos a revisitar / qualidade de código</h3>
+            <ul>
+                <li>
+                <a href="../01-tools/junit/index.html">Testes de Integração</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                <a href="../01-tools/exceptions/index.html">Tratamento de exceções</a>
+                </li>
+                <li>
+                <a href="../01-tools/java-synch/index.html">Concorrência e Sincronização</a>
+                </li>
+            </ul>
+            <h2>Sentry</h2>
+            
+	            <p>O servidor <i>sentry</i> recebe observações feitas pelo rádio e depois envia um conjunto de observações acumuladas para armazenamento.</p>
+	            <ul>
+		            <li>Estude a especificação do servidor <i>sentry</i> presente no enunciado do projeto.</li>
+		            <li>Obtenha o esqueleto do projeto do repositório <i>git</i> atribuído a cada grupo.</li>
+		            <ul>
+		            	<li>O repositório do grupo CXX está em: <a href="https://github.com/tecnico-distsys/CXX-SAYF">https://github.com/tecnico-distsys/CXX-SAYF</a>, onde CXX deve ser substituído por T e os dois dígitos do número do grupo.</li>
+		            </ul>
+	            </ul>
+
+	            <h3>sentry-contract</h3>
+
+	            <p>Comece por detalhar no ficheiro <i>Sentry.proto</i> as operações RPC.</p>
+            	<ul>
+            		<li>Relembrar: <a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a>.</li>
+            	</ul>
+
+	            <h3>sentry-server</h3>
+
+	            <p>Implemente no servidor as operações remotas que definiu no ficheiro <i>Sentry.proto</i>.</p>
+	           	<ul>
+            		<li>Relembrar: <a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a>.</li>
+            	</ul>
+            	<p>Implemente a lógica do servidor.</p>
+
+            	<h3>sentry-client</h3>
+
+	            <p>Implemente no cliente uma classe que instancia o <i>stub</i> do serviço, e adicione métodos para invocar as operações remotas.</p>
+	            
+	            <p>Implemente testes de integração, de modo a verificar o correto funcionamento do servidor <i>sentry</i>.</p>
+
+	            <ul>
+	            	<li>Observe a classe SentryIT. Observe as anotações: <i>@BeforeClass, @AfterClass, @Before, @After, @Test</i>.</li>
+	            	<li>Relembrar: <a href="../01-tools/junit/index.html">Testes de Integração</a></li>
+	            	<li>Crie testes para o serviço RPC. Estes testes devem incluir todas as operações presentes no enunciado do projeto.</li>
+	            </ul>
+
+        </div>
+            <hr>
+            <div class="rodape">
+                <p>© Docentes de Sistemas Distribuídos,
+                    <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng.
+                    Informática</a>,
+                    <a href="http://www.ist.eu">Técnico Lisboa</a>
+                </p>
+            </div>
+        </body>
+    </html>

@@ -23,7 +23,7 @@
         </div>
         <div class="corpo">
 			<p>
-			O objetivo desde laboratório é a implementação do serviço <i>Sentry</i>, componente do projeto <a href="../proj/enunciado-proj-SD-1920_1.pdf">SAYF</a>.
+			O objetivo desde laboratório é a implementação das operações do serviço <i>Sentry</i>, <i>feed</i> e <i>ctrl_ping</i>, componente do projeto <a href="../proj/enunciado-proj-SD-1920_1.pdf">SAYF</a>.
 
 			</p>
             <p>
@@ -59,6 +59,7 @@
 
 	            <p>Comece por detalhar no ficheiro <i>Sentry.proto</i> as operações RPC.</p>
             	<ul>
+            		<li>Crie as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
             		<li>Relembrar: <a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a>.</li>
             	</ul>
 
@@ -67,20 +68,26 @@
 	            <p>Implemente no servidor as operações remotas que definiu no ficheiro <i>Sentry.proto</i>.</p>
 	           	<ul>
             		<li>Relembrar: <a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a>.</li>
+            		<li>Implemente a lógica do servidor para as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
             	</ul>
-            	<p>Implemente a lógica do servidor.</p>
+            	
 
             	<h3>sentry-client</h3>
 
 	            <p>Implemente no cliente uma classe que instancia o <i>stub</i> do serviço, e adicione métodos para invocar as operações remotas.</p>
+	            <ul>
+	            	<li>Implemente os métodos para as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
+	            </ul>
 	            
 	            <p>Implemente testes de integração, de modo a verificar o correto funcionamento do servidor <i>sentry</i>.</p>
 
 	            <ul>
 	            	<li>Observe a classe SentryIT. Observe as anotações: <i>@BeforeClass, @AfterClass, @Before, @After, @Test</i>.</li>
 	            	<li>Relembrar: <a href="../01-tools/junit/index.html">Testes de Integração</a></li>
-	            	<li>Crie testes para o serviço RPC. Estes testes devem incluir todas as operações presentes no enunciado do projeto.</li>
+	            	<li>Crie testes para o serviço RPC. Estes testes devem incluir as operações <i>feed</i> e <i>ctrl_ping</i>.</li>
 	            </ul>
+
+
 
         </div>
             <hr>

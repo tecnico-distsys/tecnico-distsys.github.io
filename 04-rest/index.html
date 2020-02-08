@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+        <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="../_prettify/prettify.js"></script>
+        <title>Web Services Contract-First</title>
+    </head>
+    <body onload="prettyPrint()">
+        <div class="contexto">
+            <p>
+                <a href="../index.html">Labs SD</a> &gt;
+            </p>
+        </div>
+        <div class="titulo" id="1">
+            <h1>Web Services: Contract-First</h1>
+        </div>
+        <div class="objectivos">
+            <h2>Objetivos</h2>
+            <ul>
+                <li>Desenvolver Web Services na plataforma Java usando a abordagem <i>contract-first</i></li>
+                <li>Inspecionar mensagens SOAP</li>
+            </ul>
+        </div>
+        <div class="indice"></div>
+        <div class="corpo">
+        <h2>Web Services</h2>
+        <p>
+            Um serviço é uma funcionalidade de um sistema informático que pode ser invocada remotamente através da rede,
+			usando protocolos de comunicação da World Wide Web, nomeadamente, HTTP.
+			A tecnologia permite também a utilização de outros transportes.
+        </p>
+        <h3>WSDL</h3>
+        <p>
+            Os Web Services têm uma linguagem própria para descrever o seu <b>contrato</b> com os clientes.<br />
+            A WSDL permite especificar a interface funcional, chamada <i>port type</i>, que define as
+            operações com entradas, saídas e erros.
+			A WSDL define também a interface concreta, com escolhas de tecnologias concretas a usar.
+			Cada escolha é representada num <i>binding</i>.
+        </p>
+        <p>
+            Exemplo de um contrato WSDL:
+        </p>
+        <ul>
+            <li><a href="ping/Ping.wsdl">Ping.wsdl</a> -
+                o documento contém comentários numerados que explicam as diferentes secções do documento:<br />
+                <i>namespaces</i>,
+                <i>service definition</i>,
+                <i>binding definitions</i>,
+                <i>port type definitions</i>,
+                <i>message definitions</i> e
+                <i>type definitions</i>.
+            </li>
+        </ul>
+        <h3>Web Services em Java</h3>
+        <p>
+            A plataforma Java inclui uma implementação dos Web Services.
+			A biblioteca chama-se JAX-WS, que significa Java API for XML Web Services.
+		</p>
+		<p>
+            É possível implementar Web Services partindo de um contrato WSDL existente.<br />
+            Esta abordagem ao desenvolvimento de serviços é chamada <i>contract-first</i>.
+		</p>
+		<p>
+			A ferramenta <tt>wsimport</tt> permite gerar código a partir do contrato WSDL, 
+			para clientes e para servidores.
+        </p>
+        <p>
+            A JAX-WS também permite intercetar as mensagens SOAP que são enviadas ou recebidas pelo serviço,
+			através de objetos chamados </i>handlers</i>.
+        </p>
+        <p>
+            Exemplo Ping Web Service:
+        <ul>
+            <li>
+                <a href="ping/ping-ws.zip">server
+                <img src="../_img/zip.png" alt="ZIP" ></a>
+                <a href="ping/uml_server.png"><img src="../_img/uml.png" alt="UML" ></a>
+            </li>
+            <li>
+                <a href="ping/ping-ws-cli.zip">client
+                <img src="../_img/zip.png" alt="ZIP" ></a>
+                <a href="ping/uml_client.png"><img src="../_img/uml.png" alt="UML" ></a>
+            </li>
+        </ul>
+        </p>
+        <p><small>
+            Nota: as pastas que contêm o código não devem ter espaços nem caracteres acentuados no seu caminho.
+        </small></p>
+
+        <h3>JUnit Integration Tests (IT)</h3>
+        <p>
+			Os <a href="junit-it/index.html">testes de integração</a> de Web Services permitem verificar 
+			se o contrato das operações remotas definidas no WSDL está a ser respeitado por um servidor.
+		</p>
+		<p>
+			Os IT são definidos no cliente (<tt>ws-cli</tt>) e fazem invocações remotas ao servidor (<tt>ws</tt>).
+            Assume-se que todos os servidores foram lançados antes de correr os testes de integração.
+		</p>
+
+		<p>
+            &nbsp;
+        </p>
+
+        <hr />
+
+        <h3>Informação adicional sobre Web Services</h3>
+        <ul>
+            <li>
+                Livro Couloris, Capítulo 9
+            </li>
+            <li>
+				Apresentação das normas principais
+				<ul>
+				<li>
+					<a href="xml/index.html">XML</a> e
+					<a href="xsd/index.html">XSD</a>
+				</li>
+				<li>
+					<a href="wsdl/index.html">WSDL</a>
+				</li>
+				</ul>
+			</li>
+			<li>
+				Apresentação da implementação
+			</li>
+			<ul>
+				<li><a href="jaxws/index.html">JAX-WS</a></li>
+			</ul>
+		</ul>
+
+		<p>
+            &nbsp;
+        </p>
+
+        <hr />
+
+        <h1>Exercício</h1>
+        <p>
+O ponto de partida do exercício é um Web Service de um <a href="supplier/supplier-ws.zip">fornecedor de produtos</a> e um <a href="supplier/supplier-ws-cli.zip">cliente para o mesmo</a>.<br />
+O código fornecido inclui um servidor incompleto 
+(<tt>supplier-ws</tt> <a href="../proj/uml/uml_server.png" class="hoverZoomLink"><img src="../_img/uml.png" alt="UML"></a>) e
+um cliente incompleto 
+(<tt>supplier-ws-cli</tt> <a href="../proj/uml/uml_client.png" class="hoverZoomLink"><img src="../_img/uml.png" alt="UML"></a>).
+        </p>
+
+        <ol>
+            <li>
+                As classes de domínio da aplicação já estão implementadas.
+            </li>
+            <ol type="a">
+                <li>
+                    Consulte o pacote <tt>domain</tt> do servidor.
+                </li>
+                <li>
+                    Identifique o <i>Domain Root</i> e 
+                    as restantes entidades representadas nas classes.
+                </li>
+                <li>
+                    Analise os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
+                </li>
+            </ol>
+            <li>
+                De seguida,
+                consultar o contrato WSDL do serviço a implementar:
+            </li>
+            <ul>
+                <li><a href="supplier/supplier.wsdl">Supplier WSDL</a></li>
+                <li>
+                    Analise o contrato para ver que operações define e 
+                    quais os respectivos parâmetros e exceções.
+                </li>
+            </ul>
+            <li>
+                Vamos gerar código Java a partir do WSDL.
+                O Maven está configurado para chamar a ferramenta <tt>wsimport</tt>.
+            </li>
+            <ol type="a">
+                <li>
+                    Copie o ficheiro WSDL do serviço a implementar para a pasta <tt>src/main/resources</tt> do servidor.
+                </li>
+                <li>
+				    Vamos agora gerar o código Java do servidor a partir do WSDL:<br />
+                    <tt>cd supplier-ws</tt>
+                </li>
+                <li>
+                    <tt>mvn generate-sources</tt><br>
+                    Caso o WSDL esteja bem formado e válido,
+                    a ferramenta <tt>wsimport</tt> gera vários ficheiros que suportam o web service.
+                    Entre eles, estarão as classes para os tipos complexos usados como parâmetros
+                    e a interface Java que define o Web Service.
+                </li>
+                <li>
+                    Faça <i>refresh</i> no Eclipse e
+                    consulte as classes geradas na pasta:
+                    <tt>target/generated-sources/wsimport</tt>.<br>
+                    Em especial,
+                    consulte a classe <tt>...Service</tt>, e
+                    descubra a interface Java <tt>...PortType</tt> que foi gerada a partir do WSDL.
+                </li>
+            </ol>
+            <li>
+                Vamos agora concretizar o serviço.
+            </li>
+            <ol type="a">
+                <li>
+                    Consulte a classe de implementação do serviço <tt>...PortImpl</tt>,
+                    que deverá implementar a interface Java gerada.
+                </li>
+                <li>
+                    Deverá associar a classe <tt>PortImpl</tt> ao WSDL através da 
+                    anotação <tt>@WebService</tt> com os seguintes atributos:
+                    <i>endpoint interface</i> (nome do tipo Java do PortType), 
+                    <i>wsdlLocation</i> (nome do ficheiro WSDL),
+                    <i>name</i> (definido no WSDL), 
+                    <i>portName</i> (WSDL),
+                    <i>targetNamespace</i> (WSDL) e
+                    <i>serviceName</i> (WSDL).
+                </li>
+                <li>
+                    Além da anotação, todos os métodos listados na interface <tt>PortType</tt>
+                    devem ser implementados na classe do serviço.<br />
+					<br />
+                    Cada método é uma operação do Web Service,
+                    com entradas, saídas e excepções.<br>
+                    Para cada operação, confira se está corretamente implementada.<br>
+                    Adicione a anotação <tt>@Override</tt> antes de cada método de operação,
+                    para que o compilador confirme que está a implementar corretamente 
+                    o método definido na interface.<br>
+                    Note que as operações <tt>searchProducts</tt> e <tt>buyProducts</tt> 
+                    não estão implementadas.
+                    Para já vamos compilar e executar o servidor sem estas operações estarem concluídas.
+                </li>
+            </ol>
+            <li>
+                Executar o servidor:
+            </li>
+            <ol type="a">
+                <li>
+                    <tt>mvn compile exec:java</tt><br>
+                    O nome da classe a executar e 
+                    os argumentos estão definidos no <tt>pom.xml</tt><br>
+                    O servidor deve executar sem erros,
+                    disponibilizando o <i>endpoint address</i>.
+                </li>
+                <li>
+                    Confirmar que o servidor está à espera de pedidos no endereço:
+                </li>
+                <ul>
+                    <li>
+                        <a href="http://localhost:8081/supplier-ws/endpoint?wsdl">http://localhost:8081/supplier-ws/endpoint?wsdl</a>
+                    </li>
+                    <li>
+                        O contrato disponibilizado quando se dá o parâmetro <tt>?wsdl</tt> deve ser o documento original,
+                        com os respetivos comentários.
+                    </li>
+                </ul>
+            </ol>
+        </ol>
+        <p>
+            Vamos agora usar o cliente <tt>supplier-ws-cli</tt> para testar o servidor.
+        </p>
+        <ol>
+            <li>
+                Vamos gerar o código Java para invocação do serviço.
+            </li>
+            <ol type="a">
+                <li>
+                    Consultar o <tt>pom.xml</tt> do cliente para confirmar que o WSDL está a ser corretamente referenciado 
+                    (propriedades <tt>wsdl.directory</tt> e <tt>wsdl.filename</tt>)
+                </li>
+                <li>
+                    <tt>cd supplier-ws-cli</tt>
+                </li>
+                <li>
+                    <tt>mvn generate-sources</tt><br>
+                    As classes são geradas na pasta:
+                    <tt>target/generated-sources/wsimport</tt>.
+                </li>
+            </ol>
+            <li>
+                Vamos fazer uma chamada simples, correndo a aplicação cliente.
+            </li>
+            <ul>
+                <li>
+                    <tt>mvn compile exec:java</tt><br>
+                    A operação auxiliar <tt>ping</tt> deverá ser invocada.
+                </li>
+            </ul>
+            <li>
+                Depois deste teste pontual, vamos correr os testes de integração já existentes.
+            </li>
+            <ul>
+                <li>
+                    <tt>mvn verify</tt><br>
+                    O Maven executa todos os testes contidos em classes <tt>...IT</tt> e 
+                    apresenta um resumo dos resultados obtidos.
+					Se tudo correr bem, os testes passaram todos.
+                </li>
+            </ul>
+        </ol>
+        <p>
+            Vamos agora analisar, em detalhe, as mensagens SOAP usadas para comunicação entre cliente e servidor.
+			Vamos ativar um <i>handler</i> no servidor (classe <tt>PrintSOAPHandler</tt>) que vai intercetar e imprimir as mensagens SOAP para a consola.
+		</p>
+        <ol>
+            <li>
+                Na pasta <tt>src/main/resources</tt>
+                já se encontra um ficheiro <tt>supplier-ws_handler-chain.xml</tt> com a configuração da cadeia de interceção.<br>
+            </li>
+            <li>
+                Para ativarmos o <i>handler</i>, temos que adicionar a seguinte anotação ao <tt>PortImpl</tt>:
+                <br>
+                <pre class="prettyprint lang-java prettyprinted" style=""><span class="lit">@HandlerChain</span><span class="pun">(</span><span class="pln">file </span><span class="pun">=</span><span class="pln"> </span><span class="str">"/supplier-ws_handler-chain.xml"</span><span class="pun">)</span></pre>
+            </li>
+            <li>
+                Recompilar e relançar o servidor.
+                <ul>
+                    <li><tt>cd supplier-ws</tt></li>
+                    <li><tt>mvn compile exec:java</tt></li>
+                </ul>
+            </li>
+            <li>
+                Usar o cliente para chamar o <tt>ping</tt>.
+                <ul>
+                    <li><tt>cd supplier-ws-cli</tt></li>
+                    <li><tt>mvn compile exec:java</tt></li>
+                </ul>
+            </li>
+			<li>
+            Agora, ao receber mensagens, estas serão capturadas e
+            impressas para a consola do servidor.
+			</li>
+			<ol type="i">
+				<li>
+			Qual é a etiqueta principal da mensagem SOAP?
+				</li>
+				<li>
+			Onde são transportados os argumentos das operações? E os resultados?
+				</li>
+			</ol>
+        </ol>
+
+        <p>
+            <b>O que falta fazer?</b>
+        </p>
+        <ul>
+            <li>
+            No servidor:
+            </li>
+            <ul>
+                <li>
+                Implementar <tt>searchProducts</tt> e <tt>buyProduct</tt>
+                </li>
+            </ul>
+            <li>
+            No cliente:
+            </li>
+            <ul>
+                <li>
+                Fazer testes de integração das operações implementadas
+                </li>
+                <ul>
+                    <li>
+                    Testar casos mais importantes
+                    </li><li>
+                    Não esquecer os casos com argumentos incorretos: <tt>null</tt>, <tt>""</tt>, valores inesperados, etc
+                    </li>
+                </ul>
+                <li>
+                Os testes de integração correm com <tt>mvn verify</tt> no cliente
+                </li>
+            </ul>
+        </ul>
+        <hr />
+        <div class="rodape">
+            <p>
+                &copy; Docentes de Sistemas Distribuídos,
+                <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+                <a href="http://www.ist.eu">Técnico Lisboa</a><br />
+            </p>
+        </div>
+    </body>
+</html>

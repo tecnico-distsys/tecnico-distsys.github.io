@@ -137,13 +137,13 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
             <small>Atenção: se instalou o JDK 32 bits, deve instalar o Eclipse 32 bits;
             se instalou o JDK 64 bits, deve instalar o Eclipse 64 bits.</small></li> -->
 			<li>Extrair o arquivo para um diretório com permissões de escrita.</li>
-			<small>Exemplo: <tt>C:\Users\john\Documents\eclipse</tt> em Windows, ou <tt>/home/john/Documents/eclipse</tt> em Linux para um utilizador chamado <b>john</b></small>
+			<!--small>Exemplo: <tt>C:\Users\john\Documents\eclipse</tt> em Windows, ou <tt>/home/john/Documents/eclipse</tt> em Linux para um utilizador chamado <b>john</b></small-->
         </ul>
         <li>Configurar:</li>
         <ul>
             <li>Especificar o JDK como Standard VM (em vez do JRE)</li>
 			<b>Nota: só deverá ser necessário este passo em Windows.</b>
-			<!--Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre-->
+			<!--Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre -->
             <ul>
                 <li>Window -> Preferences -> Java -> Installed JREs -> Add...</li>
                 <li>Indicar o caminho até ao diretório do JDK:
@@ -156,12 +156,8 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                 <li>Window -> Preferences -> Maven -> Discovery e clicar em "Open catalog".</li>
                 <li>Seleccionar:</li>
                 <ul>
-                    <!--li>m2e connector for jaxws-maven-plugin</li--><!-- if not installed, handlers config file may not be found on Run As, Maven, exec:java<!--> <!--Repository not found-->
-										<li>m2e connector for maven-dependency-plugin</li>
-                    <!--li>m2e connector for maven-remote-resources-plugin</li--> <!--Repository not found-->
-										<!--li>m2e connector for org.codehaus.mojo:jaxb2-maven-plugin and org.jvnet.jaxb2.maven2:maven-jaxb2-plugin</li-->
-                    <!--li>m2e-apt</li-->
-                    <!--li>m2e-egit <small>&#x26A0; not working on 2018-08-10. Try to install. If there is an <a href="2018-08-10_maven_egit_problem.png">error</a>, skip and try again later.</small></li-->
+    				<li>m2e connector for maven-dependency-plugin</li>
+                    <li>m2e connector for maven-remote-resources-plugin</li>
                 </ul>
             </ul>
             <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.
@@ -171,53 +167,6 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         </ul>
     </ul>
 
-	<!--
-    <li>
-    <b>Apache jUDDI</b><br />
-    Servidor de nomes para Web Services que segue a norma UDDI 
-    (Universal Description, Discovery, and Integration)</li>
-    <ul>
-        <li>Obter</li>
-        <ul>
-            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.5/">jUDDI distro</a></li- ->
-            <li><a href="http://disciplinas.tecnico.ulisboa.pt/leic-sod/2018-2019/download/juddi-3.3.6_tomcat_9090.zip">jUDDI 3.3.6</a> <small>(configured for port <b>9090</b>)</small></li>
-        </ul>
-        <li>Instalar</li>
-        <ul>
-            <!--li><a href="http://www.eu.apache.org/dist/juddi/juddi/3.3.5/readme.txt">Instruções de instalação</a></li- ->
-            <!--li>Definir variável de ambiente CATALINA_HOME com o caminho para a pasta de instalação terminada em /juddi-distro-3.3.5/juddi-tomcat-3.3.5</li>
-            <li>Acrescentar CATALINA_HOME/bin à variável de ambiente PATH</li- ->
-            <li>Em Linux ou Mac,
-                tornar os <i>scripts</i> de lançamento executáveis:<br />
-                <tt>chmod +x juddi-3.3.6_tomcat_9090/bin/*.sh</tt>
-            <!--li><b>IMPORTANTE</b>: Configurar o jUDDI para escutar no porto <b>9090</b></li>
-            <ul>
-                <li>Abrir o ficheiro '...\juddi-distro-3.3.5\juddi-tomcat-3.3.5\conf\server.xml' e alterar a linha 71 para:<br>
-                <tt>&lt;Connector port="9090" protocol="HTTP/1.1"</tt></li>
-                <li>Substituir ocorrências de 8080 por 9090 nos ficheiros</li>
-                <ul>
-                    <li>juddi-3.3.5_tomcat-7.0.82_9090/webapps/juddiv3/WEB-INF/classes/juddiv3.xml</li>
-                    <li>juddi-3.3.5_tomcat-7.0.82_9090/webapps/juddiv3/WEB-INF/classes/META-INF/uddi.xml</li>
-                </ul>
-            </ul- ->
-            <li>Para lançar o servidor,
-                basta executar o seguinte comando na pasta <tt>juddi-3.3.6_tomcat_9090/bin</tt>:</li>
-                <ul>
-                    <li><tt>startup.sh</tt> (Linux e Mac)</li>
-                    <li><tt>startup.bat</tt> (Windows)</li>
-                </ul>
-            <li>Para confirmar funcionamento,
-                aceder à página de índice do jUDDI, 
-                que dá também acesso à interface de administração<br />
-                <a href="http://localhost:9090/juddiv3/">http://localhost:9090/juddiv3/</a>
-            </li>
-            <ul>
-                <li>utilizador:senha <tt>uddiadmin:da_password1</tt></li>
-            </ul>
-        </ul>
-    </ul>
-	-->
-    
 </ol>
 
 <hr />

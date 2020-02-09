@@ -17,24 +17,30 @@
     <p>
         <a href="../index.html">Labs SD</a> &gt;
     </p>
-</div>
+</div><!-- contexto -->
 
 <div class="titulo" id="1">
     <h1>Ferramentas</h1>
-</div>
+</div><!-- titulo -->
 
-<!--div class="objectivos">
-    <h2>Objectivos da semana</h2>
+<div class="objectivos">
+    <h2>Objetivos da semana</h2>
     <ul>
-        <!--li>Instalar/testar o software necessário</li-->
-        <!--li>Usar o Maven para compilar projectos Java</li>
+        <li>Usar o Maven para compilar projectos Java</li>
         <li>Usar o Eclipse para programar e depurar projectos Java</li>
-        <li>Usar <i>sockets</i> para transferir dados entre cliente e servidor</li>
+        <li>Resolver exercício com <i>sockets</i> para transferir dados entre cliente e servidor</li>
     </ul>
-</div-->
+</div><!-- objectivos-->
 
-<div class="indice">
-</div>
+<!--div class="indice">
+    <h2>Índice:</h2>
+    <ul>
+        <li><a href="#java">Java</a></li>
+        <li><a href="#maven">Maven</a></li>
+        <li><a href="#eclipse">Eclipse</a></li>
+    </ul>
+</div--><!-- indice -->
+
 
 <div class="corpo">
 
@@ -51,11 +57,9 @@ Em primeiro lugar, antes de começar,
 é necessário <a href="../software/index.html">instalar o software</a>.
 </p>
 
+
 <p>&nbsp;</p>
-
-
-
-<h2>Java</h2>
+<h2 id="java">Java</h2>
 
 <p>
 O Java Developer Kit (JDK) é um conjunto de ferramentas para
@@ -98,9 +102,9 @@ A programação em Java para Sistemas Distribuídos deve ter em conta a
 O <a href="exceptions/index.html">tratamento de exceções</a> é também um aspeto muito importante, e que irá ser especialmente importante para lidar com faltas de comunicação.
 </p>
 
-<p>&nbsp;</p>
 
-<h2>Maven</h2>
+<p>&nbsp;</p>
+<h2 id="maven">Maven</h2>
 <p>
 A ferramenta Maven é, talvez,
 a mais importante logo a seguir ao próprio JDK
@@ -149,46 +153,9 @@ Compilar e executar o programa através da linha de comando <tt>mvn</tt>,
 seguindo as instruções no ficheiro <tt>readme.txt</tt>.<br/>
 </p>
 
-<h3>JUnit</h3>
-<p>
-Para garantir a qualidade do código,
-é necessário produzir testes que incidem sobre diferentes módulos e aspetos das soluções.
-</p>
-<ul>
-    <li>
-Testes unitários (<tt>Test</tt>) -
-são testes que verificam o comportamento de objetos individuais através de invocações <i>locais</i>.
-    </li>
-    <li>
-Testes de integração (<tt>IT</tt>) -
-são testes que verificam o comportamento de todo o sistema através de invocações <i>remotas</i>.
-    </li>
-</ul>
-<p>
-O JUnit é uma biblioteca Java que ajuda a construir e executar testes ao código.
-</p>
-<p>
-Exemplo e mais informação: <a href="junit/index.html">JUnit</a>
-</p>
-<!--ul>
-    <li>
-        <a href="junit-app.zip">Exemplo de aplicação Java com testes JUnit
-        <img src="../_img/zip.png" alt="ZIP" ></a><br />
-        - utiliza o Maven para compilar e testar<br />
-        - comando <tt>mvn test</tt>
-    </li-->
-    <!--li>
-        <a href="jmockit-app.zip">Exemplo de aplicação Java com testes JMockit
-        <img src="../_img/zip.png" alt="ZIP" ></a>
-        - utiliza o Maven para compilar e testar,
-        com objectos simulados.
-    </li-->
-<!--/ul-->
-
 
 <p>&nbsp;</p>
-
-<h2>Eclipse</h2>
+<h2 id="eclipse">Eclipse</h2>
 <p>
 O Eclipse pode ser configurado por cima do JDK (Eclipse/JDK),
 ou então por cima também do Maven (Eclipse/Maven/JDK).
@@ -297,7 +264,10 @@ ou então por cima também do Maven (Eclipse/Maven/JDK).
 	</ol>
 -->
 </ol>
+</div><!-- corpo -->
 
+
+<p>&nbsp;</p>
 <hr />
 
 <div class="rodape">

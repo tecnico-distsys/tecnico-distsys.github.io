@@ -32,30 +32,24 @@
 <div class="indice">
     <ul>
         <li><a href="#intro">Introdução</a></li>
-        <li><a href="#estrutura-dir">Estrutura típica de pastas</a></li>
-        <li><a href="#conceitos-fun">Conceitos fundamentais</a></li>
+        <li><a href="#dirs">Estrutura típica de pastas</a></li>
+        <li><a href="#cmds">Comandos mais frequentes</a></li>
+        <li><a href="#concepts">Conceitos fundamentais</a></li>
     </ul>
 </div>
 
-<hr>
-
 <div class="corpo">
 
+<p>&nbsp;</p>
 <h3 id="intro">Introdução</h3>
 
 <p>
 O Maven é uma ferramenta Java para a gestão de projetos que fornece aos programadores uma estrutura completa para suportar o ciclo de desenvolvimento de uma aplicação.
-Em particular, 
-o Maven trata da compilação, 
-distribuição, 
-documentação, e 
-colaboração em equipa, 
-entre outras tarefas.
+Em particular, o Maven trata da compilação, distribuição, documentação, e colaboração em equipa, entre outras atividades.
 </p>
 <p>
-A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, 
-chamado POM (Project Object Model) <tt>pom.xml</tt>, 
-que é a unidade fundamental deste sistema.
+A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<i>Project Object Model</i>) <tt>pom.xml</tt>, que é a unidade fundamental deste sistema.
+Cada POM descreve um módulo.
 </p>
 <p>
 Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documentação</a>):
@@ -68,10 +62,8 @@ Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documen
   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
   &lt;!--
-    Os elementos de configuração básicos permitem 
-    identificar unicamente o projeto, 
-    especificar dependências e
-    definir propriedades (variáveis). 
+    Os elementos de configuração básicos permitem identificar unicamente o projeto, 
+    especificar dependências e definir propriedades (variáveis). 
   --&gt;
   &lt;groupId&gt;...&lt;/groupId&gt;
   &lt;artifactId&gt;...&lt;/artifactId&gt;
@@ -87,8 +79,7 @@ Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documen
 
   &lt;!-- 
     Os elementos de configuração de construção permitem declarar 
-    a estrutura de pastas do projeto e 
-    a gestão de extensões (plugins).
+    a estrutura de pastas do projeto e a gestão de extensões (plugins).
   --&gt;
   &lt;build&gt;...&lt;/build&gt;
   &lt;reporting&gt;...&lt;/reporting&gt;
@@ -117,8 +108,12 @@ Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documen
   &lt;pluginRepositories&gt;...&lt;/pluginRepositories&gt;
   &lt;distributionManagement&gt;...&lt;/distributionManagement&gt;
   &lt;profiles&gt;...&lt;/profiles&gt;
-&lt;/project&gt;</pre>
+&lt;/project&gt;
 
+
+</pre>
+
+<p>&nbsp;</p>
 <p>
 Exemplo de ficheiro POM:
 </p>
@@ -133,7 +128,7 @@ Exemplo de ficheiro POM:
   &lt;groupId&gt;example&lt;/groupId&gt;
   &lt;artifactId&gt;java-app&lt;/artifactId&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
-  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
   &lt;name&gt;java-app&lt;/name&gt;
   &lt;url&gt;http://maven.apache.org&lt;/url&gt;
   
@@ -143,7 +138,7 @@ Exemplo de ficheiro POM:
       &lt;plugin&gt;
         &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
         &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.9&lt;/version&gt;
+        &lt;version&gt;1.10&lt;/version&gt;
         &lt;configuration&gt;
           &lt;programs&gt;
             &lt;program&gt;
@@ -157,89 +152,75 @@ Exemplo de ficheiro POM:
   &lt;/build&gt;
 
 &lt;/project&gt;
+
+
 </pre>
 
 <p>&nbsp;</p>
-<h3 id="estrutura-dir">Estrutura típica de pastas</h3>
+<h3 id="dirs">Estrutura típica de pastas</h3>
 <p>
-Assumindo que <i>${basedir}</i> corresponde à localização do projeto, 
-a estrutura de pastas associada a um projecto Maven é a seguinte:
+Assumindo que <i>${basedir}</i> corresponde à localização do projeto Maven, a estrutura de pastas associada é a seguinte:
 </p>
 <ul>
-    <li><i>${basedir}</i>/src/main/java - código fonte</li>
-    <li><i>${basedir}</i>/src/main/resources - recursos</li>
-    <li><i>${basedir}</i>/src/test - código de teste</li>
-    <li><i>${basedir}</i>/target - A pasta <i>target</i> é temporária e 
-        serve para guardar as classes do programa compiladas (*.class) e 
-        outros ficheiros auxiliares 
-        - pode ser descartada a qualquer momento e 
-        não deve ser guardada em controlo de versões.</li>
+    <li><tt><i>${basedir}</i>/src/main/java</tt> - código fonte</li>
+    <li><tt><i>${basedir}</i>/src/main/resources</tt> - recursos</li>
+    <li><tt><i>${basedir}</i>/src/test</tt> - código de teste</li>
+    <li><tt><i>${basedir}</i>/target</tt> - A pasta <i>target</i> é temporária e serve para guardar as classes do programa compiladas (<tt>*.class</tt>) e outros ficheiros auxiliares - pode ser descartada a qualquer momento e não deve ser guardada em controlo de versões</li>
 </ul>
 
+<p>&nbsp;</p>
+<h3 id="cmds">Comandos mais frequentes</h3>
+<p>
+A lista seguinte apresenta alguns dos comandos Maven mais frequentes:
+</p>
 <ul>
     <li><tt>mvn clean</tt> - limpa a pasta temporária</li>
     <li><tt>mvn compile</tt> - compila o código do programa</li>
-    <li><tt>mvn compile exec:java</tt> - compila o código do programa e executa a classe definida como principal no pom.xml</li>
-    <li><tt>mvn test</tt> - compila o código do programa e executa testes</li>
-    <li><tt>mvn verify</tt> - compila o código do programa e executa testes de integração (e.g. cliente-servidor)</li>
-    <!--li><tt>mvn package</tt> - depende de <i>compile</i>, e 
-        cria um pacote JAR / WAR.</li-->
-    <!--li><tt>mvn appassembler:assemble</tt> - depende de <i>package</i>, que depende de <i>compile</i>, e 
-        cria o <i>script</i> de arranque do programa na consola</li-->
+    <li><tt>mvn compile exec:java</tt> - compila o código do programa e executa a classe definida como principal no <tt>pom.xml</tt></li>
+    <li><tt>mvn test</tt> - compila o código do programa e executa os testes</li>
+    <li><tt>mvn verify</tt> - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)</li>
+    <!--li><tt>mvn package</tt> - depende de <i>compile</i>, e cria um pacote JAR / WAR.</li-->
+    <!--li><tt>mvn appassembler:assemble</tt> - depende de <i>package</i>, que depende de <i>compile</i>, e cria o <i>script</i> de arranque do programa na consola</li-->
 </ul>    
 
 <p>&nbsp;</p>
-<h3 id="conceitos-fun">Conceitos fundamentais</h3>
+<h3 id="concepts">Conceitos fundamentais</h3>
 
 <p><b>Ciclos de vida de construção, fases e objetivos (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics">documentação</a>)</b></p>
 <p>
-Em Maven, 
-o processo de construção é dividido em ciclos de vida de construção, 
-fases e 
-objetivos.
-Um ciclo de vida de construção é composto por uma sequência de fases de construção e 
-por sua vez cada fase de construção consiste numa sequência de objetivos.
+Em Maven, o processo de construção é dividido em ciclos de vida de construção, fases e objetivos.
+Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos.
 <p>
-Por exemplo, 
-o ciclo <i>default</i> inclui as seguintes fases (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference" name="lista completa de fases" target="_self">lista completa de fases</a>):
+Por exemplo, o ciclo <i>default</i> inclui as seguintes fases (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference" name="lista completa de fases" target="_self">lista completa de fases</a>):
 </p>
 <ul>
-    <li>validate - verifica se projecto está correcto e 
+    <li><i>validate</i> - verifica se projecto está correcto e 
         toda a informação está disponível</li>
-    <li>compile - compila o código fonte</li>
-    <li>test - testa o código fonte compilado</li>
-    <li>package - pega no código compilado e 
-        empacota-o num formato que se pode partilhar/distribuir, como JAR.</li>
-    <li>integration-test - processa e 
-        integra o pacote se necessário num ambiente onde testes de integração possam correr</li>
-    <li>verify - corre verificações para confirmar que o pacote é válido e 
-        corresponde aos critérios de qualidade definidos</li>
-    <li>install - instala o pacote no repositório local, 
-        para poder ser usado localmente como dependência noutros projectos</li>
-    <li>deploy - copia pacote final para um repositório remoto</li>    
+    <li><i>compile</i> - compila o código fonte</li>
+    <li><i>test</i> - testa o código fonte compilado</li>
+    <li><i>package</i> - pega no código compilado e empacota-o num formato que se pode partilhar/distribuir, como JAR.</li>
+    <li><i>integration-test</i> - processa e integra o pacote se necessário num ambiente onde testes de integração possam correr</li>
+    <li><i>verify</i> - corre verificações para confirmar que o pacote é válido e corresponde aos critérios de qualidade definidos</li>
+    <li><i>install</i> - instala o pacote no repositório local, para poder ser usado localmente como dependência noutros projectos</li>
+    <li><i>deploy</i> - copia pacote final para um repositório remoto</li>    
 </ul>
 
 <p>
-Uma execução no Maven consiste em passar um comando a este. 
-Este comando corresponde ao nome dum ciclo de vida de construção, 
-fase ou 
-objetivo.
+Uma execução no Maven consiste em passar um argumento ao executável <tt>mvn</tt>. 
+Este argumento corresponde ao nome dum ciclo de vida de construção, fase ou objetivo.
 </p>
 
 <p>
-Se um ciclo de vida solicitado é executado, 
-todas as fases de construção deste ciclo de vida são executadas.
-Por conseguinte, 
-se uma fase de construção solicitada é executada, 
-todas as fases de construção que a antecedem na sequência pré-definida de fases de construção são também executadas.
+Se um ciclo de vida solicitado é executado, todas as fases de construção deste ciclo de vida são executadas.
+Por conseguinte, se uma fase de construção solicitada é executada, todas as fases de construção que a antecedem na sequência pré-definida de fases de construção são também executadas.
 </p>
 
 <p>
 Por exemplo, executar: <br />
-<tt>mvn package</tt><br />
+<tt>mvn install</tt><br />
 irá correr todas as fases anteriores 
 - validate, compile, ... -
-antes de executar package.
+antes de empacotar e instalar o módulo no repositório local.
 </p>
 
 
@@ -247,26 +228,23 @@ antes de executar package.
 <p>
 Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto.
 As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto.
-Se as dependências não forem encontrados no repositório local, 
-isto é, 
-numa pasta no disco rígido do computador local, 
-o Maven descarrega-as de um repositório central para o repositório local. 
-Por omissão, 
-o repositório local encontra-se na pasta %USER_HOME%. 
-Contudo, 
-é possível especificar um repositório local onde Maven irá guardar os artefactos.
+Se as dependências não forem encontrados no repositório local, isto é, numa pasta no disco rígido do computador local, o Maven descarrega-as de um repositório central para o repositório local. 
+Por omissão, o repositório local encontra-se na pasta %USER_HOME%. 
+Contudo, é possível especificar um repositório local onde Maven irá guardar os artefactos.
 
 <pre class="prettyprint lang-xml">
 &lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;
           xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
           xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;
-  &lt;localRepository&gt;C:/RepositorioLocal&lt;/localRepository&gt;
+    &lt;localRepository&gt;C:/RepositorioLocal&lt;/localRepository&gt;
+    ...
+
+
 </pre>
 </p>
 </p>
 <p>
-Um exemplo de uma dependência é o JUnit, 
-como pode ser visto abaixo.
+Um exemplo de uma dependência é o JUnit, que como pode ser vista abaixo.
 </p>
 
 <pre class="prettyprint lang-xml">
@@ -280,14 +258,14 @@ como pode ser visto abaixo.
       &lt;scope&gt;test&lt;/scope&gt;
   &lt;/dependencies&gt;
 &lt;/project&gt;
+
+
 </pre>
 
 <p>
 Os três primeiros campos identificam a dependência.
-O parâmetro <tt>scope</tt> especifica que a dependência apenas existe para os testes.
-Isto significa que o Maven vai providenciar um <i>classpath</i> sem o JUnit para compilação do código principal e
-um <i>classpath</i> com o JUnit (na versão indicada) para compilação e 
-execução do código de testes.
+O parâmetro <i>scope</i> especifica que a dependência apenas existe para os testes.
+Isto significa que o Maven vai providenciar um <i>classpath</i> sem o JUnit para compilação do código principal e um <i>classpath</i> com o JUnit (na versão indicada) para compilação e execução do código de testes.
 </p>
 <p>
 As dependências podem ser pesquisadas no motor de pesquisa amigável do repositório central Maven.
@@ -296,13 +274,9 @@ Por exemplo, o JUnit 4.12 tem a seguinte página informativa:
 </p>
 
 <p>
-Para o caso de projetos em desenvolvimento com inúmeros módulos 
-(por exemplo: módulos <b>A</b>, <b>B</b> e <b>C</b>), 
-com dependências entre eles,
-o conceito de SNAPSHOT é muitas vezes usado. 
-Se um módulo <b>A</b> está em desenvolvimento rápido, e 
-a criar novas versões com muita frequência, 
-o sufixo -SNAPSHOT é adicionado no elemento <tt>&lt;version&gt;</tt>. 
+Para o caso de projetos em desenvolvimento com inúmeros módulos (por exemplo: módulos <b>A</b>, <b>B</b> e <b>C</b>), com dependências entre eles, o conceito de <i>SNAPSHOT</i> é muitas vezes usado. 
+Se um módulo <b>A</b> está em desenvolvimento rápido, e a criar novas versões com muita frequência, o sufixo <tt>-SNAPSHOT</tt> é adicionado no elemento <tt>&lt;version&gt;</tt>.<br />
+<br />
 Exemplo do <tt>pom.xml</tt> de <b>A</b>:
 </p>
 
@@ -311,17 +285,17 @@ Exemplo do <tt>pom.xml</tt> de <b>A</b>:
   ...
   &lt;groupId&gt;exemplo&lt;/groupId&gt;
   &lt;artifactId&gt;modA&lt;/artifactId&gt;
-  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
   ...
-&lt;/project&gt;</pre>
+&lt;/project&gt;
+
+
+</pre>
 
 <p>
-Assim, 
-cada vez que o módulo <b>A</b> enviar uma SNAPSHOT do seu código actualizado para o repositório, 
-vai substituir a versão que existia anteriormente.
-Por sua vez, 
-os outros módulos, <b>B</b> e <b>C</b>, 
-que dependem de <b>A</b> escolhem essa mesma versão SNAPSHOT como dependência. 
+Assim, cada vez que o módulo <b>A</b> enviar uma <i>SNAPSHOT</i> do seu código actualizado para o repositório, vai substituir a versão que existia anteriormente.
+Por sua vez, os outros módulos, <b>B</b> e <b>C</b>, que dependem de <b>A</b> escolhem essa mesma versão <i>SNAPSHOT</i> como dependência.<br />
+<br />
 O <tt>pom.xml</tt> de <b>B</b> e <b>C</b> iriam conter:
 </p>
 
@@ -332,25 +306,23 @@ O <tt>pom.xml</tt> de <b>B</b> e <b>C</b> iriam conter:
         &lt;dependency&gt;
             &lt;groupId&gt;exemplo&lt;/groupId&gt;
             &lt;artifactId&gt;modA&lt;/artifactId&gt;
-            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+            &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
             &lt;scope&gt;test&lt;/scope&gt;
         &lt;/dependency&gt;
   &lt;/dependencies&gt;
 &lt;/project&gt;
+
+
 </pre>
 
 <p>
-Deste modo, sempre que os módulos <b>B</b> e <b>C</b> são construídos, 
-o Maven automaticamente actualiza o módulo <b>A</b>, 
-obtendo fazendo o JAR correspondente ao SNAPSHOT mais recente.
+Deste modo, sempre que os módulos <b>B</b> e <b>C</b> são construídos, o Maven automaticamente actualiza o módulo <b>A</b>, obtendo fazendo o JAR correspondente ao <i>SNAPSHOT</i> mais recente.
 </p>
 <br>
 
 <p><b>Plugins de construção (<a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">documentação</a>)</b></p>
 <p>
-Os <i>plugins</i> de construção são utilizados para inserir objetivos adicionais numa fase de construção, 
-caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e 
-objetivos padrão do Maven.
+Os <i>plugins</i> de construção são utilizados para inserir objetivos adicionais numa fase de construção, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven.
 Os <i>plugins</i> podem ser adicionados ao ficheiro POM.
 Para além dos plugins padrão disponibilizados, 
 outros podem também ser implementados em Java.
@@ -366,7 +338,7 @@ Damos como exemplo o <i>plugin</i> <tt>AppAssembler</tt>:
       &lt;plugin&gt;
         &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
         &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.9&lt;/version&gt;
+        &lt;version&gt;1.10&lt;/version&gt;
         &lt;configuration&gt;
           &lt;programs&gt;
             &lt;program&gt;
@@ -378,13 +350,12 @@ Damos como exemplo o <i>plugin</i> <tt>AppAssembler</tt>:
       &lt;/plugin&gt;
     &lt;/plugins&gt;
 &lt;/build&gt;
+
+
 </pre>
     
-<p>Este <i>plugin</i> é usado para criar um <i>script</i> de arranque do programa, 
-tanto para Windows (ficheiro <tt>.bat</tt>) como para Linux 
-(ficheiro com o atributo "executável").
-Neste caso, 
-o programa a executar é um programa de exemplo (java-app) cuja classe principal se chama <tt>mypackage.MyClass</tt>.
+<p>Este <i>plugin</i> é usado para criar um <i>script</i> de arranque do programa, tanto para <i>Windows</i> (ficheiro <tt>.bat</tt>) como para <i>Linux</i> (ficheiro com o atributo executável definido).
+Neste caso, o programa a executar é um programa de exemplo (<tt>java-app</tt>) cuja classe principal se chama <tt>mypackage.MyClass</tt>.
 </p>
 
 <br>
@@ -392,15 +363,14 @@ o programa a executar é um programa de exemplo (java-app) cuja classe principal
 <p><b>Perfis de construção</b></p>
 <p>
 Os perfis de construção são utilizados caso seja necessário construir um projeto de maneira diferente.
-Por exemplo, 
-pode ser necessário construir num computador pessoal projetos para desenvolvimento e teste.
+Por exemplo, pode ser necessário construir num computador pessoal projetos para desenvolvimento e teste.
 Pode ainda ser necesssário construí-los para um ambiente de produção. 
-Estas versões poderão ser diferentes.
-Para permitir diferentes versões, 
-diferentes perfis de construção podem ser adicionados aos ficheiros POM.
+Estas versões poderão ser diferentes. 
+Para permitir diferentes versões, diferentes perfis de construção podem ser adicionados aos ficheiros POM.
 Durante a execução pode ser especificado que perfil de construção deve ser usado.
 </p>
 
+<p>&nbsp;</p>
 </div>
 
 <hr>

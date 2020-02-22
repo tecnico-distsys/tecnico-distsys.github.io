@@ -31,70 +31,54 @@
 
 <p>
 As exceções são usadas na linguagem Java para assinalar que algo não correu como esperado.<br />
-São classes que herdam de <tt>java.lang.Exception</tt> e 
-cujos objetos podem ser atirados (throw) e
-apanhados (caught).
+São classes que herdam de <tt>java.lang.Exception</tt> e cujos objetos podem ser atirados (<i>throw</i>) e apanhados (<i>caught</i>).
 </p>
 <p>
-As exceções que herdam de <tt>java.lang.RuntimeException</tt> (RTE) são chamadas <i>unchecked exceptions</i>.
+As exceções que herdam de <tt>java.lang.RuntimeException</tt> (RTE) são chamadas exceções não verificadas (<i>unchecked exceptions</i>).
 Neste caso, o compilador não obriga o programador a declarar se apanha ou se atira.
 Por este motivo, qualquer linha de código pode atirar uma exceção destas.
 A mais conhecida é a <tt>NullPointerException</tt> (NPE).
 </p>
 <p>
-As exceções que herdam de <tt>java.lang.Exception</tt> são chamadas <i>checked exceptions</i>,
-no sentido, em que a sua utilização é verificada pelo compilador.
-Nestes casos é preciso explicitar se se apanha a exceção (catch) ou se se lança (throws).
+As exceções que herdam de <tt>java.lang.Exception</tt> são chamadas exceções verificadas (<i>checked exceptions</i>), no sentido, em que a sua utilização é verificada pelo compilador.
+Nestes casos é preciso explicitar se se apanha a exceção (<i>catch</i>) ou se se lança (<i>throws</i>).
 Normalmente, se não se vai tentar recuperar a exceção, pode simplesmente dizer que se atira.
 É preferível atirar do que fazer um falso tratamento de exceção.
 </p>
+
+
+<p>&nbsp;</p>
+<h2>Abordagens ao tratamento de exceções</h2>
 
 <p>
 Podemos ter as seguintes abordagens em relação às exceções:
 </p>
 <ul>
-    <li>Exception pass-through (deixar-passar)</li>
-    <li>Exception handling (apanhar-tratar)</li>
+    <li>Deixar-passar (<i>pass-through</i>)</li>
+    <li>Apanhar-e-tratar (<i>catch-and-handle</i>)</li>
     <ul>
-	    <li><span style="color: red">Exception swallowing (apanhar-ignorar!)</span></li>
-        <li>Exception logging (apanhar-imprimir-atirar)</li>
-        <li>Exception wrapping (apanhar-embrulhar-atirar)</li>
-        <li>Exception recovery (apanhar-recuperar)</li>
+	    <li><span style="color: red">Apanhar-e-ignorar! (<i>swallow!</i>)</span></li>
+        <li>Apanhar-registar-e-atirar (<i>logging</i>)</li>
+        <li>Apanhar-embrulhar-e-atirar (<i>wrapping</i>)</li>
+        <li>Apanhar-e-recuperar (<i>recovery</i>)</li>
     </ul>
 </ul>
 
 <p>
-A abordagem 'apanhar-ignorar' é claramente errada porque perde informação e
-tornam muito mais difícil diagnosticar e 
-resolver problemas.
+A abordagem 'apanhar-e-ignorar' é claramente errada porque perde informação e torna muito mais difícil diagnosticar e resolver problemas.
 </p>
 
-<hr />
 
+<p>&nbsp;</p>
 <h2>Exceções impressas na consola</h2>
 
 <p>
-Os <i>outputs</i> seguintes foram produzidos usando o servidor <tt>java-sockets-server</tt> e 
-o cliente <tt>java-sockets-client</tt> e ilustram diversas situações.
+Os <i>outputs</i> seguintes foram produzidos por uma aplicação que usa <i>sockets</i> para comunicação, e ilustram diversas situações.
 </p>
 <p>
-<p>
-As linhas mais importantes dos <i>outputs</i> são as começadas por 
-<b>"Caused by:"</b>.
-É aí que se podem encontrar as mensagens das exceções.<br />
-Dado que uma exceção pode ter outra exceção aninhada
-(<i>cause</i>) 
-pode ser necessário consultar várias linhas para perceber o que causou a exceção de topo.
-</p>
-<p>
-As linhas começadas por <b>"at"</b> indicam o contexto de execução.
-Observando estas linhas é possível ver o conteúdo da pilha de execução do programa,
-que diz que parte do código estava a chamar que outra parte.
-</p>
 
 <p>
-Na situação abaixo, 
-o servidor tenta criar o socket com um porto fora do intervalo [0;65535].
+Na situação abaixo, o servidor tenta criar o <i>socket</i> com um porto fora do intervalo [0;65535].
 </p>
 
 <pre class="prettyprint lang-java">
@@ -109,13 +93,12 @@ Caused by: java.lang.IllegalArgumentException: Port value out of range: 65536
 	at java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:232)
 	at java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:128)
 	at example.SocketServer.main(SocketServer.java:24)
-	... 6 more
+    ... 6 more
+
 </pre>
 
 <p>
-Na situação abaixo,
-o cliente tenta ligar ao servidor por meio dum porto incorreto e 
-não consegue.
+Na situação abaixo, o cliente tenta ligar ao servidor por meio dum porto incorreto e não consegue.
 </p>
 
 <pre class="prettyprint lang-java">
@@ -139,17 +122,28 @@ Caused by: java.net.ConnectException: Connection refused: connect
 	at java.net.Socket.&lt;init&gt;(Socket.java:434)
 	at java.net.Socket.&lt;init&gt;(Socket.java:211)
 	at example.SocketClient.main(SocketClient.java:32)
-	... 6 more
+    ... 6 more
+
 </pre>
 
-<hr />
+<p>
+As linhas mais importantes dos <i>outputs</i> são as começadas por <b><tt>Caused by</tt></b>.
+É aí que se podem encontrar as mensagens das exceções.
+Dado que uma exceção pode ter outra exceção aninhada (<i>cause</i>) pode ser necessário consultar várias linhas para perceber o que causou a exceção de topo.
+</p>
+<p>
+As linhas começadas por <b><tt>at</tt></b> indicam o contexto de execução.
+Observando estas linhas é possível ver o conteúdo da pilha de execução do programa, que diz que parte do código estava a chamar que outra parte.
+</p>
 
-<h2>Código de exceções</h2>
+
+<p>&nbsp;</p>
+<h2>Código de tratamento de exceções</h2>
         
-O seguinte código mostra <b>maus</b> exemplos de tratamento de exceções.
+O seguinte código mostra <span style="color: red"><b>maus exemplos</b></span> de tratamento de exceções.
 </p>
 <pre class="prettyprint lang-java">
-    // ANTI-padrão 'apanhar-ignorar!'
+    // ANTI-padrão 'apanhar-e-ignorar!'
     // Ignorar a exceção sem dizer nada a ninguém.
     // Evitar! 
     try {
@@ -160,7 +154,7 @@ O seguinte código mostra <b>maus</b> exemplos de tratamento de exceções.
     
     ...
     
-    // ANTI-padrão 'apanhar-imprimir-ignorar!' 
+    // ANTI-padrão 'apanhar-imprimir-e-ignorar!' 
     // Imprimir o <i>stack trace</i>, não resolve nada.
     // O programa vai "rebentar" mais à frente, onde será mais difícil perceber porquê.
     // Evitar também! 
@@ -170,25 +164,29 @@ O seguinte código mostra <b>maus</b> exemplos de tratamento de exceções.
     } catch(Exception e) {
         e.printStackTrace();
     }
+
+
 </pre>
 <p>
 Ignorar a exceção torna muito mais difícil detetar e corrigir erros no código!
 </p>
 
+<p>&nbsp;</p>
+
 <p>
-Vamos então ilustrar alguns <b>bons</b> exemplos:
+Vamos então ilustrar alguns <span style="color: green"><b>bons exemplos</b></span>:
 </p>
 <pre class="prettyprint lang-java">
 
     // padrão 'deixar-passar'
-    // Se a exceção não vai ser tratada, mais vale lançá-la (throws)
+    // Se a exceção não vai ser tratada, mais vale lançá-la (<i>throws</i>)
     public static void main(String[] args) throws Exception {
         doSomething();
     }
 
     ...
     
-    // padrão 'apanhar-imprimir-atirar'
+    // padrão 'apanhar-imprimir-e-atirar'
     // Registar onde foi apanhada a exceção, mas voltar a atirá-la para que seja tratada depois
     try {
         doSomething();
@@ -200,7 +198,7 @@ Vamos então ilustrar alguns <b>bons</b> exemplos:
     }
     
     
-    // padrão 'apanhar-embrulhar-atirar'
+    // padrão 'apanhar-embrulhar-e-atirar'
     // Apanhar exceção da camada inferior
     // Envolver com mais contexto (novo tipo, mensagem de erro melhor)
     // Atirar
@@ -213,17 +211,21 @@ Vamos então ilustrar alguns <b>bons</b> exemplos:
         throw new MyHigherLevelException("Failed to do something.", e);
     }
 
+
 </pre>
+
+<p>&nbsp;</p>
+<h2>Conclusão</h2>
 
 <p>
 Em resumo, um bom tratamento de exceções é muito importante em Sistemas Distribuídos.<br />
-As melhores estratégias a seguir são:
-'deixar-passar', 'apanhar-*-atirar' e 'apanhar-recuperar' quando possível.
+As melhores estratégias a seguir são: 'deixar-passar', 'apanhar-*-atirar' e 'apanhar-e-recuperar' quando possível.
 </p>
 
 
-
 <p>&nbsp;</p>
+
+<hr />
 
 <div class="rodape">
 <p>

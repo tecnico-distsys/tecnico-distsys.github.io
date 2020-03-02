@@ -25,7 +25,7 @@
         <h2>Objectivos da semana</h2>
         <ul>
             <li>
-                Distribuir uma aplicação originalmente centralizada usando REST 
+                Distribuir uma aplicação originalmente centralizada usando REST
             </li>
             <li>
                 Descrever, em detalhe, os componentes REST
@@ -47,7 +47,7 @@
         </ul>
         <ul>
             <li>
-                <a href="https://restfulapi.net/">Texto resumido sobre o que é REST</a>
+                <a href="https://www.codecademy.com/articles/what-is-rest">Texto resumido sobre o que é REST</a>
             </li>
             <li>
                 <a href="https://restfulapi.net/">Tutorial sobre REST</a>
@@ -129,7 +129,7 @@
                     </ol>
                 </li>
                 <li>
-                    Compile o servidor utilizando <kbd>mvn compile exec:java</kbd>. 
+                    Compile o servidor utilizando <kbd>mvn compile exec:java</kbd>.
                 </li>
                 <li>
                     Abra o browser e aceda a <tt>http://localhost:8080/ttt/game/board</tt>. Confirme que o que aparece no ecrâ é um tabuleiro do jogo do galo.
@@ -145,7 +145,8 @@
             </li>
             <ol type="1">
                 <li>
-                    Baseando-se no ficheiro <tt>TTTResources.java</tt> da aplicação, crie um método GET para verificar qual o jogador que ganhou, utilizando o método <tt>checkWinner</tt>. Sugestão: olhe para os métodos <tt>getBoard</tt> e <tt>resetBoard</tt>.
+                    Baseando-se no ficheiro <tt>TTTResources.java</tt> da aplicação, crie um método GET para verificar qual o jogador que ganhou, utilizando o método <tt>checkWinner</tt>. <br/>Sugestão: olhe para os métodos <tt>getBoard</tt> e <tt>resetBoard</tt>.
+                    <br/>
                 </li>
                 <ol type="a">
                     <li>
@@ -157,7 +158,7 @@
                     <li>
                         O que é devolvido do pedido está no formato texto (<tt>MediaType.TEXT_PLAIN</tt>), mas o que o método devolve é um inteiro. E se, em vez de texto, fosse pedido XML? E se fosse JSON?
                         <br />
-                            <br />
+                        <br />
                     </li>
                 </ol>
                 <li>
@@ -167,7 +168,7 @@
                             Comece por analisar novamente o método <tt>play</tt> do ficheiro <tt>TTTGame.java</tt> e o ficheiro <tt>PlayRequest.java</tt>.
                         </li>
                         <li>
-                            Crie um método POST no caminho <tt>"play"</tt> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. Este método vai-nos permitir enviar jogadas para o servidor.
+                            No ficheiro <tt>TTTResources.java</tt>, crie um método POST no caminho <tt>"play"</tt> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. Este método vai-nos permitir enviar jogadas para o servidor.
                             <br /> Exemplo de um método que recebe qualquer coisa em XML e JSON e devolve qualquer coisa em XML:
                             <pre class="prettyprint lang-java">
     @POST
@@ -178,11 +179,9 @@
         return qualquerCoisa;
     }
 
-
-
                         </li>
                         <li>
-                            Depois de terminado, compile o servidor utilizando <kbd>mvn install exec:java</kbd>
+                            Depois de terminado, compile o servidor utilizando <kbd>mvn clean install</kbd>
                         </li>
                         <li>
                             Aceda agora à pasta que contêm o cliente. Compile o cliente utilizando <kbd>mvn clean compile</kbd>
@@ -206,35 +205,82 @@
         </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
     ...</span></pre>
                         </li>
+                        <li>
+                            Compile novamente o cliente e confirme que foi bem sucedido.
+                            <br/>
+                            <br/>
+                        </li>
                     </ol>
                 </li>
-                <!--<li>
-                    Por fim, com base no módulo <tt>client</tt> da aplicação de exemplo, crie um projeto Maven para conter a implementação do cliente.
+            </ol>
+            </li>
+            <li>
+                Acima enviamos os parâmetros do método <tt>play</tt> utilizando um método POST em REST. Agora vamos enviar os argumentos encapsulando parâmetros no URL.
+                <br />
+                <br />
+                <ol type="1">
+                    <li>
+                        Para isso vamos criar outro método GET no ficheiro <tt>TTTResources.java</tt>.
+                    </li>
                     <ol type="a">
                         <li>
-                            Confirme que o módulo contrato é uma dependência do projeto.
-                        </li>
-                        <li>
-                            Crie uma classe que instancia um <i>stub</i> do serviço TTT (através de um endereço e porta recebidos como argumentos).
-                        </li>
-                        <li>
-                            Usando o código do ficheiro <tt>Game.java</tt> do código base, adicione métodos para jogar o jogo remotamente através do <i>stub</i> instanciado.
-                            <br /> Exemplo de adaptação:
+                            Usando o código do ficheiro <tt>TTTResources.java</tt> do código base e o exemplo imediatamente abaixo, crie um método GET que permita enviar os argumentos utilizando parâmetros URL.
+                            <br /> Exemplo de utilização:
                             <pre class="prettyprint lang-java">
-    // before the change: local call
-    winner = ttt.checkWinner();
+    @GET
+    @Path("{arg1}/{arg2}")
+    @Produces(...)
+    public QualquerCoisa metodo(@PathParam("arg1") int arg1,
+                     @PathParam("arg2") String arg2) {
+        return qualquerCoisa.fazcoisas(arg1, arg2);
+    }
 
-    // after the change: remote call
-    winner = stub.checkWinner(CheckWinnerRequest.getDefaultInstance()).getResult();
                 </pre>
                         </li>
+                        <li>
+                            Para testar a sua implementação, abra o browser e aceda a <tt>http://localhost:8080/ttt/game/board/reset</tt> para reiniciar o jogo.
+                        </li>
+
+                        <li>
+                            Para fazer uma jogada, experimente, por exemplo, <tt>http://localhost:8080/ttt/game/play/1/1/0</tt>.
+                        </li>
+                        <li>
+                            Se tudo correu bem, ao aceder agora a <tt>http://localhost:8080/ttt/game/board</tt>, o tabuleiro com a jogada anterior vai aparecer no ecrâ.
+                            <br/>
+                            <br/>
+                        </li>
+
                     </ol>
-                </li>-->
-                <li>
-                    Lance o servidor e experimente jogar remotamente através do cliente.
-                    <br />
-                    <br />
-                </li>
+                    <li>
+                        O cliente está configurado para utilizar o método POST em vez do novo método GET para jogar. Para isso é necessário fazer algumas alterações.
+                        <ol type="a">
+                        <li>
+                            Vá agora ao cliente e no ficheiro <tt>TTTPlayer.java</tt> comente as linhas seguintes desta forma:
+                            <pre class="prettyprint lang-java">
+    /* Response response = client.target(restURL).path("play").request(MediaType.APPLICATION_JSON)
+    .post(Entity.entity(playRequest, MediaType.APPLICATION_JSON), Response.class); */
+
+    ...
+
+    /* play_res = response.readEntity(PlayResult.class); */
+                    </pre>
+                        </li>
+                        <li>
+                            Descomente a linha seguinte desta forma:
+                            <pre class="prettyprint lang-java">
+    /* Uncomment to use URL parameter to play */
+    /* URL to play is: play/{row}/{column}/{player} */
+    String playString = "play/" +  String.valueOf(row) + '/' + String.valueOf(column) + '/' + String.valueOf(player);
+                    </pre>
+                        </li>
+                        <li>
+                            Finalmente, só precisamos de aceder ao URL que vai fazer a jogada e receber o resultado da jogada. Para isso, adicione a linha de código da seguinte forma:
+                            <pre class="prettyprint lang-java">
+    play_res = client.target(restURL).path(playString).request().get(PlayResult.class);
+                    </pre>
+                        </li>
+                    </ol>
+            </li>
             </ol>
 
             <p>

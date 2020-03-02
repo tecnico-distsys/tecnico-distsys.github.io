@@ -9,7 +9,7 @@
     <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="../_prettify/prettify.js"></script>
 
-    <title>Invocação de procedimentos remotos com a API REST</title>
+    <title>Chamadas remotas com a API REST</title>
 </head>
 
 <body onload="prettyPrint()">
@@ -18,11 +18,11 @@
     </div>
 
     <div class="titulo" id="1">
-        <h1>Invocação de procedimentos remotos com REST</h1>
+        <h1>Chamadas remotas com REST</h1>
     </div>
 
     <div class="objectivos">
-        <h2>Objectivos da semana</h2>
+        <h2>Objetivos da semana</h2>
         <ul>
             <li>
                 Distribuir uma aplicação originalmente centralizada usando REST
@@ -38,13 +38,6 @@
     <div class="corpo">
         <h2 id="conteudos">Materiais de apoio à aula</h2>
 
-        <p class="exemplos"></p>
-        <ul>
-            <li>
-                <a href="./hello-rest.zip">REST Hello World <img src="../_img/zip.png" alt="ZIP" /></a>
-                <br /> Siga as instruções dos ficheiros <tt>README.md</tt> para compilar e executar o exemplo.
-            </li>
-        </ul>
         <ul>
             <li>
                 <a href="https://www.codecademy.com/articles/what-is-rest">Texto resumido sobre o que é REST</a>
@@ -56,6 +49,16 @@
                 <a href="https://eclipse-ee4j.github.io/jersey/">REST em Java (Jersey)</a>
             </li>
         </ul>
+
+        <p class="exemplos"></p>
+        <ul>
+            <li><a href="https://github.com/tecnico-distsys/example_rest" target="_blank">REST <i>Hello World</i> <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
+            <ul>
+                <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
+            </ul>
+            </li>
+        </ul>
+
         <p>&nbsp;</p>
 
         <p class="exercicios"></p>
@@ -69,38 +72,32 @@
         <br />
 
         <p>
-            Partindo de uma versão Jogo do Galo feita para um cenário local, pretende-se desenvolver uma variante do jogo onde a parte computacionalmente mais pesada é realizada por um servidor remoto. O servidor guarda as variáveis do jogo. O cliente faz a interface com o utilizador.
+            Partindo de uma versão Jogo do Galo feita para um cenário local, pretende-se desenvolver uma variante do jogo onde a parte computacionalmente mais pesada é realizada por um servidor remoto. 
+            O servidor guarda as variáveis do jogo. 
+            O cliente faz a interface com o utilizador.
             <br />
         </p>
 
         <ol type="I">
             <li>
-                Jogo do Galo/<i>Tic Tac Toe</i>
+                <a href="https://github.com/tecnico-distsys/example_ttt" target="_blank">Jogo do Galo/<i>Tic Tac Toe</i> <img src="../_img/github.png" alt="GitHub" height="16"></a>
             </li>
-            <ol type="1">
-                <li>
-                    Descarregue e descomprima o código fonte da <a href="./ttt-local.zip">implementação do jogo <img src="../_img/zip.png" alt="ZIP" /></a>.
-                </li>
+            <ul>
+                <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
                 <li>
                     Analise o código do jogo de forma a compreender a implementação.
                 </li>
                 <li>
-                    Compile e execute o código com o comando:
-                    <br />
-                    <tt>mvn compile exec:java</tt>
-                    <br />
-                </li>
-                <li>
-                    Experimente o jogo. Indique a posição escolhida para cada jogador, até terminar o jogo.
+                    Experimente o jogo. 
+                    Indique a posição escolhida para cada jogador, até terminar o jogo.
                     <br />
                     <br />
                 </li>
-            </ol>
+            </ul>
 
             <li>
-                Pretende-se que a nova versão do programa seja dividida em dois processos: servidor e cliente, através do Jersey.
-                <br /> Descarregue e descomprima o <a href="./ttt-rest-initial.zip">código fonte da aplicação
-    Jogo do Galo/Tic Tac Toe <img src="../_img/zip.png" alt="ZIP"></a> adaptada a este exercício.
+                Pretende-se que a nova versão do programa seja dividida em dois processos: servidor e cliente, através do Jersey.<br />
+                Começar pela <a href="https://github.com/tecnico-distsys/exercise_ttt-rest" target="_blank">implementação do jogo <img src="../_img/github.png" alt="GitHub" height="16"></a> adaptada a este exercício.
                 <br />
             </li>
             <ol type="1">
@@ -121,10 +118,10 @@
                             Analise o ficheiro <tt>TTTGame.java</tt> e perceba como funciona o jogo do galo</a>.
                         </li>
                         <li>
-                            O ficheiro <tt>TTTResources.java</tt> contêm dois métodos GET. Analise o que cada um faz.
+                            O ficheiro <tt>TTTResources.java</tt> contém dois métodos GET. Analise o que cada um faz.
                         </li>
                         <li>
-                            O ficheiro <tt>PlayRequest.java</tt> contêm a informação necessária para fazer uma jogada (row, column e player). Existe um decorador <tt>@XmlRootElement</tt>. Qual é a necessidade desta linha de código?
+                            O ficheiro <tt>PlayRequest.java</tt> contém a informação necessária para fazer uma jogada (row, column e player). Existe um decorador <tt>@XmlRootElement</tt>. Qual é a necessidade desta linha de código?
                         </li>
                     </ol>
                 </li>
@@ -162,7 +159,7 @@
                     </li>
                 </ol>
                 <li>
-                    Agora é necessária uma maneira de jogar, isto é, invocar o método <tt>play</tt> a partir de um cliente. Para isso é necessário criar um método POST para enviar um pedido que contêm a jogada que queremos efetuar.
+                    Agora é necessária uma maneira de jogar, isto é, invocar o método <tt>play</tt> a partir de um cliente. Para isso é necessário criar um método POST para enviar um pedido que contém a jogada que queremos efetuar.
                     <ol type="a">
                         <li>
                             Comece por analisar novamente o método <tt>play</tt> do ficheiro <tt>TTTGame.java</tt> e o ficheiro <tt>PlayRequest.java</tt>.
@@ -184,7 +181,7 @@
                             Depois de terminado, compile o servidor utilizando <kbd>mvn clean install</kbd>
                         </li>
                         <li>
-                            Aceda agora à pasta que contêm o cliente. Compile o cliente utilizando <kbd>mvn clean compile</kbd>
+                            Aceda agora à pasta que contém o cliente. Compile o cliente utilizando <kbd>mvn clean compile</kbd>
                         </li>
                         <ol type="i">
                             <li>
@@ -224,7 +221,7 @@
                     </li>
                     <ol type="a">
                         <li>
-                            Usando o código do ficheiro <tt>TTTResources.java</tt> do código base e o exemplo imediatamente abaixo, crie um método GET que permita enviar os argumentos utilizando parâmetros URL.
+                            Usando o código do ficheiro <tt>TTTResources.java</tt> do código base e o exemplo imediatamente abaixo, crie um método GET que permita enviar os argumentos utilizando parâmetros no URL.
                             <br /> Exemplo de utilização:
                             <pre class="prettyprint lang-java">
     @GET

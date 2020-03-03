@@ -73,8 +73,9 @@
 
         <p>
             Partindo de uma versão Jogo do Galo feita para um cenário local, pretende-se desenvolver uma variante do jogo onde a parte computacionalmente mais pesada é realizada por um servidor remoto. 
-            O servidor guarda as variáveis do jogo. 
+            O servidor guarda as variáveis do jogo.
             O cliente faz a interface com o utilizador.
+            No contract é onde as mensagens partilhadas entre o cliente e o servidor estão definidas. Estas mensagens contêm a informação necessária para fazer uma jogada.
             <br />
         </p>
 
@@ -101,7 +102,7 @@
                 <br />
                 <ol type="1">
                     <li>
-                        Veja como o programa está estruturado em dois módulos: <i>server</i> e <i>client</i>.
+                        Veja como o programa está estruturado em três módulos: <i>contract</i>, <i>server</i> e <i>client</i>.
                         <br /> Cada módulo tem um POM próprio.
                     </li>
                     <li>
@@ -111,7 +112,7 @@
                         Nesta secção, vamo-nos focar apenas no <i>server</i>. O <i>client</i> já está todo implementado e vai ser utilizado para testar e jogar o jogo do galo na secção a seguir.
                     </li>
                     <li>Estude os principais ficheiros com a implementação do jogo (
-                        <tt>TTTGame.java</tt>, <tt>TTTResources.java</tt> e <tt>PlayRequest.java</tt> do módulo <i>server</i>).
+                        <tt>TTTGame.java</tt>, <tt>TTTResources.java</tt> (do módulo <i>server</i>) e <tt>PlayRequest.java</tt> (do módulo <i>contract</i>).
                         <ol type="a">
                             <li>
                                 Analise o ficheiro <tt>TTTGame.java</tt> e perceba como funciona o jogo do galo</a>.
@@ -120,12 +121,15 @@
                                 O ficheiro <tt>TTTResources.java</tt> contém dois métodos GET. Analise o que cada um faz.
                             </li>
                             <li>
-                                O ficheiro <tt>PlayRequest.java</tt> contém a informação necessária para fazer uma jogada (row, column e player). Existe um decorador <tt>@XmlRootElement</tt>. Qual é a necessidade desta linha de código?
+                                Vá agora ao <i>contract</i>. O ficheiro <tt>PlayRequest.java</tt> contém a informação necessária para fazer uma jogada (row, column e player). Existe um decorador <tt>@XmlRootElement</tt>. Qual é a necessidade desta linha de código?
                             </li>
                         </ol>
                     </li>
                     <li>
-                        Compile o servidor utilizando <kbd>mvn compile exec:java</kbd>.
+                        Instale o contract utilizando <kbd>mvn install</kbd>.
+                    </li>
+                    <li>
+                        Compile e corra o servidor utilizando <kbd>mvn compile exec:java</kbd>.
                     </li>
                     <li>
                         Abra o browser e aceda a <tt>http://localhost:8080/ttt/game/board</tt>. Confirme que o que aparece no ecrâ é um tabuleiro do jogo do galo.
@@ -136,7 +140,7 @@
             </li>
 
                 <li>
-                    Vamos agora implementar os métodos necessários para que o Jogo do Galo funcione numa aplicação cliente-servidor com REST, organizada em dois módulos,.
+                    Vamos agora implementar os métodos necessários para que o Jogo do Galo funcione numa aplicação cliente-servidor com REST, organizada em três módulos.
                     <br />
                     <br />
                 <ol type="1">
@@ -178,7 +182,7 @@
 
                         </li>
                         <li>
-                            Depois de terminado, compile o servidor utilizando <kbd>mvn clean install</kbd>
+                            Depois de terminado, compile o servidor utilizando <kbd>mvn clean compile</kbd>
                         </li>
                             <li>
                                 Aceda agora à pasta que contém o cliente. Compile o cliente utilizando <kbd>mvn clean compile</kbd>
@@ -191,13 +195,13 @@
                             </ol>
                             </li>
                         <li>
-                            O cliente necessita de obter informação acerca de algumas classes que estão definidas no servidor. 
-                            <br />Para isso, é necessário criar uma dependência do servidor no cliente:
+                            O cliente necessita de obter informação acerca de algumas classes que estão definidas no contract. 
+                            <br />Para isso, é necessário criar uma dependência do contract no cliente:
 
         <pre class="prettyprint lang-xml prettyprinted" style=""><span class="pln">    ...
         </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
             </span><span class="tag">&lt;groupId&gt;</span><span class="pln">pt.ulisboa.tecnico.distsys.ttt-rest</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
-            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">ttt-server</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">ttt-contract</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
             </span><span class="tag">&lt;version&gt;</span><span class="pln">0.0.1-SNAPSHOT</span><span class="tag">&lt;/version&gt;</span><span class="pln">
         </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
     ...</span></pre>

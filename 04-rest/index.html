@@ -116,8 +116,7 @@
                     <li>
                         Nesta secção, vamo-nos focar apenas no <i>server</i>. O <i>client</i> já está todo implementado e vai ser utilizado para testar e jogar o jogo do galo na secção a seguir.
                     </li>
-                    <li>Estude os principais ficheiros com a implementação do jogo (
-                        <tt>TTTGame.java</tt>, <tt>TTTResources.java</tt> (do módulo <i>server</i>) e <tt>PlayRequest.java</tt> (do módulo <i>contract</i>).
+                    <li>Estude os principais ficheiros com a implementação do jogo (<tt>TTTGame.java</tt>, <tt>TTTResources.java</tt> do módulo <i>server</i>) e <tt>PlayRequest.java</tt> do módulo <i>contract</i>).
                         <ol type="a">
                             <li>
                                 Analise o ficheiro <tt>TTTGame.java</tt> e perceba como funciona o jogo do galo</a>.
@@ -128,19 +127,20 @@
                             <li>
                                 Vá agora ao <i>contract</i>. 
                                 O ficheiro <tt>PlayRequest.java</tt> contém a informação necessária para fazer uma jogada (<i>row</i>, <i>column</i> e <i>player</i>). 
-                                Existe um decorador <tt>@XmlRootElement</tt>. 
-                                Qual é a necessidade desta linha de código?
+                                Existe uma anotação <tt>@XmlRootElement</tt>. 
+                                Qual é o efeito desta linha de código?
                             </li>
                         </ol>
                     </li>
                     <li>
-                        Instale o <tt>contract</tt> utilizando <kbd>mvn install</kbd>.
+                        Instale o <i>contract</i> utilizando <kbd>mvn install</kbd>.
                     </li>
                     <li>
                         Compile e corra o servidor utilizando <kbd>mvn compile exec:java</kbd>.
                     </li>
                     <li>
-                        Abra o browser e aceda a <tt>http://localhost:8080/ttt/game/board</tt>. Confirme que o que aparece no ecrâ é um tabuleiro do jogo do galo.
+                        Abra o <i>browser</i> e aceda a <a href="http://localhost:8080/ttt/game/board">http://localhost:8080/ttt/game/board</a>. 
+                        Confirme que o que aparece no ecrã é um tabuleiro do jogo do galo.
                         <br />
                         <br />
                     </li>
@@ -153,17 +153,19 @@
                     <br />
                 <ol type="1">
                     <li>
-                            Baseando-se no ficheiro <tt>TTTResources.java</tt> da aplicação, crie um método GET para verificar qual o jogador que ganhou, utilizando o método <tt>checkWinner</tt>. <br/>Sugestão: olhe para os métodos <tt>getBoard</tt> e <tt>resetBoard</tt>.
+                            Baseando-se no ficheiro <tt>TTTResources.java</tt> da aplicação, crie um método GET para verificar qual o jogador que ganhou, utilizando o método <tt>checkWinner</tt>. <br/>
+                            Sugestão: veja os métodos <tt>getBoard</tt> e <tt>resetBoard</tt>.
                             <br/>
                         <ol type="a">
                             <li>
                                 O pedido deve ser acedido no caminho <tt>"board/checkwinner"</tt>, para manter consistência com os outros métodos já disponíveis.
                             </li>
                             <li>
-                                Verifique sempre se o caminho funciona (depois de compilar e executar), acedendo com o browser.
+                                Verifique sempre se o caminho funciona (depois de compilar e executar), acedendo com o <i>browser</i>.
                             </li>
                             <li>
-                                O que é devolvido do pedido está no formato texto (<tt>MediaType.TEXT_PLAIN</tt>), mas o que o método devolve é um inteiro. E se, em vez de texto, fosse pedido XML? E se fosse JSON?
+                                O que é devolvido do pedido está no formato texto (<tt>MediaType.TEXT_PLAIN</tt>), mas o que o método devolve é um inteiro. <br />
+                                E se, em vez de texto, fosse pedido XML ou JSON?
                                 <br />
                                 <br />
                             </li>
@@ -171,14 +173,16 @@
                     </li>
                 </li>
                 <li>
-                    Agora é necessária uma maneira de jogar, isto é, invocar o método <tt>play</tt> a partir de um cliente. Para isso é necessário criar um método POST para enviar um pedido que contém a jogada que queremos efetuar.
+                    Agora é necessária uma maneira de jogar, isto é, invocar o método <tt>play</tt> a partir de um cliente.<br />
+                    Para isso é necessário criar um método POST para enviar um pedido que contém a jogada que queremos efetuar.
                     <ol type="a">
                         <li>
-                            Comece por analisar novamente o método <tt>play</tt> do ficheiro <tt>TTTGame.java</tt> e o ficheiro <tt>PlayRequest.java</tt>.
+                            Comece por analisar novamente o método <tt>play()</tt> do ficheiro <tt>TTTGame.java</tt> e o ficheiro <tt>PlayRequest.java</tt>.
                         </li>
                         <li>
-                            No ficheiro <tt>TTTResources.java</tt>, crie um método POST no caminho <tt>"play"</tt> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. Este método vai-nos permitir enviar jogadas para o servidor.
-                            <br /> Exemplo de um método que recebe qualquer coisa em XML e JSON e devolve qualquer coisa em XML:
+                            No ficheiro <tt>TTTResources.java</tt>, crie um método POST no caminho <b><tt>"play"</tt></b> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. 
+                            Este método vai-nos permitir enviar jogadas para o servidor.<br /> 
+                            Exemplo de um método que recebe qualquer coisa em XML e JSON e devolve qualquer coisa em XML:
                             <pre class="prettyprint lang-java">
     @POST
     @Path("caminho-aqui")
@@ -193,18 +197,20 @@
                             Depois de terminado, compile o servidor utilizando <kbd>mvn clean compile</kbd>
                         </li>
                             <li>
-                                Aceda agora à pasta que contém o cliente. Compile o cliente utilizando <kbd>mvn clean compile</kbd>
-                            <ol type="i">
+                                Aceda agora à pasta que contém o cliente. 
+                                Compile o cliente utilizando <kbd>mvn clean compile</kbd>
+                            <ul>
                                 <li>
-                                    Porque é que a compilação falhou? Porque é que o maven não consegue encontrar aquelas classes?
+                                    Porque é que a compilação falhou? 
+                                    Porque é que o <i>Maven</i> não consegue encontrar aquelas classes?
                                     <br />
                                     <br />
                                 </li>
-                            </ol>
+                            </ul>
                             </li>
                         <li>
-                            O cliente necessita de obter informação acerca de algumas classes que estão definidas no contract. 
-                            <br />Para isso, é necessário criar uma dependência do contract no cliente:
+                            O cliente necessita de obter informação acerca de algumas classes que estão definidas no <i>contract</i>.<br />
+                            Para isso, é necessário criar uma dependência do <i>contract</i> no cliente:
 
         <pre class="prettyprint lang-xml prettyprinted" style=""><span class="pln">    ...
         </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
@@ -215,7 +221,8 @@
     ...</span></pre>
                         </li>
                         <li>
-                            Compile novamente o cliente e confirme que foi bem sucedido.
+                            Compile novamente o cliente e confirme que foi bem sucedido.<br />
+                            Experimente o jogo: <kbd>mvn clean compile exec:java</kbd>
                             <br/>
                             <br/>
                         </li>
@@ -246,14 +253,14 @@
                     </pre>
                             </li>
                             <li>
-                                Para testar a sua implementação, abra o browser e aceda a <tt>http://localhost:8080/ttt/game/board/reset</tt> para reiniciar o jogo.
+                                Para testar a sua implementação, abra o <i>browser</i> e aceda a <a href="http://localhost:8080/ttt/game/board/reset">http://localhost:8080/ttt/game/board/reset</a> para reiniciar o jogo.
                             </li>
 
                             <li>
-                                Para fazer uma jogada, experimente, por exemplo, <tt>http://localhost:8080/ttt/game/play/1/1/0</tt>.
+                                Para fazer uma jogada, experimente, por exemplo, <a href="http://localhost:8080/ttt/game/play/1/1/0">http://localhost:8080/ttt/game/play/1/1/0</a>.
                             </li>
                             <li>
-                                Se tudo correu bem, ao aceder agora a <tt>http://localhost:8080/ttt/game/board</tt>, o tabuleiro com a jogada anterior vai aparecer no ecrâ.
+                                Se tudo correu bem, ao aceder agora a <a href="http://localhost:8080/ttt/game/board">http://localhost:8080/ttt/game/board</a>, o tabuleiro com a jogada anterior vai aparecer no ecrã.
                                 <br/>
                                 <br/>
                             </li>

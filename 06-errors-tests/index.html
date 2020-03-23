@@ -30,7 +30,7 @@
 <div class="objectivos">
     <h2>Objetivos da semana</h2>
     <ul>
-        <li>Analisar duas abordagens para tratar erros com gRPC</li>
+        <li>Aprender a tratar erros com gRPC</li>
         <li>Aprender a escrever testes de integração utilizando JUnit 5</li>
     </ul>
 </div>
@@ -113,8 +113,8 @@ if (condition) {
     </pre>
     <p>No entanto, há que ter em conta que as exceções passadas como argumento a <tt>onError</tt> são automaticamente
         encapsuladas dentro de <tt>StatusRuntimeException</tt> ou <tt>StatusException</tt>, perdendo informação
-        relevante sobre a sua origem (uma
-        vez que esta pertence exclusivamente ao domínio do servidor). Assim sendo, as únicas exceções que o cliente
+        relevante sobre a sua origem/cause (uma vez que esta informação pertence exclusivamente ao domínio do servidor e
+        não deve ser enviada ao cliente). Assim sendo, as únicas exceções que o cliente
         poderá
         receber do seu lado são do tipo <tt>StatusRuntimeException</tt> (que herda de <tt>RuntimeException</tt>) ou <tt>StatusException</tt>
         (que herda de <tt>Exception</tt>).</p>
@@ -126,7 +126,8 @@ if (condition) {
         erro de que
         temos vindo a falar. Um exemplo é o estado <tt>INVALID_ARGUMENT</tt>, utilizado para representar o estado de
         erro em que se incorre quando o cliente especifica um argumento inválido. A grande vantagem desta classe é que
-        possui um método que mapeia automaticamente um <tt>Status</tt> numa exceção, pronta a ser passada ao método <tt>onError</tt>.
+        possui um método que encapsula automaticamente um objeto <tt>Status</tt> numa exceção, pronta a ser passada ao
+        método <tt>onError</tt>.
     </p>
     <p>Por exemplo, para que o cliente receba uma <tt>StatusRuntimeException</tt> (análogo para <tt>StatusException</tt>)
         ao especificar um argumento inválido,
@@ -153,8 +154,8 @@ responseObserver.onError(Status.INVALID_ARGUMENT.withDescription(desc).asRuntime
     <h3>Como captar o erro no cliente?</h3>
     <p>Para captar o erro do lado do cliente, basta introduzir um bloco <tt>try-catch</tt> para uma exceção do tipo <tt>StatusRuntimeException</tt>,
         que oferece o método <tt>getStatus</tt>, que devolve a instância de <tt>Status</tt> previamente encapsulada,
-        como explicado. Supondo, então, que existe, do lado do cliente, um stub com nome <tt>stub</tt>, imprimir o
-        código de erro é facil</p>
+        Supondo, então, que existe, do lado do cliente, um stub com nome <tt>stub</tt>, imprimir o
+        código é fácil:</p>
 
     <pre class="prettyprint lang-java">
 ...
@@ -222,7 +223,7 @@ Metadata.Key&lt;String&gt; key = Metadata.Key.of("keyName", Metadata.ASCII_STRIN
 
     <p>Os testes de integração com JUnit 5 usam as mesmas anotações para definir qual o papel dos métodos:</p>
     <ul>
-        <li>Os métodos anotados com @Test são testes individuais;</li>
+        <li>Os métodos anotados com <tt>@Test</tt> são testes individuais;</li>
         <li><tt>@BeforeEach</tt> e <tt>@AfterEach</tt> são executados antes e depois de cada teste, respetivamente;</li>
         <li><tt>@BeforeAll</tt> e <tt>@AfterAll</tt> são executados apenas uma vez para o conjunto de testes da classe.
         </li>
@@ -353,7 +354,8 @@ $ mvn install -Dit.test.skip=true
                     esqueleto <!--<img alt="GitHub" height="16" src="../_img/github.png"/>--></a>.
                 </li>
                 <li>Veja como o projeto está estruturado em três módulos: <tt>silo-contract</tt>, <tt>silo-server</tt> e
-                    <tt>silo-client</tt>.</li>
+                    <tt>silo-client</tt>.
+                </li>
                 <li>Prepare o ambiente para a análise e execução do código.
                     <ol type="a">
                         <li>Comece por instalar o módulo <tt>silo-contract</tt>, executando <tt>mvn install</tt> nesse
@@ -366,8 +368,10 @@ $ mvn install -Dit.test.skip=true
                         </li>
                     </ol>
                 </li>
-                <li>Compile e lance o servidor, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-server</tt>.</li>
-                <li>Compile e lance um cliente, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-client</tt>.</li>
+                <li>Compile e lance o servidor, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-server</tt>.
+                </li>
+                <li>Compile e lance um cliente, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-client</tt>.
+                </li>
                 <li>Compreenda a interação que foi definida entre cliente e servidor para efeitos deste
                     exercício.
                     <ol type="a">
@@ -382,7 +386,8 @@ $ mvn install -Dit.test.skip=true
             seja vazia e tenha um comprimento em caracteres compreendido no intervalo <tt>[2, 10]</tt>.
             <ol type="1">
                 <li>Comece por criar duas exceções no domínio do <tt>Silo</tt>, em que cada exceção representa a
-                    violação de uma das propriedades desejadas. Utilize nomes sugestivos e associe uma mensagem a cada exceção.
+                    violação de uma das propriedades desejadas. Utilize nomes sugestivos e associe uma mensagem a cada
+                    exceção.
                 </li>
                 <li>Implemente a validação da mensagem no método <tt>handleCtrlPing</tt> (definido em <tt>Silo.java</tt>),
                     que deverá passar a lançar as novas exceções.
@@ -414,7 +419,8 @@ $ mvn install -Dit.test.skip=true
         <li>Teste a sua solução.
             <ol type="1">
                 <li>Se nada alterou no módulo <tt>silo-contract</tt>, não precisa de executar <tt>mvn install</tt>.</li>
-                <li>Compile e lance o servidor, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-server</tt>.</li>
+                <li>Compile e lance o servidor, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-server</tt>.
+                </li>
                 <li>Compile e lance um cliente, executando <tt>mvn compile exec:java</tt> no módulo <tt>silo-client</tt>.
                     <ol type="a">
                         <li>Teste o envio de várias mensagens. Em particular, procure testar os casos limites para as

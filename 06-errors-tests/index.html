@@ -359,7 +359,12 @@ $ mvn install -Dit.test.skip=true
                 <li>Lance o servidor, executando <tt>mvn exec:java</tt> no módulo <tt>silo-server</tt>.</li>
                 <li>Lance um cliente, executando <tt>mvn exec:java</tt> no módulo <tt>silo-client</tt>.</li>
                 <li>Compreenda a interação que foi definida entre cliente e servidor para efeitos deste
-                    exercício.<br/><br/>
+                    exercício.
+                    <ol type="a">
+                        <li>A aplicação cliente lê do <tt>stdin</tt> a mensagem a enviar ao servidor e imprime a
+                            resposta do servidor (ou a mensagem de erro, se for o caso).<br/><br/>
+                        </li>
+                    </ol>
                 </li>
             </ol>
         </li>

@@ -51,7 +51,7 @@
     <p>Após invocação de um procedimento remoto com gRPC, a chamada pode ter sucesso ou falhar, sendo enviado para o
         cliente um código de erro (ou <i>error status code</i>) neste último caso. gRPC é uma framework agnóstica
         relativamente à linguagem de programação que se utiliza, pelo que o recurso a um conjunto limitado de códigos de
-        erro é a forma base de tratar situações me que a invocação remota falha.</p>
+        erro é a forma base de tratar situações em que a invocação remota falha.</p>
     <p>De acordo com a <a href="https://grpc.io/docs/guides/error/">documentação oficial</a>, existem três categorias de
         códigos de erro suportadas por todas as bibliotecas cliente/servidor gRPC e independentes do formato de dados:
     </p>
@@ -91,7 +91,7 @@ public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentB
     <p>Em caso de erro, é importante notificar o cliente de que a execução remota falhou, para que consiga recuperar
         (por exemplo, através da repetição da invocação). Esse estado de erro pode ser induzido, por exemplo, por uma
         falha na conexão entre cliente e servidor (como descrito
-        <a href="#common_errors">anteriormente</a>) ou induzido pelo próprio programador, para acautelar violações do
+        <a href="#common_errors">anteriormente</a>) ou introduzido pelo próprio programador, para acautelar violações do
         domínio da aplicação. A validação de argumentos é um exemplo clássico.</p>
     <p>No caso de Java, é possível explicitar que a chamada remota falhou invocando
         <tt>responseObserver.onError(...)</tt> quando necessário. Este método recebe um <tt>Throwable</tt>, sendo
@@ -114,7 +114,8 @@ if (condition) {
     <p>No entanto, há que ter em conta que as exceções passadas como argumento a <tt>onError</tt> são automaticamente
         encapsuladas dentro de <tt>StatusRuntimeException</tt> ou <tt>StatusException</tt>, perdendo informação
         relevante sobre a sua origem (uma
-        vez que pertence exclusivamente ao domínio do servidor). Assim sendo, as únicas exceções que o cliente poderá
+        vez que esta pertence exclusivamente ao domínio do servidor). Assim sendo, as únicas exceções que o cliente
+        poderá
         receber do seu lado são do tipo <tt>StatusRuntimeException</tt> (que herda de <tt>RuntimeException</tt>) ou <tt>StatusException</tt>
         (que herda de <tt>Exception</tt>).</p>
 
@@ -150,7 +151,10 @@ responseObserver.onError(Status.INVALID_ARGUMENT.withDescription(desc).asRuntime
 
     <br>
     <h3>Como captar o erro no cliente?</h3>
-    <p>Para captar o erro do lado do cliente, basta introduzir um bloco <tt>try-catch</tt> para uma exceção do tipo <tt>StatusRuntimeException</tt>, que oferece o método <tt>getStatus</tt>, que devolve a instância de <tt>Status</tt> previamente encapsulada, como explicado. Supondo, então, que existe, do lado do cliente, um stub com nome <tt>stub</tt>, imprimir o código de erro é facil</p>
+    <p>Para captar o erro do lado do cliente, basta introduzir um bloco <tt>try-catch</tt> para uma exceção do tipo <tt>StatusRuntimeException</tt>,
+        que oferece o método <tt>getStatus</tt>, que devolve a instância de <tt>Status</tt> previamente encapsulada,
+        como explicado. Supondo, então, que existe, do lado do cliente, um stub com nome <tt>stub</tt>, imprimir o
+        código de erro é facil</p>
 
     <pre class="prettyprint lang-java">
 ...
@@ -164,7 +168,9 @@ try {
 ...
     </pre>
 
-    <p>Atente-se que a descrição que se obtém ao invocar <tt>status.getDescription()</tt> é igual à descrição <tt>desc</tt> que foi previamente passada no servidor (em <tt>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</tt>).</p>
+    <p>Atente-se que a descrição que se obtém ao invocar <tt>status.getDescription()</tt> é igual à descrição
+        <tt>desc</tt> que foi previamente passada no servidor (em <tt>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</tt>).
+    </p>
 
     <!--
     <br>
@@ -347,7 +353,7 @@ $ mvn install -Dit.test.skip=true
                 </li>
                 <li>Analise o código de forma a compreender a implementação.<br>
                     Comece por entender a estrutura das mensagens trocadas (no módulo <tt>silo-contract</tt>), passando,
-                    depois, para o módulo <tt>silo-server</tt>e, por fim, para o módulo <tt>silo-client</tt>.
+                    depois, para o módulo <tt>silo-server</tt> e, por fim, para o módulo <tt>silo-client</tt>.
                 </li>
                 <li>Compile o código executando <tt>mvn compile</tt> na raiz do projeto.</li>
                 <li>Lance o servidor, executando <tt>mvn exec:java</tt> no módulo <tt>silo-server</tt>.</li>

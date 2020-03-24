@@ -152,10 +152,7 @@ responseObserver.onError(Status.INVALID_ARGUMENT.withDescription(desc).asRuntime
 
     <br>
     <h3>Como captar o erro no cliente?</h3>
-    <p>Para captar o erro do lado do cliente, basta introduzir um bloco <tt>try-catch</tt> para uma exceção do tipo <tt>StatusRuntimeException</tt>,
-        que oferece o método <tt>getStatus</tt>, que devolve a instância de <tt>Status</tt> previamente encapsulada,
-        Supondo, então, que existe, do lado do cliente, um stub com nome <tt>stub</tt>, imprimir o
-        código é fácil:</p>
+    <p>Para captar o erro do lado do cliente, basta introduzir um bloco <tt>try-catch</tt> para uma exceção do tipo <tt>StatusRuntimeException</tt>, que oferece o método <tt>getStatus</tt>, que devolve a instância de <tt>Status</tt> previamente encapsulada. Supondo, então, que existe, do lado do cliente, um <i>stub</i> com nome <tt>stub</tt>, imprimir o código de erro é fácil:</p>
 
     <pre class="prettyprint lang-java">
 ...
@@ -169,27 +166,17 @@ try {
 ...
     </pre>
 
-    <p>Atente-se que a descrição que se obtém ao invocar <tt>status.getDescription()</tt> é igual à descrição
-        <tt>desc</tt> que foi previamente passada no servidor (em <tt>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</tt>).
-    </p>
+    <p>Atente-se que a descrição que se obtém ao invocar <tt>status.getDescription()</tt> é igual à descrição <tt>desc</tt> que foi previamente passada no servidor (em <tt>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</tt>).</p>
 
     <!--
     <br>
     <h4>Metadados</h4>
-    <p>A passagem de metadados é igualmente possível, mas mais complexa. Todas as mensagens trocadas com gRPC necessitam
-        de um marshaller, ou seja de uma entidade que seja capaz de transformar a representação um objeto num formato
-        adequado para a sua transmissão, e vice-versa. Em particular, se quisermos enviar um metadado,
-        necessitamos de um marshaller binário para o mesmo, para que a framework saiba como convertê-lo adequadamente de
-        e para um <tt>byte[]</tt>.</p>
-    <p>Vamos, a título de exemplo, enviar um metadado que seja o próprio <tt>CurrentBoardRequest</tt> recebido. Para
-        tal, vamos utilizar o <tt>BinaryMarshaller</tt> que a framework já oferece (disponível em <tt>Metadata.BINARY_BYTE_MARSHALLER</tt>).<b>Esta
-            é a entidade que converte o nosso objeto em <tt>byte[]</tt>e vice-versa</b>.Comecemos por criar a instância
-        que armazena os metadados.</p>
+    <p>A passagem de metadados é igualmente possível, mas mais complexa. Todas as mensagens trocadas com gRPC necessitam de um marshaller, ou seja de uma entidade capaz de transformar a representação de um objeto num formato adequado para a sua transmissão e vice-versa. Em particular, se quisermos enviar um metadado, necessitamos de um marshaller binário para o mesmo, para que a <i>framework</i> saiba como convertê-lo adequadamente de e para um array de bytes (<tt>byte[]</tt>).</p>
+    <p>A título de exemplo, vamos introduzir o <tt>CurrentBoardRequest</tt> recebido como metadado &mdash; muitas vezes. Para tal, vamos utilizar o <tt>BinaryMarshaller</tt> que a framework já oferece (disponível em <tt>Metadata.BINARY_BYTE_MARSHALLER</tt>) para converter o objeto em <tt>byte[]</tt>e vice-versa. Comecemos por criar a instância que armazena os metadados.</p>
     <pre class="prettyprint lang-java">
 Metadata trailers = new Metadata();
     </pre>
-    <p>Esta instância funciona como uma base de dados de pares chave-valor, ao estilo <tt>HashMap</tt>, em que
-        <b>cada</b> chave corresponde ao nome do metadado e o <b>valor</b> ao conteúdo do metadado em si. A chave é
+    <p>Esta instância funciona como uma base de dados de pares chave-valor, ao estilo <tt>HashMap</tt>. A chave é
         sempre uma instância de <tt>Metadata.Key&lt;T&gt;</tt>, em que <tt>T</tt> designa o tipo do nosso metadado. Este
         tipo tem de ter um marshaller associado, pelo motivo discutido acima. Na linha abaixo, vamos criar uma
         <b>chave</b> com
@@ -199,21 +186,19 @@ Metadata trailers = new Metadata();
     <pre class="prettyprint lang-java">
 Metadata.Key&lt;byte[]&gt; key = Metadata.Key.of("keyName", Metadata.BINARY_BYTE_MARSHALLER);
     </pre>
-    <br>
-    <p><b>NOTA:</b> Num outro cenário, poderíamos, por exemplo, necessitar de um metadado que fosse do tipo
+    <p>Num outro cenário, poderíamos, por exemplo, necessitar de um metadado que fosse do tipo
         <tt>String</tt>, e isso
         seria
         possível uma vez que já existe um marshaller específico para <tt>String</tt> (disponível em <tt>Metadata.ASCII_STRING_MARSHALLER</tt>).
-        Analogamente, o código seria muito semelhante.</p>
+        O código seria muito semelhante.</p>
     <pre class="prettyprint lang-java">
 Metadata.Key&lt;String&gt; key = Metadata.Key.of("keyName", Metadata.ASCII_STRING_MARSHALLER);
     </pre>
-    <br>
-    <p>Retomando a explicação para o marshaller binário, vamos, agora, construir o nosso <b>valor</b>. Como explicado,
+    <p>Retomando a explicação para o marshaller binário, vamos construir o nosso <b>valor</b>. Como explicado,
         terá de ser do tipo <tt>byte[]</tt>. Suponhamos, neste caso, </p>
-    <br>
     -->
     <br>
+
     <h2>Testes de integração com JUnit</h2>
     <p>Os testes de integração (integration tests) verificam o comportamento de vários componentes do sistema.<br>Por
         outras palavras, verificam se os componentes se integram bem uns com os outros.</p>

@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <link href="../_css/labs-sd.css" rel="stylesheet" type="text/css"/>
+    <link href="../_prettify/prettify.css" rel="stylesheet" type="text/css"/>
+    <script src="../_prettify/prettify.js" type="text/javascript"></script>
+    <title>Tratamento de erros com gRPC e testes de integração com JUnit</title>
+
+    <style type="text/css">
+        body {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        .underlined {
+            text-decoration: underline !important;
+        }
+    </style>
+</head>
+
+<body onload="prettyPrint()">
+<div class="contexto">
+    <p><a href="../index.html">Labs SD</a> &gt;</p>
+</div>
+<div class="titulo" id="1">
+    <h1>Tratamento de erros com gRPC e testes de integração com JUnit</h1>
+</div>
+<div class="objectivos">
+    <h2>Objetivos da semana</h2>
+    <ul>
+        <li>Aprender a tratar erros com gRPC</li>
+        <li>Aprender a fazer testes de integração utilizando JUnit</li>
+    </ul>
+</div>
+<div class="corpo" style="padding-right: 2em">
+
+    <h2 id="conteudos">Materiais de apoio à aula</h2>
+    <ul>
+        <li>
+            <a href="grpc-error/index.html">Tratamento de erros com gRPC</a>
+        </li>
+        <li>
+            <a href="junit-it/index.html">Testes de integração com JUnit</a>
+        </li>
+    </ul>
+
+    <p class="exemplos">
+        Exemplos:
+    </p>
+    <ul>
+        <li><a href="https://github.com/tecnico-distsys/example_junit" target="_blank">JUnit <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
+        <ul>
+            <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
+        </ul>
+        </li>
+        <li><a href="https://github.com/tecnico-distsys/example_error-test-grpc" target="_blank"><i>gRPC example with errors and tests</i> <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
+        <ul>
+            <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
+        </ul>
+        </li>
+    </ul>
+
+
+    <p>
+    &nbsp;
+    </p>
+    <hr />
+        
+    <h1>Exercício</h1>
+    <h2>Implementação da operação <tt>ctrlPing</tt> no projeto (P1)</h2>
+        
+    <p>
+        O objetivo é construir uma primeira operação remota no projeto.<br />
+        Vai-se implementar o <tt>ctrlPing</tt>, testar manualmente com o cliente e depois fazer teste de integração automático.
+    </p>
+
+    <ol type="I">
+        <li>
+            O ponto de partida é o projeto base no repositório GitHub de cada grupo.<br />
+            No caso do <i>silo</i>, existem três módulos: <tt>contract</tt>, <tt>server</tt> e <tt>client</tt>.<br />
+            Antes de começar, e para prevenir conflitos de módulos Maven, alterar os <tt>pom.xml</tt> substituindo as referências <b><tt>CXX</tt></b> pelo identificador do grupo.
+        </li>
+        <li>
+            Vamos começar pelo <b>contrato</b>:
+            <ol>
+                <li>
+                    Aceder ao ficheiro <tt>.proto</tt>.<br />
+                    Este ficheiro define as estruturas de dados e as operações remotas.
+                </li>
+                <li>
+                    Cada operação necessita de uma mensagem de pedido e de uma mensagem de resposta.
+                </li>
+                <li>
+                    Definir a mensagem do pedido, <tt>PingRequest</tt>, que recebe texto simples.
+                </li>
+                <li>
+                    Definir a mensagem do resposta, <tt>PingResponse</tt>, que devolve também texto simples.
+                </li>
+                <li>
+                    Definir a operação <tt>rpc</tt> com o nome <tt>ctrl_ping</tt>, com os tipos de pedido e resposta indicados.
+                </li>
+                <li>
+                    Vamos gerar código Java a partir do WSDL.
+                    O Maven está configurado para chamar a ferramenta <tt>protoc</tt>.
+                    <ul>
+                        <li>
+                            <tt>mvn install</tt>
+                        </li>
+                        <li>
+                            Se tudo correr bem, as definições protobuf foram convertidas para classes Java.<br />
+                            Consultar o código gerado 
+                            Faça <i>refresh</i>
+                            (<i>right-click</i>, Maven, Update Project..., Force Update of Snapshots/Releases, OK)
+                            no Eclipse e
+                            consulte as classes geradas na pasta:
+                            <tt>target/generated-sources/protobuf</tt>.<br />
+                            Há classes que representam os tipos das mensagens e depois há as classes cliente e servidor do RPC.
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>
+            Vamos agora concretizar o <b>servidor</b>:
+            <ol>
+                <li>
+                    As classes de domínio da aplicação, onde são definidas as entidades e os comportamentos, ficam no pacote <tt>domain</tt>.<br />
+                    <ul>
+                        <li>
+                            Identifique o <i>Domain Root</i> e as restantes entidades representadas nas classes.
+                        </li>
+                        <li>
+                            Veja os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
+                        </li>
+                    </ul>
+                    Para o <tt>ctrl_ping</tt> não deve ser necessário usar o domínio.
+                </li>
+                <li>
+                    Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores já vistos nas aulas:
+                    <ul>
+                        <li>
+                            Crie a classe <tt>...ServerImpl</tt>
+                        </li>
+                        <li>
+                            Adicione o método de implementação do <tt>ctrl_ping</tt>:<br />
+                            <pre class="prettyprint lang-java">
+                                public void ctrlPing(PingRequest request, StreamObserver&lt;PingResponse&gt; responseObserver) {
+                                    String input = request.getInputText();
+                                    String output = "Hello " + input + "!";
+                                    PingResponse response = PingBoardResponse.newBuilder().setOutputText(output).build();
+                                responseObserver.onNext(response);
+                                responseObserver.onCompleted();
+                                }
+                            </pre>
+                       </li>
+                    </ul>
+                    <li>
+                        Ajuste a classe <tt>ServerApp</tt> para instanciar o servidor e direcionar os pedidos para a implementação.
+                    </li>
+                    <li>
+                        Para compilar e testar:<br />
+                        <tt>mvn compile exec:java</tt>
+                    </li>
+                </ul>
+            </ol>
+        </li>
+        <li>
+            Vamos agora concretizar o <b>cliente</b>:
+            <ol>
+                <li>
+                    O <tt>...Frontend</tt> vai envolver o <i>channel</i> e o <i>stub</i> gerado pelo <tt>protoc</tt>.<br />
+                    Todos os pedidos para o servidor vão depois usar este objeto <tt>...Frontend</tt>, o que permitirá mais tarde acrescentar funcionalidades.
+                </li>
+                <li>
+                    O objeto <tt>...ClientApp</tt> deverá criar um <i>frontend</i> e fazer uma chamada à operação remota:<br />
+                    <pre class="prettyprint lang-java">
+                            ServerFrontend frontend = new ServerFrontend(host, port);
+
+                            ...
+
+                            PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
+                            PingResponse response = frontend.ctrlPing(request);
+                            System.out.println(response);
+                    </pre>
+                </li>
+                <li>
+                    Para compilar e testar:<br />
+                    <tt>mvn compile exec:java</tt><br />
+                    Se tudo correr bem, deverá aparecer a mensagem: <tt>Hello friend!</tt>
+                </li>
+            </ol>
+        </li>
+        <li>
+            Vamos adicionar um retorno de erro ao servidor caso a mensagem do pedido seja vazia.
+            <pre class="prettyprint lang-java">
+                import static io.grpc.Status.INVALID_ARGUMENT;
+
+                ...
+
+                if (inputText == null || inputText.isBlank()) {
+                    responseObserver.onError(INVALID_ARGUMENT.withDescription("Input cannot be empty!").asRuntimeException());
+                }
+
+                ...
+            </pre>
+        </li>
+        <li>
+            Do lado do cliente, vamos apanhar e detetar a exceção:
+            <pre class="prettyprint lang-java">
+                import io.grpc.StatusRuntimeException;
+
+                ...
+
+                try {
+
+                    PingRequest request = PingRequest.newBuilder().setInputText("").build();
+                    PingResponse response = frontend.ctrlPing(request);
+
+                } catch (StatusRuntimeException e) {
+                    System.out.println("Caught exception with description: " + e.getStatus().getDescription());
+                }
+            </pre>
+        </li>
+        <li>
+            Vamos agora criar um teste de integração para verificar este comportamento do servidor.<br />
+            <ol>
+                <li>
+                    Criar a classe <tt>PingIT</tt> na pasta <tt>src/test/java/</tt>.
+                </li>
+                <li>
+                    Primeiro vamos criar um teste para o caso normal:<br />
+                    <pre class="prettyprint lang-java">
+                        ... 
+
+                        @Test
+                        public void pingOKTest() {
+                            PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
+                            PingResponse response = frontend.ctrlPing(request);
+                            assertEquals("Hello friend!", response);
+                        }
+
+                        ...
+                    </pre>
+                </li>
+                <li>
+                    Para correr os testes, lançar o servidor primeiro, e depois:<br />
+                    <tt>mvn verify</tt><br />
+                    O resultado deverá ser bem sucedido para todos os testes (no total é apenas 1, para já).
+                </li>
+                <li>
+                    Vamos agora criar um teste para a situação de erro:
+                    <pre class="prettyprint lang-java">
+                        ...
+
+                        @Test
+                        public void emptyPingTest() {
+                            PingRequest request = PingRequest.newBuilder().setInputText("").build();
+                            assertEquals(
+                                INVALID_ARGUMENT,
+                                assertThrows(
+                                        StatusRuntimeException.class, () -> frontend.ctrlPing(request))
+                                    .getStatus()
+                                    .getCode());
+                        }
+                    </pre>
+                </li>
+                <li>
+                    Para correr novamente os testes:<br />
+                    <tt>mvn verify</tt><br />
+                    O resultado deverá ser, novamente, bem sucedido para todos os testes (o total agora é 2).<br />
+                    Repare que o teste passa se houver exceção, porque é isso o esperado.
+                </li>
+            </ol>
+        </li>
+    </ol>
+
+    <p>
+        <b>O que falta fazer?</b>
+    </p>
+    <ul>
+        <li>
+            Completar o contrato e o servidor.
+        </li>
+        <li>
+            Atualizar <i>frontend</i>
+        </li>
+        <li>
+            Testar todas as operações a desenvolver.
+        </li>
+        <li>
+            Concretizar os restantes requisitos do projeto.
+        </li>
+    </ul>
+
+</div>
+<hr/>
+<div class="rodape">
+    <p>&copy; Docentes de Sistemas Distribu&iacute;dos, <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng.
+        Informática</a>, <a href="http://www.ist.eu">Técnico Lisboa</a>
+        <br/>
+    </p>
+</div>
+</body>
+</html>

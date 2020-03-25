@@ -183,6 +183,7 @@
                             No ficheiro <tt>TTTResources.java</tt>, crie um método POST no caminho <b><tt>"play"</tt></b> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. 
                             Este método vai-nos permitir enviar jogadas para o servidor.<br /> 
                             Exemplo de um método que recebe qualquer coisa em XML e JSON e devolve qualquer coisa em XML:
+                            <!-- nota: no exemplo de código o Produces deverá estar a JSON -->
                             <pre class="prettyprint lang-java">
     @POST
     @Path("caminho-aqui")
@@ -274,9 +275,11 @@
                         O cliente está configurado para utilizar o método POST em vez do novo método GET para jogar. Para isso é necessário fazer algumas alterações.
                         <ol type="a">
                         <li>
-                            Vá agora ao cliente e no ficheiro <tt>TTTPlayer.java</tt> comente as linhas seguintes desta forma:
+                            Vá agora ao cliente e no ficheiro <tt>TTTPlayer.java</tt> e modifique o valor de <tt>USE_POST_TO_PLAY_FLAG</tt> para <tt>false</tt>.<br />
+                            O código que irá executar agora é este:
                             <pre class="prettyprint lang-java">
-    /* Response response = client.target(restURL).path("play").request(MediaType.APPLICATION_JSON)
+        private static final boolean USE_POST_TO_PLAY_FLAG = true;
+                                /* Response response = client.target(restURL).path("play").request(MediaType.APPLICATION_JSON)
     .post(Entity.entity(playRequest, MediaType.APPLICATION_JSON), Response.class); */
 
     ...

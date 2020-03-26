@@ -30,9 +30,13 @@
 </div>
 
 <p>
-    Após a invocação de um procedimento remoto com gRPC, a chamada pode ter sucesso ou falhar, sendo enviado para o
-    cliente um código de erro (ou <i>error status code</i>) neste último caso. 
-    O gRPC é uma biblioteca agnóstica relativamente à linguagem de programação que se utiliza, pelo que o recurso a um conjunto limitado de códigos de erro é a forma base de tratar situações em que a invocação remota falha.
+    Uma chamada remota de procedimento (RPC) pode falhar devido a problemas na rede, no servidor ou no próprio cliente.<br />
+    Mesmo quando a comunicação é possível entre cliente e servidor, este último pode detetar um problema nos argumentos recebidos ou ter um problema interno que precisa de reportar ao cliente.
+</p>
+<p>
+    O gRPC reporta todos os problemas através de um código de estado (<i>status code</i>) que é devolvido em situações de erro.
+    Este mecanismo é básico e menos sofiscado, por exemplo, do que as exceções do Java.
+    A opção de desenho deve-se ao facto do gRPC ser uma biblioteca agnóstica relativamente à linguagem de programação que se utiliza, pelo que o recurso a um conjunto limitado de códigos de erro é a forma base de tratar situações em que a invocação remota falha.
 </p>
 <p>
     De acordo com a <a href="https://grpc.io/docs/guides/error/">documentação oficial</a>, existem três categorias de códigos de erro suportadas por todas as bibliotecas cliente/servidor gRPC e independentes do formato de dados:
@@ -46,44 +50,64 @@
     <li><b>Erros de protocolo</b>, como acesso não autenticado ou violação do protocolo de fluxo de controlo.
     </li>
 </ul>
+
+<br>
+<h3>Códigos de erro adicionais</h3>
 <p>
-    Este modelo, embora seja suficiente em algumas situações, não permite comunicar informações mais detalhadas
-    acerca do erro em causa. 
-    Foi criado, por isso, um <a href="https://cloud.google.com/apis/design/errors#error_model">modelo de erros mais rico</a> que, além de um <a
-            href="https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto">conjunto mais vasto de códigos de erro</a>, que permite incluir detalhes que podem ser relevantes para o cliente conseguir recuperar do erro, como <b id="richer_model_text">uma descrição textual do erro</b> e/ou <b             id="richer_model_metadata">metadados</b>. Nem todas as bibliotecas cliente/servidor gRPC suportam este modelo, mas Java (a que usaremos) suporta.
+<p>
+    Os código de base são suficientes em muitas situações, mas não permitem comunicar informações mais detalhadas
+    acerca do erro em causa.
+    Por este motivo, o gRPC tem também um <a href="https://cloud.google.com/apis/design/errors#error_model"></a>conjunto mais alargado de códigos de erro</a>, que já são definidos em <i>protocol buffers</i>.
 </p>
+<p>
+    A utilização de <a
+    href="https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto"><i>protocol buffers</i></a> permite incluir detalhes que podem ser relevantes para o cliente conseguir recuperar do erro, como uma descrição textual do erro e/ou metadados. 
+    Nem todas as implementações de gRPC suportam este modelo, mas o Java, que usaremos, suporta.
+    Felizmente, a união dos conjuntos de códigos de erro é apresentada ao programador Java através de uma classe apenas:
+    <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/grpc/Status.java"><tt>io.grpc.Status</tt></a>.
+</p>
+
 <br>
 <h3>Como retornar um erro?</h3>
 <p>
-    Tome como exemplo a implementação do método <tt>currentBoard</tt> do <a href="../../05-rpc">laboratório anterior</a>:
+    Após a invocação de um procedimento remoto com gRPC, a chamada pode ter sucesso ou falhar, sendo enviado para o
+    cliente um código de erro (ou <i>error status code</i>) neste último caso. 
+</p>
+<p>
+    Tome como exemplo a implementação do método <tt>currentBoard</tt> do <a href="../../05-rpc/index.html" target="_blank">laboratório anterior</a>:
 </p>
 <pre class="prettyprint lang-java">
 public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
-CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(ttt.currentBoard()).build();
-responseObserver.onNext(response);
-responseObserver.onCompleted();
+    String board = ttt.currentBoard();
+    CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(board).build();
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
 }</pre>
 <p>
     Em caso de erro, é importante notificar o cliente de que a execução remota falhou, para que consiga recuperar (por exemplo, através da repetição da invocação). 
-    Esse estado de erro pode ser induzido, por exemplo, por uma falha na conexão entre cliente e servidor (como descrito <a href="#common_errors">anteriormente</a>) ou introduzido pelo próprio programador, para acautelar violações do domínio da aplicação. A validação de argumentos é um exemplo clássico.</p>
+    Esse estado de erro pode ser induzido, por exemplo, por uma falha na conexão entre cliente e servidor (como descrito anteriormente) ou introduzido pelo próprio programador, para acautelar violações do domínio da aplicação. 
+    A validação de argumentos é um exemplo clássico.</p>
 <p>No caso de Java, é possível explicitar que a chamada remota falhou invocando <tt>responseObserver.onError(...)</tt> quando necessário. 
     Este método recebe um <tt>Throwable</tt>, sendo qualquer exceção em Java uma subclasse desta. Esta invocação altera o fluxo de execução do programa. 
     Quer isto dizer que, num determinado fluxo, <tt>onCompleted</tt> e <tt>onError</tt> só podem ser invocadas uma vez e, se forem, devem ser as últimas (não podendo, por isso, ser executadas em conjunto). 
     A título de exemplo, e considerando a guarda <tt>condition</tt>, deve ter-se algo como:</p>
 <pre class="prettyprint lang-java">
-...
-if (condition) {
-...
-responseObserver.onError(...);
-} else {
-...
-responseObserver.onNext(...);
-responseObserver.onCompleted();
-}
-...
+    ...
+
+    if (condition) {
+        ...
+        responseObserver.onError(...);
+
+    } else {
+        ...
+        responseObserver.onNext(...);
+        responseObserver.onCompleted();
+    }
+
+    ...
 </pre>
 <p>
-    No entanto, há que ter em conta que as exceções passadas como argumento a <tt>onError</tt> são automaticamente encapsuladas dentro de <tt>StatusRuntimeException</tt> ou <tt>StatusException</tt>, perdendo informação relevante sobre a sua origem/cause (uma vez que esta informação pertence exclusivamente ao domínio do servidor e
+    No entanto, há que ter em conta que as exceções passadas como argumento a <tt>onError</tt> são automaticamente encapsuladas dentro de <tt>StatusRuntimeException</tt> ou <tt>StatusException</tt>, perdendo informação relevante sobre a sua origem/causa (uma vez que esta informação pertence exclusivamente ao domínio do servidor e
     não deve ser enviada ao cliente). 
     Assim sendo, as únicas exceções que o cliente poderá receber do seu lado são do tipo <tt>StatusRuntimeException</tt> (que herda de <tt>RuntimeException</tt>) ou <tt>StatusException</tt> (que herda de <tt>Exception</tt>).
 </p>
@@ -98,9 +122,11 @@ responseObserver.onCompleted();
     Por exemplo, para que o cliente receba uma <tt>StatusRuntimeException</tt> (análogo para <tt>StatusException</tt>) ao especificar um argumento inválido, o servidor pode invocar:
 </p>
 <pre class="prettyprint lang-java">
-...
-responseObserver.onError(Status.INVALID_ARGUMENT.asRuntimeException());
-...
+        ...
+
+        responseObserver.onError(Status.INVALID_ARGUMENT.asRuntimeException());
+
+        ...
 </pre>
 
 <br>
@@ -108,34 +134,38 @@ responseObserver.onError(Status.INVALID_ARGUMENT.asRuntimeException());
 <h4>Descrição textual</h4>
 <p>
     Como discutido anteriormente, é ainda possível passar mais informação ao cliente acerca do erro em causa. 
-    Por exemplo, para passar uma descrição textual do erro (atribuída à variável <tt>desc</tt>), o servidor pode invocar:
+    Por exemplo, para passar uma descrição textual do erro, o servidor pode invocar:
 </p>
 <pre class="prettyprint lang-java">
-...
-responseObserver.onError(Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException());
-...
+        ...
+
+        responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid input!").asRuntimeException());
+
+        ...
 </pre>
 
 <br>
 <h3>Como captar o erro no cliente?</h3>
 <p>
     Para captar o erro do lado do cliente, basta introduzir um bloco <tt>try-catch</tt> para uma exceção do tipo <tt>StatusRuntimeException</tt>, que oferece o método <tt>getStatus</tt>, que devolve a instância de <tt>Status</tt> previamente encapsulada.
-    Supondo, então, que existe, do lado do cliente, um stub com nome <tt>stub</tt>, imprimir o código é simples:</p>
+    Supondo, então, que existe, do lado do cliente, um <tt>stub</tt>, imprimir o código é simples:</p>
 
 <pre class="prettyprint lang-java">
-...
-try {
-stub.currentBoard(currentBoardRequest);
+    ...
 
-} catch (StatusRuntimeException e) {
-Status status = e.getStatus();
-System.out.println(status.getDescription());
-}
-...
+    try {
+        CurrentBoardResponse response = stub.currentBoard(request);
+
+    } catch (StatusRuntimeException e) {
+        Status status = e.getStatus();
+        System.out.println(status.getDescription());
+    }
+
+    ...
 </pre>
 
 <p>
-    Atente-se que a descrição que se obtém ao invocar <tt>status.getDescription()</tt> é igual à descrição <tt>desc</tt> que foi previamente passada no servidor (em <tt>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</tt>).
+    Atente-se que a descrição que se obtém ao invocar <tt>status.getDescription()</tt> é igual à descrição que foi passada no servidor em <tt>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</tt>.
 </p>
 
 
@@ -189,15 +219,14 @@ Metadata.Key&lt;String&gt; key = Metadata.Key.of("keyName", Metadata.ASCII_STRIN
     Suponhamos, neste caso, TODO </p>
 <br>
 -->
-<br>
 
-<p>&nbsp;</p>
+<!--p>&nbsp;</p>
 <h2>Conclusão</h2>
 
 <p>
 Em resumo, o tratamento de erros depende de um entendimento entre o servidor, que devolve um <i>status</i> de erro, e o cliente que o recebe.
 Tenha em conta que existem muitas situações de erro em que o servidor e cliente não conseguem mesmo comunicar, por isso, a receção do <i>status</i> não chega a acontecer.
-</p>
+</p-->
 
 <p>&nbsp;</p>
 

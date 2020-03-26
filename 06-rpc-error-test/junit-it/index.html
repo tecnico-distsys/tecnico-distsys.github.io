@@ -32,49 +32,77 @@
 
 <div class="corpo">
 
-    <h2>Testes de integração com JUnit</h2>
+<h2>Testes de integração com JUnit</h2>
+<p>
+    Os testes de integração (<i>integration tests</i>) verificam o comportamento de vários componentes do sistema.
+    Por outras palavras, verificam se componentes autónomos, como um servidor e um cliente, se estão a integrar bem um com o outro.
+</p>
+<p>
+    O <a href="https://junit.org/junit5/docs/current/user-guide/">JUnit</a> é uma biblioteca Java para escrever testes ao código. 
+    A sua utilização mais comum é para testes unitários, mas também pode ser usada para fazer testes de integração.
+</p>
+<p>
+    Um conjunto (<i>suite</i>) de testes JUnit correspondem a uma classe Java.<br />
+    A classe seguinte contém dois testes:
+</p>
+<pre class="prettyprint lang-java">
+package example.it;
 
-    <p>
-        Os testes de integração (integration tests) verificam o comportamento de vários componentes do sistema.<br>
-        Por outras palavras, verificam se os componentes se integram bem uns com os outros.
-    </p>
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-    <p>
-        O <a href="https://junit.org/junit5/docs/current/user-guide/">JUnit</a> é uma biblioteca Java para escrever testes
-        ao código. A sua utilização mais comum é para testes unitários, mas também pode ser usada para fazer testes de integração.
-    </p>
+/** Integration test suite */
+public class ExampleIT {
 
-    <p>
-        Os testes de integração com JUnit 5 usam as seguintes anotações para o papel dos métodos durante a execução de testes:
-    </p>
-    <ul>
-        <li>Os métodos anotados com <tt>@Test</tt> são testes individuais;</li>
-        <li><tt>@BeforeEach</tt> e <tt>@AfterEach</tt> são executados antes e depois de cada teste, respetivamente;</li>
-        <li><tt>@BeforeAll</tt> e <tt>@AfterAll</tt> são executados apenas uma vez para o conjunto de testes da classe.</li>
-    </ul>
+    @Test
+    public void testSomething() {
+        // do something ...
+        Example example = new Example();
+        String result = example.doSomething();
 
-    <p>
-        Os testes utilizam funções de <a
-            href="https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html">assert</a> para
-        verificar o resultado esperado de cada teste.<br>
-        A forma normal é <tt>assertEquals(expected, actual)</tt> (em que <tt>expected</tt> é o valor esperado e <tt>actual</tt> é o valor que resultou da execução).
-    </p>
-    <p>
-        No entanto, muitos outros existem (com nome que sugere qual a funcionalidade respetiva):
-    </p>
-    <ul>
-        <li><tt>assertArrayEquals</tt></li>
-        <li><tt>assertFalse</tt></li>
-        <li><tt>assertNull</tt></li>
-        <li><tt>assertTimeout</tt></li>
-        <li>...</li>
-    </ul>
+        // assertEquals(expected, actual);
+        assertEquals("Hello", result);
+        // if the assert fails, the test fails
+    }
 
-    <br>
-    <p>
-        Uma classe de testes de integração tem a seguinte estrutura:
-    </p>
-    <pre class="prettyprint lang-java">
+    @Test
+    public void testSum() {
+        Calculator calc = new Calculator();
+        int result = calc.sum(22, 7);
+        assertEquals(29, result);
+    }
+
+}
+</pre>
+<p>
+    Os testes utilizam funções de <a
+        href="https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html"><i>assert</i></a> para verificar o resultado esperado de cada teste.<br>
+    A forma normal é <tt>assertEquals(expected, actual)</tt>,em que <tt>expected</tt> é o valor esperado e <tt>actual</tt> é o valor que resultou da execução.
+    No entanto, muitos outros existem, com nome que sugere qual a funcionalidade respetiva:
+</p>
+<ul>
+    <li><tt>assertArrayEquals</tt></li>
+    <li><tt>assertFalse</tt></li>
+    <li><tt>assertNull</tt></li>
+    <li><tt>assertTimeout</tt></li>
+    <li>...</li>
+</ul>
+
+<br>
+<h3>Anotações no código</h3>
+<p>
+    Como muitas vezes os testes têm partes repetitivas de código, é possível ter métodos anotados que são executados antes/depois de todos os testes da <i>suite</i> ou antes/depois de cada teste.<br />
+    Os testes de integração com JUnit 5 usam as seguintes anotações para o papel dos métodos durante a execução de testes:
+</p>
+<ul>
+    <li>Os métodos anotados com <tt>@Test</tt> são testes individuais;</li>
+    <li><tt>@BeforeEach</tt> e <tt>@AfterEach</tt> são executados antes e depois de cada teste, respetivamente;</li>
+    <li><tt>@BeforeAll</tt> e <tt>@AfterAll</tt> são executados apenas uma vez para o conjunto de testes da classe.</li>
+</ul>
+<p>
+    A classe seguinte mostra todas as anotações referidas:
+</p>
+<pre class="prettyprint lang-java">
 package example.it;
 
 import org.junit.jupiter.api.*;
@@ -100,7 +128,6 @@ public class ExampleIT {
     // members
     // ...
 
-
     // initialization and clean-up for each test
     @BeforeEach
     public void setUp() {
@@ -121,18 +148,18 @@ public class ExampleIT {
         // if the assert fails, the test fails
     }
 }
-    </pre>
+</pre>
 
-    <br>
-    <p>
-        Por convenção, as classes de testes de integração terminam com (<tt>IT</tt>). 
-        Devem ser também arrumadas na pasta <tt>src/test/java</tt> do projeto.<br>
-        O Maven executa os testes de integração na fase <b>verify</b> do ciclo de vida.
-    </p>
-    <p>
-        Antes disso, é necessário configurar o <i>plug-in</i> <a
-            href="https://maven.apache.org/surefire/maven-failsafe-plugin/">Failsafe</a> da forma ilustrada abaixo:</p>
-    <pre class="prettyprint lang-xml">
+<br>
+<h3>Configuração do Maven</h3>
+<p>
+    Por convenção, as classes de testes de integração terminam com <tt>IT</tt> e devem ser arrumadas na pasta <tt>src/test/java</tt> do projeto.<br>
+</p>
+<p>
+    Para executar testes de integração no Maven, é necessário configurar o <a
+        href="https://maven.apache.org/surefire/maven-failsafe-plugin/"><i>plug-in failsafe</i></a> no <tt>pom.xml</tt>:
+</p>
+<pre class="prettyprint lang-xml">
 &lt;plugin&gt;
     &lt;artifactId&gt;maven-failsafe-plugin&lt;/artifactId&gt;
     &lt;version&gt;3.0.0-M4&lt;/version&gt;
@@ -146,12 +173,13 @@ public class ExampleIT {
     &lt;/executions&gt;
 &lt;/plugin&gt;
 </pre>
-
-    <br>
-    <p>
-        Os exemplos seguintes mostram como correr os testes de integração e como controlar quais os testes a executar.
-    </p>
-    <pre class="prettyprint lang-sh">
+<p>
+    O Maven executa os testes de integração na fase <b>verify</b> do ciclo de vida.
+</p>
+<p>
+    Os exemplos seguintes mostram como correr os testes de integração e como controlar quais os testes a executar.
+</p>
+<pre class="prettyprint lang-sh">
 // to compile and execute all integration tests
 $ mvn verify
 
@@ -166,8 +194,7 @@ $ mvn verify -Dit.test=P*
 
 // to skip integration tests
 $ mvn install -Dit.test.skip=true
-    </pre>
-    <br/>
+</pre>
 
 <p>&nbsp;</p>
 

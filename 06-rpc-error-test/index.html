@@ -169,7 +169,7 @@ public void ctrlPing(PingRequest request,
 
     String input = request.getInputText();
     String output = "Hello " + input + "!";
-    PingResponse response = PingBoardResponse.newBuilder().
+    PingResponse response = PingResponse.newBuilder().
         setOutputText(output).build();
     responseObserver.onNext(response);
     responseObserver.onCompleted();
@@ -228,6 +228,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
             <li>
                 Verificar se o argumento é vazio e devolver o erro em caso afirmativo.
                 <pre class="prettyprint lang-java">
+    ...
     if (inputText == null || inputText.isBlank()) {
         responseObserver.onError(INVALID_ARGUMENT
             .withDescription("Input cannot be empty!").asRuntimeException());

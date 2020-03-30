@@ -266,7 +266,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
     public void pingOKTest() {
         PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
         PingResponse response = frontend.ctrlPing(request);
-        assertEquals("Hello friend!", response);
+        assertEquals("Hello friend!", response.getOutputText());
     }
                 </pre>
             </li>
@@ -282,7 +282,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
     public void emptyPingTest() {
         PingRequest request = PingRequest.newBuilder().setInputText("").build();
         assertEquals(
-            INVALID_ARGUMENT,
+            INVALID_ARGUMENT.getCode(),
             assertThrows(
                     StatusRuntimeException.class, () -> frontend.ctrlPing(request))
                 .getStatus()

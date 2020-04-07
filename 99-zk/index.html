@@ -70,7 +70,7 @@ Mais informação:
 			</ul>
 			</li>
             <li>Mudar o nome do ficheiro <i>zookeeper/conf/zoo_sample.cfg</i> para <i>zoo.cfg</i> </li>
-            <li>Editar o ficheiro <i>zoo.cfg</i>, alterando as seguintes configurações:
+            <li>Editar o ficheiro <i>zoo.cfg</i>, alterando as seguintes configurações (preenchendo o valor de <tt>dataDir</tt> com o caminho para a pasta criada anteriormente):
 				<ul>
 				<li>initLimit=10</li>
 				<li>syncLimit=2</li>
@@ -88,7 +88,7 @@ Mais informação:
 
 			<ul>
 				<li>Navegue até à pasta <i>zookeeper/bin</i></li>
-				<li>Corra o comando <tt>./zkServer.sh start</tt></li>
+				<li>Corra o comando <tt>./zkServer.sh start</tt> (ou <tt>./zkServer.cmd start</tt> caso esteja em Windows)</li>
 				<li>Deverá obter o seguinte <i>output</i>:</li>
 <pre class="prettyprint lang-bash">
     $ Starting zookeeper ... STARTED
@@ -100,7 +100,7 @@ Mais informação:
 			Consola de interação com o servidor ZooKeeper
 
 			<ul>
-				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt></li>
+				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt>< (ou <tt>./zkCli.cmd</tt> caso esteja em Windows)</li>
 				<ul><li>Este comando inicializa uma consola que permite interagir com o servidor ZooKeeper.</li></ul>
 				<li>Na consola correr o comando <tt>ls /</tt></li>
 				<ul>Este comando mostra os nós <i>zNodes</i> existentes na <i>raiz (/)</i> do ZooKeeper.</ul>
@@ -123,7 +123,7 @@ Mais informação:
 
 				<li>Para finalizar, correr <tt>quit</tt> para encerrar a consola do cliente.</li>
 
-				<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt></li>.</li>
+				<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt> (ou <tt>./zkServer.cmd stop</tt> caso esteja em Windows)</li>.</li>
 				<br>
 			</ul>
 		</p>
@@ -151,58 +151,33 @@ Mais informação:
 <h3>Exercício</h3>
 
 <p>
-O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o servidor <tt>grpc-hello</tt> (da aula anterior) se registe no ZooKeeper.
+O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o servidor <tt>silo-server</tt> se registe no ZooKeeper.
 </p>
 
 
 <ol type="I">
-		<li>Relembre o exemplo <i>gRPC HelloWorld</i> fornecido na aula anterior. </li>
-		<br>
+		<li>Vamos agora obter a biblioteca <tt>ZKNaming</tt> e instalar no repositório local do <tt>Maven</tt>.
 		<ol type="1">
 			<li>
-				Descarregue e descomprima o código fonte da <a href="./../04-rpc/grpc-hello-world.zip">aplicação de exemplo com gRPC <img src="../_img/zip.png" alt="ZIP" /></a>
-			</li>
-			<li>
-				Analise o código para relembrar a implementação.
-			</li>
-			<li>
-				Comece pelo módulo <tt>contract</tt>, e execute o comando:<br>
-				<tt>mvn install</tt>
-			</li>
-			<li>
-				Abra uma consola e corra o servidor:<br>
-				<tt>mvn compile exec:java</tt>
-			</li>
-			<li>
-				Abra outra consola e execute o cliente:<br>
-				<tt>mvn compile exec:java</tt>
-			</li>
-		</ol>
-		<br>
-
-		<li>Vamos agora obter a biblioteca <tt>ZKNaming</tt> e instalar no repositório local do <tt>Maven</tt>.</li>
-		<br>
-		<ol type="1">
-			<li>
-				Obtenha o codigo da biblioteca <a href="./zk-naming.zip">zk-naming <span style="color:red;font-size:90%">[atualizado]</span><img src="../_img/zip.png" alt="ZIP" />  </a>
+				Obtenha o codigo da biblioteca <a href="./zk-naming.zip">zk-naming <img src="../_img/zip.png" alt="ZIP" />  </a>
 			</li>
 			<li>
 				Instalar o módulo no repositório Maven Local:<br>
-				Atenção: Para correr os exemplos seguintes, é necessario que o servidor ZooKeeper já tenha sido iniciado: <tt>./path/to/zookeeper/bin/zkServer.sh start</tt>
+				Atenção: Para correr os exemplos seguintes, é necessario que o servidor ZooKeeper já tenha sido iniciado
 				 <ol>
-				 	<tt>cd zk-naming</tt> <br>
-				 	<tt>mvn install</tt>
+				 	<li><tt>cd zk-naming</tt> <br>
+				 	<tt>mvn install</tt></li>
 				 	<li>Uma vez instalado o módulo no repositório Maven local, a biblioteca pode ser usada como dependência em qualquer <tt>
 				 	pom.xml</tt>. </li>
 				 </ol>
 			</li>
-		</ol>
+		</ol></li>
 		<br>
-		<li>Vamos agora adaptar o <i>gRPC HelloWorld</i> para uma aplicação cliente-servidor que utiliza a biblioteca <tt>ZKNaming</tt> para registar e procurar serviços distribuídos.</li>
+		<li>Vamos agora adaptar o <i>silo</i> para uma aplicação cliente-servidor que utiliza a biblioteca <tt>ZKNaming</tt> para registar e procurar serviços distribuídos.</li>
 		<ol type="1">
 			<li>
-				Observe o <tt>pom.xml</tt> do servidor HelloWorld:
-				<ol>
+				Observe o <tt>pom.xml</tt> do servidor <tt>silo-server</tt>:
+				<ol type="a">
 					<li>Adicione a dependência para a biblioteca ZKNaming:</li>
 					
 					<pre class="prettyprint lang-xml">
@@ -220,18 +195,19 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 						Confirme as dependências, fazendo: <br/>
 						<tt>mvn dependency:tree</tt>
 					</li>
-					<li>O servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu próprio <tt>host</tt>, <tt>port</tt> e nome, no formato:</li>
-					<ol><li><tt>/HelloService</tt></li>
-						<li>o argumento nome será referênciado no resto do exercício como <tt>path</tt>
-					</ol>
+					<li>O servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu próprio <tt>host</tt>, <tt>port</tt> e nome, no formato <tt>/grpc/sauron/silo/instance_number</tt> (este nome será referenciado no resto do exercício como <tt>path</tt>):
 					<pre class="prettyprint lang-xml">
 ...
 &lt;properties&gt;
 &lt;zoo.host&gt;localhost&lt;/zoo.host&gt;
 &lt;zoo.port&gt;2181&lt;/zoo.port&gt;
+
+&lt;!-- instance number --&gt;
+&lt;ins.i&gt;1&lt;/ins.i&gt;
+
 &lt;server.host&gt;localhost&lt;/server.host&gt;
 &lt;server.port&gt;8080&lt;/server.port&gt;
-&lt;server.path&gt;/HelloService&lt;/server.path&gt;
+&lt;server.path&gt;/grpc/sauron/silo/${ins.i}&lt;/server.path&gt;
 ...
 ...
 &lt;mainClass&gt;${mainclass}&lt;/mainClass&gt;
@@ -242,6 +218,9 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 		&lt;argument&gt;${server.port}&lt;/argument&gt;
 		&lt;argument&gt;${server.path}&lt;/argument&gt;
 ...					</pre>
+
+				Note a definição da propriedade <tt>ins.i</tt>, usada para representar o número de instância do servidor.
+				</li>
 
 				</ol>
 			</li>
@@ -256,19 +235,19 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 ZKNaming zkNaming = null;
 try {
 ...
-zkNaming = new ZKNaming(zooHost, zooPort);
+	zkNaming = new ZKNaming(zooHost, zooPort);
 
-// publish
-zkNaming.rebind(path,host,port);
+	// publish
+	zkNaming.rebind(path, host, port);
 
 ...
-// start gRPC server
+	// start gRPC server
 ...
-// await termination
+	// await termination
 ...
 
 } catch (Exception e) {
-			System.out.printf("Caught exception: %s%n", e);
+	System.out.printf("Caught exception: %s%n", e);
 
 } finally  {
 ...
@@ -286,14 +265,13 @@ zkNaming.rebind(path,host,port);
 
 
 
-			<li>Vamos alterar o <tt>pom.xml</tt> do cliente:</li>
+			<li>Vamos alterar o <tt>pom.xml</tt> dos clientes:</li>
 			<ol>
-				<li>Adicione a dependência para a bliblioteca <tt>zk-naming</tt>, no mesmo modo que fez para o servidor.</li>
-				<li>Adicione ao <tt>pom.xml</tt> do cliente o endereço e porto do ZooKeeper, bem como o <tt>path</tt> do servidor.</li>
-				<ol>Este tem que ser igual ao colocado no <tt>pom</tt> do servidor.</ol>
+				<li>Adicione a dependência para a bliblioteca <tt>zk-naming</tt> no <tt>silo-client</tt>, no mesmo modo que fez para o servidor.</li>
+				<li>Adicione ao <tt>pom.xml</tt> do <tt>spotter</tt> e do <tt>eye</tt> o endereço e porto do ZooKeeper, bem como o <tt>path</tt> do servidor. Este tem de ser igual ao colocado no <tt>pom</tt> do servidor.</li>
 			</ol>
 			<br>
-			<li>Altere o código do cliente de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.</li>
+			<li>Altere o código do <tt>SiloFrontend</tt> de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.</li>
 
 			<ol>
 				<li>Adicionar as seguintes linhas de código ao cliente:</li>
@@ -314,13 +292,19 @@ final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaint
 			</ol>
 
 		<br>
-		<li>Execute novamente o cliente e servidor: </li>
+		<li>Execute os clientes e servidor:
 		<ol>
-			<li>Mantenho o servidor ZooKeeper a correr (inicie se estiver parado)</li>
-			<li>Corra <tt>mvn compile exec:java</tt> para o servidor e cliente</li> 
-			<li>Observe que o cliente comunica com o servidor, sem ter conhecimento explícito do <tt>host:port</tt> do mesmo</li>
-			<li>Pode comprovar, alterando o porto do servidor e testando o cliente sem alterações na sua configuração</li>
-		</ol>
+			<li>Mantenha o servidor ZooKeeper a correr (inicie se estiver parado)</li>
+			<li>Corra <tt>mvn compile exec:java</tt> para o servidor e clientes</li> 
+			<li>Experimente correr vários comandos no <tt>eye</tt> e no <tt>spotter</tt></li>
+			<li>Observe que os clientes comunicam com o servidor, sem ter conhecimento explícito do <tt>host:port</tt> do mesmo
+			<ol type="a"><li>Pode comprovar, alterando o porto do servidor e testando o cliente sem alterações na sua configuração</li></ol>
+			</li>
+		</ol></li>
+
+		<li>E se tivéssemos várias réplicas? Como poderia encontrá-las dinamicamente?
+			<ol><li>Estude a operação <tt>listRecords</tt></li></ol>
+		</li>
 		
 </ol>
 

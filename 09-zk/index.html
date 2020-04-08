@@ -88,7 +88,7 @@ Mais informação:
 
 			<ul>
 				<li>Navegue até à pasta <i>zookeeper/bin</i></li>
-				<li>Corra o comando <tt>./zkServer.sh start</tt> (ou <tt>./zkServer.cmd start</tt> caso esteja em Windows)</li>
+				<li>Corra o comando <tt>./zkServer.sh start</tt> (ou apenas <tt>.\zkServer.cmd</tt> caso esteja em Windows)</li>
 				<li>Deverá obter o seguinte <i>output</i>:</li>
 <pre class="prettyprint lang-bash">
     $ Starting zookeeper ... STARTED
@@ -100,7 +100,7 @@ Mais informação:
 			Consola de interação com o servidor ZooKeeper
 
 			<ul>
-				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt>< (ou <tt>./zkCli.cmd</tt> caso esteja em Windows)</li>
+				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt> (ou <tt>.\zkCli.cmd</tt> caso esteja em Windows)</li>
 				<ul><li>Este comando inicializa uma consola que permite interagir com o servidor ZooKeeper.</li></ul>
 				<li>Na consola correr o comando <tt>ls /</tt></li>
 				<ul>Este comando mostra os nós <i>zNodes</i> existentes na <i>raiz (/)</i> do ZooKeeper.</ul>
@@ -123,7 +123,7 @@ Mais informação:
 
 				<li>Para finalizar, correr <tt>quit</tt> para encerrar a consola do cliente.</li>
 
-				<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt> (ou <tt>./zkServer.cmd stop</tt> caso esteja em Windows)</li>.</li>
+				<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt> (ou faça Ctrl+C na linha de comandos, caso esteja em Windows)</li>.</li>
 				<br>
 			</ul>
 		</p>
@@ -159,11 +159,12 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 		<li>Vamos agora obter a biblioteca <tt>ZKNaming</tt> e instalar no repositório local do <tt>Maven</tt>.
 		<ol type="1">
 			<li>
-				Obtenha o codigo da biblioteca <a href="./zk-naming.zip">zk-naming <img src="../_img/zip.png" alt="ZIP" />  </a>
+				Obtenha o codigo da biblioteca <a href="https://github.com/tecnico-distsys/naming">zk-naming
+					<img src="../_img/github.png" alt="GitHub" height="16" /></a>
 			</li>
 			<li>
 				Instalar o módulo no repositório Maven Local:<br>
-				Atenção: Para correr os exemplos seguintes, é necessario que o servidor ZooKeeper já tenha sido iniciado
+				Atenção: Para correr os exemplos seguintes, é necessario que o servidor ZooKeeper já tenha sido iniciado:
 				 <ol>
 				 	<li><tt>cd zk-naming</tt> <br>
 				 	<tt>mvn install</tt></li>
@@ -173,6 +174,19 @@ O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o ser
 			</li>
 		</ol></li>
 		<br>
+		<li>Relembre o exemplo de gRPC estudado na <a href="../05-rpc">aula de gRPC</a>
+		<ol type="1">
+					<li>Faça <b><i>Clone</b></i> ou <b><i>Download</i></b> do branch <tt>zk</tt> código fonte do <a href="https://github.com/tecnico-distsys/example_grpc/tree/zk">exemplo gRPC <img src="../_img/github.png" alt="GitHub" height="16"/></a><br />
+					</li>
+					<li>Execute o exemplo seguindo as instruções <tt>README.md</tt> de cada módulo.</li>
+					<li>Experimente alterar o porto do servidor no <tt>pom.xml</tt> e executar novamente ambos os módulos, sem alterar o cliente.</li>
+					<li>Familiarize-se com o código e responda às seguintes questões:
+						<ol type="a">
+							<li>Onde está o registo do servidor no serviço de nomes?</li>
+							<li>Como é que o cliente obtém a localização do servidor?</li>
+					</ol></li>
+		</ol></li>
+		<br />
 		<li>Vamos agora adaptar o <i>silo</i> para uma aplicação cliente-servidor que utiliza a biblioteca <tt>ZKNaming</tt> para registar e procurar serviços distribuídos.</li>
 		<ol type="1">
 			<li>

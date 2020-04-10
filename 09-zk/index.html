@@ -28,133 +28,122 @@
         <div class="corpo">
         <h2>ZooKeeper</h2>
         <p>
-O Apache ZooKeeper é um serviço centralizado para resolver nomes, fornecer informação de configuração e sincronizar conjuntos de servidores distribuídos.<br />
-
+O <a href="https://zookeeper.apache.org/">Apache ZooKeeper</a> é um servidor para resolver nomes, fornecer informação de configuração e sincronizar conjuntos de servidores distribuídos.<br />
 O seu objetivo é simplificar a gestão de serviços, com propagação fiável de alterações de configuração.
-
-<br><br>
+		</p>
+		<p>
+<img src="zookeeper.png" height="150" />
+		</p>
+		<p>
 Mais informação:
 <!--ul>
     <li--><a href="https://zookeeper.apache.org/documentation.html">ZooKeeper Documentation</a><!--/li>
 </ul-->
-						
-        </p>
-        <h3>Obtenção e Instalação</h3>
-        <p>
-            
-        <li>Obter</li>
-        <ul>
-            <li>
-                <a href="https://zookeeper.apache.org/">Apache ZooKeeper</a>
-                <small>(versão <i>stable</i>)</small><br />
-            </li>
-			<li>
-				Obtenha a versão pré-compilada.
-				<small>(Versão com binários incluidos)</small>
-				<li>exemplo: <i>apache-zookeeper-x.y.z-bin.tar.gz</i></li>
-			</li>
-        </ul>
-        <li>Instalar
-		<ul>
-			<li>Descompactar para pasta à escolha.</li>
-			<li>exemplo: <tt>/home/user/zookeeper</tt></li>
-		</ul>
-		</li>
-			
-        <li>Configurar</li>
-        <ul>
-            <li>Criar a pasta <i>data</i> dentro da pasta de instalação do ZooKeeper.
-            	É nesta pasta que o ZooKeeper irá armazenar a informação.
-			<ul>
-				<li>exemplo: <i>/home/user/zookeeper/data</i></li>
-			</ul>
-			</li>
-            <li>Mudar o nome do ficheiro <i>zookeeper/conf/zoo_sample.cfg</i> para <i>zoo.cfg</i> </li>
-            <li>Editar o ficheiro <i>zoo.cfg</i>, alterando as seguintes configurações (preenchendo o valor de <tt>dataDir</tt> com o caminho para a pasta criada anteriormente):
-				<ul>
-				<li>initLimit=10</li>
-				<li>syncLimit=2</li>
-				<li>dataDir=/home/user/zookeeper/data</li>
-				</ul>
-			<li>Repare no campo <i>clientPort</i>
-				<ul>este é o porto em que o ZooKeeper estará disponivel</ul>
-        </ul>
-    
-        </p>
-		
-		<h3>Utilização</h3>
-		<p>
-			Vamos agora iniciar o servidor do ZooKeeper.
-
-			<ul>
-				<li>Navegue até à pasta <i>zookeeper/bin</i></li>
-				<li>Corra o comando <tt>./zkServer.sh start</tt> (ou apenas <tt>.\zkServer.cmd</tt> caso esteja em Windows)</li>
-				<li>Deverá obter o seguinte <i>output</i>:</li>
-<pre class="prettyprint lang-bash">
-    $ Starting zookeeper ... STARTED
-</pre>
-				<br>
-				<li>O ZooKeeper está agora a correr.</li><br>
-			</ul>
-
-			Consola de interação com o servidor ZooKeeper
-
-			<ul>
-				<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt> (ou <tt>.\zkCli.cmd</tt> caso esteja em Windows)</li>
-				<ul><li>Este comando inicializa uma consola que permite interagir com o servidor ZooKeeper.</li></ul>
-				<li>Na consola correr o comando <tt>ls /</tt></li>
-				<ul>Este comando mostra os nós <i>zNodes</i> existentes na <i>raiz (/)</i> do ZooKeeper.</ul>
-				<br>
-				<li>Crie agora um novo nó com o comando <tt>create</tt></li>
-				<ul><li>correr <tt>create /myFirstZnode myFirstData</tt></li>
-					<li>Verificar que o nó foi criado com sucesso.</li>
-				</ul>
-				<li>Verifique que o nó criado contem os dados</li>
-				<ul><li>correr o comando <tt>get /myFirstZnode</tt></li>
-					<li>verificar os dados devolvidos</li>
-				</ul>
-				<br>
-
-				<li>Vamos agora eliminar o nó criado</li>
-				<ul>
-					<li>correr o comand <tt>delete /myFirstNode</tt></li>
-					<li>verificar com <tt>ls /</tt></li>
-				</ul>
-
-				<li>Para finalizar, correr <tt>quit</tt> para encerrar a consola do cliente.</li>
-
-				<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt> (ou faça Ctrl+C na linha de comandos, caso esteja em Windows)</li>.</li>
-				<br>
-			</ul>
 		</p>
 		
-<h3>Utilização do ZooKeeper para registo de serviços</h3>
+        <h3>Instalação do ZooKeeper</h3>
+        <ul>
+			<li>Obter
+				<ul>
+					<li>Ir à página do <a href="https://zookeeper.apache.org/releases.html#download">ZooKeeper</a> e obter a versão <i>stable</i> mais recente, com binários incluidos (o ficheiro a obter segue o padrão: <tt>apache-zookeeper-x.y.z-bin.tar.gz</tt>)</li>
+				</ul>
+			</li>
+			<li>Instalar
+				<ul>
+					<li>Descompactar para pasta à escolha, por exemplo, <tt>/home/user/zookeeper</tt> em Linux, ou <tt>C:\zookeeper</tt> em Windows</li>
+				</ul>
+			</li>
+			<li>Configurar
+				<ul>
+					<li>Criar a pasta <tt>data</tt> dentro da pasta de instalação do ZooKeeper, seguindo o exemplo, <tt>/home/user/zookeeper/data</tt> em Linux, ou <tt>C:\zookeeper\data</tt> em Windows.<br />
+					É nesta pasta que o ZooKeeper irá armazenar informação.</li>
+					<li>Mudar o nome do ficheiro <tt>zookeeper/conf/zoo_sample.cfg</tt> para <tt>zoo.cfg</tt></li>
+					<li>Editar o ficheiro <tt>zoo.cfg</tt>, alterando a configuração <tt>dataDir</tt> para referenciar a pasta criada anteriormente.<br />
+						Linux:
+						<ul>
+							<li>dataDir=/home/user/zookeeper/data</li>
+						</ul>
+						Windows:
+						<ul>
+							<li>dataDir=/C:/zookeeper/data</li>
+						</ul>
+					</li>
+					<li>As restantes configurações podem ser deixadas com os valores por omissão, nomeadamente o <tt>clientPort</tt> que indica o porto onde o ZooKeeper estará disponível.</li>
+				</ul>
+			</li>
+		</ul>
 
-<p>
+		<h3>Utilização</h3>
+		<ul>
+			<li>Vamos agora iniciar o servidor ZooKeeper:
+				<ul>
+					<li>Navegue até à pasta <tt>zookeeper/bin</tt></li>
+					<li>Corra o comando <tt>./zkServer.sh start</tt> em Linux, ou apenas <tt>zkServer.cmd</tt> em Windows</li>
+					<li>Deverão surgir mensagens de arranque na consola do servidor.</li>
+					<li>O servidor ZooKeeper está agora a correr.</li>
+				</ul>
+			</li>
+			<li>Consola de interação com o servidor ZooKeeper:
+				<ul>
+					<li>Novamente na pasta <i>zookeeper/bin</i>, corra o comando <tt>./zkCli.sh</tt> em Linyx, ou <tt>zkCli.cmd</tt> em Windows
+						<ul>
+							<li>Este comando inicializa uma consola que permite interagir com o servidor ZooKeeper.</li>
+						</ul>
+					</li>
+					<li>Na consola do cliente Zookeeper, correr o comando: <tt>ls /</tt>
+						<ul>
+							<li>Este comando mostra os nós (chamados <i>zNodes</i>), existentes na raiz (<tt>/</tt>) do ZooKeeper.</li>
+						</ul>
+					</li>
+					<li>Crie agora um novo nó com o comando <tt>create</tt>:
+						<ul>
+							<li>Correr <tt>create /myNode myData</tt></li>
+							<li>Confirme que o nó foi criado com sucesso.</li>
+						</ul>
+					</li>
+					<li>Verifique que o nó criado contém os dados armazenados:
+						<ul>
+							<li>Correr o comando <tt>get /myNode</tt></li>
+							<li>Verificar os dados devolvidos</li>
+						</ul>
+					</li>
+					<li>Vamos agora eliminar o nó criado:
+						<ul>
+							<li>Correr o comand <tt>delete /myNode</tt></li>
+							<li>Verificar com <tt>ls /</tt></li>
+						</ul>
+					</li>
+					<li>Para encerrar a consola do cliente, correr o comando <tt>quit</tt>.</li>
+				</ul>
+			</li>
+			<li>Para encerrar o servidor, corra o comando <tt>./zkServer.sh stop</tt> em Linux, ou faça <tt>Ctrl+C</tt> na consola caso esteja em Windows.</li>
+		</ul>
+
+	<h3>Utilização do ZooKeeper para registo de serviços gRPC</h3>
+	<p>
 Os endereços -- servidor e porto -- de serviços gRPC devem ser descobertos de forma dinâmica, para evitar que fiquem fixos no código das aplicações.
 Isto permite que o endereço mude sempre que necessário, sem recompilação dos clientes.
 Permite também que existam diversas réplicas de servidores para contactar alternativamente.
-</p>
-
-<p>
+	</p>
+	<p>
 As funcionalidades do ZooKeeper vão para além de um simples servidor de nomes.
-Para tornar a utilização do ZooKeeper mais simples foi criada a biblioteca <tt>ZKNaming</tt> que oferece as operações <tt>rebind</tt> e <tt>lookup</tt>.
+Para tornar a utilização do ZooKeeper mais simples foi criada a biblioteca <tt>ZKNaming</tt> que oferece as operações <tt>bind</tt> e <tt>lookup</tt>.
 Esta biblioteca torna o registo e pesquisa de serviços mais sucinto.
-O código fonte está disponível para consulta e modificação, caso sejam necessárias mais funcionalidades do ZooKeeper.
-</p>
-
+O código fonte da biblioteca está disponível para consulta e pode ser modificado, caso seja necessário expor mais funcionalidades do ZooKeeper.
+	</p>
+	<p>
 Mais informação:
 <!--ul>
     <li--><a href="zk-naming/apidocs/index.html">ZKNaming JavaDoc</a><!--/li>
 </ul-->
+	</p>
 
-<h3>Exercício</h3>
+	<hr />
 
-<p>
+	<h2>Exercício</h2>
+	<p>
 O objetivo do exercício desta aula é usar a biblioteca ZKNaming para que o servidor <tt>silo-server</tt> se registe no ZooKeeper.
-</p>
-
-
+	</p>
 <ol type="I">
 		<li>Vamos agora obter a biblioteca <tt>ZKNaming</tt> e instalar no repositório local do <tt>Maven</tt>.
 		<ol type="1">

@@ -5,19 +5,19 @@
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
         <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
 
-        <title>Esbo&ccedil;o de solu&ccedil;&atilde;o do exerc&iacute;cio de seguran&ccedil;a</title>
+        <title>Esboço de solução do exercício de segurança</title>
     </head>
 
     <body>
         <div class="contexto">
             <p>
-                <a href="../../index.html">Labs SD</a> &gt;
+                <a href="../../index.html">Labs SD</a> >
                 <a href="../index.html">Criptografia</a>
             </p>
         </div>
 
         <div class="titulo">
-            <h1>Esbo&ccedil;o de solu&ccedil;&atilde;o de Seguran&ccedil;a</h1>
+            <h1>Esboço de solução de Segurança</h1>
         </div>
 
         <div class="indice">
@@ -27,34 +27,34 @@
 
         <div class="corpo">
             <h3>
-Assinatura digital de dados n&atilde;o estruturados
+Assinatura digital de dados não estruturados
             </h3>
             <p>
-O mecanismo de assinatura numa sequ&ecirc;ncia de dados n&atilde;o estruturada (leia-se byte[])
-&eacute; o seguinte:
+O mecanismo de assinatura numa sequência de dados não estruturada (leia-se byte[])
+é o seguinte:
                 <ul>
                     <li><b>Assinar</b> -
 calcular resumo,
 cifrar resumo com chave privada de quem assina;</li>
                     <li><b>Verificar</b> -
 calcular novo resumo,
-decifra assinatura com chave p&uacute;blica de quem assinou,
-comparar resumos para confirmar que os dados n&atilde;o foram modificados.</li>
+decifra assinatura com chave pública de quem assinou,
+comparar resumos para confirmar que os dados não foram modificados.</li>
                 </ul>
             </p>
-            <p>&nbsp;</p>
+            <p> </p>
 
             <h3>
-Documento electr&oacute;nico estruturado
+Documento electrónico estruturado
             </h3>
             <p>
-Um documento electr&oacute;nico &eacute; mais do que uma sequ&ecirc;ncia de dados,
-pois pressup&otilde;e uma <b>estrutura</b>.
+Um documento electrónico é mais do que uma sequência de dados,
+pois pressupõe uma <b>estrutura</b>.
             </p>
             <p>
-A estrutura do documento cont&eacute;m meta-informa&ccedil;&atilde;o
-al&eacute;m dos dados.
-A meta-informa&ccedil;&atilde;o &eacute; informa&ccedil;&atilde;o sobre o pr&oacute;prio documento.
+A estrutura do documento contém meta-informação
+além dos dados.
+A meta-informação é informação sobre o próprio documento.
             </p>
             <p>
 Por exemplo:
@@ -66,62 +66,62 @@ Por exemplo:
                 </ul>
             </p>
             <p>
-Existe um formato can&oacute;nico em que toda a informa&ccedil;&atilde;o
-contida no documento &eacute; representada por uma sequ&ecirc;ncia de dados
+Existe um formato canónico em que toda a informação
+contida no documento é representada por uma sequência de dados
 bem definida.
             </p>
-            <p>&nbsp;</p>
+            <p> </p>
 
             <h3>
 Assinatura digital de dados estruturados
             </h3>
             <p>
-O mecanismo de assinatura num documento electr&oacute;nico estruturado
-&eacute; o seguinte:
+O mecanismo de assinatura num documento electrónico estruturado
+é o seguinte:
                 <ul>
                     <li><b>Assinar</b> -
-converter o documento para formato can&oacute;nico
-(sem incluir o cont&eacute;udo do campo assinatura),
-calcular o resumo do documento em formato can&oacute;nico,
+converter o documento para formato canónico
+(sem incluir o contéudo do campo assinatura),
+calcular o resumo do documento em formato canónico,
 cifrar resumo com chave privada de quem assina,
 preencher o campo assinatura com o resultado;
                     </li>
                     <li><b>Verificar</b> -
-converter o documento assinado para formato can&oacute;nico
-(remover temporariamente o conte&uacute;do do campo assinatura),
+converter o documento assinado para formato canónico
+(remover temporariamente o conteúdo do campo assinatura),
 calcular o novo resumo do documento,
-decifrar assinatura com chave p&uacute;blica de quem assinou,
-comparar resumos para confirmar que os dados n&atilde;o foram modificados.</li>
+decifrar assinatura com chave pública de quem assinou,
+comparar resumos para confirmar que os dados não foram modificados.</li>
                 </ul>
             </p>
-            <p>&nbsp;</p>
+            <p> </p>
 
             <h3>
-Certificados digitais de chave p&uacute;blica
+Certificados digitais de chave pública
             </h3>
             <p>
-O par&acirc;metro fundamental na verifica&ccedil;&atilde;o de assinatura &eacute;
-a <b>chave p&uacute;blica</b> de quem assinou.
-Para que se possa confiar que as chaves p&uacute;blicas pertencem a uma dada entidade,
-s&atilde;o distribu&iacute;das num certificado digital emitido por uma autoridade certificadora.
+O parâmetro fundamental na verificação de assinatura é
+a <b>chave pública</b> de quem assinou.
+Para que se possa confiar que as chaves públicas pertencem a uma dada entidade,
+são distribuídas num certificado digital emitido por uma autoridade certificadora.
             </p>
             <p>
-O certificado digital de chave p&uacute;blica &eacute; um documento electr&oacute;nico estruturado
-contendo a chave p&uacute;blica, meta-informa&ccedil;&atilde;o e a assinatura da autoridade que o emite.
+O certificado digital de chave pública é um documento electrónico estruturado
+contendo a chave pública, meta-informação e a assinatura da autoridade que o emite.
             </p>
             <p>
-Para confiar no certificado &eacute; necess&aacute;rio confiar na autoridade
-e possuir a sua chave p&uacute;blica,
-que se pode designar por <b>raiz da confian&ccedil;a</b> (<i>trust root</i>).
+Para confiar no certificado é necessário confiar na autoridade
+e possuir a sua chave pública,
+que se pode designar por <b>raiz da confiança</b> (<i>trust root</i>).
             </p>
-            <p>&nbsp;</p>
+            <p> </p>
 
         </div>
 
 		<hr />
 
         <div class="rodape">
-            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UL</p>
+            <p>&copy; Docentes de Sistemas Distribuídos, DEI, IST, UL</p>
         </div>
 
 	</body>

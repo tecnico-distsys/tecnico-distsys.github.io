@@ -5,20 +5,20 @@
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
         <link rel="stylesheet" type="text/css" href="../../_css/labs-sd.css"><!--/link-->
 
-        <title>Seguran&ccedil;a na plataforma Java</title>
+        <title>Segurança na plataforma Java</title>
 
     </head>
 
     <body>
         <div class="contexto">
             <p>
-                <a href="../../index.html">Labs SD</a> &gt;
+                <a href="../../index.html">Labs SD</a> >
                 <a href="../index.html">Criptografia</a>
             </p>
         </div>
 
         <div class="titulo">
-            <h1>Seguran&ccedil;a na plataforma Java</h1>
+            <h1>Segurança na plataforma Java</h1>
         </div>
 
         <div class="indice">
@@ -32,12 +32,12 @@
         <hr />
 
         <div class="corpo">
-            <h2 id="seguranca-java">Seguran&ccedil;a na plataforma Java</h2>
+            <h2 id="seguranca-java">Segurança na plataforma Java</h2>
             <p>
 <img src="java-security.png" alt="Java Security">
             </p>
             <p>
-A seguran&ccedil;a na plataforma Java &eacute; implementada em v&aacute;rias bibliotecas.
+A segurança na plataforma Java é implementada em várias bibliotecas.
             </p>
             <p>
 Java Cryptography Extension (JCE)<br />
@@ -46,28 +46,28 @@ Java Authentication and Authorization Service (JAAS)<br />
             </p>
 
 
-            <p>&nbsp;</p>
+            <p> </p>
             <h3 id="jce">Java Cryptography Extension (JCE)</h3>
             <p>
-A JCE &eacute; a biblioteca de criptografia
-que cont&eacute;m as implementa&ccedil;&otilde;es de algoritmos criptogr&aacute;ficos:
-Cifras sim&eacute;tricas (chave secreta),
-Cifras assim&eacute;tricas (chave p&uacute;blica e privada),
+A JCE é a biblioteca de criptografia
+que contém as implementações de algoritmos criptográficos:
+Cifras simétricas (chave secreta),
+Cifras assimétricas (chave pública e privada),
 Resumos.
             </p>
             <p>
-Os pacotes principais s&atilde;o: java.security , javax.crypto.
+Os pacotes principais são: java.security , javax.crypto.
             </p>
             <p>
-Suporta v&aacute;rios algoritmos atrav&eacute;s de Providers.
-No c&oacute;digo, praticamente todos os objectos JCE s&atilde;o criados com:
+Suporta vários algoritmos através de Providers.
+No código, praticamente todos os objectos JCE são criados com:
 <tt>getInstance("algorithm name", "provider name")</tt>,
-permitindo &agrave; aplica&ccedil;&atilde;o pedir uma implementa&ccedil;&atilde;o de um
+permitindo à aplicação pedir uma implementação de um
 algoritmo.
             </p>
             <p>
-Os principais objectos JCE s&atilde;o:
-Cipher (m&eacute;todos: <tt>init</tt>, <tt>update</tt>, <tt>doFinal</tt>),
+Os principais objectos JCE são:
+Cipher (métodos: <tt>init</tt>, <tt>update</tt>, <tt>doFinal</tt>),
 Key,
 KeyGenerator,
 KeyPair,
@@ -75,52 +75,52 @@ PublicKey,
 PrivateKey,
 KeyPairGenerator,
 MessageDigest.
-Existem outros objectos que realizam opera&ccedil;&otilde;es compostas:
+Existem outros objectos que realizam operações compostas:
 Signature, SignedObject, SealedObject, CipherStream.
             </p>
             <p>
-Os Java Security Providers s&atilde;o
+Os Java Security Providers são
 bibliotecas que implementam algoritmos de criptografia.
-O Sun Provider inclu&iacute;do com a Java Standard Edition
-implementa v&aacute;rios algoritmos: AES, SHA1, entre outros.
-Outro exemplo de <i>provider</i> &eacute; o Bouncy Castle
-que cont&eacute;m implementa&ccedil;&otilde;es alternativas,
+O Sun Provider incluído com a Java Standard Edition
+implementa vários algoritmos: AES, SHA1, entre outros.
+Outro exemplo de <i>provider</i> é o Bouncy Castle
+que contém implementações alternativas,
 incluindo o algoritmo RSA.
             </p>
 
-            <p>&nbsp;</p>
+            <p> </p>
             <h3 id="jsse">Java Secure Sockets Extension (JSSE)</h3>
             <p>
-A JSSE &eacute; a biblioteca de sockets que
-abstraem a utiliza&ccedil;&atilde;o de criptografia na comunica&ccedil;&atilde;o
-para garantir integridade, cifra e autentica&ccedil;&atilde;o.
-&Eacute; utilizada sobretudo para comunica&ccedil;&atilde;o na Internet,
+A JSSE é a biblioteca de sockets que
+abstraem a utilização de criptografia na comunicação
+para garantir integridade, cifra e autenticação.
+É utilizada sobretudo para comunicação na Internet,
 constituindo uma camada adicional na pilha de protocolos de rede,
-entre o n&iacute;vel de transporte e o n&iacute;vel da aplica&ccedil;&atilde;o.
+entre o nível de transporte e o nível da aplicação.
             </p>
             <p>
 O Secure Sockets Layer (SSL), actualmente designado por Transport Layer Security (TLS),
-&eacute; utilizado normalmente no HTTPS (HTTP sobre SSL).
-&Eacute; uma forma simples de criar canais seguros entre cliente e servidor,
-com autentica&ccedil;&atilde;o do servidor,
-sendo a autentica&ccedil;&atilde;o do cliente opcional.
+é utilizado normalmente no HTTPS (HTTP sobre SSL).
+É uma forma simples de criar canais seguros entre cliente e servidor,
+com autenticação do servidor,
+sendo a autenticação do cliente opcional.
             </p>
             <p>
-Os pacotes s&atilde;o: <tt>javax.net.ssl</tt> , <tt>javax.security.net</tt>.
+Os pacotes são: <tt>javax.net.ssl</tt> , <tt>javax.security.net</tt>.
             </p>
 
-            <p>&nbsp;</p>
+            <p> </p>
             <h3 id="jaas">Java Authentication and Authorization Service (JAAS)</h3>
             <p>
-A JAAS tem uma arquitectura Pluggable para autentica&ccedil;&atilde;o,
-independente de tecnologias espec&iacute;ficas.
-Permite o controlo de acessos dos utilizadores a recursos (autoriza&ccedil;&atilde;o)
-e tem seguran&ccedil;a centrada no utilizador (<i>user-centric</i>).
-A JAAS est&aacute; integrada com Java Naming and Directory Interface (JNDI),
+A JAAS tem uma arquitectura Pluggable para autenticação,
+independente de tecnologias específicas.
+Permite o controlo de acessos dos utilizadores a recursos (autorização)
+e tem segurança centrada no utilizador (<i>user-centric</i>).
+A JAAS está integrada com Java Naming and Directory Interface (JNDI),
 Windows NT, Solaris Login, Kerberos.
             </p>
             <p>
-O pacote principal &eacute;: <tt>javax.security.auth</tt>
+O pacote principal é: <tt>javax.security.auth</tt>
             </p>
 
         </div>
@@ -128,7 +128,7 @@ O pacote principal &eacute;: <tt>javax.security.auth</tt>
         <hr />
 
         <div class="rodape">
-            <p>&copy; Docentes de Sistemas Distribu&iacute;dos, DEI, IST, UL</p>
+            <p>&copy; Docentes de Sistemas Distribuídos, DEI, IST, UL</p>
         </div>
 
 	</body>

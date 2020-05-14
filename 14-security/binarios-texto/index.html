@@ -32,41 +32,31 @@
 
         <div class="corpo">
             <h2 id="criptografia">Representação de dados binários em texto</h2>
-            <h3 id="introducao">Introdução</h3>
             <p>
 A entrada e saída dos algoritmos criptográficos são vectores de octetos (byte[]).
             </p>
             <p>
 Muitas vezes é necessário representar conteúdos cifrados em ficheiros de texto,
 como acontece com documentos XML, por exemplo.
-Neste caso, a representação de dados não pode ser directa, porque
-existem muitos octetos que não correspondem a caracteres válidos.
-            </p>
-            <p>
+Neste caso, a representação de dados não pode ser directa, porque existem muitos octetos que não correspondem a caracteres válidos.<br />
 Sendo assim, uma solução possível é usar codificação de base 64.
             </p>
 
-            <p> </p>
+            <p>&nbsp;</p>
             <h3 id="base-64">Base 64</h3>
             <p>
-A codificação de base 64 foi definida originalmente
-para anexos do correio electrónico:
-RFC 2045: "Multipurpose Internet Mail Extensions".
+A codificação de base 64 foi definida originalmente para anexos do correio electrónico:
+<a href="https://tools.ietf.org/html/rfc2045">RFC 2045: <i>"Multipurpose Internet Mail Extensions"</i></a>.
             </p>
             <p>
-A codificação de base 64 usa o
-sub-conjunto de 65 caracteres do US-ASCII
-que são os caracteres mais "universais",
-ou seja, caracteres
-que são iguais em practicamente todos os códigos:
+A codificação de base 64 usa o sub-conjunto de 65 caracteres do US-ASCII que são os caracteres mais "universais",
+ou seja, caracteres que são iguais em practicamente todos os códigos:
 A-Z, a-z, 0-9, +, /
 = pad.
             </p>
             <p>
-24 bits são representados em 4 caracteres<br />
-6 bits úteis por caracter<br />
-Aumenta tamanho do conteúdo em 33%,
-por causa dos 2 bits "desperdiçados".
+24 bits são representados em 4 caracteres, ou seja, 6 bits úteis por caracter.<br />
+Esta conversão aumenta o tamanho do conteúdo em 33% por causa dos 2 bits "desperdiçados".
             </p>
             <p>
 O objecto <tt>javax.xml.bind.DatatypeConverter</tt>
@@ -92,6 +82,7 @@ import static javax.xml.bind.DatatypeConverter.printBase64Binary;
 
 </pre>
         </p>
+        <p>&nbsp;</p>
 
         </div>
 

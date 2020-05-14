@@ -48,11 +48,11 @@ código de autenticação de mensagem (MAC),
 assinatura digital e
 geração de números aleatórios imprevisíveis.
             </p>
+            <p>&nbsp;</p>
 
             <h3 id="criptografia-simetrica">Criptografia simétrica</h3>
             <p>
-A criptografia simétrica é também designada por
-criptografia de chave secreta.
+A criptografia simétrica é também designada por criptografia de chave secreta.
 A mesma chave permite cifrar e decifrar os dados.
             </p>
             <p>
@@ -60,20 +60,19 @@ Os algoritmos são:
 DES, AES, IDEA, TripleDES, Blowfish, PBE, etc.
             </p>
             <p>
-Os modos de cifra são: ECB, CBC, CFB, OFB, PCBC, etc.
 A cifra é feita bloco a bloco.
 O modo define como são combinados os blocos.
+Os modos de cifra são: ECB, CBC, CFB, OFB, PCBC, etc.
             </p>
             <p>
 Os enchimentos (padding) são: PKCS5, OAEP, SSL3, etc.
-Permitem fazer o acerto quando o tamanho dos dados
-não é múltiplo do tamanho do bloco.
+Permitem fazer o acerto quando o tamanho dos dados não é múltiplo do tamanho do bloco.
             </p>
+            <p>&nbsp;</p>
 
             <h3 id="criptografia-assimetrica">Criptografia assimétrica</h3>
             <p>
-A criptografia assimétrica é também designada por
-criptografia de chave pública.
+A criptografia assimétrica é também designada por criptografia de chave pública.
 Existe um par de chaves: pública e privada.
 A chave privada cifra os dados e a pública decifra-os (ou vice-versa).
             </p>
@@ -86,27 +85,26 @@ RSA – para assinatura digital e pequena cifra (blocos 117 bytes com PKCS1 Padd
 DSA – apenas para assinatura digital,
 Diffie-Hellman (Key Agreement Algorithm).
             </p>
+            <p>&nbsp;</p>
 
             <h3 id="resumo-digest">Resumo (Digest)</h3>
             <p>
-As funções de resumo (digest)
-produzem um resultado, com tamanho constante, a partir de dados com tamanho variável.
+As funções de resumo (<i>digest</i>) produzem um resultado, com tamanho constante, a partir de dados com tamanho variável.
 Produzem valores muito diferentes para entradas semelhantes.
             </p>
             <p>
-São "não invertíveis"
-e oferecem resistência à descoberta de dados alternativos
-que tenham o mesmo resumo.
+São "não invertíveis" e oferecem resistência à descoberta de dados alternativos que tenham o mesmo resumo.
 Partindo dos dados e do seu resumo, é difícil encontrar outros dados que produzam o mesmo resumo.
             </p>
             <p>
 Os algoritmos de resumo são:
 MD5, SHA-1, etc.
             </p>
+            <p>&nbsp;</p>
 
             <h3 id="mac">Código de autenticação de mensagem (MAC)</h3>
             <p>
-Os MAC (Message Authentication Codes) - códigos de autenticação de mensagens -
+Os MAC (<i>Message Authentication Codes</i>) - códigos de autenticação de mensagens -
 são uma forma de assinatura digital baseada num segredo partilhado entre interlocutores (e.g., uma chave simétrica de sessão).
 Permitem garantir a integridade e autenticidade do conteúdo de uma mensagem
 trocada entre duas entidades que partilham um segredo.
@@ -126,6 +124,7 @@ Se a chave secreta for apenas partilhada entre o emissor e o recetor, a validaç
 i) a mensagem foi de facto emitida pelo emissor legítimo (autenticidade), e ii) que a mensagem não foi modificada durante
 a transmissão pela rede (integridade). No entanto, ao contrário das assinaturas digitais de chave pública, o MAC não assegura não repúdio da mensagem.
             </p>
+            <p>&nbsp;</p>
 
             <h3 id="assinatura-digital">Assinatura digital de chave pública</h3>
             <p>
@@ -145,29 +144,27 @@ decifrar resumo com chave pública do emissor,
 comparar resumo decifrado com novo resumo.
 Se forem iguais a mensagem não foi modificada!
             </p>
+            <p>&nbsp;</p>
 
             <h3 id="numeros-aleatorios">Geração de números aleatórios</h3>
             <p>
 A geração de números aleatórios é importante,
-porque muitos mecanismos de segurança são derrotados
-por falta de verdadeira aleatoriedade.
+porque muitos mecanismos de segurança são derrotados por falta de verdadeira aleatoriedade.
             </p>
             <p>
-Um erro comum é o uso de funções pseudo-aleatórias, que
-recebem uma semente (seed) e depois geram
-uma sequência de números determinística
-(a mesma semente gera sempre a mesma sequência). Nestes casos
-é possível adivinhar as chaves que vão ser geradas a seguir.
+Um erro comum é o uso de funções pseudo-aleatórias, que recebem uma semente (<i>seed</i>) e depois geram
+uma sequência de números determinística (a mesma semente gera sempre a mesma sequência). 
+Nestes casos é possível adivinhar as chaves que vão ser geradas a seguir.
             </p>
             <p>
-As soluções possíveis são
-recolher fontes de aleatoriedade na máquina
+As soluções possíveis são recolher fontes de aleatoriedade na máquina
 - movimentos do rato do utilizador, número de processos, memória utilizada, etc -
-e combiná-las ou
-usar hardware específico que meça fenómenos físicos.
+e combiná-las ou usar <i>hardware</i> específico que meça fenómenos físicos.
 O objectivo é a geração de números aleatórios de boa qualidade,
 que produzam valores equiprováveis e imprevisíveis.
             </p>
+            <p>&nbsp;</p>
+
         </div>
 
         <hr />

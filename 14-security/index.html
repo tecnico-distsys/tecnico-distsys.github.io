@@ -28,13 +28,13 @@
 <div class="objectivos">
     <h2>Objectivos</h2>
     <ul>
-        <li>Utilizar os mecanismos criptogr&aacute;ficos da plataforma Java</li>
+        <li>Utilizar os mecanismos criptográficos da plataforma Java</li>
         <li>Concretizar um mecanismo de segurança para um gRPC</li>
     </ul>
 </div>
 <!--/br-->
 <!--div class="laboratorio">
-    <h2>No laborat&oacute;rio:</h2>
+    <h2>No laboratório:</h2>
     <ul>
         <li>Testar a criptografia Java, em especial, a cifra simétrica</li>
     </ul>
@@ -44,32 +44,33 @@
 </div>
 
 <div class="corpo">
-    <!--h2 id="conteudos">Conte&uacute;dos</h2-->
+    <!--h2 id="conteudos">Conteúdos</h2-->
     <p class="textos"><h3>Resumos:</h3>
         <ul>
-            <li><a href="seguranca-java/index.html">Seguran&ccedil;a na plataforma Java</a></li>
-            <li><a href="criptografia/index.html">Mecanismos criptogr&aacute;ficos</a></li>
-            <li><a href="binarios-texto/index.html">Representa&ccedil;&atilde;o de dados bin&aacute;rios em texto</a></li>
+            <li><a href="seguranca-java/index.html">Segurança na plataforma Java</a></li>
+            <li><a href="criptografia/index.html">Mecanismos criptográficos</a></li>
+            <li><a href="binarios-texto/index.html">Representação de dados binários em texto</a></li>
         </ul>
     </p>
     <p class="exemplos" id="crypto"><h3>Exemplos:</h3>
         <ul>
-			<li>
-            <a href="crypto.zip">Criptografia em Java
-            <img src="../_img/zip.png" alt="ZIP" ></a>
+            <li><a href="https://github.com/tecnico-distsys/example_crypto" target="_blank">Criptografia em Java <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
+            <ul>
+                <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
+            </ul>
             </li>
             <ul>
-                <li>Cifra sim&eacute;trica</li>
-                <li>Cifra assim&eacute;trica</li>
+                <li>Cifra simétrica</li>
+                <li>Cifra assimétrica</li>
                 <li>Resumo (<i>digest</i>)</li>
-                <li>Gera&ccedil;&atilde;o de n&uacute;meros aleat&oacute;rios seguros</li>
+                <li>Geração de números aleatórios seguros</li>
                 <li>Assinaturas digitais</li>
-                <li>Leitura e escrita de chaves criptogr&aacute;ficas</li>
+                <li>Leitura e escrita de chaves criptográficas</li>
                 <!--li>Criptografia em texto (XML)</li-->
             </ul>
         </ul>
 		<ul>
-			<li>Para executar uma breve demonstração da criptografia, escrever:</li>
+			<li>Para executar uma demonstração da criptografia, escrever:</li>
 			<ul>
 				<li><tt>mvn compile exec:java</tt></li>
 			</ul>
@@ -96,16 +97,16 @@ Nomeadamente, vamos garantir <b>integridade</b> da comunicação entre servidor 
 	<li>
 <b>Fornecedor gRPC / <i>Supplier</i></b><br />
 <br />
-O ponto de partida para o exercício é um programa cliente-servidor que usa gRPC.<br />
+O ponto de partida para o exercício é um <a href="https://github.com/tecnico-distsys/exercise_grpc-supplier" target="_blank"></a>cliente-servidor que usa gRPC <img src="../_img/github.png" alt="GitHub" height="16"></a>.<br />
 O servidor é um fornecedor de produtos para venda.
 O cliente contacta o servidor, chamando a operação remota <tt>listProducts</tt>, e o servidor responde com uma lista de produtos.
 	</li>
 	<ol type="1">
 		<li>
-Descarregue e descomprima o <a href="./grpc-supplier.zip">código fonte <img src="../_img/zip.png" alt="ZIP" /></a>.
+Faça <b><i>Clone or Download</b></i> do ponto de partida.
 		</li>
 		<li>
-Leia os README e analise o código, começando pelo <tt>contract</tt>, depois pelo <tt>server</tt> e finalmente o <tt>client</tt>.
+Leia os <tt>README</tt> e analise o código, começando pelo <tt>contract</tt>, depois pelo <tt>server</tt> e finalmente o <tt>client</tt>.
 		</li>
 		<li>
 Para construir e executar:
@@ -325,8 +326,8 @@ Vamos então calcular o resumo da resposta e depois cifrar esse resumo com a cha
 Aceder à classe de implementação do serviço no <tt>server</tt>.
 		</li>
 		<li>
-Para calcular o resumo, criar um objecto <tt>MessageDigest</tt> com o algoritmo <tt>SHA-256</tt><br />
-(consultar os <a href="#crypto">exemplos de criptografia</a> para mais detalhes sobre este objeto).
+Para calcular o resumo, criar um objecto <tt><b>MessageDigest</b></tt> com o algoritmo <tt>SHA-256</tt><br />
+(consultar a <a href="https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html">documentação</a> e o <a href="https://github.com/tecnico-distsys/example_crypto/blob/master/src/test/java/pt/tecnico/crypto/MACTest.java">exemplo</a> sobre este objeto).
 		</li>
 		<li>
 Para obter os dados a resumir, serializar o resultado com o seguinte método:
@@ -337,9 +338,9 @@ Para obter os dados a resumir, serializar o resultado com o seguinte método:
 ...
 </pre>
 		<li>
-Para cifrar o resumo, criar um objecto <tt>Cipher</tt> com o algoritmo <tt>AES/ECB/PKCS5Padding</tt> e 
+Para cifrar o resumo, criar um objecto <tt><b>Cipher</b></tt> com o algoritmo <tt>AES/ECB/PKCS5Padding</tt> e 
 inicializar em <tt>ENCRYPT_MODE</tt> com a chave<br />
-(consultar os <a href="#crypto">exemplos de criptografia</a> para mais detalhes sobre este objeto).
+(consultar a <a href="https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html">documentação</a> e o <a href="https://github.com/tecnico-distsys/example_crypto/blob/master/src/test/java/pt/tecnico/crypto/SymCryptoTest.java">exemplo</a> sobre este objeto).
 		</li>
 		<li>
 Preencher a assinatura e devolver a resposta que engloba a resposta anterior e a assinatura.
@@ -365,11 +366,11 @@ Para testar:
 			<li>
 O que significa cada campo na expressão <tt>AES/ECB/PKCS5Padding</tt>?
 			</li>
-			<li>
+			<!--li>
 Concorda com a escolha?<br /> 
 Consulte a <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#Cipher">documentação do JCE</a> para fundamentar a sua resposta. 
 Caso discorde, escolha uma alternativa mais segura.
-			</li>
+			</li-->
 		</ol><!-- type="a" -->
 	</ol><!-- type="1" -->		
 
@@ -459,11 +460,11 @@ Para testar:
 		</li>
 		<ol type="a">
 			<li>
-O cliente conseguiu detetar a alteração ao verificar a assinatura?
+O cliente conseguiu detetar a alteração?
 			</li>
 			<li>
-Em caso afirmativo, a solução construída garante a frescura da assinatura? <br />
-Ou seja, é resistente a um ataque de repetição?
+O cliente consegue detetar mensagens repetidas?<!--br />
+Ou seja, o cliente é resistente a um ataque de repetição?-->
 			</li>
 		</ol>
 	</ol>
@@ -507,27 +508,6 @@ O objectivo será estender a solução resultante do enunciado acima.<br />
         Assegure-se que a solução é enviada em formato ZIP e que não contém
         código compilado (faça <tt>mvn clean</tt> antes de criar o zip)
       </li>
-      <!--li>
-        Deverá também incluir um ficheiro <tt>instrucoes.txt</tt> com resumo
-        da funcionalidade implementada e com instruções para colocar o
-        programa a funcionar como esperado.<br />
-        Por exemplo:
-      </li>
-      <ul>
-        <li>
-          A funcionalidade pedida foi total/parcialmente implementada
-          <b>...</b>
-        </li>
-        <li>Para compilar: <kbd>mvn compile</kbd></li>
-        <li>
-          O servidor deve executar com o comando:
-          <kbd>mvn exec:java &amp;</kbd>
-        </li>
-        <li>
-          O cliente deve executar com o comando:
-          <kbd>mvn exec:java -Dserver.port=8080</kbd>
-        </li>
-      </ul-->
     </ul>
   </div>
 

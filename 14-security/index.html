@@ -97,7 +97,7 @@ Nomeadamente, vamos garantir <b>integridade</b> da comunicação entre servidor 
 	<li>
 <b>Fornecedor gRPC / <i>Supplier</i></b><br />
 <br />
-O ponto de partida para o exercício é um <a href="https://github.com/tecnico-distsys/exercise_grpc-supplier" target="_blank"></a>cliente-servidor que usa gRPC <img src="../_img/github.png" alt="GitHub" height="16"></a>.<br />
+O ponto de partida para o exercício é um <a href="https://github.com/tecnico-distsys/exercise_supplier-grpc" target="_blank">cliente-servidor que usa gRPC</a> <img src="../_img/github.png" alt="GitHub" height="16"></a>.<br />
 O servidor é um fornecedor de produtos para venda.
 O cliente contacta o servidor, chamando a operação remota <tt>listProducts</tt>, e o servidor responde com uma lista de produtos.
 	</li>
@@ -121,15 +121,16 @@ Para construir e executar:
 			<li>Servidor</li>
 			<ul>
 				<li>Compilar e executar o servidor</li>
+				<li><tt>mvn compile exec:java -Ddebug</tt></li>
 				<li>Fica à espera de pedidos de clientes</li>
-				<li><tt>mvn compile exec:java</tt></li>
+				<li>A definição de <tt>debug</tt> ativa a impressão de mensagens detalhadas</li>
 			</ul>
 			<li>Cliente</li>
 			<ul>
 				<li>Abrir outro terminal</li>
-				<li>Compilar e executar o cliente</li>
+				<li>Compilar e executar o cliente (com mensagens </li>
+				<li><tt>mvn compile exec:java -Ddebug</tt></li>
 				<li>Prepara o pedido, imprime-o na consola, faz a chamada remota, e imprime o resultado na consola</li>
-				<li><tt>mvn compile exec:java</tt></li>
 			</ul>
 		</ul>
 		<li>
@@ -346,18 +347,14 @@ inicializar em <tt>ENCRYPT_MODE</tt> com a chave<br />
 Preencher a assinatura e devolver a resposta que engloba a resposta anterior e a assinatura.
 		</li>
 		<li>
-Para testar:
+Para executar:
 		</li>
 		<ul>
 			<li>Servidor</li>
 			<ul>
 				<li>Compilar e executar o servidor</li>
-				<li><tt>mvn compile exec:java</tt></li>
+				<li><tt>mvn compile exec:java -Ddebug</tt></li>
 			</ul>
-			<!--li>Cliente</li>
-			<ul>
-				<li><tt>mvn compile exec:java</tt></li>
-			</ul-->
 		</ul>
 		<li>
 <b>Perguntas</b>
@@ -436,10 +433,8 @@ No servidor, após a realização da assinatura, modificar um dos campos de um d
 		</li>
 		<ul>
 			<li>
+Os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos.
 Para criar um objeto modificado a partir de um objeto existente pode-se usar o método <tt>toBuilder()</tt>.
-<!--
-os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos.
--->
 			</li>
 		</ul>
 		<li>
@@ -448,11 +443,11 @@ Para testar:
 		<ul>
 			<li>Servidor</li>
 			<ul>
-				<li><tt>mvn compile exec:java</tt></li>
+				<li><tt>mvn compile exec:java -Ddebug</tt></li>
 			</ul>
 			<li>Cliente</li>
 			<ul>
-				<li><tt>mvn compile exec:java</tt></li>
+				<li><tt>mvn compile exec:java -Ddebug</tt></li>
 			</ul>
 		</ul>
 		<li>
@@ -463,7 +458,7 @@ Para testar:
 O cliente conseguiu detetar a alteração?
 			</li>
 			<li>
-O cliente consegue detetar mensagens repetidas?<!--br />
+O cliente consegue detetar se a mensagem é repetida?<!--br />
 Ou seja, o cliente é resistente a um ataque de repetição?-->
 			</li>
 		</ol>

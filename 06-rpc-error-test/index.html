@@ -32,6 +32,7 @@
     <ul>
         <li>Aprender a tratar erros com gRPC</li>
         <li>Aprender a fazer testes de integração utilizando JUnit</li>
+        <li>Começar a desenvolver alguns métodos da parte 1 do projeto</li>
     </ul>
 </div>
 <div class="corpo" style="padding-right: 2em">
@@ -69,10 +70,11 @@
 <hr />
         
 <h2>Exercício</h2>
-<h3>Implementação da operação <tt>ctrlPing</tt> no projeto (P1)</h3>
+<h3>Implementação da primeira operação de controlo do projeto de SD: a operação <tt>ctrlPing</tt>.</h3>
     
 <p>
-    O objetivo do exercício é construir e testar uma primeira operação remota no projeto.<br />
+    No projeto a desenvolver em Sistemas distribuímos os servidores vão dispor de um conjunto de operações de controlo que se destinam a facilitar a realização de testes.
+O objetivo do exercício é construir e testar uma primeira operação remota semelhante à que se vai implementar no projeto. Esta operação (ctrl_ping) recebe um pedido de sinal de vida e responde com uma mensagem indicando o estado do servidor.<br />
     Para este fim, vai-se:
     <ol type="I">
         <li>
@@ -89,12 +91,24 @@
 <p>
     Vamos então começar!
 </p>
-<p>
+
+<!-- <p>
     O <b>ponto de partida</b> é o código base que está no repositório GitHub de cada grupo, que deve ser obtido com o comando <tt>git clone</tt>.
 </p>
 <p>
     Antes de começar, e para prevenir conflitos nos nomes dos módulos Maven, deve alterar os <tt>pom.xml</tt> e <tt>README.md</tt>, substituindo todas as referências a <b><tt>CXX</tt></b> pelo identificador do grupo.
     Por exemplo, o grupo A22 corresponde ao grupo 22 sediado no campus Alameda; já o grupo T07 corresponde ao grupo 7 sediado no Taguspark.
+</p>
+-->
+
+<p>
+    O <b>ponto de partida</b> é o código base que está no repositório <a href="https://github.com/tecnico-distsys/exercise_grpc_error_testing.git" target="_blank">exercise_grpc_error_testing<img src="../_img/github.png" alt="GitHub" height="16"></a>, que deve ser obtido com o comando fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>. Comece por executar:
+
+<pre class="prettyprint lang-java">
+mvn clean install -DskipTests
+</pre>
+
+na diretoria base.
 </p>
 
 <ol type="I">
@@ -149,7 +163,7 @@
             <li>
                 Vamos agora concretizar o <b>servidor</b>:
                 <ol type="a">
-                    <li>
+                    <!-- <li>
                         As classes de domínio da aplicação, onde são definidas as entidades e os comportamentos, ficam no pacote <tt>domain</tt>.<br />
                         <ul>
                             <li>
@@ -160,8 +174,8 @@
                             </li>
                         </ul>
                         Para o <tt>ctrl_ping</tt> não deve ser necessário usar o domínio, mas para as operações principais será necessário.
-                    </li>
-                    <li>
+                    </li> -->
+                    <li> 
                         Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, crie a classe <tt>...ServerImpl</tt> e adicione o método de implementação do <tt>ctrl_ping</tt>:<br />
                                 <pre class="prettyprint lang-java">
 public void ctrlPing(PingRequest request, 
@@ -189,7 +203,7 @@ public void ctrlPing(PingRequest request,
                 Vamos agora concretizar o <b>cliente</b>:
                 <ol type="a">
                     <li>
-                        O <tt>...Frontend</tt> vai envolver o <i>channel</i> e o <i>stub</i> gerado pelo <tt>protoc</tt>.
+                        O cliente gRPC deve fornecer um frontend para executar os testes de integração. O <tt>...Frontend</tt> vai envolver o <i>channel</i> e o <i>stub</i> gerado pelo <tt>protoc</tt>.
                         Todos os pedidos para o servidor vão depois usar este objeto <tt>...Frontend</tt>, o que permitirá mais tarde acrescentar funcionalidades.
                     </li>
                     <li>
@@ -299,22 +313,21 @@ import static io.grpc.Status.INVALID_ARGUMENT;
     </li>
 </ol>
 
-<p>&nbsp;</p>
+<!--<p>&nbsp;</p>
 <p>
     <b>Próximos passos</b>
 </p>
 <ul>
     <li>
-        Adicionar as restantes operações, uma a uma.<br />
-        Primeiro as de controlo, <tt>ctrl_clear</tt>, <tt>ctrl_init</tt>, e depois as principais.
+        Implementar mais duas operações de controlo, <tt>ctrl_clear</tt> e <tt>ctrl_init</tt>, de acordo com as descrições que se seguem.
+
+
     </li>
     <li>
         Testar todas as operações desenvolvidas.
     </li>
-    <li>
-        Concretizar os restantes requisitos do projeto.
-    </li>
 </ul>
+-->
 
 <p>&nbsp;</p>
 </div>

@@ -145,7 +145,7 @@ Mais informação:
 
 	<h2>Exercício</h2>
 	<p>
-O objetivo do exercício desta aula é usar a biblioteca <b>ZKNaming</b> para que o servidor <tt>silo-server</tt> se registe no ZooKeeper.
+O objetivo do exercício desta aula é usar a biblioteca <b>ZKNaming</b> para que o servidor <tt>dgs-server</tt> se registe no ZooKeeper.
 	</p>
 	<ol type="I">
 		<li>Vamos obter a biblioteca <b>ZKNaming</b> e instalar no repositório local do <i>Maven</i>.
@@ -182,10 +182,10 @@ O objetivo do exercício desta aula é usar a biblioteca <b>ZKNaming</b> para qu
 			</ol><!-- type="1" -->
 		</li>
 		<br />
-		<li>Vamos agora adaptar o <i>silo</i> para uma aplicação cliente-servidor que utiliza a biblioteca <b>ZKNaming</b> para registar e procurar serviços distribuídos.</li>
+		<li>Vamos agora adaptar o <i>dgs</i> para uma aplicação cliente-servidor que utiliza a biblioteca <b>ZKNaming</b> para registar e procurar serviços distribuídos.</li>
 			<ol type="1">
 				<li>
-					Observe o <tt>pom.xml</tt> do servidor <tt>silo-server</tt>:
+					Observe o <tt>pom.xml</tt> do servidor <tt>dgs-server</tt>:
 					<ol type="a">
 						<li>Adicione a dependência para a biblioteca ZKNaming instalada anteriormente:
 							<pre class="prettyprint lang-xml">...
@@ -203,7 +203,7 @@ O objetivo do exercício desta aula é usar a biblioteca <b>ZKNaming</b> para qu
 						</li>
 						<br />
 						<li>
-							O servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu próprio <tt>host</tt>, <tt>port</tt> e nome, no formato <tt>/grpc/sauron/silo/instance</tt> (este nome será referenciado no resto do exercício como <i>path</i>):
+							O servidor deverá receber como argumentos o endereço e porto do ZooKeeper, bem como o seu próprio <tt>host</tt>, <tt>port</tt> e nome, no formato <tt>/grpc/staysafe/dgs/instance</tt> (este nome será referenciado no resto do exercício como <i>path</i>):
 							<pre class="prettyprint lang-xml">
 ...
 &lt;properties&gt;
@@ -215,7 +215,7 @@ O objetivo do exercício desta aula é usar a biblioteca <b>ZKNaming</b> para qu
 
 &lt;server.host&gt;localhost&lt;/server.host&gt;
 &lt;server.port&gt;808${instance}&lt;/server.port&gt;
-&lt;server.path&gt;/grpc/sauron/silo/${instance}&lt;/server.path&gt;
+&lt;server.path&gt;/grpc/staysafe/dgs/${instance}&lt;/server.path&gt;
 
 ...
 
@@ -265,18 +265,18 @@ try {
 			</ol>
 		</li>
 		<br />
-		<li>Vamos agora alterar os clientes do <i>silo</i>:
+		<li>Vamos agora alterar os clientes do <i>dgs</i>:
 			<ol type="1">
 				<li>Vamos começar por atualizar os <tt>pom.xml</tt>:
 					<ol type="a">
-						<li>Adicione a dependência para a biblioteca <tt>zk-naming</tt> no <tt>silo-client</tt>, no mesmo modo que fez para o servidor.</li>
-						<li>Adicione ao <tt>pom.xml</tt> do <tt>eye</tt> o endereço e porto do ZooKeeper, bem como o <tt>path</tt> do servidor. 
+						<li>Adicione a dependência para a biblioteca <tt>zk-naming</tt> no <tt>dgs-client</tt>, do mesmo modo que fez para o servidor.</li>
+						<li>Adicione ao <tt>pom.xml</tt> do <tt>sniffer</tt> o endereço e porto do ZooKeeper, bem como o <tt>path</tt> do servidor. 
 							Este tem de ser igual ao colocado no <tt>pom</tt> do servidor.</li>
-						<li>Proceda de igual modo para o <tt>spotter</tt></li>
+						<li>Proceda de igual modo para o <tt>journalist</tt> e <tt>researcher</tt></li>
 					</ol>
 				</li>
 				<br />
-				<li>Altere o código do <tt>SiloFrontend</tt> de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.
+				<li>Altere o código do <tt>DgsFrontend</tt> de modo a chamar a biblioteca <tt>zk-naming</tt> para procurar o servidor no ZooKeeper e obter o respectivo <tt>host</tt> e <tt>port</tt>.
 					<ol type="a">
 						<li>Adicionar as seguintes linhas de código ao cliente:
 							<pre class="prettyprint lang-java">...
@@ -297,7 +297,7 @@ final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaint
 					<ol type="a">
 						<li>Mantenha o servidor ZooKeeper a correr (inicie se estiver parado)</li>
 						<li>Corra <tt>mvn compile exec:java</tt> para o servidor e clientes</li> 
-						<li>Experimente correr vários comandos no <tt>eye</tt> e no <tt>spotter</tt></li>
+						<li>Experimente correr vários comandos no <tt>sniffer</tt>, no <tt>journalist</tt> e no <tt>researcher</tt></li>
 						<li>Observe que os clientes comunicam com o servidor, sem ter conhecimento explícito do <tt>host:port</tt> do mesmo.
 							<ul>
 								<li>Pode comprovar, alterando o porto do servidor e testando o cliente sem alterações na sua configuração</li>

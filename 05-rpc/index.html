@@ -69,7 +69,7 @@
 						Familiarize-se com o código e responda às seguintes questões:
 						<ol type="a">
 							<li>Onde estão definidas as mensagens trocadas entre o cliente e o servidor?</li>
-							<li>Onde estão definidas as operações remotas no servidor?</li>
+							<li>Onde estão definidos os procedimentos remotos no servidor?</li>
 							<li>Onde estão os ficheiros gerados pelo compilador de	<i>Protocol Buffers</i>?</li>
 							<li>Onde são feitas as invocações remotas no cliente?</li>
 							<li>As invocações remotas são síncronas (bloqueantes) ou assíncronas?</li>
@@ -94,18 +94,18 @@
 				<ol type="1">
 					<li>Faça <b><i>Clone</b></i> ou <b><i>Download</i></b> do <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc">código inicial do exercício</a> <img src="../_img/github.png" alt="GitHub" height="16"/><br /><br />
 					</li>
-					<li>Baseando-se no módulo <tt>contract</tt> da aplicação de exemplo, modifique o ficheiro <tt>.proto</tt> com a definição das mensagens e procedimentos necessários para as invocações remotas das operações <tt>currentBoard</tt>, <tt>play</tt> e <tt>checkWinner</tt>.<br />
+					<li>Baseando-se no módulo <tt>contract</tt> da aplicação de exemplo, modifique o ficheiro <tt>.proto</tt> com as definições necessárias para as chamadas remotas de procedimentos <tt>currentBoard</tt>, <tt>play</tt> e <tt>checkWinner</tt>.<br />
 					Sugestão: consulte a <a href="https://developers.google.com/protocol-buffers/docs/overview">documentação dos <i>Protocol Buffers</i></a>.
 						<ol type="a">
-							<li>Declare todas as mensagens de pedido e resposta para cada operação do jogo.<br />
+							<li>Declare todas as mensagens de pedido e resposta para cada procedimento do jogo.<br />
 								Note que algumas mensagens podem ser vazias, mas devem ser declaradas na mesma.</li>
 							<li>Cada campo deve ter uma etiqueta numérica única.</li>
-							<li>Declare um serviço com as definições das operações necessárias, usando as mensagens definidas.</li>
+							<li>Declare um serviço com as definições dos procedimentos  necessários, usando as mensagens definidas.</li>
 							<li>Instale o módulo com o comando <tt>mvn install</tt>.<br />
 								Analise o código Java gerado na pasta <tt>target/generated-sources/</tt>.
 								<ol type="i">
 									<li>Onde estão definidas as mensagens?</li>
-									<li>E as operações?<br />
+									<li>E os procedimentos?<br />
 									<br /></li>
 								</ol>
 							</li>
@@ -114,8 +114,8 @@
 					<li>Baseando-se no módulo <tt>server</tt> da aplicação de exemplo, modifique o código inicial do módulo <tt>server</tt>.
 						<ol type="a">
 							<li>Confirme que o módulo <tt>contract</tt> é uma dependência do projeto.</li>
-							<li>Modifique a classe <tt>TTTServiceImpl</tt> de forma a implementar as operações remotas declaradas no contrato, utilizando a classe	<tt>TTTGame</tt> (que implementa a lógica do jogo) definida no código base. 
-							A classe de implementação do serviço estende a classe do serviço definido no contrato e faz <i>override</i> das operações declaradas no contrato.<br />
+							<li>Modifique a classe <tt>TTTServiceImpl</tt> de forma a implementar os procedimentos remotos declarados no contrato, utilizando a classe <tt>TTTGame</tt> (que implementa a lógica do jogo) definida no código base. 
+							A classe de implementação do serviço estende a classe do serviço definido no contrato e faz <i>override</i> dos procedimentos  declarados no contrato.<br />
 							<br />
 							Exemplo de um método:
 								<pre class="prettyprint lang-java">
@@ -147,7 +147,7 @@ public class TTTServiceImpl extends TTTGrpc.TTTImplBase {
 						<ol type="a">
 							<li>Confirme que o módulo <tt>contract</tt> é uma dependência do projeto.</li>
 							<li>Confirme que a classe <tt>TTTClient</tt> instancia um <i>stub</i> do serviço TTT (através de um endereço e porta recebidos como argumentos).</li>
-							<li>Adicione as chamadas remotas às operações <tt>play</tt> e <tt>checkWinner</tt> que estão em falta.<br />
+							<li>Adicione as chamadas remotas aos procedimentos <tt>play</tt> e <tt>checkWinner</tt> que estão em falta.<br />
 							<!--Pode conferir as chamadas locais na implementação do jogo local e converter para chamadas remotas.<br />-->
 								<br />
 							Exemplo de chamada local:

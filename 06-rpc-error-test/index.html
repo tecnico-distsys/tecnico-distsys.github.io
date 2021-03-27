@@ -30,7 +30,7 @@
 <div class="objectivos">
     <h2>Objetivos da semana</h2>
     <ul>
-        <li>Aprender a tratar erros com gRPC</li>
+        <li>Aprender a enviar e receber erros com gRPC</li>
         <li>Aprender a fazer testes de integração utilizando JUnit</li>
         <li>Começar a desenvolver alguns métodos da parte 1 do projeto</li>
     </ul>
@@ -70,21 +70,21 @@
 <hr />
         
 <h2>Exercício</h2>
-<h3>Implementação da primeira operação de controlo do projeto de SD: a operação <tt>ctrlPing</tt>.</h3>
+<h3>Implementação do procedimento remoto <tt>ping</tt>.</h3>
     
 <p>
-    No projeto a desenvolver em Sistemas distribuímos os servidores vão dispor de um conjunto de operações de controlo que se destinam a facilitar a realização de testes.
-O objetivo do exercício é construir e testar uma primeira operação remota semelhante à que se vai implementar no projeto. Esta operação (ctrl_ping) recebe um pedido de sinal de vida e responde com uma mensagem indicando o estado do servidor.<br />
+    O objetivo do exercício é construir um primeiro procedimento remoto no projeto. 
+    O procedimento <tt>ping</tt> recebe um pedido de sinal de vida e responde com uma mensagem indicando o estado do servidor.<br />
     Para este fim, vai-se:
     <ol type="I">
         <li>
-            Definir o <tt>ctrl_ping</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
+            Definir o <tt>ping</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
         </li>
         <li>
             Enviar informação de erro do servidor para o cliente;
         </li>
         <li>
-        Testar a operação do servidor a partir do cliente com testes de integração JUnit 5.
+        Testar o procedimento do servidor a partir do cliente com testes de integração JUnit 5.
         </li>
     </ol>
 </p>
@@ -102,7 +102,8 @@ O objetivo do exercício é construir e testar uma primeira operação remota se
 -->
 
 <p>
-    O <b>ponto de partida</b> é o código base que está no repositório <a href="https://github.com/tecnico-distsys/exercise_grpc_error_testing.git" target="_blank">exercise_grpc_error_testing<img src="../_img/github.png" alt="GitHub" height="16"></a>, que deve ser obtido com o comando fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>. Comece por executar:
+    O <b>ponto de partida</b> é o código base do projeto que está no repositório do grupo ou em <a href="https://github.com/tecnico-distsys/CXX-Bicloin" target="_blank">CXX-Bicloin <img src="../_img/github.png" alt="GitHub" height="16"></a>.
+    O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>. Comece por executar:
 
 <pre class="prettyprint lang-java">
 mvn clean install -DskipTests
@@ -113,18 +114,18 @@ na diretoria base.
 
 <ol type="I">
     <li>
-        <b>Definir, implementar e experimentar a operação remota <tt>ctrl_ping</tt></b>
+        <b>Definir, implementar e experimentar o procedimento remoto <tt>ping</tt> no <tt>rec</tt></b>
         <ol type="1">
             <li>
-                Existem três módulos: <tt>contract</tt>, <tt>server</tt> e <tt>client</tt>.
+                Existem três módulos: <tt>rec-contract</tt>, <tt>rec</tt> (servidor) e <tt>rec-tester</tt> (cliente).
                 Vamos começar pelo <b>contrato</b>:
                 <ol type="a">
                     <li>
                         Aceder ao ficheiro <tt>.proto</tt>.
-                        Este ficheiro define as estruturas de dados e as operações remotas.
+                        Este ficheiro define as estruturas de dados e os procedimentos remotos.
                     </li>
                     <li>
-                        Cada operação necessita de uma mensagem de pedido e de uma mensagem de resposta.
+                        Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta.
                         <ul>
                             <li>
                                 Definir a mensagem do pedido, <tt>PingRequest</tt>, que recebe texto simples.
@@ -133,7 +134,7 @@ na diretoria base.
                                 Definir a mensagem do resposta, <tt>PingResponse</tt>, que devolve também texto simples.
                             </li>
                             <li>
-                                Definir a operação <tt>rpc</tt> com o nome <tt>ctrl_ping</tt>, com os tipos de pedido e resposta indicados.
+                                Definir o procedimento <tt>rpc</tt> com o nome <tt>ping</tt>, com os tipos de pedido e resposta indicados.
                             </li>
                         </ul>
                     </li>
@@ -173,12 +174,12 @@ na diretoria base.
                                 Veja os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
                             </li>
                         </ul>
-                        Para o <tt>ctrl_ping</tt> não deve ser necessário usar o domínio, mas para as operações principais será necessário.
+                        Para o <tt>ping</tt> não deve ser necessário usar o domínio, mas para os procedimentos principais será necessário.
                     </li> -->
                     <li> 
-                        Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, crie a classe <tt>...ServerImpl</tt> e adicione o método de implementação do <tt>ctrl_ping</tt>:<br />
+                        Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, crie a classe <tt>...ServerImpl</tt> e adicione o método de implementação do <tt>ping</tt>:<br />
                                 <pre class="prettyprint lang-java">
-public void ctrlPing(PingRequest request, 
+public void ping(PingRequest request, 
     StreamObserver&lt;PingResponse&gt; responseObserver) {
 
     String input = request.getInputText();
@@ -203,18 +204,18 @@ public void ctrlPing(PingRequest request,
                 Vamos agora concretizar o <b>cliente</b>:
                 <ol type="a">
                     <li>
-                        O cliente gRPC deve fornecer um frontend para executar os testes de integração. O <tt>...Frontend</tt> vai envolver o <i>channel</i> e o <i>stub</i> gerado pelo <tt>protoc</tt>.
+                        O cliente gRPC deve fornecer um <i>frontend</i> para executar os testes de integração. O <tt>...Frontend</tt> vai envolver o <i>channel</i> e o <i>stub</i> gerado pelo <tt>protoc</tt>.
                         Todos os pedidos para o servidor vão depois usar este objeto <tt>...Frontend</tt>, o que permitirá mais tarde acrescentar funcionalidades.
                     </li>
                     <li>
-                        O objeto <tt>...ClientApp</tt> deverá criar um <i>frontend</i> e fazer uma chamada à operação remota:<br />
+                        O objeto <tt>...ClientApp</tt> deverá criar um <i>frontend</i> e fazer uma chamada ao procedimento remoto:<br />
                         <pre class="prettyprint lang-java">
     ServerFrontend frontend = new ServerFrontend(host, port);
 
     ...
 
     PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
-    PingResponse response = frontend.ctrlPing(request);
+    PingResponse response = frontend.ping(request);
     System.out.println(response);
                         </pre>
                     </li>
@@ -255,7 +256,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
                 <pre class="prettyprint lang-java">
     try {
         PingRequest request = PingRequest.newBuilder().setInputText("").build();
-        PingResponse response = frontend.ctrlPing(request);
+        PingResponse response = frontend.ping(request);
 
     } catch (StatusRuntimeException e) {
         System.out.println("Caught exception with description: " + 
@@ -267,7 +268,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
         </ol>
     </li>
     <li>
-        <b>Testar a operação do servidor a partir do cliente</b>
+        <b>Testar o procedimento do servidor a partir do cliente</b>
         <ol type="1">
             <li>
                 Vamos agora criar um teste de integração para verificar este comportamento do servidor.<br />
@@ -279,7 +280,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
     @Test
     public void pingOKTest() {
         PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
-        PingResponse response = frontend.ctrlPing(request);
+        PingResponse response = frontend.ping(request);
         assertEquals("Hello friend!", response.getOutputText());
     }
                 </pre>
@@ -298,7 +299,7 @@ import static io.grpc.Status.INVALID_ARGUMENT;
         assertEquals(
             INVALID_ARGUMENT.getCode(),
             assertThrows(
-                    StatusRuntimeException.class, () -> frontend.ctrlPing(request))
+                    StatusRuntimeException.class, () -> frontend.ping(request))
                 .getStatus()
                 .getCode());
     }
@@ -319,12 +320,12 @@ import static io.grpc.Status.INVALID_ARGUMENT;
 </p>
 <ul>
     <li>
-        Implementar mais duas operações de controlo, <tt>ctrl_clear</tt> e <tt>ctrl_init</tt>, de acordo com as descrições que se seguem.
+        Implementar mais dois procedimentos de controlo, <tt>ctrl_clear</tt> e <tt>ctrl_init</tt>, de acordo com as descrições que se seguem.
 
 
     </li>
     <li>
-        Testar todas as operações desenvolvidas.
+        Testar todos os procedimentos desenvolvidos.
     </li>
 </ul>
 -->

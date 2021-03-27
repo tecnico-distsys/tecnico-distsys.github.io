@@ -100,7 +100,7 @@ Isto permite que o endereço mude sempre que necessário, sem recompilação dos
 Permite também que existam diversas réplicas de servidores para contactar alternativamente.
 	</p>
 	<p>
-A interface de clientes ZooKeeper está orientada à monitorização ativa de configurações, o que torna o <a href="https://zookeeper.apache.org/doc/r3.6.0/javaExample.html#sc_completeSourceCode" target="_blank">código bastante verboso</a>.
+A interface de clientes ZooKeeper está orientada à monitorização ativa de configurações, o que torna o <a href="https://zookeeper.apache.org/doc/r3.6.2/javaExample.html#sc_completeSourceCode" target="_blank">código bastante verboso</a>.
 	</p>
 	<p>
 Para simplificar a utilização do ZooKeeper foi criada a biblioteca <b>ZKNaming</b> que oferece as operações <tt>bind</tt> (registo), <tt>lookup</tt> e <tt>listRecords</tt> (pesquisas).
@@ -167,7 +167,7 @@ O objetivo do exercício desta aula é usar a biblioteca <b>ZKNaming</b> para qu
 &lt;dependency&gt;
     &lt;groupId&gt;pt.ulisboa.tecnico.sdis&lt;/groupId&gt;
     &lt;artifactId&gt;zk-naming&lt;/artifactId&gt;
-    &lt;version&gt;1.0.3&lt;/version&gt;
+    &lt;version&gt;1.0.4&lt;/version&gt;
 &lt;/dependency&gt;
 ...							</pre>
 						</li>
@@ -283,7 +283,7 @@ final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaint
 				<li>
 					E se tivéssemos várias réplicas? Como poderia encontrá-las dinamicamente?
 					<ul>
-						<li>Estude a operação <tt>listRecords</tt></li>
+						<li>Estude a operação <tt><a href="zk-naming/apidocs/pt/ulisboa/tecnico/sdis/zk/ZKNaming.html">listRecords</a></tt></li>
 					</ul>
 				</li>
 			</ol><!-- type="1" -->

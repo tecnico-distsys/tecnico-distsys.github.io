@@ -102,19 +102,21 @@
             </li>
 
             <li>
-                Pretende-se que a nova versão do programa seja dividida em dois processos: servidor e cliente, através do Jersey.<br />
+                Pretende-se que a nova versão do jogo seja dividida em dois programas: servidor e cliente, que comunicam através de chamadas ao estilo REST, com pedidos HTTP.
+                É usada a biblioteca Jersey, que implementa a <i>Java API for XML RESTful Web Services</i>.<br />
                 Começar pela <a href="https://github.com/tecnico-distsys/exercise_ttt-rest" target="_blank">implementação do jogo <img src="../_img/github.png" alt="GitHub" height="16"></a> adaptada a este exercício.
                 <br />
                 <ol type="1">
                     <li>
                         Veja como o programa está estruturado em três módulos: <i>contract</i>, <i>server</i> e <i>client</i>.
-                        <br /> Cada módulo tem um POM próprio.
+                        <br /> Cada módulo tem um descritor POM próprio.
                     </li>
                     <li>
                         Importe os projectos no Eclipse, recorrendo a <i> File &gt; Import &gt; Maven &gt; Existing Maven Projects</i>
                     </li>
                     <li>
-                        Nesta secção, vamo-nos focar apenas no <i>server</i>. O <i>client</i> já está todo implementado e vai ser utilizado para testar e jogar o jogo do galo na secção a seguir.
+                        Nesta secção, vamo-nos focar apenas no <i>server</i>. 
+                        O <i>client</i> já está todo implementado e vai ser utilizado para jogar na secção a seguir.
                     </li>
                     <li>Estude os principais ficheiros com a implementação do jogo (<tt>TTTGame.java</tt>, <tt>TTTResources.java</tt> do módulo <i>server</i> e <tt>PlayRequest.java</tt> do módulo <i>contract</i>).
                         <ol type="a">
@@ -136,7 +138,8 @@
                         Instale o <i>contract</i> utilizando <kbd>mvn install</kbd>.
                     </li>
                     <li>
-                        Compile e corra o servidor utilizando <kbd>mvn compile exec:java</kbd>.
+                        Compile e corra o servidor utilizando <kbd>mvn compile exec:java</kbd>.<br />
+                        O programa pode ser executado com mensagens extra da seguinte forma: <kbd>mvn compile exec:java -Ddebug</kbd>
                     </li>
                     <li>
                         Abra o <i>browser</i> e aceda a <a href="http://localhost:8080/ttt/game/board">http://localhost:8080/ttt/game/board</a>. 
@@ -148,13 +151,13 @@
             </li>
 
                 <li>
-                    Vamos agora implementar os métodos necessários para que o Jogo do Galo funcione numa aplicação cliente-servidor com REST, organizada em três módulos.
+                    Vamos agora implementar os métodos necessários para que o Jogo do Galo funcione por inteiro, numa aplicação cliente-servidor com REST, organizada em três módulos.
                     <br />
                     <br />
                 <ol type="1">
                     <li>
                             Baseando-se no ficheiro <tt>TTTResources.java</tt> da aplicação, crie um método GET para verificar qual o jogador que ganhou, utilizando o método <tt>checkWinner</tt>. <br/>
-                            Sugestão: veja os métodos <tt>getBoard</tt> e <tt>resetBoard</tt>.
+                            Sugestão: veja como foram implementados os métodos <tt>getBoard</tt> e <tt>resetBoard</tt>.
                             <br/>
                         <ol type="a">
                             <li>
@@ -174,13 +177,13 @@
                 </li>
                 <li>
                     Agora é necessária uma maneira de jogar, isto é, invocar o método <tt>play</tt> a partir de um cliente.<br />
-                    Para isso é necessário criar um método POST para enviar um pedido que contém a jogada que queremos efetuar.
+                    Para isso é necessário criar um método HTTP POST para enviar um pedido que contém a jogada que queremos efetuar.
                     <ol type="a">
                         <li>
                             Comece por analisar novamente o método <tt>play()</tt> do ficheiro <tt>TTTGame.java</tt> e o ficheiro <tt>PlayRequest.java</tt>.
                         </li>
                         <li>
-                            No ficheiro <tt>TTTResources.java</tt>, crie um método POST no caminho <b><tt>"play"</tt></b> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. 
+                            No ficheiro <tt>TTTResources.java</tt>, crie um método HTTP POST no caminho <b><tt>"play"</tt></b> que receba um <tt>PlayRequest</tt> em JSON e que produza um <tt>PlayResult</tt> em JSON. 
                             Este método vai-nos permitir enviar jogadas para o servidor.<br /> 
                             Exemplo de um método que recebe qualquer coisa em XML e JSON e devolve qualquer coisa em XML:
                             <!-- nota: no exemplo de código o Produces deverá estar a JSON -->
@@ -189,8 +192,8 @@
     @Path("caminho-aqui")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML})
-    public QualquerCoisa metodo(ClasseCoisa coisa) {
-        return qualquerCoisa;
+    public ClasseResultado metodo(ClasseArgumento argumento) {
+        return resultado;
     }
 
                         </li>
@@ -210,15 +213,14 @@
                             </ul>
                             </li>
                         <li>
-                            O cliente necessita de obter informação acerca de algumas classes que estão definidas no <i>contract</i>.<br />
-                            Para isso, é necessário criar uma dependência do <i>contract</i> no cliente:
-
+                            O cliente necessita de obter informação sobre as classes que estão definidas no <i>contract</i>.<br />
+                            Para isso, é necessário voltar a instalar o módulo <i>contract</i>, para depois o cliente poder usar a versão atualizada:
         <pre class="prettyprint lang-xml prettyprinted" style=""><span class="pln">
     ...
         &lt;dependency&gt;
             &lt;groupId&gt;pt.ulisboa.tecnico.distsys.ttt-rest&lt;/groupId&gt;
             &lt;artifactId&gt;ttt-contract&lt;/artifactId&gt;
-            &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+            &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
         &lt;/dependency&gt;
     ...
         
@@ -235,7 +237,8 @@
             </ol>
             </li>
             <li>
-                Acima enviamos os parâmetros do método <tt>play</tt> utilizando um método POST em REST. Agora vamos enviar os argumentos encapsulando parâmetros no URL.
+                Acima enviamos os parâmetros do método <tt>play</tt> utilizando um método POST em REST. 
+                Agora vamos enviar os argumentos encapsulando parâmetros no URL, através de um pedido HTTP GET.
                 <br />
                 <br />
                 <ol type="1">
@@ -249,9 +252,10 @@
         @GET
         @Path("{arg1}/{arg2}")
         @Produces(...)
-        public QualquerCoisa metodo(@PathParam("arg1") int arg1,
-                        @PathParam("arg2") String arg2) {
-            return qualquerCoisa.fazcoisas(arg1, arg2);
+        public ClasseResultado metodo(@PathParam("arg1") int arg1, 
+            @PathParam("arg2") String arg2) {
+
+            return qualquerCoisa.fazCoisas(arg1, arg2);
         }
 
                     </pre>
@@ -272,39 +276,28 @@
                         </ol>
                     </li>
                     <li>
-                        O cliente está configurado para utilizar o método POST em vez do novo método GET para jogar. Para isso é necessário fazer algumas alterações.
-                        <ol type="a">
-                        <li>
-                            Vá agora ao cliente e no ficheiro <tt>TTTPlayer.java</tt> e modifique o valor de <tt>USE_POST_TO_PLAY_FLAG</tt> para <tt>false</tt>.<br />
-                            O código que irá executar agora é este:
+                        O cliente contém duas implementações alternativas de chamada à operação play, a saber: com HTTP GET (opção por omissão) e com HTTP POST. 
+                        Para ativar a opção de chamada com HTTP POST, basta definir a propriedade postPlay da seguinte forma: <kbd>mvn compile exec:java -DpostPlay</kbd>
+                        O código que usa POST tem o seguinte aspecto:
                             <pre class="prettyprint lang-java">
-        private static final boolean USE_POST_TO_PLAY_FLAG = true;
-                                /* Response response = client.target(restURL).path("play").request(MediaType.APPLICATION_JSON)
-    .post(Entity.entity(playRequest, MediaType.APPLICATION_JSON), Response.class); */
-
+    Response response = client.target(restURL).path("play").request(MediaType.APPLICATION_JSON)
+    .post(Entity.entity(playRequest, MediaType.APPLICATION_JSON), Response.class);
     ...
-
-    /* play_res = response.readEntity(PlayResult.class); */
-                    </pre>
-                        </li>
-                        <li>
-                            Descomente a linha seguinte desta forma:
+    play_res = response.readEntity(PlayResult.class);
+                            </pre>
+                        O código do GET é diferente:
                             <pre class="prettyprint lang-java">
-    /* Uncomment to use URL parameter to play */
     /* URL to play is: play/{row}/{column}/{player} */
     String playString = "play/" +  String.valueOf(row) + '/' + String.valueOf(column) + '/' + String.valueOf(player);
-                    </pre>
-                        </li>
-                        <li>
-                            Finalmente, só precisamos de aceder ao URL que vai fazer a jogada e receber o resultado da jogada. Para isso, adicione a linha de código da seguinte forma:
+                            </pre>
+                        O código de chamada tem o seguinte aspeto:
                             <pre class="prettyprint lang-java">
     play_res = client.target(restURL).path(playString).request().get(PlayResult.class);
-                    </pre>
+                            </pre>
                         </li>
                     </ol>
             </li>
             </ol>
-
             <p>
                 O resto do enunciado será entregue na aula.
                 <br /> O objectivo será estender a solução resultante do enunciado acima com mais procedimentos remotos ou modificar alguns dos seus procedimentos actuais.

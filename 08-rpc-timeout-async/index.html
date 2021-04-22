@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+
+    <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../_prettify/prettify.js"></script>
+
+    <title>gRPC: temporizador e chamadas assíncronas</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<div class="contexto">
+    <p>
+        <a href="../index.html">Labs SD</a> &gt;
+    </p>
+</div>
+
+<div class="titulo" id="1">
+    <h1>gRPC: temporizador e chamadas assíncronas</h1>
+</div>
+
+<div class="objectivos">
+
+    <h2>Objetivos</h2>
+    <ul>
+        <li>Configurar o limite de tempo de espera do cliente</li>
+        <li>Fazer chamadas remotas assíncronas <i>(async)</i></li>
+    </ul>
+</div>
+
+<div class="indice">
+<p><b>Índice:</b></p>
+<ul>
+    <li><a href="#timeout">Limite de tempo</a></li>
+    <li><a href="#async">Chamadas assíncronas</a></li>
+    <li><a href="#exercicio">Exercício</a></li>
+</ul>
+</div>
+
+<div class="corpo">
+
+<hr />
+
+<h2 id="timeout">Limite de tempo</h2>
+<img src="clock.png" height="60" />
+<p>
+O gRPC utiliza o mecanismo de definição de prazo limite <i>(deadline)</i> para esperar um tempo máximo pela resposta a uma chamada remota.
+</p>
+<p>
+O exemplo abaixo demonstra como configurar os tempos de espera pelas respostas de chamadas de procedimentos remotos.
+No fim do tempo, caso a resposta não tenha sido recebida, é lançado um erro.
+</p>
+<p>
+Exemplo: 
+<a href="https://github.com/tecnico-distsys/example_grpc/tree/timeout">gRPC com temporizador <img src="../_img/github.png" alt="GitHub" height="16"/></a>. 
+<a href="https://github.com/tecnico-distsys/example_grpc/compare/main...timeout" target="_blank">Comparar com exemplo base</a>.<br />
+Para verificar o comportamento do timeout do cliente, o servidor introduz um atraso artificial <i>(sleep)</i> na execução das suas operações.
+</p>
+
+<p>&nbsp;</p>
+
+<hr />
+
+<h2 id="async">Operações assíncronas</h2>
+
+<img src="async.png" height="140" />
+<!-- image credits: http://java.boot.by/scdjws5-guide/ch12s03.html -->
+
+<p>
+Até agora vimos exemplos de chamadas remotas síncronas: o cliente faz um pedido ao servidor e fica bloqueado à espera da resposta.
+Caso o cliente não pretenda ficar bloqueado à espera da resposta do servidor, é possível fazê-lo através de uma <b>chamada assíncrona</b>.
+Neste caso o cliente faz o pedido, continua a executar, e vai receber a resposta mais tarde.
+</p>
+<p>
+A forma de fazer chamadas assíncronas é através de um <i>Stub</i> diferente, não-bloqueante, no cliente.<br />
+Não é preciso alterar o servidor.
+</p>
+
+<h3>Chamada remota com <i>callback</i></h3>
+<p>
+Para fazer este tipo de chamada, é passado, como argumento na chamada do cliente, um objeto de <i>callback</i> do tipo <tt>StreamObserver</tt>. 
+O objeto de <i>callback</i> é chamado quando se recebe resposta.
+Existem três métodos: <tt>onNext</tt> (resposta normal), <tt>onError</tt> (resposta de erro) e, finalmente, <tt>onCompleted</tt> (fim).
+</p>
+<!--p>
+Analogia:
+este funcionamento das chamadas assíncronas é semelhante ao atendimento de interrupções num processador. 
+A rotina de <i>callback</i> corresponde à rotina de atendimento da interrupção. 
+O receber uma resposta do servidor corresponde à interrupção.
+</p-->
+<p>
+Exemplo:
+<a href="https://github.com/tecnico-distsys/example_grpc/tree/async">gRPC com chamadas assíncronas <img src="../_img/github.png" alt="GitHub" height="16"/></a>.
+<a href="https://github.com/tecnico-distsys/example_grpc/compare/main...async" target="_blank">Comparar com exemplo base</a>.
+</p>
+
+<h3>Receção de resultados</h3>
+<p>
+Pode fazer sentido criar um objeto adicional, chamado <tt>ResponseCollector</tt>, por exemplo, que permite receber os resultados da chamada (sejam o esperado ou um erro).
+</p>
+<p>
+O objeto de resposta permite também esperar pela chegada da resposta, se necessário, usando a sincronização com as primitivas <tt>wait-notify</tt>. 
+</p>
+<p>
+Exemplo:
+<a href="https://github.com/tecnico-distsys/example_thread">Criação e sincronização de tarefas com <i>wait-notify</i> <img src="../_img/github.png" alt="GitHub" height="16"/></a>
+</p>
+<p>
+Um mesmo <tt>ResponseCollector</tt> pode ser usado para receber várias respostas, se estiverem a ser feitas várias chamadas em paralelo.
+</p>
+
+<p>
+&nbsp;
+</p>
+
+</div>
+
+<hr />
+
+<h1 id="exercicio">Exercício</h1>
+<p>
+O objetivo deste exercício é adaptar o código do módulo <tt>rec-tester</tt> do projeto de forma a que as chamadas passem a ser feitas assincronamente.
+</p>
+<ol>
+    <li>
+Implementar a chamada ao <tt>ping</tt> com um objeto <tt>StreamObserver</tt> para receber e imprimir a resposta.
+        <ul>
+            <li>
+Sugere-se a criação de um novo objeto <i>Frontend</i>, alternativo ao da primeira parte.
+            </li>
+            <li>
+O novo <i>Frontend</i> espera pela resposta?
+            </li>
+        </ul>
+    </li>
+    <br />
+    <li>
+Implementar a chamada ao <tt>ping</tt> em paralelo para todos os servidores conhecidos.
+        <ul>
+            <li>
+Criar um ciclo que faz todas as chamadas.
+            </li>
+            <li>
+As respostas chegam pela mesma ordem com que os pedidos foram feitos?
+Garantidamente?                
+            </li>
+            <li>
+Criar um objeto <tt>ResponseCollector</tt> para colecionar todas as respostas, à medida que chegam.
+                <ul>
+                    <li>
+Deverá existir um contador de respostas recebidas, bem como uma coleção das respostas recebidas.
+                    </li>
+                    <li>
+É fundamental que a variável do contador seja <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/atomic.html"><tt>volatile</tt></a> e que o acesso seja sincronizado.
+                    </li>
+                </ul>
+            </li>
+            <li>
+Como é que o <i>Frontend</i> pode esperar por todas as respostas?
+Reveja o exemplo <i>wait-notify</i>.
+            </li>
+        </ul>
+    </li>
+</ol>
+<p>
+Uma vez bem percebidos os mecanismos de chamadas assíncronas e de sincronização, pode começar a desenhar os próximos passos do projeto.
+</p>
+
+<p>&nbsp;</p>
+
+<hr />
+
+<div class="rodape">
+<p>
+&copy; Docentes de Sistemas Distribuídos,
+<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+</p>
+</div>
+
+</body></html>

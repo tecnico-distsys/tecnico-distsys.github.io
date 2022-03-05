@@ -126,55 +126,67 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
     </ul>
 
     <li>
-    <b>Eclipse for Java Enterprise Edition, Eclipse JEE</b><br />
-    Ambiente integrado de desenvolvimento para a plataforma Java, versão empresarial</li>
+    <b>Plataforma de desenvolvimento Java</b><br />
+    Existem várias plataformas de desenvolvimento Java à escolha, das quais só precisam de escolher 1 delas (podem até escolher 1 que não esteja nesta lista):</li>
     <ul>
-        <li>Obter o arquivo que contém o executável de Eclipse e ficheiros associados:</li>
+        <li><b>IntelliJ IDEA</b></li>
         <ul>
-            <li><a href="https://www.eclipse.org/downloads/packages/release/2020-12/r">Eclipse JEE 2020-12 R</a>
-			<small></small></li>
-			<ul>
-				<li>Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
-				<!--li>Nota: o arquivo para Windows vem em formato <b>.zip</b>, para outros sistemas operativos vem em <b>.tar.gz</b>.</li-->
-			</ul>
+            <li>Obter a <a href="https://www.jetbrains.com/toolbox-app/">Toolbox</a> da JetBrains para gerir todas as ferramentas JetBrains facilmente.</li>
+            <li>Para instalar o Toolbox no Linux, sigam os <a href="https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b">passos</a>, para instalá-lo no Windows, basta executar o executável obtido.</li>
+            <li>Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o <a href="https://www.jetbrains.com/shop/eform/students">formulário</a>.</li>
+            <li>Após instalarem o IntelliJ, recomendo instalar o plugin <a href="https://plugins.jetbrains.com/plugin/8527-google-java-format">google-java-format</a> para maior legibilidade do código que produzem.</li>
         </ul>
-        <li>Instalar:</li>
+    </ul>
+    <ul>
+        <li><b>Eclipse for Java Enterprise Edition, Eclipse JEE</b></li>
         <ul>
-           <!-- <li><a href="http://wiki.eclipse.org/Eclipse/Installation">Eclipse Installation</a>
-            <small>Atenção: se instalou o JDK 32 bits, deve instalar o Eclipse 32 bits;
-            se instalou o JDK 64 bits, deve instalar o Eclipse 64 bits.</small></li> -->
-			<li>Extrair o arquivo para um diretório com permissões de escrita.</li>
-			<!--small>Exemplo: <tt>C:\Users\john\Documents\eclipse</tt> em Windows, ou <tt>/home/john/Documents/eclipse</tt> em Linux para um utilizador chamado <b>john</b></small-->
-        </ul>
-        <li>Configurar:</li>
-        <ul>
-            <li>Especificar o JDK como Standard VM (em vez do JRE)</li>
-			<b>Nota: só deverá ser necessário este passo em Windows.</b>
-			<!--Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre -->
+            <li>Obter o arquivo que contém o executável de Eclipse e ficheiros associados:</li>
             <ul>
-                <li><i>Window</i> -> <i>Preferences</i> -> <i>Java</i> -> <i>Installed JREs</i> -> <i>Add...</i></li>
-                <li>Indicar o caminho até ao diretório do JDK:
-                    ex. <tt>C:\Java\jdk1.11.0_191</tt></li>
-                <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
-            </ul>
-            <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
-            <li><b>Conectores m2e</b> (maven 2 eclipse)</li>
-            <ul>
-                <li><i>Window</i> -> <i>Preferences</i> -> <i>Maven</i> -> <i>Discovery</i> e clicar em <i>Open catalog</i>.</li>
-                <li>Seleccionar:</li>
+                <li><a href="https://www.eclipse.org/downloads/packages/release/2020-12/r">Eclipse JEE 2020-12 R</a>
+                <small></small></li>
                 <ul>
-    				<li>m2e connector for maven-dependency-plugin</li>
-                    <li>m2e connector for maven-remote-resources-plugin</li>
+                    <li>Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
+                    <!--li>Nota: o arquivo para Windows vem em formato <b>.zip</b>, para outros sistemas operativos vem em <b>.tar.gz</b>.</li-->
                 </ul>
             </ul>
-            <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.
-            Para instalar cada ir a:
-            Eclipse, Help, Install New Software..., Work with:<br />
-            preencher endereços de origem e escolher pacotes desejados</li-->
+            <li>Instalar:</li>
+            <ul>
+            <!-- <li><a href="http://wiki.eclipse.org/Eclipse/Installation">Eclipse Installation</a>
+                <small>Atenção: se instalou o JDK 32 bits, deve instalar o Eclipse 32 bits;
+                se instalou o JDK 64 bits, deve instalar o Eclipse 64 bits.</small></li> -->
+                <li>Extrair o arquivo para um diretório com permissões de escrita.</li>
+                <!--small>Exemplo: <tt>C:\Users\john\Documents\eclipse</tt> em Windows, ou <tt>/home/john/Documents/eclipse</tt> em Linux para um utilizador chamado <b>john</b></small-->
+            </ul>
+            <li>Configurar:</li>
+            <ul>
+                <li>Especificar o JDK como Standard VM (em vez do JRE)</li>
+                <b>Nota: só deverá ser necessário este passo em Windows.</b>
+                <!--Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre -->
+                <ul>
+                    <li><i>Window</i> -> <i>Preferences</i> -> <i>Java</i> -> <i>Installed JREs</i> -> <i>Add...</i></li>
+                    <li>Indicar o caminho até ao diretório do JDK:
+                        ex. <tt>C:\Java\jdk1.11.0_191</tt></li>
+                    <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
+                </ul>
+                <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
+                <li><b>Conectores m2e</b> (maven 2 eclipse)</li>
+                <ul>
+                    <li><i>Window</i> -> <i>Preferences</i> -> <i>Maven</i> -> <i>Discovery</i> e clicar em <i>Open catalog</i>.</li>
+                    <li>Seleccionar:</li>
+                    <ul>
+                        <li>m2e connector for maven-dependency-plugin</li>
+                        <li>m2e connector for maven-remote-resources-plugin</li>
+                    </ul>
+                </ul>
+                <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.
+                Para instalar cada ir a:
+                Eclipse, Help, Install New Software..., Work with:<br />
+                preencher endereços de origem e escolher pacotes desejados</li-->
+            </ul>
         </ul>
     </ul>
 
-    <li>
+    <!--li>
         <b>ZooKeeper</b>
         <ul>
 			<li>Obter
@@ -206,7 +218,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
 				</ul>
 			</li>
 		</ul>
-    </li>
+    </li-->
 
 </ol>
 </div><!-- corpo -->

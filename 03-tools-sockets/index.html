@@ -36,7 +36,7 @@
     <ul>
         <li><a href="#java">Java</a></li>
         <li><a href="#maven">Maven</a></li>
-        <li><a href="#eclipse">Eclipse</a></li>
+        <li><a href="#IDE">Java IDE</a></li>
         <li><a href="#sockets"><i>Sockets</i></a></li>
     </ul>
 </div><!-- indice -->
@@ -46,7 +46,7 @@
 
 <p>&nbsp;</p>
 <p>
-As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e o Eclipse (ambiente integrado de desenvolvimento).
+As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um Java IDE (ambiente integrado de desenvolvimento).
 </p>
 <p>
 Esta página contém textos introdutórios a cada uma das ferramentas e um exercício.
@@ -73,7 +73,7 @@ O <tt>javac</tt> e <tt>java</tt> são suficientes para construir pequenos progra
     incluíndo a gestão de dependências: <b>Maven</b>
     </li>
     <li>
-    Um ambiente que apoie o programador em todas as tarefas: <b>Eclipse</b> (ou equivalente)
+    Um ambiente que apoie o programador em todas as tarefas: <b>IntelliJ</b>, <b>Eclipse</b>, ou equivalente.
     </li>
     <li>
     Bibliotecas para sistematizar os testes: <b>JUnit</b>
@@ -142,10 +142,13 @@ Os programas devem ter um ficheiro <tt>README</tt> com instruções de construç
 
 <p>&nbsp;</p>
 <hr />
-<h2 id="eclipse">Eclipse</h2>
+<h2 id="IDE">Java IDE</h2>
 <p>
-O Eclipse pode ser configurado por cima do JDK (Eclipse/JDK), ou então por cima também do Maven (Eclipse/Maven/JDK).<br />
+Tanto o Eclipse quanto o IntelliJ podem ser configurados em cima do JDK ou do Maven.<br />
 </p>
+<ul>
+    <li><a href="https://www.jetbrains.com/help/idea/maven-support.html">Maven no IntelliJ</a></li>
+</ul>
 <ul>
     <li><a href="eclipse/maven/index.html">Maven no Eclipse</a></li>
     <li><a href="http://www.slideshare.net/MiguelLPardal/eclipse-workshop-presentation" target="_blank">Dicas de utilização do Eclipse</a></li>
@@ -153,14 +156,13 @@ O Eclipse pode ser configurado por cima do JDK (Eclipse/JDK), ou então por cima
 <ul>
     <li>Voltar ao exemplo de <a href="https://github.com/tecnico-distsys/example_java-app" target="_blank">aplicação Java</a>:</li>
     <ul>
-        <li>Configurar o projecto no Eclipse, seguindo as indicações no ficheiro <tt>README</tt></li>
+        <li>Configurar o projecto, seguindo as indicações no ficheiro <tt>README</tt></li>
         <li>Experimente executar através da linha de comando <tt>mvn</tt></li>
-        <li>Experimente executar através do Maven dentro do Eclipse (m2eclipse): <i>"Run As"</i>, <i>"Maven Build"</i></li>
     </ul>
     <li>Experimente as funcionalidades de depuração (<i>debug</i>):</li>
     <ul>
         <li>Criar um ponto de paragem (<i>breakpoint</i>) no programa e fazer <i>debug</i></li>
-        <li>Alterar os argumentos do programa e inspecionar as variáveis durante a execução</li>
+        <li>Alterar os argumentos do programa (-Dexec.args="(...)" pode ser usado para especificar os argumentos do programa quando executado através do comando mvn) e inspecionar as variáveis durante a execução</li>
     </ul>
 </ul>
 
@@ -208,7 +210,7 @@ O ponto de partida para o exercício ilustra a comunicação entre dois programa
     Temos dois programas que colaboram entre si: servidor e cliente.</li>
     <ol type="a">
         <li>Estudar o código fonte e os ficheiros <tt>pom.xml</tt> do servidor e do cliente</li>
-        <li>Configurar os dois projetos no Eclipse</li>
+        <li>Configurar os dois projetos no Java IDE</li>
         <li>Compilar e executar primeiro o servidor e depois o cliente, seguindo as instruções no ficheiro <tt>README</tt></li>
     </ol>
 </ol>

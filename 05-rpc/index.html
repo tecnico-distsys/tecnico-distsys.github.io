@@ -43,11 +43,14 @@
 		<img src="./ttt.png" alt="Tic Tac Toe" height="90" />
 		<br />
 		<ol type="I">
-			<li>Relembre o Jogo do Galo/<i>Tic Tac Toe</i> utilizado no laboratório anterior.
+			<li>Estude uma implementação local do Jogo do Galo/<i>Tic Tac Toe</i>.
 				<ol type="1">
-					<li>Faça <b><i>Clone</b></i> ou <b><i>Download</i></b> do código fonte do <a href="https://github.com/tecnico-distsys/example_ttt">jogo local
+					<li>Faça <b><i>Clone</b></i> ou <b><i>Download</i></b> do código fonte do <a href="https://github.com/tecnico-distsys/example_ttt">jogo
 							<img src="../_img/github.png" alt="GitHub" height="16"/></a></li>
-					<li>Analise o código do jogo de forma a compreender a implementação.</li>
+					<li>Analise o código do jogo de forma a compreender a implementação.<br />
+					O servidor guarda as variáveis do jogo.<br />
+            		O cliente faz a interface com o utilizador.<br />
+            		Existe um módulo adicional, o contrato, onde são definidas mensagens partilhadas entre o servidor e o cliente para que se possam fazer jogadas.</li>
 					<li>Compile e execute o código com o comando:<br />
 					<tt>mvn compile exec:java</tt><br />
 					<br />
@@ -124,11 +127,21 @@ public class TTTServiceImpl extends TTTGrpc.TTTImplBase {
 
 	@Override
 	public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
-		CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(ttt.currentBoard()).build();
+		CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(ttt.toString()).build();
 		responseObserver.onNext(response);
 		responseObserver.onCompleted();
 	}
 								</pre>
+							<br />
+							Relembre a mensagem definida no contrato:
+							<pre class="prettyprint lang-java">
+message CurrentBoardRequest {
+ 	// No arguments for this request.
+}
+
+message CurrentBoardResponse {
+	string board = 1;
+}							</pre>
 							</li>
 							<li>Confirme que a classe <tt>TTTServer</tt> inicia um servidor numa porta que recebe como argumento, instanciando a classe de implementação do serviço.</li>
 							<li>Tenha em conta que o acesso a variáveis partilhadas tem de ser <a href="../03-tools-sockets/java-synch/index.html">sincronizado</a>.

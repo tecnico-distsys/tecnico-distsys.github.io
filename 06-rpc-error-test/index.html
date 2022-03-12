@@ -96,7 +96,7 @@ O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois segui
 </p>
 
 <p>
-   </li>. Comece por executar:
+   </li>Comece por executar:
 
 <pre class="prettyprint lang-java">
 mvn clean install -DskipTests
@@ -160,15 +160,15 @@ na diretoria base.
                     <li> 
                         Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, adicione a  <tt>BankingServiceImpl</tt> e adicione o método de implementação do <tt>consult</tt>:<br />
                                 <pre class="prettyprint lang-java">
-                                    @Override
-                                    public void consult(ConsultRequest request, StreamObserver<ConsultResponse> responseObserver) {
-                                        Integer balance = bank.getBalance(request.getClient());
-                                        
-                                        ...
+@Override
+public void consult(ConsultRequest request, StreamObserver<ConsultResponse> responseObserver) {
+    Integer balance = bank.getBalance(request.getClient());
 
-                                        responseObserver.onNext(...);
-                                        responseObserver.onCompleted();
-                                    }
+    ...
+
+    responseObserver.onNext(...);
+    responseObserver.onCompleted();
+}
                                 </pre>
                     </li>
                     <li>
@@ -186,9 +186,9 @@ na diretoria base.
                     <li>
                         No objeto <tt>BankingApp</tt> deverá criar um comando que permita realizar o pedido através do stub.
                         <pre class="prettyprint lang-java">
-                            ConsultResponse responseConsult = stub.consult(ConsultRequest.newBuilder().setClient(client).build());
+ConsultResponse responseConsult = stub.consult(ConsultRequest.newBuilder().setClient(client).build());
 
-                            System.out.println(responseConsult.getBalance());
+System.out.println(responseConsult.getBalance());
 
                         </pre>
                     </li>
@@ -208,31 +208,31 @@ na diretoria base.
                 Vamos adicionar um retorno de erro ao servidor caso a mensagem do pedido seja um cliente não existente.<br />
                 Importar a definição de um estado de erro para argumentos inválidos:
                 <pre class="prettyprint lang-java">
-                    import static io.grpc.Status.INVALID_ARGUMENT;
-                    ...
+import static io.grpc.Status.INVALID_ARGUMENT;
+...
                 </pre>
             </li>
             <li>
                 Verificar se o cliente existe e devolver o erro em caso afirmativo.
                 <pre class="prettyprint lang-java">
-                    ...
-                    if (bank.isClient(client) == false) {
-                        responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid user!").asRuntimeException());
-                    }
-                    ...
+...
+if (bank.isClient(client) == false) {
+    responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid user!").asRuntimeException());
+}
+...
                 </pre>
             </li>
             <li>
                 Do lado do cliente, vamos apanhar uma exceção e imprimir a mensagem de erro:
                 <pre class="prettyprint lang-java">
-                    try {
-                        ConsultRequest request = ConsultRequest.newBuilder().setClient(client).build();
-                        ConsultResponse response = stub.consult(request);
+try {
+    ConsultRequest request = ConsultRequest.newBuilder().setClient(client).build();
+    ConsultResponse response = stub.consult(request);
 
-                    } catch (StatusRuntimeException e) {
-                        System.out.println("Caught exception with description: " + 
-                            e.getStatus().getDescription());
-                    }
+} catch (StatusRuntimeException e) {
+    System.out.println("Caught exception with description: " + 
+        e.getStatus().getDescription());
+}
                 </pre>
                 <br />
             </li>

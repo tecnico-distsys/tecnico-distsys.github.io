@@ -70,21 +70,24 @@
 <hr />
         
 <h2>Exercício</h2>
-<h3>Implementação do procedimento remoto <tt>ping</tt>.</h3>
+<p>
+O <b>ponto de partida</b> é o código base que está no repositório <a href="https://github.com/tecnico-distsys/exercise_grpc_error_testing/tree/2022" target="_blank">exercise_grpc_error_testing branch 2022 <img src="../_img/github.png" alt="GitHub" height="16"></a>.
+O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b>
+</p>
+
+
+<h3>Implementação do procedimento remoto <tt>consult user balance</tt>.</h3>
     
 <p>
-    O objetivo do exercício é construir um primeiro procedimento remoto no projeto. 
-    O procedimento <tt>ping</tt> recebe um pedido de sinal de vida e responde com uma mensagem indicando o estado do servidor.<br />
+    O objetivo do exercício é extender o comportamente de uma aplicação simples que modela a interação de um cliente com o banco permitindo-lhe consultar o saldo. 
+    O procedimento <tt>consult user balance</tt> recebe o nome de um cliente e retorna o saldo do cliente.<br />
     Para este fim, vai-se:
     <ol type="I">
         <li>
-            Definir o <tt>ping</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
+            Definir o <tt>consult</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
         </li>
         <li>
             Enviar informação de erro do servidor para o cliente;
-        </li>
-        <li>
-        Testar o procedimento do servidor a partir do cliente com testes de integração JUnit 5.
         </li>
     </ol>
 </p>
@@ -92,18 +95,8 @@
     Vamos então começar!
 </p>
 
-<!-- <p>
-    O <b>ponto de partida</b> é o código base que está no repositório GitHub de cada grupo, que deve ser obtido com o comando <tt>git clone</tt>.
-</p>
 <p>
-    Antes de começar, e para prevenir conflitos nos nomes dos módulos Maven, deve alterar os <tt>pom.xml</tt> e <tt>README.md</tt>, substituindo todas as referências a <b><tt>CXX</tt></b> pelo identificador do grupo.
-    Por exemplo, o grupo A22 corresponde ao grupo 22 sediado no campus Alameda; já o grupo T07 corresponde ao grupo 7 sediado no Taguspark.
-</p>
--->
-
-<p>
-    O <b>ponto de partida</b> é o código base do projeto que está no repositório do grupo ou em <a href="https://github.com/tecnico-distsys/CXX-Bicloin" target="_blank">CXX-Bicloin <img src="../_img/github.png" alt="GitHub" height="16"></a>.
-    O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>. Comece por executar:
+   </li>. Comece por executar:
 
 <pre class="prettyprint lang-java">
 mvn clean install -DskipTests
@@ -114,10 +107,10 @@ na diretoria base.
 
 <ol type="I">
     <li>
-        <b>Definir, implementar e experimentar o procedimento remoto <tt>ping</tt> no <tt>rec</tt></b>
+        <b>Definir, implementar e experimentar o procedimento remoto <tt>consult</tt> no <tt>contract</tt></b>
         <ol type="1">
             <li>
-                Existem três módulos: <tt>rec-contract</tt>, <tt>rec</tt> (servidor) e <tt>rec-tester</tt> (cliente).
+                Existem três módulos: <tt>contract</tt>, <tt>server</tt> e <tt>client</tt>.
                 Vamos começar pelo <b>contrato</b>:
                 <ol type="a">
                     <li>
@@ -128,13 +121,13 @@ na diretoria base.
                         Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta.
                         <ul>
                             <li>
-                                Definir a mensagem do pedido, <tt>PingRequest</tt>, que recebe texto simples.
+                                Definir a mensagem do pedido, <tt>ConsultRequest</tt>, que recebe texto simples.
                             </li>
                             <li>
-                                Definir a mensagem do resposta, <tt>PingResponse</tt>, que devolve também texto simples.
+                                Definir a mensagem do resposta, <tt>ConsultResponse</tt>, que devolve um inteiro.
                             </li>
                             <li>
-                                Definir o procedimento <tt>rpc</tt> com o nome <tt>ping</tt>, com os tipos de pedido e resposta indicados.
+                                Definir o procedimento <tt>rpc</tt> com o nome <tt>consult</tt>, com os tipos de pedido e resposta indicados.
                             </li>
                         </ul>
                     </li>
@@ -164,35 +157,22 @@ na diretoria base.
             <li>
                 Vamos agora concretizar o <b>servidor</b>:
                 <ol type="a">
-                    <!-- <li>
-                        As classes de domínio da aplicação, onde são definidas as entidades e os comportamentos, ficam no pacote <tt>domain</tt>.<br />
-                        <ul>
-                            <li>
-                                Identifique o <i>Domain Root</i> e as restantes entidades representadas nas classes.
-                            </li>
-                            <li>
-                                Veja os mecanismos de sincronização que são utilizados para garantir que as classes podem ser chamadas corretamente por múltiplas tarefas (<i>threads</i>).
-                            </li>
-                        </ul>
-                        Para o <tt>ping</tt> não deve ser necessário usar o domínio, mas para os procedimentos principais será necessário.
-                    </li> -->
                     <li> 
-                        Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, crie a classe <tt>...ServerImpl</tt> e adicione o método de implementação do <tt>ping</tt>:<br />
+                        Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, adicione a  <tt>BankingServiceImpl</tt> e adicione o método de implementação do <tt>consult</tt>:<br />
                                 <pre class="prettyprint lang-java">
-public void ping(PingRequest request, 
-    StreamObserver&lt;PingResponse&gt; responseObserver) {
+                                    @Override
+                                    public void consult(ConsultRequest request, StreamObserver<ConsultResponse> responseObserver) {
+                                        Integer balance = bank.getBalance(request.getClient());
+                                        
+                                        ...
 
-    String input = request.getInputText();
-    String output = "Hello " + input + "!";
-    PingResponse response = PingResponse.newBuilder().
-        setOutputText(output).build();
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
-}
+                                        responseObserver.onNext(...);
+                                        responseObserver.onCompleted();
+                                    }
                                 </pre>
                     </li>
                     <li>
-                        Ajuste a classe <tt>ServerApp</tt> para instanciar o servidor e direcionar os pedidos para a implementação.
+                        Ajuste a classe <tt>Bank</tt>, escrevendo a businness logic que a operação consult implica.
                     </li>
                     <li>
                         Para compilar e testar, fazer: <tt>mvn compile exec:java</tt><br />
@@ -204,25 +184,17 @@ public void ping(PingRequest request,
                 Vamos agora concretizar o <b>cliente</b>:
                 <ol type="a">
                     <li>
-                        O cliente gRPC deve fornecer um <i>frontend</i> para executar os testes de integração. O <tt>...Frontend</tt> vai envolver o <i>channel</i> e o <i>stub</i> gerado pelo <tt>protoc</tt>.
-                        Todos os pedidos para o servidor vão depois usar este objeto <tt>...Frontend</tt>, o que permitirá mais tarde acrescentar funcionalidades.
-                    </li>
-                    <li>
-                        O objeto <tt>...ClientApp</tt> deverá criar um <i>frontend</i> e fazer uma chamada ao procedimento remoto:<br />
+                        No objeto <tt>BankingApp</tt> deverá criar um comando que permita realizar o pedido através do stub.
                         <pre class="prettyprint lang-java">
-    ServerFrontend frontend = new ServerFrontend(host, port);
+                            ConsultResponse responseConsult = stub.consult(ConsultRequest.newBuilder().setClient(client).build());
 
-    ...
+                            System.out.println(responseConsult.getBalance());
 
-    PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
-    PingResponse response = frontend.ping(request);
-    System.out.println(response);
                         </pre>
                     </li>
                     <li>
                         Para compilar e testar:<br />
                         <tt>mvn compile exec:java</tt><br />
-                        Se tudo correr bem, deverá aparecer a mensagem: <tt>Hello friend!</tt><br />
                         <br />
                     </li>
                 </ol>
@@ -233,102 +205,39 @@ public void ping(PingRequest request,
         <b>Enviar informação de erro do servidor para o cliente</b>
         <ol type="1">
             <li>
-                Vamos adicionar um retorno de erro ao servidor caso a mensagem do pedido seja vazia.<br />
+                Vamos adicionar um retorno de erro ao servidor caso a mensagem do pedido seja um cliente não existente.<br />
                 Importar a definição de um estado de erro para argumentos inválidos:
                 <pre class="prettyprint lang-java">
-import static io.grpc.Status.INVALID_ARGUMENT;
-...
+                    import static io.grpc.Status.INVALID_ARGUMENT;
+                    ...
                 </pre>
             </li>
             <li>
-                Verificar se o argumento é vazio e devolver o erro em caso afirmativo.
+                Verificar se o cliente existe e devolver o erro em caso afirmativo.
                 <pre class="prettyprint lang-java">
-    ...
-    if (inputText == null || inputText.isBlank()) {
-        responseObserver.onError(INVALID_ARGUMENT
-            .withDescription("Input cannot be empty!").asRuntimeException());
-    }
-    ...
+                    ...
+                    if (bank.isClient(client) == false) {
+                        responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid user!").asRuntimeException());
+                    }
+                    ...
                 </pre>
             </li>
             <li>
                 Do lado do cliente, vamos apanhar uma exceção e imprimir a mensagem de erro:
                 <pre class="prettyprint lang-java">
-    try {
-        PingRequest request = PingRequest.newBuilder().setInputText("").build();
-        PingResponse response = frontend.ping(request);
+                    try {
+                        ConsultRequest request = ConsultRequest.newBuilder().setClient(client).build();
+                        ConsultResponse response = stub.consult(request);
 
-    } catch (StatusRuntimeException e) {
-        System.out.println("Caught exception with description: " + 
-            e.getStatus().getDescription());
-    }
+                    } catch (StatusRuntimeException e) {
+                        System.out.println("Caught exception with description: " + 
+                            e.getStatus().getDescription());
+                    }
                 </pre>
                 <br />
             </li>
         </ol>
     </li>
-    <li>
-        <b>Testar o procedimento do servidor a partir do cliente</b>
-        <ol type="1">
-            <li>
-                Vamos agora criar um teste de integração para verificar este comportamento do servidor.<br />
-                Criar a classe <tt>PingIT</tt> na pasta <tt>src/test/java/</tt>, seguindo a convenção de uma pasta por cada pacote (<i>package</i>) Java.
-            </li>
-            <li>
-                Primeiro vamos criar um teste para o caso normal:<br />
-                <pre class="prettyprint lang-java">
-    @Test
-    public void pingOKTest() {
-        PingRequest request = PingRequest.newBuilder().setInputText("friend").build();
-        PingResponse response = frontend.ping(request);
-        assertEquals("Hello friend!", response.getOutputText());
-    }
-                </pre>
-            </li>
-            <li>
-                Para correr os testes, lançar o servidor primeiro, e depois fazer: <tt>mvn verify</tt><br />
-                O resultado deverá ser bem sucedido para todos os testes.<br />
-                <br />
-            </li>
-            <li>
-                Vamos de seguida criar um segundo teste, para o caso de erro:
-                <pre class="prettyprint lang-java">
-    @Test
-    public void emptyPingTest() {
-        PingRequest request = PingRequest.newBuilder().setInputText("").build();
-        assertEquals(
-            INVALID_ARGUMENT.getCode(),
-            assertThrows(
-                    StatusRuntimeException.class, () -> frontend.ping(request))
-                .getStatus()
-                .getCode());
-    }
-                </pre>
-            </li>
-            <li>
-                Correr novamente os testes com <tt>mvn verify</tt>.<br />
-                O resultado deverá ser, novamente, bem sucedido para todos os testes.
-                Repare que este segundo teste tem sucesso se houver exceção, porque é isso que é esperado.
-            </li>
-        </ol>
-    </li>
-</ol>
-
-<!--<p>&nbsp;</p>
-<p>
-    <b>Próximos passos</b>
-</p>
-<ul>
-    <li>
-        Implementar mais dois procedimentos de controlo, <tt>ctrl_clear</tt> e <tt>ctrl_init</tt>, de acordo com as descrições que se seguem.
-
-
-    </li>
-    <li>
-        Testar todos os procedimentos desenvolvidos.
-    </li>
-</ul>
--->
 
 <p>&nbsp;</p>
 </div>

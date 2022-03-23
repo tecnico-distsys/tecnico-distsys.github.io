@@ -159,13 +159,13 @@ O servidor e o cliente vão partilhar uma chave para permitir assinar e verifica
 A chave foi gerada e guardada num ficheiro.
 		<ol type="1">
 			<li>Descarregue e descomprima as <a href="./keys.zip">chaves de exemplo <img src="../_img/zip.png" alt="ZIP" /></a>.</li>
-			<li>Copie a chave secreta para o servidor (pasta <tt>/src/main/resources</tt>).</li>
-			<li>Copie a mesma chave para o cliente (pasta <tt>/src/main/resources</tt>).</li>
-			<li>Quando precisar da chave, no servidor ou no cliente, pode usar um código semelhante ao seguinte para ler o seu valor a partir do recurso da aplicação:
+			<li>Copie a chave secreta (ficheiro <i>secret.key</i>) para o servidor (pasta <tt>/src/main/resources</tt>: se a pasta <i>resources</i> não existir, ela deve ser criada no diretório <i>main</i>).</li>
+			<li>Copie a mesma chave (ficheiro <i>secret.key</i>) para o cliente (pasta <tt>/src/main/resources</tt>: se a pasta <i>resources</i> não existir, ela deve ser criada no diretório <i>main</i>).</li>
+			<li>Quando precisar da chave, no servidor ou no cliente, pode usar o código abaixo para ler o seu valor:
 				<pre class="prettyprint lang-java">
 ...
 
-import java.security.Key;
+import javax.crypto.spec.SecretKeySpec;
 
 import static javax.xml.bind.DatatypeConverter.printHexBinary;
 
@@ -173,10 +173,10 @@ import java.io.InputStream;
 
 ...
 
-	public static Key readKey(String resourcePath) throws Exception {
-		System.out.println("Reading key from resource " + resourcePath + " ...");
+	public static SecretKeySpec readKey(String resourcePathName) throws Exception {
+		System.out.println("Reading key from resource " + resourcePathName + " ...");
 		
-		InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath);
+		InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePathName);
 		byte[] encoded = new byte[fis.available()];
 		fis.read(encoded);
 		fis.close();
@@ -251,7 +251,7 @@ message SignedResponse {
 				<br />
 			</li>
 			<li>Consulte o código Java gerado para verificar o que mudou.<br /><br /></li>
-			<li>Atualizar o código do servidor para refletir a modificação:
+			<li>Atualizar o código do servidor para refletir a modificação. PS: não se esqueça de efetuar as alterações necessárias no resto da função.
 				<pre class="prettyprint lang-java">
 ...
 
@@ -304,6 +304,17 @@ Vamos então calcular o resumo da resposta e depois cifrar esse resumo com a cha
 (consultar a <a href="https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html">documentação</a> e o <a href="https://github.com/tecnico-distsys/example_crypto/blob/master/src/test/java/pt/tecnico/crypto/SymCryptoTest.java">exemplo</a> sobre este objeto).
 			</li>
 			<li>Preencher a assinatura e devolver a resposta que engloba a resposta anterior e a assinatura.</li>
+			<li>Se necessário, para transformar byte[] em ByteString, pode usar o seguinte método:
+				<pre class="prettyprint lang-java">
+...
+
+import com.google.protobuf.ByteString;
+
+...
+	ByteString byteString = ByteString.copyFrom(byteArray);
+...
+				</pre>
+			</li>
 			<li>Para executar:
 				<ul>
 					<li>Servidor
@@ -373,7 +384,16 @@ para confirmar que o cliente é capaz de detetar a alteração.
 			<li>No servidor, após a realização da assinatura, modificar um dos campos de um dos produtos.
 				<ul>
 					<li>Os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos.
-					Para criar um objeto modificado a partir de um objeto existente pode-se usar o método <tt>toBuilder()</tt>.</li>
+					Para criar um objeto modificado a partir de um objeto existente pode-se usar o método <tt>toBuilder()</tt>, semelhante ao seguinte:</li>
+						<pre class="prettyprint lang-java">
+...
+
+	ProductsResponse.Builder modifiedProducts = products.toBuilder();
+	modified_products.setSupplierIdentifier("modifiedID");
+
+...
+						</pre>
+					</li>
 				</ul>
 			</li>
 			<li>Para testar:

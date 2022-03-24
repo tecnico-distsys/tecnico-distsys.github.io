@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" type="text/css" href="../_css/labs-sd.css">
+        <link href="../_prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="../_prettify/prettify.js"></script>
+        <title>Servidor de Nomes</title>
+    </head>
+    <body onload="prettyPrint()">
+        <div class="contexto">
+            <p>
+                <a href="../index.html">Labs SD</a> &gt;
+            </p>
+        </div>
+        <div class="titulo" id="1">
+            <h1>Servidor de Nomes</h1>
+        </div>
+        <div class="objectivos">
+            <h2>Objetivos</h2>
+            <ul>
+                <li>Criar um servidor de nomes</li>
+                <li>Publicar e pesquisar serviços gRPC no servidor de nomes</li>
+            </ul>
+        </div>
+        <div class="indice"></div>
+        <div class="corpo">
+<h2 id="introdução">Introdução</h2>
+<p>O servidor que iremos criar permitirá resolver nomes no seu respetivo IP e utilizará a tecnologia gRPC. Este servidor também permitirá a coexistência de vários serviços que podem não estar relacionados entre si. O servidor de nomes irá fazer um uso adequado de sincronização e de paralelismo.</p>
+<h2 id="exercício">Exercício</h2>
+<p>Este exercício tem como ponto de partida o código base já fornecido para o projeto.</p>
+<h3 id="implementação-da-operação-de-registo">Implementação da operação de registo</h3>
+<ol type="1">
+<li>Implemente a operação <code>register</code>, que permite a um servidor inserir uma entrada no servidor de nomes que permitirá aos clientes conectarem-se a ele. Comece por definir esta operação no ficheiro <code>.proto</code> adequado. Esta chamada remota recebe como parâmetros:
+<ul>
+<li>o nome do serviço que a queremos adicionar o servidor;</li>
+<li>o <code>host:port</code> do servidor;</li>
+<li>uma lista de qualificadores associados ao servidor a registar.</li>
+</ul></li>
+</ol>
+<p>Uma mensagem vazia deverá ser retornada pelo servidor quando foi possível registar o serviço.</p>
+<p>Configure o código base para ter o servidor de nomes a aguardar conexões no porto <code>5000</code>. Crie a classe <code>NamingServer</code> que irá conter a informação para cada servidor, nomeadamente, a combinação <code>host:port</code> e a lista de qualificadores. Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de <code>NamingServer</code>s. Crie a classe <code>NamingServices</code> que irá guardar toda a informação que o servidor necessita, ou seja, contém um mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente. Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a operação <code>register</code>, assim como todos o métodos necessários nas classes definidas anteriormente.</p>
+<ol start="2" type="1">
+<li>Implemente a operação <code>lookup</code>, que permite a um cliente encontrar servidores, relativos a um serviço. Comece por definir esta operação no ficheiro <code>.proto</code> adequado. Este procedimento remoto recebe como parâmetros:
+<ul>
+<li>o nome do serviço a que o cliente pretende aceder;</li>
+<li>uma lista de qualificadores que se pretende que os servidores retornados tenham presente.</li>
+</ul></li>
+</ol>
+<p>Caso a lista de qualificadores seja vazia, devem retornar-se todos os servidores do serviço. Caso o nome do serviço não se encontre presente, deverá ser retornada uma lista vazia de qualificadores.</p>
+<ol start="3" type="1">
+<li>Implemente a operação <code>delete</code>, que permite a um servidor remover-se do registo de nomes Comece por definir esta operação no ficheiro <code>.proto</code> adequado, tal como foi feito anteriormente. Esta chamada recebe como parâmetros:
+<ul>
+<li>o nome do serviço;</li>
+<li>o <code>host:port</code> do servidor.</li>
+	<p>&nbsp;</p>
+	<hr />
+
+	<div class="rodape">
+		<p>
+			&copy; Docentes de Sistemas Distribuídos,
+			<a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+			<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+		</p>
+	</div>
+    </body>
+</html>

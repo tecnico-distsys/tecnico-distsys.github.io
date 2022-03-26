@@ -53,7 +53,8 @@
          <li>
             <pre class="prettyprint lang-java">python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;</pre>
          </li>
-         <li>Confirmar que 2 ficheiros .py foram gerados na diretoria-output indicada, &lt;nome-do-proto&gt;_pb2.py e &lt;nome-do-proto&gt;_pb2_grpc.py</li>
+         <li>O comando acima gera 2 ficheiros .py na diretoria-output indicada, &lt;nome-do-proto&gt;_pb2.py e &lt;nome-do-proto&gt;_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de suporte ao servidor e ao cliente do RPC.</li>
+         <li>Nos exemplos deste guião a compilação é automatizada com o Exec Maven Plugin.</li>
       </ul>
       <h2 id="java-vs-python-grpc">Java vs Python gRPC</h2>
       <ul>
@@ -62,7 +63,13 @@
             <ul>
                <li>Executar e testar o código:</li>
                <li>Criar um virtual env na diretoria base seguindo as instruções dadas na secção &quot;Setup e instalação das packages&quot;.</li>
-               <li>Na diretoria contract, compilar e executar os seguintes comandos: <code>mvn install; mvn exec:exec</code>.</li>
+               <li>Na diretoria contract, compilar e executar os seguintes comandos:
+                  <ul> 
+                  <li><code>mvn install</code></li>
+                   <li><code>mvn exec:exec</code></li> 
+                   <li>Caso tenhas um alias diferente para o python modifica o <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable do pom</a> para o teu alias e corre o último comando de novo).</li>
+                  </ul>
+                  </li>
                <li>Analisar a diretoria generated-sources/protobuf e ver o código gerado nas diretorias java e python.</li>
                <li>Testar server: na diretoria server executar: <code>mvn compile exec:java</code></li>
                <li>Testar python_client: na diretoria python_client executar <code>python client.py</code></li>
@@ -147,6 +154,7 @@
                         Vamos gerar código Python a partir dos protocol buffers.
                         <ul>
                            <li>Executar: mvn exec:exec</li>
+                           <li>Caso tenhas um alias diferente para o python modifica o <a href="https://github.com/tecnico-distsys/example_grpc_addressbook/blob/main/contract/pom.xml#L85">executable do pom</a> para o teu alias e corre o comando de novo.</li>
                            <li>Verificar e analisar os ficheiros gerados na diretoria generated-sources/protobuf/python: AddressBook_pb2_grpc.py e AddressBook_pb2.py</li>
                         </ul>
                      </li>

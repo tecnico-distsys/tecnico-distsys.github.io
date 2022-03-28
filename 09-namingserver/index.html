@@ -44,8 +44,8 @@ Esta chamada remota recebe como parâmetros:
 </ul>
 <p>Uma mensagem vazia deverá ser retornada pelo servidor quando foi possível registar o serviço.<br />
 Configure o código base para ter o servidor de nomes a aguardar conexões no porto <code>5000</code>.<br />
-Crie a classe <code>NamingServer</code> que irá conter a informação para cada servidor, nomeadamente, a combinação <code>host:port</code> e a lista de qualificadores.<br />
-Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de <code>NamingServer</code>s.<br />
+Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação <code>host:port</code> e a lista de qualificadores.<br />
+Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de <code>ServerEntry</code>s.<br />
 Crie a classe <code>NamingServices</code> que irá guardar toda a informação que o servidor necessita, ou seja, contém um mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.<br />
 Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a operação <code>register</code>, assim como todos o métodos necessários nas classes definidas anteriormente.</p></li>
 </ol>

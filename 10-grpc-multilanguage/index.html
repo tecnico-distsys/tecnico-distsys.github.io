@@ -66,7 +66,7 @@
                   <ul> 
                   <li><code>mvn install</code></li>
                    <li><code>mvn exec:exec</code></li> 
-                   <li>Caso tenhas um alias diferente para o python modifica o <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable do pom</a> para o teu alias e corre o último comando de novo).</li>
+                   <li>Caso tenhas um alias diferente para o python modifica o <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable do pom</a> para o teu alias e corre o último comando de novo.</li>
                   </ul>
                   </li>
                <li>Analisar a diretoria generated-sources/protobuf e ver o código gerado nas diretorias java e python.</li>
@@ -129,10 +129,10 @@
       <ol>
          <li>Comece por criar um virtual env na diretoria base seguindo as instruções da secção &quot;Setup e instalação das packages&quot;.</li>
          <li>
-            <p>Definir, implementar e experimentar o procedimento remoto searchPerson no contract</p>
+            <p>Definir, implementar e experimentar o procedimento remoto searchPerson</p>
             <ul>
                <li>
-                  Existem três módulos: contract, server e client. Vamos começar pelo contrato:
+                  Existem três módulos: contract, server e client. Vamos começar na diretoria <strong>contract</strong>:
                   <ol>
                      <li>Aceder ao ficheiro .proto. Este ficheiro define as estruturas de dados e os procedimentos remotos.</li>
                      <li>
@@ -160,7 +160,7 @@
                   </ol>
                </li>
                <li>
-                  Vamos agora concretizar o servidor:
+                  Vamos agora concretizar o <strong>server</strong>:
                   <ul>
                      <li>
                         Com base nas classes geradas pelo protoc e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, adicione a AddressBookServiceImpl e adicione o método de implementação do searchPerson: 
@@ -174,7 +174,7 @@
                   </ul>
                </li>
                <li>
-                  <p>Vamos concretizar o cliente:</p>
+                  <p>Vamos concretizar o <strong>client</strong>:</p>
                   <ul>
                      <li>
                         <p>Adicionar uma função ao PythonClient que pede o email a procurar e chamada o procedimento remoto <code>searchPerson</code></p>

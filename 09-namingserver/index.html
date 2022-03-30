@@ -44,8 +44,8 @@ Esta chamada remota recebe como parâmetros:
 </ul>
 <p>Uma mensagem vazia deverá ser retornada pelo servidor quando foi possível registar o serviço.<br />
 Configure o código base para ter o servidor de nomes a aguardar conexões no porto <code>5000</code>.<br />
-Crie a classe <code>NamingServer</code> que irá conter a informação para cada servidor, nomeadamente, a combinação <code>host:port</code> e a lista de qualificadores.<br />
-Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de <code>NamingServer</code>s.<br />
+Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação <code>host:port</code> e a lista de qualificadores.<br />
+Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de <code>ServerEntry</code>s.<br />
 Crie a classe <code>NamingServices</code> que irá guardar toda a informação que o servidor necessita, ou seja, contém um mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.<br />
 Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a operação <code>register</code>, assim como todos o métodos necessários nas classes definidas anteriormente.</p></li>
 </ol>
@@ -59,7 +59,7 @@ Este procedimento remoto recebe como parâmetros:
 <li>uma lista de qualificadores que se pretende que os servidores retornados tenham presente.</li>
 </ul>
 <p>Caso a lista de qualificadores seja vazia, devem retornar-se todos os servidores do serviço.<br />
-Caso o nome do serviço não se encontre presente, deverá ser retornada uma lista vazia de qualificadores.</p></li>
+Caso o nome do serviço não se encontre presente, deverá ser retornada uma lista vazia de servidores.</p></li>
 </ol>
 <h3 id="implementação-da-operação-de-remoção-de-servidores">Implementação da operação de remoção de servidores</h3>
 <ol start="3" type="1">

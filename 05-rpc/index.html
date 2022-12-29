@@ -69,7 +69,7 @@
 						Cada módulo tem um POM próprio.
 						<!--Existe um POM pai com definições partilhadas por todos os módulos.-->
 					</li>
-					<li>Execute o exemplo seguindo as instruções <tt>README.md</tt> de cada módulo.<br /></li>
+					<li>Nos passos seguintes, vamos compilar e executar o exemplo seguindo as instruções <tt>README.md</tt> de cada módulo.<br /></li>
 					<li>Comece pelo módulo <tt>contract</tt>, executando o comando: <tt>mvn install</tt><br />
 						Este comando vai passar pela etapa	<i>generate-sources</i>, que vai invocar o	<i>protoc</i>, o compilador de <i>protocol buffers</i> que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro	<tt>.proto</tt>.<br />
 						Familiarize-se com o código e responda às seguintes questões:
@@ -82,10 +82,10 @@
 							<!--li>O que teria de alterar para que a resposta à pergunta anterior mudasse?</li-->
 						</ol>
 					</li>
-					<li>Abra uma consola e corra o servidor:</br>
+					<li>Abra uma consola, entre na diretoria do módulo <tt>server</tt> e corra o servidor:</br>
 						<tt>mvn compile exec:java</tt>
 					</li>
-					<li>Abra uma outra consola e execute o cliente:<br />
+					<li>Abra uma outra consola, entre na diretoria do módulo <tt>client</tt> e execute o cliente:<br />
 						<tt>mvn compile exec:java</tt><br />
 						Depois de ver o	<i>Hello World</i> a funcionar corretamente no seu computador, avance para o passo seguinte.<br />
 						<br />

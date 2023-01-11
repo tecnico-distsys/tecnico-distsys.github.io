@@ -22,9 +22,6 @@
 
 <div class="corpo">
 
-<!--
-<span style="color:red;font-size:90%">[OLD]</span>
--->
 
 <p>
 Para realizar os exercícios de laboratório e o projecto de SD é necessário instalar um conjunto de ferramentas e servidores. 
@@ -94,9 +91,6 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
             </li>
         </ul>
         <li>Instalar</li>
-        <!--ul>
-            <li><a href="http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">Maven in 5 minutes</a></li>
-        </ul-->
         <li>Configurar</li>
         <ul>
             <li>Definir variável de ambiente M2_HOME com o caminho para a pasta de instalação</li>
@@ -112,7 +106,6 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
         <ul>
             <li><a href="http://git-scm.com/download/">Git 2.x</a>
             <small>(escolher a versão estável mais recente disponível)</small>
-            <!--li>Alternativa: <a href="https://desktop.github.com/">GitHub Desktop</a></li-->
         </ul>
         <li>Instalar</li>
         <ul>
@@ -145,29 +138,22 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                 <small></small></li>
                 <ul>
                     <li>Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
-                    <!--li>Nota: o arquivo para Windows vem em formato <b>.zip</b>, para outros sistemas operativos vem em <b>.tar.gz</b>.</li-->
                 </ul>
             </ul>
             <li>Instalar:</li>
             <ul>
-            <!-- <li><a href="http://wiki.eclipse.org/Eclipse/Installation">Eclipse Installation</a>
-                <small>Atenção: se instalou o JDK 32 bits, deve instalar o Eclipse 32 bits;
-                se instalou o JDK 64 bits, deve instalar o Eclipse 64 bits.</small></li> -->
                 <li>Extrair o arquivo para um diretório com permissões de escrita.</li>
-                <!--small>Exemplo: <tt>C:\Users\john\Documents\eclipse</tt> em Windows, ou <tt>/home/john/Documents/eclipse</tt> em Linux para um utilizador chamado <b>john</b></small-->
             </ul>
             <li>Configurar:</li>
             <ul>
                 <li>Especificar o JDK como Standard VM (em vez do JRE)</li>
                 <b>Nota: só deverá ser necessário este passo em Windows.</b>
-                <!--Reveja este passo em outros sistemas operativos se encontrar problemas ao compilar código no Eclipse nos vários exercícios ao longo do semestre -->
                 <ul>
                     <li><i>Window</i> -> <i>Preferences</i> -> <i>Java</i> -> <i>Installed JREs</i> -> <i>Add...</i></li>
                     <li>Indicar o caminho até ao diretório do JDK:
                         ex. <tt>C:\Java\jdk-17.0.2</tt></li>
                     <li>Confirmar que as "Installed JREs" apenas faz referência ao JDK instalado nas opções ativadas</li>
                 </ul>
-                <!--li>Definir variável de ambiente ECLIPSE_HOME com o caminho para a pasta de instalação do Eclipse</li-->
                 <li><b>Conectores m2e</b> (maven 2 eclipse)</li>
                 <ul>
                     <li><i>Window</i> -> <i>Preferences</i> -> <i>Maven</i> -> <i>Discovery</i> e clicar em <i>Open catalog</i>.</li>
@@ -177,47 +163,11 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
                         <li>m2e connector for maven-remote-resources-plugin</li>
                     </ul>
                 </ul>
-                <!--li><i>Plug-ins</i> são extensões que podem ser adicionados ao ambiente.
-                Para instalar cada ir a:
-                Eclipse, Help, Install New Software..., Work with:<br />
-                preencher endereços de origem e escolher pacotes desejados</li-->
+                
             </ul>
         </ul>
     </ul>
 
-    <!--li>
-        <b>ZooKeeper</b>
-        <ul>
-			<li>Obter
-				<ul>
-					<li>Ir à página do <a href="https://zookeeper.apache.org/releases.html#download" target="_blank">ZooKeeper</a> e obter a versão <i>stable</i> mais recente, com binários incluidos (o ficheiro a obter segue o padrão: <tt>apache-zookeeper-x.y.z-bin.tar.gz</tt>)</li>
-				</ul>
-			</li>
-			<li>Instalar
-				<ul>
-					<li>Descompactar para pasta à escolha, por exemplo, <tt>/home/user/zookeeper</tt> em Linux, ou <tt>C:\zookeeper</tt> em Windows</li>
-				</ul>
-			</li>
-			<li>Configurar
-				<ul>
-					<li>Criar a pasta <tt>data</tt> dentro da pasta de instalação do ZooKeeper, seguindo o exemplo, <tt>/home/user/zookeeper/data</tt> em Linux, ou <tt>C:\zookeeper\data</tt> em Windows.<br />
-					É nesta pasta que o ZooKeeper irá armazenar informação.</li>
-					<li>Mudar o nome do ficheiro <tt>zookeeper/conf/zoo_sample.cfg</tt> para <tt>zoo.cfg</tt></li>
-					<li>Editar o ficheiro <tt>zoo.cfg</tt>, alterando a configuração <tt>dataDir</tt> para referenciar a pasta criada anteriormente.<br />
-						Linux:
-						<ul>
-							<li><tt>dataDir=/home/user/zookeeper/data</tt></li>
-						</ul>
-						Windows:
-						<ul>
-							<li><tt>dataDir=/C:/zookeeper/data</tt></li>
-						</ul>
-					</li>
-					<li>As restantes configurações podem ser deixadas com os valores por omissão, nomeadamente o <tt>clientPort</tt> que indica o porto onde o ZooKeeper estará disponível.</li>
-				</ul>
-			</li>
-		</ul>
-    </li-->
 
 </ol>
 </div><!-- corpo -->
@@ -229,7 +179,7 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
 <p>
 &copy; Docentes de Sistemas Distribu&iacute;dos,
 <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-<a href="http://www.ist.eu">Técnico Lisboa</a><br />
+<a href="http://www.tecnico.ulisboa.pt">Técnico Lisboa</a><br />
 </p>
 </div><!-- rodape -->
 

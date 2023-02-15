@@ -75,15 +75,15 @@ O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois segui
 </p>
 
 
-<h3>Implementação do procedimento remoto <tt>consult user balance</tt>.</h3>
+<h3>Implementação do procedimento remoto <tt>getBalance user</tt>.</h3>
     
 <p>
-    O objetivo do exercício é extender o comportamente de uma aplicação simples que modela a interação de um cliente com o banco permitindo-lhe consultar o saldo. 
-    O procedimento <tt>consult user balance</tt> recebe o nome de um cliente e retorna o saldo do cliente.<br />
+    O objetivo do exercício é estender o comportamente de uma aplicação simples que modela a interação de um cliente com o banco permitindo-lhe consultar o saldo. 
+    O procedimento <tt>getBalance user</tt> recebe o nome de um cliente e retorna o saldo do cliente.<br />
     Para este fim, vai-se:
     <ol type="I">
         <li>
-            Definir o <tt>consult</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
+            Definir o <tt>getBalance</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
         </li>
         <li>
             Enviar informação de erro do servidor para o cliente;
@@ -106,7 +106,7 @@ na diretoria base.
 
 <ol type="I">
     <li>
-        <b>Definir, implementar e experimentar o procedimento remoto <tt>consult</tt> no <tt>contract</tt></b>
+        <b>Definir, implementar e experimentar o procedimento remoto <tt>getBalance</tt> no <tt>contract</tt></b>
         <ol type="1">
             <li>
                 Existem três módulos: <tt>contract</tt>, <tt>server</tt> e <tt>client</tt>.
@@ -120,13 +120,13 @@ na diretoria base.
                         Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta.
                         <ul>
                             <li>
-                                Definir a mensagem do pedido, <tt>ConsultRequest</tt>, que recebe texto simples.
+                                Definir a mensagem do pedido, <tt>GetBalanceRequest</tt>, que recebe texto simples.
                             </li>
                             <li>
-                                Definir a mensagem do resposta, <tt>ConsultResponse</tt>, que devolve um inteiro.
+                                Definir a mensagem do resposta, <tt>GetBalanceResponse</tt>, que devolve um inteiro.
                             </li>
                             <li>
-                                Definir o procedimento <tt>rpc</tt> com o nome <tt>consult</tt>, com os tipos de pedido e resposta indicados.
+                                Definir o procedimento <tt>rpc</tt> com o nome <tt>getBalance</tt>, com os tipos de pedido e resposta indicados.
                             </li>
                         </ul>
                     </li>
@@ -160,7 +160,7 @@ na diretoria base.
                         Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, adicione a  <tt>BankingServiceImpl</tt> e adicione o método de implementação do <tt>consult</tt>:<br />
                                 <pre class="prettyprint lang-java">
 @Override
-public void consult(ConsultRequest request, StreamObserver<ConsultResponse> responseObserver) {
+public void getBalance(GetBalanceRequest request, StreamObserver<GetBalanceResponse> responseObserver) {
     Integer balance = bank.getBalance(request.getClient());
 
     ...
@@ -171,7 +171,7 @@ public void consult(ConsultRequest request, StreamObserver<ConsultResponse> resp
                                 </pre>
                     </li>
                     <li>
-                        Ajuste a classe <tt>Bank</tt>, escrevendo a businness logic que a operação consult implica.
+                        Ajuste a classe <tt>Bank</tt>, implementando a operação getBalance.
                     </li>
                     <li>
                         Para compilar e testar, fazer: <tt>mvn compile exec:java</tt><br />
@@ -185,9 +185,9 @@ public void consult(ConsultRequest request, StreamObserver<ConsultResponse> resp
                     <li>
                         No objeto <tt>BankingApp</tt> deverá criar um comando que permita realizar o pedido através do stub.
                         <pre class="prettyprint lang-java">
-ConsultResponse responseConsult = stub.consult(ConsultRequest.newBuilder().setClient(client).build());
+GetBalanceResponse responseGetBalance = stub.getBalance(GetBalanceRequest.newBuilder().setClient(client).build());
 
-System.out.println(responseConsult.getBalance());
+System.out.println(responseGetBalance.getBalance());
 
                         </pre>
                     </li>
@@ -225,8 +225,8 @@ if (bank.isClient(client) == false) {
                 Do lado do cliente, vamos apanhar uma exceção e imprimir a mensagem de erro:
                 <pre class="prettyprint lang-java">
 try {
-    ConsultRequest request = ConsultRequest.newBuilder().setClient(client).build();
-    ConsultResponse response = stub.consult(request);
+    GetBalanceRequest request = GetBalanceRequest.newBuilder().setClient(client).build();
+    GetBalanceResponse response = stub.getBalance(request);
 
 } catch (StatusRuntimeException e) {
     System.out.println("Caught exception with description: " + 

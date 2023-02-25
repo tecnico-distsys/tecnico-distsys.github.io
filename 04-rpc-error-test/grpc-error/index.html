@@ -34,7 +34,7 @@
     Mesmo quando a comunicação é possível entre cliente e servidor, este último pode detetar um problema nos argumentos recebidos ou ter um problema interno que precisa de reportar ao cliente.
 </p>
 <p>
-    O gRPC reporta todos os problemas através de um código de estado (<i>status code</i>) que é devolvido em situações de erro.
+    O gRPC reporta todos os problemas através de um código de estado de erro (<i>status code</i>) que é devolvido em situações de erro.
     Este mecanismo é básico e menos sofiscado, por exemplo, do que as exceções do Java.
     A opção de desenho deve-se ao facto do gRPC ser uma biblioteca agnóstica relativamente à linguagem de programação que se utiliza, pelo que o recurso a um conjunto limitado de códigos de erro é a forma base de tratar situações em que a invocação remota falha.
 </p>
@@ -84,17 +84,17 @@ public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentB
     responseObserver.onCompleted();
 }</pre>
 <p>
-    Em caso de erro, é importante notificar o cliente de que a execução remota falhou, para que consiga recuperar (por exemplo, através da repetição da invocação). 
+    Em caso de erro, é importante notificar o cliente de que a execução remota falhou, para que consiga recuperar (por exemplo, repetindo a invocação ou reportando o erro ao utilizador). 
     Esse estado de erro pode ser induzido, por exemplo, por uma falha na conexão entre cliente e servidor (como descrito anteriormente) ou introduzido pelo próprio programador, para acautelar violações do domínio da aplicação. 
     A validação de argumentos é um exemplo clássico.</p>
 <p>No caso de Java, é possível explicitar que a chamada remota falhou invocando <tt>responseObserver.onError(...)</tt> quando necessário. 
     Este método recebe um <tt>Throwable</tt>, sendo qualquer exceção em Java uma subclasse desta. Esta invocação altera o fluxo de execução do programa. 
     Quer isto dizer que, num determinado fluxo, <tt>onCompleted</tt> e <tt>onError</tt> só podem ser invocadas uma vez e, se forem, devem ser as últimas (não podendo, por isso, ser executadas em conjunto). 
-    A título de exemplo, e considerando a guarda <tt>condition</tt>, deve ter-se algo como:</p>
+    A título de exemplo, e considerando a guarda <tt>errorCondition</tt>, deve ter-se algo como:</p>
 <pre class="prettyprint lang-java">
     ...
 
-    if (condition) {
+    if (errorCondition) {
         ...
         responseObserver.onError(...);
 
@@ -113,10 +113,14 @@ public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentB
 </p>
 
 <p>
-    No modelo que estamos a considerar, gRPC oferece uma estrutura que permite modelar o estado de uma invocação remota, <tt>Status</tt> (cuja implementação em Java pode ser consultada <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/grpc/Status.java">aqui</a>). 
-    Em Java, esta classe define, para cada estado, um código e uma descrição do estado, modelando também os estados de erro de que temos vindo a falar. 
-    Um exemplo é o estado <tt>INVALID_ARGUMENT</tt>, utilizado para representar o estado de erro em que se incorre quando o cliente especifica um argumento inválido. 
-    A grande vantagem desta classe é que possui um método que encapsula automaticamente um objeto <tt>Status</tt> numa exceção, pronta a ser passada ao método <tt>onError</tt>.
+    O gRPC oferece uma estrutura que permite representar o estado de erro devolvido por uma invocação remota, <tt>Status</tt>. 
+    Em Java, a classe com o mesmo nome define um código e uma descrição textual do estado de erro. 
+    Há vários códigos previstos, que podem ser consultados <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/grpc/Status.java">aqui</a>. Um exemplo é o código <tt>INVALID_ARGUMENT</tt>, para representar 
+    situações em que o cliente especificou um argumento inválido. 
+    Os códigos <tt>NOT_FOUND</tt>, <tt>ALREADY_EXISTS</tt> e <tt>FAILED_PRECONDITION</tt> cobrem outras situações em que
+    a invocação remota não pode ser executada por alguma condição da lógica do domínio não estar satisfeita.
+    
+    A grande vantagem de usar a classe <tt>Status</tt> para retornar estados de erro em gRPC é que esta possui um método que encapsula automaticamente o código pretendido numa exceção, pronta a ser passada ao método <tt>onError</tt>.
 </p>
 <p>
     Por exemplo, para que o cliente receba uma <tt>StatusRuntimeException</tt> (análogo para <tt>StatusException</tt>) ao especificar um argumento inválido, o servidor pode invocar:

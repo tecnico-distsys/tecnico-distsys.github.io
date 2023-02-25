@@ -69,175 +69,82 @@
 <hr />
         
 <h2>Exercício</h2>
-<p>
-O <b>ponto de partida</b> é o código base que está no repositório <a href="https://github.com/tecnico-distsys/exercise_grpc_error_testing/tree/2022" target="_blank">exercise_grpc_error_testing branch 2022 <img src="../_img/github.png" alt="GitHub" height="16"></a>.
-O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b>
-</p>
-
-
-<h3>Implementação do procedimento remoto <tt>getBalance user</tt>.</h3>
     
 <p>
-    O objetivo do exercício é estender o comportamente de uma aplicação simples que modela a interação de um cliente com o banco permitindo-lhe consultar o saldo. 
-    O procedimento <tt>getBalance user</tt> recebe o nome de um cliente e retorna o saldo do cliente.<br />
-    Para este fim, vai-se:
-    <ol type="I">
-        <li>
-            Definir o <tt>getBalance</tt> no contrato, implementar no servidor e testar manualmente com o cliente;
-        </li>
-        <li>
-            Enviar informação de erro do servidor para o cliente;
-        </li>
-    </ol>
-</p>
-<p>
+    O ponto de partida será <a href="https://tecnico-distsys.github.io/03-rpc/index.html">a solução que se espera que 
+    o grupo tenha construído na aula anterior para o Jogo do Galo em gRPC</a>.</p>
+    <p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
+    
+    <p>
     Vamos então começar!
 </p>
 
-<p>
-   </li>Comece por executar:
 
-<pre class="prettyprint lang-java">
-mvn clean install -DskipTests
-</pre>
+<p><h3>
+    Enviar informação de erro do servidor para o cliente</h3></p>
 
-na diretoria base.
-</p>
 
-<ol type="I">
-    <li>
-        <b>Definir, implementar e experimentar o procedimento remoto <tt>getBalance</tt> no <tt>contract</tt></b>
-        <ol type="1">
+<p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação <tt>play</tt> recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
+
+        <p><ol type="1">
+            <li>Comece por aprender sobre ler os materiais sobre <a href="grpc-error/index.html">o tratamento de erros com gRPC</a>.</li>
             <li>
-                Existem três módulos: <tt>contract</tt>, <tt>server</tt> e <tt>client</tt>.
-                Vamos começar pelo <b>contrato</b>:
-                <ol type="a">
-                    <li>
-                        Aceder ao ficheiro <tt>.proto</tt>.
-                        Este ficheiro define as estruturas de dados e os procedimentos remotos.
-                    </li>
-                    <li>
-                        Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta.
-                        <ul>
-                            <li>
-                                Definir a mensagem do pedido, <tt>GetBalanceRequest</tt>, que recebe texto simples.
-                            </li>
-                            <li>
-                                Definir a mensagem do resposta, <tt>GetBalanceResponse</tt>, que devolve um inteiro.
-                            </li>
-                            <li>
-                                Definir o procedimento <tt>rpc</tt> com o nome <tt>getBalance</tt>, com os tipos de pedido e resposta indicados.
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        Vamos gerar código Java a partir dos <i>protocol buffers</i>.
-                        O Maven está configurado com <i>plug-ins</i> para chamar a ferramenta <tt>protoc</tt> (<i>protocol buffers compiler</i>)
-                        <ul>
-                            <li>
-                                Executar: <tt>mvn install</tt>
-                            </li>
-                            <li>
-                                Se tudo correr bem, as definições protobuf foram convertidas para classes Java, que foram compiladas e instaladas no repositório local do Maven.
-                            </li>
-                            <li>
-                                Para consultar o código gerado, faça <i>refresh</i>
-                                (<i>right-click</i>, <i>Maven</i>, <i>Update Project</i>, <i>Force Update of Snapshots/Releases</i>, <i>OK</i>)
-                                no Eclipse e depois
-                                consulte os ficheiros na pasta:
-                                <tt>target/generated-sources/protobuf</tt>.<br />
-                                Há classes que representam os tipos de dados das mensagens e há classes de suporte ao servidor e ao cliente do RPC.<br />
-                                <br />
-                            </li>
-                        </ul>
-                    </li>
-                </ol>
-            </li>
-            <li>
-                Vamos agora concretizar o <b>servidor</b>:
-                <ol type="a">
-                    <li> 
-                        Com base nas classes geradas pelo <tt>protoc</tt> e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, adicione a  <tt>BankingServiceImpl</tt> e adicione o método de implementação do <tt>consult</tt>:<br />
-                                <pre class="prettyprint lang-java">
-@Override
-public void getBalance(GetBalanceRequest request, StreamObserver<GetBalanceResponse> responseObserver) {
-    Integer balance = bank.getBalance(request.getClient());
-
-    ...
-
-    responseObserver.onNext(...);
-    responseObserver.onCompleted();
-}
-                                </pre>
-                    </li>
-                    <li>
-                        Ajuste a classe <tt>Bank</tt>, implementando a operação getBalance.
-                    </li>
-                    <li>
-                        Para compilar e testar, fazer: <tt>mvn compile exec:java</tt><br />
-                        <br />
-                    </li>
-                </ol>
-            </li>
-            <li>
-                Vamos agora concretizar o <b>cliente</b>:
-                <ol type="a">
-                    <li>
-                        No objeto <tt>BankingApp</tt> deverá criar um comando que permita realizar o pedido através do stub.
-                        <pre class="prettyprint lang-java">
-GetBalanceResponse responseGetBalance = stub.getBalance(GetBalanceRequest.newBuilder().setClient(client).build());
-
-System.out.println(responseGetBalance.getBalance());
-
-                        </pre>
-                    </li>
-                    <li>
-                        Para compilar e testar:<br />
-                        <tt>mvn compile exec:java</tt><br />
-                        <br />
-                    </li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-    <li>
-        <b>Enviar informação de erro do servidor para o cliente</b>
-        <ol type="1">
-            <li>
-                Vamos adicionar um retorno de erro ao servidor caso a mensagem do pedido seja um cliente não existente.<br />
-                Importar a definição de um estado de erro para argumentos inválidos:
+                Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:
                 <pre class="prettyprint lang-java">
 import static io.grpc.Status.INVALID_ARGUMENT;
 ...
                 </pre>
             </li>
             <li>
-                Verificar se o cliente existe e devolver o erro em caso afirmativo.
+                Verifique se a jogada está fora do tabuleiro e, em caso afirmativo, devolver o erro.
                 <pre class="prettyprint lang-java">
 ...
-if (bank.isClient(client) == false) {
-    responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid user!").asRuntimeException());
+PlayResult result = ttt.play(row, column, player);
+
+if (result == PlayResult.OUT_OF_BOUNDS){
+    responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid position").asRuntimeException());
 }
+else{
+    // Send a single response through the stream.
+    PlayResponse response = PlayResponse.newBuilder().setPlay(result).build();
+    responseObserver.onNext(response);
+    // Notify the client that the operation has been completed.
+    responseObserver.onCompleted();
+} 
 ...
                 </pre>
             </li>
             <li>
-                Do lado do cliente, vamos apanhar uma exceção e imprimir a mensagem de erro:
+                Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:
                 <pre class="prettyprint lang-java">
-try {
-    GetBalanceRequest request = GetBalanceRequest.newBuilder().setClient(client).build();
-    GetBalanceResponse response = stub.getBalance(request);
-
-} catch (StatusRuntimeException e) {
+play_res = null;
+...
+try{
+    play_res =  stub.play(PlayRequest.newBuilder().setRow(row).setColumn(column).setPlayer(player).build()).getPlay();
+    if (play_res != PlayResult.SUCCESS) {
+        displayResult(play_res);
+    }
+}
+catch (StatusRuntimeException e) {
     System.out.println("Caught exception with description: " + 
         e.getStatus().getDescription());
-}
+} 
                 </pre>
                 <br />
             </li>
         </ol>
     </li>
-
+    <h3> Testes JUnit </h3>
+    <p>
+     Vamos agora estender o seu Jogo do Galo com alguns testes JUnit.</p> 
+    
+    <ol type="1">
+            <li>Comece por estudar os nossos materiais sobre <a href="https://tecnico-distsys.github.io/04-rpc-error-test/junit-it/index.html" target="_blank">testes de integração com JUnit <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
+            <li>Pode também consultar e experimentar <a href="https://github.com/tecnico-distsys/example_junit" alt="GitHub" height="16">este exemplo simples do uso de JUnit</a>.</li>
+            <li>Agora experimente criar alguns testes unitários simples ao seu projeto do Jogo do Galo!</li>
+    </ol>
+    
+</p>
      <div class="objectivos">    
          <h2>Atenção que na próxima semana há mini exercício!</h2>
     <p>

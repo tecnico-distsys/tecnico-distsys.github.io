@@ -69,42 +69,34 @@
 <hr />
         
 <h2>Exercício</h2>
-<p>
-O <b>ponto de partida</b> é o código base que está no repositório <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc" target="_blank">gRPC Tic Tac Toe exercise <img src="../_img/github.png" alt="GitHub" height="16"></a>.
-O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b>
-</p>
     
 <p>
-    O objetivo do exercício é estender o comportamento de uma aplicação simples que simula o jogo do galo de modo a ser devolvido um erro caso a jogada seja inválida, o ponto de partida será o exercicío resolvido na aula anterior. 
-    O procedimento <tt>play</tt> recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.<br />
-    Para este fim, vai-se:
-    <ol type="I">
-        <li>
-            Enviar informação de erro do servidor para o cliente;
-        </li>
-        <li>
-            Apanhar a exceção do lado do cliente e imprimir uma mensagem de erro;
-        </li>
-    </ol>
-</p>
-<p>
+    O ponto de partida será <a href="https://tecnico-distsys.github.io/03-rpc/index.html">a solução que se espera que 
+    o grupo tenha construído na aula anterior para o Jogo do Galo em gRPC</a>.</p>
+    <p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
+    
+    <p>
     Vamos então começar!
 </p>
 
-<ol type="I">
-    <li>
-        <b>Enviar informação de erro do servidor para o cliente</b>
-        <ol type="1">
+
+<p><h3>
+    Enviar informação de erro do servidor para o cliente</h3></p>
+
+
+<p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação <tt>play</tt> recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
+
+        <p><ol type="1">
+            <li>Comece por aprender sobre ler os materiais sobre <a href="grpc-error/index.html">o tratamento de erros com gRPC</a>.</li>
             <li>
-                Vamos adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro.<br />
-                Importar a definição de um estado de erro para argumentos inválidos:
+                Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:
                 <pre class="prettyprint lang-java">
 import static io.grpc.Status.INVALID_ARGUMENT;
 ...
                 </pre>
             </li>
             <li>
-                Verificar se a jogada está fora do tabuleiro e devolver o erro em caso afirmativo.
+                Verifique se a jogada está fora do tabuleiro e, em caso afirmativo, devolver o erro.
                 <pre class="prettyprint lang-java">
 ...
 PlayResult result = ttt.play(row, column, player);
@@ -123,7 +115,7 @@ else{
                 </pre>
             </li>
             <li>
-                Do lado do cliente, vamos apanhar uma exceção e imprimir a mensagem de erro:
+                Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:
                 <pre class="prettyprint lang-java">
 play_res = null;
 ...
@@ -144,11 +136,14 @@ catch (StatusRuntimeException e) {
     </li>
     <h3> Testes JUnit </h3>
     <p>
-     Vamos agora executar testes JUnit. Deve seguir o código base que está no repositório <a href="https://github.com/tecnico-distsys/example_junit" alt="GitHub" height="16"> JUnit Github</a>.
-     O código deve ser obtido fazendo <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b>.
-    </p>
-    <p>
-        Para saber mais pode consultar o repositório <a href="https://tecnico-distsys.github.io/04-rpc-error-test/junit-it/index.html" target="_blank">Testes de integração com JUnit <img src="../_img/github.png" alt="GitHub" height="16"></a>
+     Vamos agora estender o seu Jogo do Galo com alguns testes JUnit.</p> 
+    
+    <ol type="1">
+            <li>Comece por estudar os nossos materiais sobre <a href="https://tecnico-distsys.github.io/04-rpc-error-test/junit-it/index.html" target="_blank">testes de integração com JUnit <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
+            <li>Pode também consultar e experimentar <a href="https://github.com/tecnico-distsys/example_junit" alt="GitHub" height="16">este exemplo simples do uso de JUnit</a>.</li>
+            <li>Agora experimente criar alguns testes unitários simples ao seu projeto do Jogo do Galo!</li>
+    </ol>
+    
 </p>
      <div class="objectivos">    
          <h2>Atenção que na próxima semana há mini exercício!</h2>

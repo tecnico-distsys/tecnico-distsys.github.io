@@ -153,25 +153,18 @@ public class ExampleIT {
 <br>
 <h3>Configuração do Maven</h3>
 <p>
-    Por convenção, as classes de testes de integração terminam com <tt>IT</tt> e devem ser arrumadas na pasta <tt>src/test/java</tt> do projeto.<br>
+    Para usar o JUnit no Maven, é necessário meter a classe dos testes na pasta src/test/java.
 </p>
 <p>
-    Para executar testes de integração no Maven, é necessário configurar o <a
-        href="https://maven.apache.org/surefire/maven-failsafe-plugin/"><i>plug-in failsafe</i></a> no <tt>pom.xml</tt>:
+    Também é necessário acrescentar a seguinte dependência no pom.xml.
 </p>
 <pre class="prettyprint lang-xml">
-&lt;plugin&gt;
-    &lt;artifactId&gt;maven-failsafe-plugin&lt;/artifactId&gt;
-    &lt;version&gt;3.0.0-M9&lt;/version&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;goals&gt;
-                &lt;goal&gt;integration-test&lt;/goal&gt;
-                &lt;goal&gt;verify&lt;/goal&gt;
-            &lt;/goals&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-&lt;/plugin&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+        &lt;artifactId>junit-jupiter-engine&lt;/artifactId&gt;
+        &lt;version>5.6.0&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
 </pre>
 <p>
     O Maven executa os testes de integração na fase <b>verify</b> do ciclo de vida.

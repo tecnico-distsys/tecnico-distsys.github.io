@@ -47,9 +47,9 @@ O servidor de nomes deverá fazer um uso adequado de sincronização e de parale
     <li>E deve retornar: </li>
     <ul>
         <li>uma mensagem <code>OK</code> quando for possível registar o servidor;</li>
-        <li>uma mensagem <code>ERROR</code> quando não for possível registar o servidor;</li>
+        <li>uma exceção quando não for possível registar o servidor;</li>
     </ul>
-    <li>Configure o código base para ter o servidor de nomes a aguardar conexões no porto definido no enunciado do projeto.
+    <li>Configure o código base para ter o servidor de nomes a aguardar conexões no porto definido no enunciado do projeto (neste caso, <code>5001</code>).
     </li>
     <li>Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação
         <code>host:port</code> e o qualificador.
@@ -57,7 +57,7 @@ O servidor de nomes deverá fazer um uso adequado de sincronização e de parale
     <li>Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de
         <code>ServerEntry</code>s.
     </li>
-    <li>Crie a classe <code>NamingServices</code> que irá guardar toda a informação que o servidor necessita, ou seja,
+    <li>Crie a classe <code>NamingServer</code> que irá guardar toda a informação que o servidor necessita, ou seja,
         contém um
         mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.</li>
     <li>Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a
@@ -102,7 +102,7 @@ O servidor de nomes deverá fazer um uso adequado de sincronização e de parale
             <li>E deve retornar: </li>
             <ul>
                 <li>uma mensagem <code>OK</code> quando for possível remover o servidor;</li>
-                <li>uma mensagem <code>ERROR</code> quando não for possível remover o servidor;</li>
+                <li>uma exceção quando não for possível remover o servidor;</li>
             </ul>
             </ul>
             </li>

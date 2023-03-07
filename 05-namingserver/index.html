@@ -29,47 +29,83 @@
 <h2 id="introdução">Introdução</h2>
 <p>O servidor que iremos criar permitirá resolver nomes no seu respetivo IP e utilizará a tecnologia gRPC.<br />
 Este servidor também permitirá a coexistência de vários serviços que podem não estar relacionados entre si.<br />
-O servidor de nomes irá fazer um uso adequado de sincronização e de paralelismo.</p>
+O servidor de nomes deverá fazer um uso adequado de sincronização e de paralelismo.</p>
 <h2 id="exercício">Exercício</h2>
 <p>Este exercício tem como ponto de partida o código base já fornecido para o projeto.</p>
 <h3 id="implementação-da-operação-de-registo">Implementação da operação de registo</h3>
 <ol type="1">
 <li>Implemente a operação <code>register</code>, que permite a um servidor inserir uma entrada no servidor de nomes que permitirá aos clientes conectarem-se a ele.<br />
-Comece por definir esta operação no ficheiro <code>.proto</code> adequado.<br />
-Esta chamada remota recebe como parâmetros:
 <ul>
-<li>o nome do serviço que a queremos adicionar o servidor;</li>
-<li>o <code>host:port</code> do servidor;</li>
-<li>uma lista de qualificadores associados ao servidor a registar.</li>
-</ul>
-<p>Uma mensagem vazia deverá ser retornada pelo servidor quando foi possível registar o serviço.<br />
-Configure o código base para ter o servidor de nomes a aguardar conexões no porto <code>5000</code>.<br />
-Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação <code>host:port</code> e a lista de qualificadores.<br />
-Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de <code>ServerEntry</code>s.<br />
-Crie a classe <code>NamingServices</code> que irá guardar toda a informação que o servidor necessita, ou seja, contém um mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.<br />
-Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a operação <code>register</code>, assim como todos o métodos necessários nas classes definidas anteriormente.</p></li>
+    <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado. </li>
+    <li>Esta chamada remota recebe como
+        parâmetros:</li>
+    <ul>
+        <li>o nome do serviço que a queremos adicionar o servidor;</li>
+        <li>o <code>host:port</code> do servidor;</li>
+        <li>um qualificador associado ao servidor a registar.</li>
+        </ul>
+    <li>E deve retornar: </li>
+    <ul>
+        <li>uma mensagem <code>OK</code> quando for possível registar o servidor;</li>
+        <li>uma exceção com a descrição <code>Not possible to register the server</code> quando não for possível registar o servidor;</li>
+    </ul>
+    <li>Configure o código base para ter o servidor de nomes a aguardar conexões no porto definido no enunciado do projeto (neste caso, <code>5001</code>).
+    </li>
+    <li>Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação
+        <code>host:port</code> e o qualificador.
+    </li>
+    <li>Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de
+        <code>ServerEntry</code>s.
+    </li>
+    <li>Crie a classe <code>NamingServer</code> que irá guardar toda a informação que o servidor necessita, ou seja,
+        contém um
+        mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.</li>
+    <li>Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a
+        operação <code>register</code>, assim como todos o métodos necessários nas classes definidas anteriormente.</li>
+    </li>
+    </ul>
+
 </ol>
 <h3 id="implementação-da-operação-de-procura-de-servidores">Implementação da operação de procura de servidores</h3>
 <ol start="2" type="1">
-<li>Implemente a operação <code>lookup</code>, que permite a um cliente encontrar servidores, relativos a um serviço.<br />
-Comece por definir esta operação no ficheiro <code>.proto</code> adequado.<br />
-Este procedimento remoto recebe como parâmetros:
-<ul>
-<li>o nome do serviço a que o cliente pretende aceder;</li>
-<li>uma lista de qualificadores que se pretende que os servidores retornados tenham presente.</li>
-</ul>
-<p>Caso a lista de qualificadores seja vazia, devem retornar-se todos os servidores do serviço.<br />
-Caso o nome do serviço não se encontre presente, deverá ser retornada uma lista vazia de servidores.</p></li>
+<li>Implemente a operação <code>lookup</code>, que permite a um cliente encontrar servidores, relativos a um serviço.
+    <ul>
+        <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado.</li>
+        <li>Este procedimento remoto recebe como parâmetros:
+            <ul>
+                <li>o nome do serviço a que o cliente pretende aceder;</li>
+                <li>um qualificador que se pretende que os servidores retornados tenham associado.</li>
+                </ul>
+        <li>E deve retornar:
+            <ul>
+                <li>uma lista de servidores para o qualificador e serviço pedidos;</li>
+                <li>uma lista com todos os servidores do serviço caso não seja dado qualquer qualificador;</li>
+                <li>uma lista vazia caso o qualificador e/ou o serviço não existam.</li>
+            </ul>
+        </li>
+        </li>
+        </ul>
+
 </ol>
 <h3 id="implementação-da-operação-de-remoção-de-servidores">Implementação da operação de remoção de servidores</h3>
 <ol start="3" type="1">
-<li>Implemente a operação <code>delete</code>, que permite a um servidor remover-se do registo de nomes<br />
-Comece por definir esta operação no ficheiro <code>.proto</code> adequado, tal como foi feito anteriormente.<br />
-Esta chamada recebe como parâmetros:
-<ul>
-<li>o nome do serviço;</li>
-<li>o <code>host:port</code> do servidor.</li>
-</ul></li>
+<li>Implemente a operação <code>delete</code>, que permite a um servidor remover-se do registo de nomes.
+    <ul>
+        <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado, tal como foi feito anteriormente.
+        </li>
+        <li>Esta chamada recebe como parâmetros:
+            <ul>
+                <li>o nome do serviço;</li>
+                <li>o <code>host:port</code> do servidor.</li>
+            </ul>
+            </li>
+            <li>E deve retornar: </li>
+            <ul>
+                <li>uma mensagem <code>OK</code> quando for possível remover o servidor;</li>
+                <li>uma exceção como a descrição <code>Not possible to remove the server</code> quando não for possível remover o servidor.</li>
+            </ul>
+            </ul>
+            </li>
 </ol>
 	<p>&nbsp;</p>
 	<hr />

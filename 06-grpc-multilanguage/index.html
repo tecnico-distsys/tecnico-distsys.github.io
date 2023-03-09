@@ -31,11 +31,51 @@
       <h2 id="pr-requisitos">Pré-requisitos</h2>
       <ul>
          <li>Python 3.5+</li>
-         <li>Packages: grpcio, grpcio-tools</li>
-      </ul>
-      <h2 id="setup-e-instala-o-das-packages">Setup e instalação das packages</h2>
-      <pre class="prettyprint lang-java"><span class="hljs-comment"># windows</span>
- &gt; python -m venv .venv
+         <li>Packages: <a href="https://pypi.org/project/grpcio/">grpcio</a>, <a
+               href="https://pypi.org/project/grpcio-tools/">grpcio-tools</a> e <a
+               href="https://docs.python.org/3/library/venv.html">venv</a></li>
+         </ul>
+         <h2 id="setup-e-instala-o-das-packages">Setup e instalação das packages</h2>
+         <ul>
+            <li>Windows:</li>
+            <ul>
+               <li>Correr o seguinte comando para criar um ambiente virtual:
+                  <pre class="prettyprint lang-java"><code>python -m venv .venv</code></pre>
+               </li>
+               <li>Correr o comando para ativar o ambiente virtual:
+                  <pre class="prettyprint lang-java"><code>.venv\Scripts\activate</code></pre>
+               </li>
+               <li>Correr o comando para instalar a package grpcio:
+                  <pre
+                     class="prettyprint lang-java"><code>python -m pip <span class="hljs-keyword">install</span> grpcio</code></pre>
+               </li>
+               <li>Correr o comando para
+                  instalar a package grpcio-tools:
+                  <pre
+                     class="prettyprint lang-java"><code>python -m pip <span class="hljs-keyword">install</span> grpcio-tools</code></pre>
+               </li>
+            </ul>
+            <li>Linux:</li>
+            <ul>
+               <li>Correr o seguinte comando para criar um ambiente virtual:
+                  <pre class="prettyprint lang-java"><code>python -m venv .venv</code></pre>
+               </li>
+               <li>Correr o comando para ativar o ambiente virtual:
+                  <pre class="prettyprint lang-java"><code>source .venv/bin/activate</code></pre>
+               </li>
+               <li>Correr o comando para instalar a package grpcio:
+                  <pre
+                     class="prettyprint lang-java"><code>python -m pip <span class="hljs-keyword">install</span> grpcio</code></pre>
+               </li>
+               <li>Correr o comando para
+                  instalar a package grpcio-tools:
+                  <pre
+                     class="prettyprint lang-java"><code>python -m pip <span class="hljs-keyword">install</span> grpcio-tools</code></pre>
+               </li>
+            </ul>
+         </ul>
+         <!--pre class="prettyprint lang-java"><span class="hljs-comment"># windows</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             &gt; python -m venv .venv
  &gt; .venv\Scripts\activate
 
  <span class="hljs-comment"># linux</span>
@@ -43,39 +83,45 @@
  $ source .venv/bin/activate
 
  python -m pip <span class="hljs-keyword">install</span> grpcio
- python -m pip <span class="hljs-keyword">install</span> grpcio-tools
+python -m pip <span class="hljs-keyword">install</span> grpcio-tools-->
 
 </pre>
       <h2 id="compila-o-do-proto">Compilação do proto</h2>
       <ul>
-         <li>
+         <li>O comando descrito abaixo gera 2 ficheiros .py na &lt;diretoria-output&gt; indicada: o &lt;nome-do-proto&gt;_pb2.py
+            e o
+            &lt;nome-do-proto&gt;_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de
+            suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven
+            Plugin.</li>
             <pre class="prettyprint lang-java">python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;</pre>
-         </li>
-         <li>O comando acima gera 2 ficheiros .py na diretoria-output indicada, &lt;nome-do-proto&gt;_pb2.py e &lt;nome-do-proto&gt;_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de suporte ao servidor e ao cliente do RPC.</li>
-         <li>Nos exemplos deste guião a compilação é automatizada com o Exec Maven Plugin.</li>
+         
       </ul>
       <h2 id="java-vs-python-grpc">Java vs Python gRPC</h2>
-      <ul>
+      <ol>
          <li>
-            Fazer <strong>Clone</strong> ou <strong>Download</strong> do código fonte do <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage">grpc_example_multilanguage</a>.
-            <ul>
-               <li>Executar e testar o código:</li>
-               <li>Criar um virtual env na diretoria base seguindo as instruções dadas na secção &quot;Setup e instalação das packages&quot;.</li>
-               <li>Na diretoria contract, compilar e executar os seguintes comandos:
-                  <ul> 
+            Começe por fazer <strong>Clone</strong> ou <strong>Download</strong> do código fonte do <a
+               href="https://github.com/tecnico-distsys/example_grpc_multilanguage">grpc_example_multilanguage</a>.
+            <li>Crie um ambiente virtual na diretoria base seguindo as instruções dadas na secção &quot;<i>Setup e instalação
+                  das
+                  packages</i>&quot;.</li>
+            <li>Na diretoria <strong>contract</strong>, compile e execute os seguintes comandos:
+               <ul>
                   <li><code>mvn install</code></li>
-                   <li><code>mvn exec:exec</code></li> 
-                   <li>Caso tenhas um alias diferente para o python modifica o <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable do pom</a> para o teu alias e corre o último comando de novo.</li>
+                  <li><code>mvn exec:exec</code></li>
+                  <li>Caso tenha um alias diferente para o python, modifique o <a
+                        href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable
+                        do pom</a> para o seu alias e corra o último comando de novo.</li>
                   </ul>
                   </li>
-               <li>Analisar a diretoria generated-sources/protobuf e ver o código gerado nas diretorias java e python.</li>
-               <li>Testar server: na diretoria server executar: <code>mvn compile exec:java</code></li>
-               <li>Testar python_client: na diretoria python_client executar <code>python client.py</code></li>
-            </ul>
-         </li>
-         <li>
-            <p>Analisar as diferenças e as semelhanças entre os dois clientes:</p>
-            <ol>
+               <li>Analise a diretoria <code>generated-sources/protobuf</code> e o código gerado nas diretorias <code>java</code> e
+                  <code>python</code>.
+               </li>
+               <li>Teste o servidor, executando na diretoria <strong>server</strong> o comando <code>mvn compile exec:java</code>.</li>
+               <li>Teste o cliente, executando na diretoria <strong>python_client</strong> o comando <code>python client.py</code>.
+               </li>
+               
+               <li>Analise as diferenças e as semelhanças entre os dois clientes:</li>
+               <ul>
                <li>
                   <p>Criação de stubs:</p>
                   <ul>
@@ -109,88 +155,101 @@
                      </li>
                   </ul>
                </li>
-            </ol>
-         </li>
-      </ul>
+            </ul>
+            </li>
+      </ol>
       <h2 id="exerc-cio">Exercício</h2>
       <ul>
-         <li>Fazer <strong>Clone</strong> ou <strong>Download</strong> do código fonte <a href="https://github.com/tecnico-distsys/example_grpc_addressbook">example grpc addressbook</a></li>
-         <li>No código base fornecido, o servidor mantém uma lista de contactos e permite ao cliente adicionar novos contactos e listar contactos.</li>
-         <li>O objetivo deste exercício é extender o comportamento da aplicação base de modo a permitir que cliente possa procurar contactos.</li>
-         <li>Procedimentos remotos a implementar: <code>searchPerson</code></li>
-         <li>
-            searchPerson recebe uma <code>string</code> que corresponde ao email do contacto e retorna a informação que o servidor tem desse contacto.
+         <li>O objetivo deste exercício é extender o comportamento de uma aplicação base de modo a permitir que cliente possa
+            procurar contactos; Para tal, pretende-se que implemente os seguintes procedimentos:
             <ul>
-               <li>Erros: o servidor não tem informação do contacto indicado</li>
+               <li><code>searchPerson</code> - recebe uma <code>string</code> que corresponde ao email do contacto e retorna a
+                  informação que o servidor tem desse contacto. Deve retornar erro caso não tenha a informação do contacto indicado.
+               </li>
             </ul>
          </li>
       </ul>
       <ol>
-         <li>Comece por criar um virtual env na diretoria base seguindo as instruções da secção &quot;Setup e instalação das packages&quot;.</li>
-         <li>
-            <p>Definir, implementar e experimentar o procedimento remoto searchPerson</p>
+         <li>Faça <strong>Clone</strong> ou <strong>Download</strong> do código fonte <a
+               href="https://github.com/tecnico-distsys/example_grpc_addressbook">example grpc addressbook</a>. O código base
+            fornecido contém um servidor que mantém uma lista de contactos e permite ao cliente adicionar e
+            listar
+            contactos.</li>
+         <li>Comece por criar um ambiente virtual na diretoria base seguindo as instruções da secção &quot;<i>Setup e instalação
+               das
+               packages</i>&quot;.</li>
+         <li>Defina, implemente e experimente o procedimento remoto <code>searchPerson</code>:
             <ul>
                <li>
                   Existem três módulos: contract, server e client. Vamos começar na diretoria <strong>contract</strong>:
                   <ol>
-                     <li>Aceder ao ficheiro .proto. Este ficheiro define as estruturas de dados e os procedimentos remotos.</li>
+                     <li>Aceda ao ficheiro .proto. Este ficheiro define as estruturas de dados e os procedimentos remotos.</li>
                      <li>
-                        Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta.
+                        Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta:
                         <ul>
-                           <li>Definir a mensagem do pedido, SearchPersonRequest, que uma string que corresponde ao email do contacto a pesquisar.</li>
-                           <li>Definir o procedimento rpc com o nome searchPerson, que recebe SearchPersonRequest e devolve PersonInfo.</li>
+                           <li>Analise a mensagem do pedido <code>SearchPersonRequest</code>, que contém uma string que corresponde ao email do
+                              contacto a
+                              pesquisar.</li>
+                           <li>Defina o procedimento rpc com o nome <code>searchPerson</code>, que recebe <code>SearchPersonRequest</code> e
+                              devolve
+                              <code>PersonInfo</code>.
+                           </li>
                         </ul>
                      </li>
                      <li>
-                        Vamos gerar código Java a partir dos protocol buffers. O Maven está configurado com plugins para chamar a ferramenta protoc (protocol buffers compiler)
+                        Vamos gerar código Java a partir dos protocol buffers. O Maven está configurado com plugins para chamar a ferramenta
+                        protoc (protocol buffers compiler):
                         <ul>
-                           <li>Executar: mvn install </li>
+                           <li>Execute o comando <code>mvn install</code> </li>
                            <li>Se tudo correr bem, as definições protobuf foram convertidas para classes Java, que foram compiladas e instaladas no repositório local do Maven.</li>
                         </ul>
                      </li>
                      <li>
-                        Vamos gerar código Python a partir dos protocol buffers.
+                        Vamos gerar código Python a partir dos protocol buffers:
                         <ul>
-                           <li>Executar: mvn exec:exec</li>
-                           <li>Caso tenhas um alias diferente para o python modifica o <a href="https://github.com/tecnico-distsys/example_grpc_addressbook/blob/main/contract/pom.xml#L85">executable do pom</a> para o teu alias e corre o comando de novo.</li>
-                           <li>Verificar e analisar os ficheiros gerados na diretoria generated-sources/protobuf/python: AddressBook_pb2_grpc.py e AddressBook_pb2.py</li>
+                           <li>Execute o comando <code>mvn exec:exec</code></li>
+                           <li>Caso tenha um alias diferente para o python, modifique o <a
+                                 href="https://github.com/tecnico-distsys/example_grpc_addressbook/blob/main/contract/pom.xml#L85">executable do
+                                 pom</a> para o seu alias e corra o comando de novo.</li>
+                           <li>Verifique e analise os ficheiros gerados na diretoria
+                              <code>generated-sources/protobuf/python</code>.
+                           </li>
                         </ul>
                      </li>
                   </ol>
                </li>
                <li>
                   Vamos agora concretizar o <strong>server</strong>:
-                  <ul>
+                  <ol>
                      <li>
-                        Com base nas classes geradas pelo protoc e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas, adicione a AddressBookServiceImpl e adicione o método de implementação do searchPerson: 
+                        Com base nas classes geradas pelo protoc e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas de
+                        laboratório anteriores,
+                        ao ficheiro <code>AddressBookServiceImpl</code> adicione o método de implementação do <code>searchPerson</code>:
                         <pre class="prettyprint lang-java">   <span class="hljs-meta">@Override</span>
    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">searchPerson</span><span class="hljs-params">(SearchPersonRequest request, StreamObserver&lt;PersonInfo&gt; responseObserver)</span> </span>{
-       \\TODO
+      //TODO: implement the search person feature
    }
 </pre>
                      </li>
-                     <li>Para compilar e testar, executar na diretoria server: <code>mvn compile exec:java</code></li>
-                  </ul>
+                     <li>Para compilar e testar, execute na diretoria <strong>server</strong> o comando <code>mvn compile exec:java</code>
+                     </li>
+                     </ol>
                </li>
                <li>
                   <p>Vamos concretizar o <strong>client</strong>:</p>
-                  <ul>
+                  <ol>
                      <li>
-                        <p>Adicionar uma função ao PythonClient que pede o email a procurar e chamada o procedimento remoto <code>searchPerson</code></p>
+                        <p>Adicione uma função ao cliente que pede o email a procurar e chamada o procedimento remoto <code>searchPerson</code>
+                        </p>
                         <pre class="prettyprint lang-java">   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PyhtonClient</span><span class="hljs-params">(object)</span>:</span>
    ...
    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search_person</span><span class="hljs-params">(self)</span>:</span>
-       <span class="hljs-comment"># TODO</span>
-
+      <span class="hljs-comment"># TODO: implement search person feature</span>
    ...
-   <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
-       ...
-       <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">'3'</span>:
-           client.search_person()
 </pre>
                      </li>
-                     <li>Para testar, executar na diretoria client: <code>python client.py</code></li>
-                  </ul>
+                     <li>Para testar, execute na diretoria <strong>client</strong> o comando <code>python client.py</code></li>
+                     </ol>
                </li>
             </ul>
          </li>

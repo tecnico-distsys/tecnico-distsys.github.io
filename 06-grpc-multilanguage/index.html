@@ -116,9 +116,9 @@ python -m pip <span class="hljs-keyword">install</span> grpcio-tools-->
                <ul>
                   <li><code>mvn install</code></li>
                   <li><code>mvn exec:exec</code></li>
-                  <li>Caso tenha um alias diferente para o python, modifique o <a
+                  <li>Assegure-se que, na sua máquina, o interpretador Python é lançado pelo comando que está indicado na tag <a
                         href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable
-                        do pom</a> para o seu alias e corra o último comando de novo.</li>
+                        no pom</a>. Se não for, corrija o valor nessa tag e corra o último comando de novo.</li>
                   </ul>
                   </li>
                <li>Analise a diretoria <code>generated-sources/protobuf</code> e o código gerado nas diretorias <code>java</code> e
@@ -168,11 +168,12 @@ python -m pip <span class="hljs-keyword">install</span> grpcio-tools-->
       </ol>
       <h2 id="exerc-cio">Exercício</h2>
       <ul>
-         <li>O objetivo deste exercício é extender o comportamento de uma aplicação base de modo a permitir que cliente possa
-            procurar contactos; Para tal, pretende-se que implemente os seguintes procedimentos:
+         <li>O objetivo deste exercício é estender o comportamento de <a
+               href="https://github.com/tecnico-distsys/example_grpc_addressbook">uma aplicação base</a> de modo a permitir que o cliente possa
+            procurar contactos. Para tal, pretende-se acrescentar a essa aplicação a seguinte operação remota:
             <ul>
-               <li><code>searchPerson</code> - recebe uma <code>string</code> que corresponde ao email do contacto e retorna a
-                  informação que o servidor tem desse contacto. Deve retornar erro caso não tenha a informação do contacto indicado.
+               <li><code>searchPerson</code> - recebe uma <code>string</code> que corresponde ao email de uma pessoa numa lista de contactos. Retorna a
+                  informação que o servidor tem desse contacto, ou erro caso não tenha a informação do contacto indicado.
                </li>
             </ul>
          </li>

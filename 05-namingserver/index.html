@@ -27,29 +27,32 @@
         <div class="indice"></div>
         <div class="corpo">
 <h2 id="introdução">Introdução</h2>
-<p>O servidor que iremos criar permitirá resolver nomes no seu respetivo IP e utilizará a tecnologia gRPC.<br />
-Este servidor também permitirá a coexistência de vários serviços que podem não estar relacionados entre si.<br />
-O servidor de nomes deverá fazer um uso adequado de sincronização e de paralelismo.</p>
+<p>Neste guião construiremos um servidor de nomes usando a tecnologia gRPC. 
+	Este servidor permitirá que processos servidores registem o serviço remoto que oferecem.</br>
+	Isso permitirá que os processos cliente possam descobrir, quais os endereços (nome DNS, porto) dos servidores que atualmente oferecem um dado serviço.<
+	Pode haver mais que um servidor a oferecer o mesmo serviço remoto (por exemplo, num serviço replicado), sendo que cada servidor pode ser 
+	distinguido por um qualificador (por exemplo, "primário" e "secundário").</p>
+		
 <h2 id="exercício">Exercício</h2>
-<p>Este exercício tem como ponto de partida o código base já fornecido para o projeto.</p>
+<p>Este exercício assume como ponto de partida o código do projeto já desenvolvido até ao momento por cada grupo.</p>
 <h3 id="implementação-da-operação-de-registo">Implementação da operação de registo</h3>
 <ol type="1">
-<li>Implemente a operação <code>register</code>, que permite a um servidor inserir uma entrada no servidor de nomes que permitirá aos clientes conectarem-se a ele.<br />
+<li>Implemente a operação <code>register</code>, que permite a um servidor inserir uma entrada no servidor de nomes.<br />
 <ul>
     <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado. </li>
     <li>Esta chamada remota recebe como
         parâmetros:</li>
     <ul>
-        <li>o nome do serviço que a queremos adicionar o servidor;</li>
-        <li>o <code>host:port</code> do servidor;</li>
-        <li>um qualificador associado ao servidor a registar.</li>
+        <li>um nome do serviço oferecido pelo servidor (uma string);</li>
+	<li>um qualificador associado ao servidor a registar (uma string);</li>
+        <li>o endereço do servidor, na forma <code>host:port</code> (uma string);</li>
         </ul>
     <li>E deve retornar: </li>
     <ul>
-        <li>uma mensagem <code>OK</code> quando for possível registar o servidor;</li>
-        <li>uma exceção com a descrição <code>Not possible to register the server</code> quando não for possível registar o servidor;</li>
+        <li>uma mensagem de resposta vazia quando for possível registar o servidor;</li>
+        <li>uma exceção com a descrição <code>Not possible to register the server</code> quando não for possível registar o serviço;</li>
     </ul>
-    <li>Configure o código base para ter o servidor de nomes a aguardar conexões no porto definido no enunciado do projeto (neste caso, <code>5001</code>).
+    <li>Configure o código base para ter o servidor de nomes a aguardar ligações no porto definido no enunciado do projeto (neste caso, <code>5001</code>).
     </li>
     <li>Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação
         <code>host:port</code> e o qualificador.
@@ -60,8 +63,8 @@ O servidor de nomes deverá fazer um uso adequado de sincronização e de parale
     <li>Crie a classe <code>NamingServer</code> que irá guardar toda a informação que o servidor necessita, ou seja,
         contém um
         mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.</li>
-    <li>Crie o serviço que <code>NamingServerServiceImpl</code> que extende a classe gerada pelo protobuf e implemente a
-        operação <code>register</code>, assim como todos o métodos necessários nas classes definidas anteriormente.</li>
+    <li>Crie o serviço que <code>NamingServerServiceImpl</code> que estende a classe gerada pelo protobuf e implemente a
+        operação <code>register</code>.</li>
     </li>
     </ul>
 

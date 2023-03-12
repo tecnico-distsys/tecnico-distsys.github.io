@@ -29,7 +29,7 @@
 <h2 id="introdução">Introdução</h2>
 <p>Neste guião construiremos um servidor de nomes usando a tecnologia gRPC. 
 	Este servidor permitirá que processos servidores registem o serviço remoto que oferecem.</br>
-	Isso permitirá que os processos cliente possam descobrir, quais os endereços (nome DNS, porto) dos servidores que atualmente oferecem um dado serviço.<
+	Isso permitirá que os processos cliente possam descobrir, quais os endereços (nome DNS, porto) dos servidores que atualmente oferecem um dado serviço.
 	Pode haver mais que um servidor a oferecer o mesmo serviço remoto (por exemplo, num serviço replicado), sendo que cada servidor pode ser 
 	distinguido por um qualificador (por exemplo, "primário" e "secundário").</p>
 		
@@ -104,7 +104,7 @@
             </li>
             <li>E deve retornar: </li>
             <ul>
-                <li>uma mensagem <code>OK</code> quando for possível remover o servidor;</li>
+                <li>uma mensagem vazia quando for possível remover o servidor;</li>
                 <li>uma exceção como a descrição <code>Not possible to remove the server</code> quando não for possível remover o servidor.</li>
             </ul>
             </ul>

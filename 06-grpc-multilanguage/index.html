@@ -83,23 +83,31 @@
                </li>
             </ul>
          </ul>
-         <!--pre class="prettyprint lang-java"><span class="hljs-comment"># windows</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             &gt; python -m venv .venv
- &gt; .venv\Scripts\activate
-
- <span class="hljs-comment"># linux</span>
- $ python -m venv .venv
- $ source .venv/bin/activate
-
- python -m pip <span class="hljs-keyword">install</span> grpcio
-python -m pip <span class="hljs-keyword">install</span> grpcio-tools-->
 
 </pre>
       <h2 id="java-vs-python-grpc">Java vs Python gRPC</h2>
       <ol>
          <li>
             Começe por fazer <strong>Clone</strong> ou <strong>Download</strong> do código fonte do <a
-               href="https://github.com/tecnico-distsys/example_grpc_multilanguage">grpc_example_multilanguage</a>.      
+               href="https://github.com/tecnico-distsys/example_grpc_multilanguage">grpc_example_multilanguage</a>.
+               <li>Crie um ambiente virtual na diretoria base seguindo as instruções dadas na secção &quot;<i>Setup e instalação
+                     das
+                     packages</i>&quot;.</li>
+               <li>Na diretoria <strong>contract</strong>, compile e execute os seguintes comandos:
+                  <ul>
+                     <li><code>mvn install</code></li>
+                     <li><code>mvn exec:exec</code></li>
+                     <li>Assegure-se que, na sua máquina, o interpretador Python é lançado pelo comando que está indicado na tag <a
+                           href="https://github.com/tecnico-distsys/example_grpc_multilanguage/blob/master/contract/pom.xml#L169">executable
+                           no pom</a>. Se não for, corrija o valor nessa tag e corra o último comando de novo.</li>
+                  </ul>
+               </li>
+               <li>Analise a diretoria <code>generated-sources/protobuf</code> e o código gerado nas diretorias <code>java</code> e
+                  <code>python</code>.
+               </li>
+               <li>Teste o servidor, executando na diretoria <strong>server</strong> o comando <code>mvn compile exec:java</code>.</li>
+               <li>Teste o cliente, executando na diretoria <strong>python_client</strong> o comando <code>python client.py</code>.
+               </li>
                <li>Analise as diferenças e as semelhanças entre os dois clientes <code>java</code> na pasta <strong>client</strong> e <code>python</code> na pasta <strong>python_code</strong>:</li>
                <ul>
                <li>
@@ -220,12 +228,13 @@ python -m pip <span class="hljs-keyword">install</span> grpcio-tools-->
                   <p>Vamos concretizar o <strong>client</strong>:</p>
                   <ol>
                      <li>
-                        <p>Adicione uma função ao cliente que pede o email a procurar e chamada o procedimento remoto <code>searchPerson</code>
+                        <p>Adicione e implemente uma função no cliente que pede o email a procurar e chamada o procedimento remoto
+                           <code>searchPerson:</code>
                         </p>
                         <pre class="prettyprint lang-java">   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PyhtonClient</span><span class="hljs-params">(object)</span>:</span>
    ...
    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search_person</span><span class="hljs-params">(self)</span>:</span>
-      <span class="hljs-comment"># TODO: implement search person feature</span>
+      print(<span class="hljs-string">"TODO: searchPerson to be implemented"</span>)
    ...
 </pre>
                      </li>

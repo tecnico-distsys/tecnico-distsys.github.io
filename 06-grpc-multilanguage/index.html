@@ -144,7 +144,41 @@
                   </ul>
                </li>
             </ul>
-            </li>
+            <li>Termine agora o servidor <code>java</code> e teste o servidor <code>python</code> na pasta <strong>python_server</strong> correndo o comando <code>python HelloServer.py</code>. Corra ambos os clientes <code>java</code> e <code>python</code>.</li>
+            <li>Analise as diferencças e as semelhanças entre os dois servidores <code>java</code> na pasta <strong>server</strong> e <code>python</code> na pasta <strong>python_server</strong>:</li>
+            <ul>
+               <li>
+                  <p>Adição do serviço ao servidor:</p>
+                  <ul>
+                     <li>
+                        Java:
+                        <pre class="prettyprint lang-java">  Server server = ServerBuilder.forPort(port).addService(impl).build();<span class="hljs-comment">;</span>
+</pre>
+                     </li>
+                     <li>
+                        Python:
+                        <pre class="prettyprint lang-java">  pb2_grpc.add_HelloWorldServiceServicer_to_server(HelloWorldServiceImpl(), server)
+</pre>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <p>Acesso aos campos dos pedidos:</p>
+                  <ul>
+                     <li>
+                        Java:
+                        <pre class="prettyprint lang-java">  List<String> hobbies = request.getHobbiesList();
+</pre>
+                     </li>
+                     <li>
+                        Python:
+                        <pre class="prettyprint lang-java">  hobbies = request.hobbies
+</pre>
+                     </li>
+                  </ul>
+               </li>
+            </ul>   
+         </li>
       </ol>
       <h2 id="exerc-cio">Exercício</h2>
       <ul>

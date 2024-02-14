@@ -20,7 +20,7 @@
          <h2>Objetivos</h2>
          <ul>
             <li>Desenvolvimento de aplicações distribuídas com gRPC com múltiplas linguagens de programação.</li>
-            <li>Em particular, desenvolvimento de uma aplicação em que o cliente é programado em Python e o servidor em Java.</li>
+            <li>Em particular, desenvolvimento de um servidor de nomes que permite publicar e pesquisar serviços gRPC no servidor de nomes</li>
          </ul>
       </div>
       <div class="indice"></div>
@@ -144,134 +144,124 @@
                   </ul>
                </li>
             </ul>
-            </li>
+            <li>Termine agora o servidor <code>java</code> e teste o servidor <code>python</code> na pasta <strong>python_server</strong> correndo o comando <code>python HelloServer.py</code>. Corra ambos os clientes <code>java</code> e <code>python</code>.</li>
+            <li>Analise as diferencças e as semelhanças entre os dois servidores <code>java</code> na pasta <strong>server</strong> e <code>python</code> na pasta <strong>python_server</strong>:</li>
+            <ul>
+               <li>
+                  <p>Adição do serviço ao servidor:</p>
+                  <ul>
+                     <li>
+                        Java:
+                        <pre class="prettyprint lang-java">  Server server = ServerBuilder.forPort(port).addService(impl).build();<span class="hljs-comment">;</span>
+</pre>
+                     </li>
+                     <li>
+                        Python:
+                        <pre class="prettyprint lang-java">  pb2_grpc.add_HelloWorldServiceServicer_to_server(HelloWorldServiceImpl(), server)
+</pre>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <p>Acesso aos campos dos pedidos:</p>
+                  <ul>
+                     <li>
+                        Java:
+                        <pre class="prettyprint lang-java">  List<String> hobbies = request.getHobbiesList();
+</pre>
+                     </li>
+                     <li>
+                        Python:
+                        <pre class="prettyprint lang-java">  hobbies = request.hobbies
+</pre>
+                     </li>
+                  </ul>
+               </li>
+            </ul>   
+         </li>
       </ol>
       <h2 id="exerc-cio">Exercício</h2>
-      <ul>
-         <li>O objetivo deste exercício é estender o comportamento de <a
-               href="https://github.com/tecnico-distsys/example_grpc_addressbook">uma aplicação base</a> de modo a permitir que o cliente possa
-            procurar contactos. Para tal, pretende-se acrescentar a essa aplicação a seguinte operação remota:
+      <p>Neste exercício iremos um servidor de nomes usando a tecnologia gRPC. 
+         Este servidor permitirá que processos servidores registem o serviço remoto que oferecem.</br>
+         Isso permitirá que os processos cliente possam descobrir, quais os endereços (nome DNS, porto) dos servidores que atualmente oferecem um dado serviço.
+         Pode haver mais que um servidor a oferecer o mesmo serviço remoto (por exemplo, num serviço replicado), sendo que cada servidor pode ser 
+         distinguido por um qualificador (por exemplo, "primário" e "secundário").</p>
+      <p>Este exercício assume como ponto de partida o código do projeto já desenvolvido até ao momento por cada grupo.</p>
+<h3 id="implementação-da-operação-de-registo">Implementação da operação de registo</h3>
+<ol type="1">
+<li>Implemente a operação <code>register</code>, que permite a um servidor inserir uma entrada no servidor de nomes.<br />
+<ul>
+    <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado. </li>
+    <li>Esta chamada remota recebe como
+        parâmetros:</li>
+    <ul>
+        <li>um nome do serviço oferecido pelo servidor (uma string);</li>
+	<li>um qualificador associado ao servidor a registar (uma string);</li>
+        <li>o endereço do servidor, na forma <code>host:port</code> (uma string);</li>
+        </ul>
+    <li>E deve retornar: </li>
+    <ul>
+        <li>uma mensagem de resposta vazia quando for possível registar o servidor;</li>
+        <li>uma exceção com a descrição <code>Not possible to register the server</code> quando não for possível registar o serviço;</li>
+    </ul>
+    <li>Configure o código base para ter o servidor de nomes a aguardar ligações no porto definido no enunciado do projeto (neste caso, <code>5001</code>).
+    </li>
+    <li>Crie a classe <code>ServerEntry</code> que irá conter a informação para cada servidor, nomeadamente, a combinação
+        <code>host:port</code> e o qualificador.
+    </li>
+    <li>Crie a classe <code>ServiceEntry</code> que irá guardar o nome de um serviço e um conjunto de
+        <code>ServerEntry</code>s.
+    </li>
+    <li>Crie a classe <code>NamingServer</code> que irá guardar toda a informação que o servidor necessita, ou seja,
+        contém um
+        mapa que permite associar um nome de um serviço à <code>ServiceEntry</code> correspondente.</li>
+    <li>Crie o serviço que <code>NamingServerServiceImpl</code> que estende a classe gerada pelo protobuf e implemente a
+        operação <code>register</code>.</li>
+    </li>
+    </ul>
+
+</ol>
+<h3 id="implementação-da-operação-de-procura-de-servidores">Implementação da operação de procura de servidores</h3>
+<ol start="2" type="1">
+<li>Implemente a operação <code>lookup</code>, que permite a um cliente encontrar servidores, relativos a um serviço.
+    <ul>
+        <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado.</li>
+        <li>Este procedimento remoto recebe como parâmetros:
             <ul>
-               <li><code>searchPerson</code> - recebe uma <code>string</code> que corresponde ao email de uma pessoa numa lista de contactos. Retorna a
-                  informação que o servidor tem desse contacto, ou erro caso não tenha a informação do contacto indicado.
-               </li>
-            </ul>
-         </li>
-      </ul>
-      <ol>
-         <li>Faça <strong>Clone</strong> ou <strong>Download</strong> do código fonte <a
-               href="https://github.com/tecnico-distsys/example_grpc_addressbook">example grpc addressbook</a>. O código base
-            fornecido contém um servidor que mantém uma lista de contactos e permite ao cliente adicionar e
-            listar
-            contactos.</li>
-         <li>Comece por criar um ambiente virtual na diretoria base seguindo as instruções da secção &quot;<i>Setup e instalação
-               das
-               packages</i>&quot;.</li>
-         <li>Defina, implemente e experimente o procedimento remoto <code>searchPerson</code>:
+                <li>o nome do serviço a que o cliente pretende aceder;</li>
+                <li>um qualificador que se pretende que os servidores retornados tenham associado.</li>
+                </ul>
+        <li>E deve retornar:
             <ul>
-               <li>
-                  Existem três módulos: contract, server e client. Vamos começar na diretoria <strong>contract</strong>:
-                  <ol>
-                     <li>Aceda ao ficheiro .proto. Este ficheiro define as estruturas de dados e os procedimentos remotos.</li>
-                     <li>
-                        Cada procedimento necessita de uma mensagem de pedido e de uma mensagem de resposta:
-                        <ul>
-                           <li>Analise a mensagem do pedido <code>SearchPersonRequest</code>, que contém uma string que corresponde ao email do
-                              contacto a
-                              pesquisar.</li>
-                           <li>Defina o procedimento rpc com o nome <code>searchPerson</code>, que recebe <code>SearchPersonRequest</code> e
-                              devolve
-                              <code>PersonInfo</code>.
-                           </li>
-                        </ul>
-                     </li>
-                     <li>
-                        Vamos gerar código Java a partir dos protocol buffers. O Maven está configurado com plugins para chamar a ferramenta
-                        protoc (protocol buffers compiler):
-                        <ul>
-                           <li>Execute o comando <code>mvn install</code> </li>
-                           <li>Se tudo correr bem, as definições protobuf foram convertidas para classes Java, que foram compiladas e instaladas no repositório local do Maven.</li>
-                        </ul>
-                     </li>
-                     <li>
-                        Vamos gerar código Python a partir dos protocol buffers:
-                        <ul>
-                           <li>Execute o comando <code>mvn exec:exec</code></li>
-                           <li>Caso tenha um alias diferente para o python, modifique o <a
-                                 href="https://github.com/tecnico-distsys/example_grpc_addressbook/blob/main/contract/pom.xml#L85">executable do
-                                 pom</a> para o seu alias e corra o comando de novo.</li>
-                           <li>Verifique e analise os ficheiros gerados na diretoria
-                              <code>generated-sources/protobuf/python</code>.
-                           </li>
-                        </ul>
-                     </li>
-                  </ol>
-               </li>
-               <li>
-                  Vamos agora concretizar o <strong>server</strong>:
-                  <ol>
-                     <li>
-                        Com base nas classes geradas pelo protoc e, por analogia com outros exemplos de servidores gRPC já vistos nas aulas de
-                        laboratório anteriores,
-                        ao ficheiro <code>AddressBookServiceImpl</code> adicione o método de implementação do <code>searchPerson</code>:
-                        <pre class="prettyprint lang-java">   <span class="hljs-meta">@Override</span>
-   <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">searchPerson</span><span class="hljs-params">(SearchPersonRequest request, StreamObserver&lt;PersonInfo&gt; responseObserver)</span> </span>{
-      //TODO: implement the search person feature
-   }
-</pre>
-                     </li>
-                     <li>Para compilar e testar, execute na diretoria <strong>server</strong> o comando <code>mvn compile exec:java</code>
-                     </li>
-                     </ol>
-               </li>
-               <li>
-                  <p>Vamos concretizar o <strong>client</strong>:</p>
-                  <ol>
-                     <li>
-                        <p>Adicione e implemente uma função no cliente que pede o email a procurar e chamada o procedimento remoto
-                           <code>searchPerson:</code>
-                        </p>
-                        <pre class="prettyprint lang-java">   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PyhtonClient</span><span class="hljs-params">(object)</span>:</span>
-      ...
-      <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search_person</span><span class="hljs-params">(self)</span>:</span>
-         print(<span class="hljs-string">"TODO: searchPerson to be implemented"</span>)
-      ...
-</pre>
-                     </li>
-                     <li>Para testar, execute na diretoria <strong>client</strong> o comando <code>python client.py</code></li>
-                     </ol>
-               </li>
+                <li>uma lista de servidores para o qualificador e serviço pedidos;</li>
+                <li>uma lista com todos os servidores do serviço caso não seja dado qualquer qualificador;</li>
+                <li>uma lista vazia caso o qualificador e/ou o serviço não existam.</li>
             </ul>
-         </li>
-      </ol>
-      
-      <h2 id="compila-o-do-proto">Sobre a compilação do proto para Python  </h2>
-      <ul>
-         <li>O comando descrito abaixo gera 2 ficheiros .py na &lt;diretoria-output&gt; indicada: o &lt;nome-do-proto&gt;_pb2.py
-            e o
-            &lt;nome-do-proto&gt;_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de
-            suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven
-            Plugin.</li>
-            <pre class="prettyprint lang-java">python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;</pre>
-         
-      </ul>
-      
-     <div class="objectivos">    
-         <h2>Atenção que na próxima semana há mini exercício!</h2>
-    <p>
-            Na próxima aula laboratorial (consultar o calendário das aulas laboratoriais), ser-lhe-á entregue uma alínea adicional que 
-            estende a solução construída pelo guião acima.
-                É, pois, esperado que, nessa aula, cada estudante traga este guião inteiramente resolvido.</p>
-    </div>
-      <p>&nbsp;</p>
-      <hr />
-      <div class="rodape">
-         <p>
-            &copy; Docentes de Sistemas Distribuídos,
-            <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
-            <a href="http://www.ist.eu">Técnico Lisboa</a><br />
-         </p>
-      </div>
+        </li>
+        </li>
+        </ul>
+
+</ol>
+<h3 id="implementação-da-operação-de-remoção-de-servidores">Implementação da operação de remoção de servidores</h3>
+<ol start="3" type="1">
+<li>Implemente a operação <code>delete</code>, que permite a um servidor remover-se do registo de nomes.
+    <ul>
+        <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado, tal como foi feito anteriormente.
+        </li>
+        <li>Esta chamada recebe como parâmetros:
+            <ul>
+                <li>o nome do serviço;</li>
+                <li>o <code>host:port</code> do servidor.</li>
+            </ul>
+            </li>
+            <li>E deve retornar: </li>
+            <ul>
+                <li>uma mensagem de resposta vazia quando for possível remover o servidor;</li>
+                <li>uma exceção como a descrição <code>Not possible to remove the server</code> quando não for possível remover o servidor.</li>
+            </ul>
+            </ul>
+            </li>
+</ol>
    </body>
 </html>
 Footer

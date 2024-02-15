@@ -181,11 +181,26 @@
          </li>
       </ol>
       <h2 id="exerc-cio">Exercício</h2>
-      <p>Neste exercício iremos implementar um servidor de nomes usando a tecnologia gRPC. 
-         Este servidor permitirá que processos servidores registem o serviço remoto que oferecem, bem como permitirá que os processos cliente possam descobrir quais os endereços (nome DNS, porto) dos servidores que atualmente oferecem um dado serviço.
-         Pode haver mais que um servidor a oferecer o mesmo serviço remoto (por exemplo, num serviço replicado), sendo que cada servidor pode ser 
-         distinguido por um qualificador (por exemplo, "primário" e "secundário").</p>
-      <p>Este exercício assume como ponto de partida o código do projeto já desenvolvido até ao momento por cada grupo.</p>
+      <p>Neste exercício iremos implementar um servidor de nomes <b>em Python</b> que oferece esse serviço, usando a tecnologia gRPC, 
+         a outros processos programados em Java (ou outra linguagem). </p>
+         <p>O servidor de nomes permitirá que outros processos servidores registem o serviço remoto que oferecem, 
+         bem como que os processos cliente descubram quais os endereços (nome DNS, porto) dos servidores que atualmente oferecem um dado serviço.</p>
+         <p>Pode haver mais que um servidor a oferecer o mesmo serviço remoto (por exemplo, num serviço replicado), sendo que cada servidor pode ser 
+         distinguido por um qualificador (por exemplo, "A", "B" e "C", ou "primary" e "backup").</p>
+      
+         <p>Este exercício permite-lhe responder a um dos objetivos do projeto de SD. Por essa razão, 
+            propomos que use como ponto de partida o código do projeto já desenvolvido até ao momento pelo seu grupo.</p>
+
+            <h3 id="criar-servidor">Criação do esqueleto do servidor de nomes no seu projeto</h3>
+            <ol type="1">
+            <li>Crie uma nova diretoria <code>NameServer</code> na diretoria raíz do seu projeto. 
+               É lá que implementará o servidor de nomes, seguindo as instruções que apresentamos mais abaixo.</li>
+            <li>Crie um ficheiro <code>NameServer.proto</code> na sub-diretoria apropriada dentro de <code>Contract</code>, preenchendo já os elementos <code>syntax</code> e <code>package</code> apropriadamente.
+            Este ficheiro também será completado mais adiante.</li>
+            <li>Ajuste o <code>pom.xml</code> da diretoria <code>Contract</code> para que sejam também criados stubs Python para este 
+               novo <code>.proto</code>. Sugestão: copie e adapte do <code>pom.xml</code> da diretoria <code>Contract</code> do exemplo que fornecemos acima.</li>
+            </ol>
+
 <h3 id="implementação-da-operação-de-registo">Implementação da operação de registo</h3>
 <ol type="1">
 <li>Implemente a operação <code>register</code>, que permite a um servidor inserir uma entrada no servidor de nomes.<br />
@@ -218,29 +233,31 @@
         operação <code>register</code>.</li>
     </li>
     </ul>
+    </ol>
 
 </ol>
 <h3 id="implementação-da-operação-de-procura-de-servidores">Implementação da operação de procura de servidores</h3>
 <ol start="2" type="1">
 <li>Implemente a operação <code>lookup</code>, que permite a um cliente encontrar servidores, relativos a um serviço.
-    <ul>
+   <ul>
         <li>Comece por definir esta operação no ficheiro <code>.proto</code> adequado.</li>
         <li>Este procedimento remoto recebe como parâmetros:
             <ul>
                 <li>o nome do serviço a que o cliente pretende aceder;</li>
                 <li>um qualificador que se pretende que os servidores retornados tenham associado.</li>
                 </ul>
-        <li>E deve retornar:
+         </li>
+         <li>E deve retornar:
             <ul>
                 <li>uma lista de servidores para o qualificador e serviço pedidos;</li>
                 <li>uma lista com todos os servidores do serviço caso não seja dado qualquer qualificador;</li>
                 <li>uma lista vazia caso o qualificador e/ou o serviço não existam.</li>
             </ul>
-        </li>
-        </li>
-        </ul>
-
+         </li>
+   </ul>
+</li>
 </ol>
+
 <h3 id="implementação-da-operação-de-remoção-de-servidores">Implementação da operação de remoção de servidores</h3>
 <ol start="3" type="1">
 <li>Implemente a operação <code>delete</code>, que permite a um servidor remover-se do registo de nomes.
@@ -261,9 +278,12 @@
             </ul>
             </li>
 </ol>
+
+<h3 id="clientes">Utilização do servidor de nomes pelos cliente e servidor do projeto</h3>
+<ol start="3" type="1">
+<li>Finalmente, adapte o código dos programas cliente e servidor do seu projeto para usarem 
+   os serviços implementados acima pelo servidor de nomes.</li>
+
+
    </body>
 </html>
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms

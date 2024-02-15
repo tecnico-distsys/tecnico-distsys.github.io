@@ -52,12 +52,18 @@ Se apenas existir leitura de dados partilhados por parte das tarefas concorrente
 
 <p>&nbsp;</p>
 <h3>Sincronização em Java</h3>
+
+<p>De seguida resumimos as principais primitivas de sincronização disponíveis em Java. 
+    <br/>Para saber mais sobre este tema, 
+    <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html">recomendamos que consulte este tutorial</a>.</p>
 <p>
-Cada objeto Java tem um <b>trinco lógico</b> (<i>mutex</i>) próprio, que pode ser (implicitamente) adquirido através da primitiva <tt>synchronized</tt>.
+Cada objeto Java tem um <b>trinco lógico</b> (<i>mutex</i>) implícito, que pode ser (implicitamente) adquirido através da primitiva <tt>synchronized</tt>.
 </p>
 <p>
-A primitiva <tt>synchronized</tt> é aplicada a métodos do objeto e oferece um mecanismo de exclusão mútua a um recurso partilhado, que previne a reordenação da execução do código.<br />
-Um método sincronizado adquire o trinco do objeto no início de execução e liberta-o no fim.
+<a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html">A primitiva <tt>synchronized</tt> pode ser aplicada a métodos da classe de um objeto.</a>
+Ao fazermos isso, qualquer chamada a um método de uma instância dessa classe é executada em exclusão mútua (em relação a outras chamadas 
+concorrentes a outros métodos <tt>synchronized</tt> da mesma instância).<br />
+Um método sincronizado adquire o trinco implícito do objeto no início de execução e liberta-o no fim.
 </p>
 <p>
 O seguinte exemplo mostra uma utilização da sincronização em Java:
@@ -97,8 +103,10 @@ Também é possível usar o <tt>synchronized</tt> para adquirir o trinco apenas 
 </pre>
 
 <p>
-No contexto de uma região <tt>synchronized</tt>, é também possível utilizar variáveis de condição, usando as primitivas <tt>wait</tt>, <tt>notify</tt> e <tt>notifyAll</tt>.
+No contexto de uma região <tt>synchronized</tt>, 
+é também possível <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/guardmeth.html">utilizar variáveis de condição, usando as primitivas <tt>wait</tt>, <tt>notify</tt> e <tt>notifyAll</tt></a>.
 </p>
+
 
 
 <p>&nbsp;</p>
@@ -140,7 +148,8 @@ Para construir uma coleção sincronizada usa-se um método especial da classe <
 </pre>
 
 <p>
-Posteriormente, foram acrescentadas ao Java coleções concorrentes (<i>Concurrent Collections</i> no pacote <tt>java.util.concurrent</tt>) que utilizam estruturas de dados sofisticadas, desenhadas de raiz para garantir a consistência da coleção mesmo quando esta é acedida concorrentemente por muitas tarefas.
+Posteriormente, foram acrescentadas ao Java <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/collections.html">coleções concorrentes</a> (<i>Concurrent Collections</i> no pacote <tt>java.util.concurrent</tt>), 
+que utilizam estruturas de dados sofisticadas, desenhadas de raiz para garantir a consistência da coleção mesmo quando esta é acedida concorrentemente por muitas tarefas.
 Exemplos destas coleções concorrentes são: <tt>ConcurrentHashMap</tt>, <tt>CopyOnWriteArrayList</tt>, e <tt>CopyOnWriteHashSet</tt>.<br />
 No exemplo seguinte constroi-se um mapa optimizado para acessos concorrentes:
 </p>
@@ -150,13 +159,6 @@ No exemplo seguinte constroi-se um mapa optimizado para acessos concorrentes:
 
 
 </pre>
-
-<!--
-Existem 3 tipos de coleções em Java:
-<p>- Java 1.0: Evitar usar num contexto multi-threaded</p>
-<p>- Java 1.2: Permite as classes serem sincronizáveis através do método Collections.synchronizedX()</p>
-<p>- Java >5.0: suporte para coleções concorrentes</p>
--->
 
 <p>&nbsp;</p>
 <hr/>

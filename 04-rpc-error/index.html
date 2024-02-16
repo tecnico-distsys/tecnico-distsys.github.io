@@ -6,7 +6,7 @@
     <link href="../_css/labs-sd.css" rel="stylesheet" type="text/css"/>
     <link href="../_prettify/prettify.css" rel="stylesheet" type="text/css"/>
     <script src="../_prettify/prettify.js" type="text/javascript"></script>
-    <title>Tratamento de erros com gRPC e testes de integração com JUnit</title>
+    <title>Tratamento de erros com gRPC e métodos remotos bloqueantes</title>
 
     <style type="text/css">
         body {
@@ -25,42 +25,25 @@
     <p><a href="../index.html">Labs SD</a> &gt;</p>
 </div>
 <div class="titulo" id="1">
-    <h1>Tratamento de erros com gRPC e testes de integração com JUnit</h1>
+    <h1>Tratamento de erros com gRPC e métodos remotos bloqueantes</h1>
 </div>
 <div class="objectivos">
     <h2>Objetivos da semana</h2>
     <ul>
         <li>Aprender a enviar e receber erros com gRPC</li>
-        <li>Aprender a fazer testes de integração utilizando JUnit</li>
+        <li>Aprender a implementar métodos remotos bloqueantes</li>
     </ul>
 </div>
 <div class="corpo" style="padding-right: 2em">
 
-<h2 id="conteudos">Materiais de apoio à aula</h2>
+<h2 id="conteudos">Comece por ler os materiais de apoio à aula</h2>
 <ul>
     <li>
         <a href="grpc-error/index.html">Tratamento de erros com gRPC</a>
-    </li>
-    <li>
-        <a href="junit-it/index.html">Testes de integração com JUnit</a>
+        <a href="../02-tools-sockets/java-synch/index.html">Concorrência e Sincronização em Java</a>
     </li>
 </ul>
 
-<p class="exemplos">
-    Exemplos:
-</p>
-<ul>
-    <li><a href="https://github.com/tecnico-distsys/example_junit" target="_blank">JUnit <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
-    <ul>
-        <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
-    </ul>
-    </li>
-    <li><a href="https://github.com/tecnico-distsys/example_error-test-grpc" target="_blank"><i>gRPC example with errors and tests</i> <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
-    <ul>
-        <li>Para experimentar o código: fazer <b><i>Clone or Download</b></i> e depois seguir as instruções do <b><tt>README</tt></b></li>
-    </ul>
-    </li>
-</ul>
 
 
 <p>
@@ -134,17 +117,33 @@ catch (StatusRuntimeException e) {
             </li>
         </ol>
     </li>
-    <h3> Testes JUnit </h3>
-    <p>
-     Vamos agora estender o seu Jogo do Galo com alguns testes JUnit.</p> 
+    </p>
+
+    <p><h3>
+        Implementar um método bloqueante</h3></p>
     
-    <ol type="1">
-            <li>Comece por estudar os nossos materiais sobre <a href="https://tecnico-distsys.github.io/04-rpc-error-test/junit-it/index.html" target="_blank">testes de integração com JUnit <img src="../_img/github.png" alt="GitHub" height="16"></a></li>
-            <li>Pode também consultar e experimentar <a href="https://github.com/tecnico-distsys/example_junit" alt="GitHub" height="16">este exemplo simples do uso de JUnit</a>.</li>
-            <li>Agora experimente criar alguns testes unitários simples ao seu projeto do Jogo do Galo!</li>
-    </ol>
     
-</p>
+    <p>Vamos agora adicionar uma variante bloqueante da operação <tt>checkWinner</tt>.</p>
+    
+            <p><ol type="1">
+                    <li>No ficheiro <tt>.proto</tt>, acrescente uma nova operação chamada <tt>waitForWinner</tt>, 
+                        cujas mensagens de pedido e respostas são idênticas às da operação <tt>checkWinner</tt>. 
+                    A grande diferença é que a <tt>waitForWinner</tt> deve bloquear-se enquanto o jogo não tiver terminado.</li>
+                    <li>Depois de gerar os novos <i>stubs</i>, acrescente o novo método à classe do servidor.</li>
+                    <li><a href="../02-tools-sockets/java-synch/index.html">Relembre as primitivas para programação concorrente em Java</a></li>
+                    <li>No novo método, use a primitiva <tt>wait()</tt> para, enquanto o jogo não tenha ainda terminado, 
+                    a <i>thread</i> que executa esse método se bloquear. Lembre-se que, para chamar <tt>wait()</tt>,
+                precisa estar dentro de um método (ou bloco) <tt>synchronized</tt>.</li>
+                    <li>Precisa também chamar <tt>notifyAll()</tt> sempre que o estado
+                    do jogo muda com uma nova jogada.</li>
+                    <li>Finalmente, estenda o cliente para também invocar esta nova operação.</li>
+                    <li>Experimente! Lance um cliente que fará as jogadas. Em paralelo, lance outro cliente
+                        que simplesmente invoca <tt>waitForWinner</tt>.
+                    </li>
+                </ol>
+            </p>
+    
+    
      <div class="objectivos">    
          <h2>Atenção que na próxima semana há mini exercício!</h2>
     <p>

@@ -193,12 +193,12 @@
 
             <h3 id="criar-servidor">Criação do esqueleto do servidor de nomes no seu projeto</h3>
             <ol type="1">
-            <li>Crie uma nova diretoria <code>NameServer</code> na diretoria raíz do seu projeto. 
-               É lá que implementará o servidor de nomes, seguindo as instruções que apresentamos mais abaixo.</li>
+            <li>No código base do projeto encontra uma diretoria <code>NameServer</code>, que já tem um primeiro esqueleto do código desse servidor. 
+               Seguindo as instruções que apresentamos mais abaixo, irá preencher esse esqueleto.</li>
             <li>Crie um ficheiro <code>NameServer.proto</code> na sub-diretoria apropriada dentro de <code>Contract</code>, preenchendo já os elementos <code>syntax</code> e <code>package</code> apropriadamente.
             Este ficheiro também será completado mais adiante.</li>
-            <li>Ajuste o <code>pom.xml</code> da diretoria <code>Contract</code> para que sejam também criados stubs Python para este 
-               novo <code>.proto</code>. Sugestão: copie e adapte do <code>pom.xml</code> da diretoria <code>Contract</code> do exemplo que fornecemos acima.</li>
+            <li>Confirme se o <code>pom.xml</code> na diretoria <code>Contract</code> já está pronto para 
+            gerar <i>stubs</i> a partir desse novo <code>.proto</code>, tanto em Java como em Python.</li>
             </ol>
 
 <h3 id="implementação-da-operação-de-registo">Implementação da operação de registo</h3>

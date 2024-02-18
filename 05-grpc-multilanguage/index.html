@@ -180,6 +180,15 @@
             </ul>   
          </li>
       </ol>
+   <h2 id="compila-o-do-proto">Sobre a compilação do proto para Python  </h2>
+      <ul>
+         <li>O comando descrito abaixo gera 2 ficheiros .py na &lt;diretoria-output&gt; indicada: o &lt;nome-do-proto&gt;_pb2.py
+            e o
+            &lt;nome-do-proto&gt;_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de
+            suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven
+            Plugin.</li>
+            <pre class="prettyprint lang-java">python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;</pre>
+      </ul>
       <h2 id="exerc-cio">Exercício</h2>
       <p>Neste exercício iremos implementar um servidor de nomes <b>em Python</b> que oferece esse serviço, usando a tecnologia gRPC, 
          a outros processos programados em Java (ou outra linguagem). </p>
@@ -283,7 +292,15 @@
 <ol start="3" type="1">
 <li>Finalmente, adapte o código dos programas cliente e servidor do seu projeto para usarem 
    os serviços implementados acima pelo servidor de nomes.</li>
+</ol>
+<hr />
+<div class="rodape">
+      <p>
+         &copy; Docentes de Sistemas Distribuídos,
+         <a href="http://www.dei.tecnico.ulisboa.pt/">Dep. Eng. Informática</a>,
+         <a href="http://www.ist.eu">Técnico Lisboa</a><br />
+      </p>
+</div>
 
-
-   </body>
+</body>
 </html>

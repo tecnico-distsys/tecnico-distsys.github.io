@@ -116,7 +116,7 @@ public class HelloObserver<R> implements StreamObserver<R> {
 
 <ol>
     <li>Lançe 2 processos servidores, um no porto 8080 e outro no porto 8081. Para o segundo, pode fazer 
-        <tt>mvn exec:exec -Dexec.args="8081"</tt> (e assim substitui o argumento que está definido no <tt>pom.xml</tt>).</li>
+        <tt>mvn exec:java -Dexec.args="8081"</tt> (e assim substitui o argumento que está definido no <tt>pom.xml</tt>).</li>
     <li>Estenda o cliente para passar a ter dois <i>stubs</i> não bloqueantes, cada um ligado a um dos dois servidores.</li>
     <li>Agora que tem 2 <i>stubs</i>, chame o método remoto <tt>greeting</tt> a ambos. Ao primeiro passe "Alice", ao segundo passe "Bob".</li>
     <li>Experimente executar este novo cliente e confirme que ambas as respostas são impressas assincronamente.</li>

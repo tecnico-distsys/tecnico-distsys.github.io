@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Laboratórios de Sistemas Distribuídos (edição 2025) - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+        <title>gRPC: chamadas assíncronas - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
 
 
         <!-- Custom HTML head -->
@@ -152,47 +152,107 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="laboratórios-de-sistemas-distribuídos"><a class="header" href="#laboratórios-de-sistemas-distribuídos">Laboratórios de Sistemas Distribuídos</a></h1>
-<p>Bem-vinda/o ao site dos materiais laboratoriais da disciplina de Sistemas Distribuídos da
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis36/2024-2025/2-semestre">LEIC-T/LETI</a>
-e
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis236/2024-2025/2-semestre">LEIC-A</a>
-do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tecnico.ulisboa.pt/">Instituto Superior Técnico</a></p>
-<h2 id="antes-das-aulas-arrancarem"><a class="header" href="#antes-das-aulas-arrancarem">Antes das aulas arrancarem</a></h2>
-<p>Começar por <a href="./00-software.html">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
-<h2 id="calendário-de-aulas-de-laboratório"><a class="header" href="#calendário-de-aulas-de-laboratório">Calendário de aulas de laboratório</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr></thead><tbody>
-<tr><td>fev</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td><a href="./01-ferramentas.html">Apresentação e instalação de software</a></td><td><a href="./02-java-avancado.html">Ferramentas: Java, Maven, Java IDE; Sockets</a></td></tr>
-<tr><td>fev</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td></tr>
-<tr><td>mar</td><td>3</td><td>4</td><td>5</td><td>6</td><td>P1</td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td><td>Apoio ao projeto, <strong>Entrega 1</strong></td></tr>
-<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: chamadas assíncronas</a></td><td>Apoio ao projeto</td></tr>
-<tr><td>mar</td><td>17</td><td>18</td><td>19</td><td>20</td><td>P2</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 2</strong></td></tr>
-<tr><td>mar</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
-<tr><td>mar/abr</td><td>31</td><td>1</td><td>2</td><td>3</td><td>P3</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 3</strong></td></tr>
-</tbody></table>
-</div>
-<h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
-<p>Recursos do projeto:</p>
+                        <h1 id="grpc-chamadas-assíncronas"><a class="header" href="#grpc-chamadas-assíncronas">gRPC: chamadas assíncronas</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+<li>Fazer chamadas remotas assíncronas usando <em>stubs</em> não bloqueantes em gRPC</li>
 </ul>
-<p>Datas das entregas (via fenix):</p>
+<hr />
+<h2 id="operações-assíncronas"><a class="header" href="#operações-assíncronas">Operações assíncronas</a></h2>
+<p>Até agora vimos exemplos de chamadas remotas síncronas, usando um <em>stub</em> bloqueante: o cliente faz um pedido ao servidor e fica bloqueado à espera da resposta. Caso o cliente não pretenda ficar bloqueado à espera da resposta do servidor, é possível fazê-lo através de uma <strong>chamada assíncrona</strong>. Neste caso o cliente faz o pedido, continua a executar, e vai receber a resposta mais tarde.</p>
+<p>A forma de fazer chamadas assíncronas é através de um <em>stub</em> diferente, não-bloqueante, no cliente.
+Não é preciso alterar o servidor.</p>
+<h3 id="chamada-remota-assíncrona-em-stub-não-bloqueante"><a class="header" href="#chamada-remota-assíncrona-em-stub-não-bloqueante">Chamada remota assíncrona em <em>stub</em> não bloqueante</a></h3>
+<p>Para fazer este tipo de chamada, é passado, como argumento na chamada do cliente, um objeto de <em>callback</em> do tipo StreamObserver. Quando chega uma resposta, um método do objeto de <em>callback</em> (que foi passado ao <em>stub</em> quando a operação remota foi invocada) será executado.</p>
+<p>O excerto seguinte ilustra a criação e invocação de um <em>stub</em> não bloqueante</p>
+<pre><code class="language-java">final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
+
+// Criamos um *stub* não bloqueante
+HelloWorldServiceGrpc.HelloWorldService*stub* *stub* = HelloWorldServiceGrpc.new*stub*(channel);
+
+[...]
+
+// Fazemos a chamada (assíncrona), passando um objeto de *callback* (HelloObserver implementa StreamObserver)
+*stub*.greeting(request, new HelloObserver());
+
+//O programa continua a sua execução, mesmo antes de chegar alguma resposta ao pedido acima!
+
+[...]
+</code></pre>
+<p>O objeto de tipo <code>StreamObserver</code> precisa implementar três métodos: <code>onNext</code> (executado quando chega uma resposta normal), <code>onError</code> (resposta de erro) e, finalmente, <code>onCompleted</code> (fim).</p>
+<pre><code class="language-java">public class HelloObserver implements StreamObserver {
+    @Override
+    public void onNext(R r) {
+        //Aqui deve estar o código a executar no caso de resposta normal
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        //Aqui deve estar o código a executar no caso de resposta de erro
+    }
+
+    @Override
+    public void onCompleted() {
+        //Aqui deve estar o código a executar no caso do final das respostas
+    }
+}
+</code></pre>
+<h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
 <ul>
-<li>1ª entrega: 7 março</li>
-<li>2ª entrega: 21 março</li>
-<li>3ª entrega: 4 abril</li>
+<li>Analise o código do cliente neste <a href="https://github.com/tecnico-distsys/example_grpc/tree/async">exemplo do uso de gRPC com chamadas assíncronas</a>.</li>
+<li>Experimente correr este projeto e confira o que acontece.</li>
+<li>Compare esse cliente com <a href="https://github.com/tecnico-distsys/example_grpc/compare/main...async">o cliente do exemplo base, que fazia chamadas síncronas através de <em>stub</em> bloqueante</a>.</li>
 </ul>
-<p>Hora limite para todas as entregas: 23:59.</p>
+<h3 id="vamos-tornar-este-projeto-mais-interessante"><a class="header" href="#vamos-tornar-este-projeto-mais-interessante">Vamos tornar este projeto mais interessante</a></h3>
+<ul>
+<li>Lance 2 processos servidores, um no porto 8080 e outro no porto 8081. Para o segundo, pode fazer <code>mvn exec:java -Dexec.args="8081"</code> (e assim substitui o argumento que está definido no <code>pom.xml</code>).</li>
+<li>Estenda o cliente para passar a ter dois <em>stubs</em> não bloqueantes, cada um ligado a um dos dois servidores.</li>
+<li>Agora que tem 2 <em>stubs</em>, chame o método remoto <code>greeting</code> a ambos. Ao primeiro passe "Alice", ao segundo passe "Bob".</li>
+<li>Experimente executar este novo cliente e confirme que ambas as respostas são impressas assincronamente.</li>
+<li>No servidor, na classe <code>HelloWorldServiceImpl.java</code>, acrescente um atraso pseudo-aleatório no método greeting antes deste retornar a resposta. Sugestão: use <code>Thread.sleep()</code>, passando um número pseudo-aleatório entre 0 e 5000 (milisegundos).</li>
+<li>Experimente de novo lançar os dois servidores e, finalmente, o cliente. Agora deverá observar as respostas a serem impressas em ordens que podem variar de cada vez que executa o cliente.</li>
+</ul>
+<h3 id="ainda-mais-interessante"><a class="header" href="#ainda-mais-interessante">Ainda mais interessante...</a></h3>
+<ul>
+<li>Agora queremos que o cliente, depois de enviar os pedidos a ambos os servidores, se bloqueie até ambas as respostas chegarem. Só nesse momento, é que ele deve imprimir ambas as respostas.</li>
+<li>Isto é possível fazer com <em>stub</em> bloqueante? Veja a resposta no fundo desta página [1]. De qualquer forma, cumprir este objetivo mantendo a solução que compôs até aqui, com <em>stubs</em> não bloqueantes.</li>
+<li><strong>Primeiro objetivo</strong>: acumular as respostas num objeto comum, referenciado pelos objetos de <em>callback</em>.
+<ul>
+<li>Crie uma classe que é capaz de guardar as múltiplas respostas. Pode, por exemplo, chamá-la ResponseCollector.</li>
+<li>Crie uma instância de ResponseCollector e faça com que ambos os objetos de <em>callback</em> passem a manter uma referência a ela (por exemplo, passada pelo método construtor de <code>HelloObserver</code>).</li>
+<li>Altere o método onNext de HelloObserver para, em vez de imprimir a resposta, a adicionar ao objeto <code>ResponseCollector</code>.</li>
+</ul>
+</li>
+<li><strong>Segundo objetivo</strong>: bloquear o cliente até todas as respostas terem sido adicionadas ao objeto ResponseCollector.
+<ul>
+<li>Acrescente um método <code>waitUntilAllReceived</code> na classe <code>ResponseCollector</code>.</li>
+<li>Este método deve bloquear até que o número de respostas acumuladas nesse objeto seja 2. Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a> e implemente a lógica bloqueante pretendida.</li>
+<li>No método <code>Main</code> do cliente, após as duas chamadas assíncronas, chame o método <code>waitUntilAllReceived</code> e, quando este retornar, imprima as respostas guardadas no objeto ResponseCollector.</li>
+<li>Experimente e confirme que a sua solução cumpre o pretendido!</li>
+</ul>
+</li>
+</ul>
+<h3 id="e-ainda-mais-uma-variante"><a class="header" href="#e-ainda-mais-uma-variante">E ainda mais uma variante.</a></h3>
+<ul>
+<li>Adapte a solução que compôs, mas agora para que o cliente só se bloqueie até chegar a primeira resposta (que chegará do servidor que responder mais cedo).</li>
+</ul>
+<h2 id="já-resolveram"><a class="header" href="#já-resolveram">Já resolveram?</a></h2>
+<p>Podem conferir a <a href="https://github.com/tecnico-distsys/example_grpc/tree/async-solution">nossa proposta de resolução</a>.</p>
+<h2 id="aproveite-o-que-construiu-para-aplicar-no-seu-projeto"><a class="header" href="#aproveite-o-que-construiu-para-aplicar-no-seu-projeto">Aproveite o que construiu para aplicar no seu projeto</a></h2>
+<p>Uma vez bem percebidos os mecanismos de chamadas assíncronas e de sincronização, pode começar a desenhar os próximos passos do projeto.</p>
+<p>No seu projeto também tem operações que implicam enviar um pedido a múltiplos servidores e a esperar ou pelas respostas de todos, ou simplesmente pela resposta mais rápida. Quais operações correspondem a cada caso?</p>
+<p>Se já concluiu o exercício acima, pense como pode incorporar a mesma estratégia no seu projeto.</p>
+<hr />
+<p>[1] Sim, é possível se criarmos múltiplas threads, sendo que cada uma invoca um <em>stub</em> bloqueante. Mesmo que essas threads fiquem bloqueadas até receberem a sua resposta, a thread principal fica livre para continuar a sua execução. No entanto, esta via é tipicamente mais difícil de programar.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-
-                            <a rel="next prefetch" href="00-software.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="05-grpc-multilinguagem.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+
 
                         <div style="clear: both"></div>
                     </nav>
@@ -200,10 +260,10 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-
-                    <a rel="next prefetch" href="00-software.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="05-grpc-multilinguagem.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+
             </nav>
 
         </div>

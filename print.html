@@ -1,0 +1,1393 @@
+<!DOCTYPE HTML>
+<html lang="pt" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2025)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="laboratórios-de-sistemas-distribuídos"><a class="header" href="#laboratórios-de-sistemas-distribuídos">Laboratórios de Sistemas Distribuídos</a></h1>
+<p>Bem-vinda/o ao site dos materiais laboratoriais da disciplina de Sistemas Distribuídos da
+<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis36/2024-2025/2-semestre">LEIC-T/LETI</a>
+e
+<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis236/2024-2025/2-semestre">LEIC-A</a>
+do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tecnico.ulisboa.pt/">Instituto Superior Técnico</a></p>
+<h2 id="antes-das-aulas-arrancarem"><a class="header" href="#antes-das-aulas-arrancarem">Antes das aulas arrancarem</a></h2>
+<p>Começar por <a href="./00-software.html">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
+<h2 id="calendário-de-aulas-de-laboratório"><a class="header" href="#calendário-de-aulas-de-laboratório">Calendário de aulas de laboratório</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr></thead><tbody>
+<tr><td>fev</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td><a href="./01-ferramentas.html">Apresentação e instalação de software</a></td><td><a href="./02-java-avancado.html">Ferramentas: Java, Maven, Java IDE; Sockets</a></td></tr>
+<tr><td>fev</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td></tr>
+<tr><td>mar</td><td>3</td><td>4</td><td>5</td><td>6</td><td>P1</td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td><td>Apoio ao projeto, <strong>Entrega 1</strong></td></tr>
+<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: chamadas assíncronas</a></td><td>Apoio ao projeto</td></tr>
+<tr><td>mar</td><td>17</td><td>18</td><td>19</td><td>20</td><td>P2</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 2</strong></td></tr>
+<tr><td>mar</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
+<tr><td>mar/abr</td><td>31</td><td>1</td><td>2</td><td>3</td><td>P3</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 3</strong></td></tr>
+</tbody></table>
+</div>
+<h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
+<p>Recursos do projeto:</p>
+<ul>
+<li><a href="">Enunciado</a></li>
+<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+</ul>
+<p>Datas das entregas (via fenix):</p>
+<ul>
+<li>1ª entrega: 7 março</li>
+<li>2ª entrega: 21 março</li>
+<li>3ª entrega: 4 abril</li>
+</ul>
+<p>Hora limite para todas as entregas: 23:59.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="instalação-das-ferramentas-de-desenvolvimento"><a class="header" href="#instalação-das-ferramentas-de-desenvolvimento">Instalação das ferramentas de desenvolvimento</a></h1>
+<p>As ferramentas de desenvolvimento permitem realizar os exercícios das aulas e depois o projeto.
+Podem ser usadas nos computadores dos laboratórios, mas é também aconselhável instalar no seu computador pessoal.</p>
+<p>Todo o software listado abaixo está disponível em sistemas Windows, Linux e Mac.</p>
+<h3 id="antes-de-começar"><a class="header" href="#antes-de-começar">Antes de começar</a></h3>
+<p>Nos caminhos de ficheiros (<em>paths</em>) em Windows usa-se a barra para trás \ (<em>backslash</em>) como separador; nos caminhos Linux e Mac usa-se a barra para a frente / (<em>slash</em>).</p>
+<p>As instalações seguintes devem ser feitas numa pasta que <strong>não</strong> tenha espaços nem caracteres acentuados no nome, para evitar bugs existentes e ainda não resolvidos, sobretudo nas ferramentas Java em Windows.</p>
+<p>Nome de pasta raiz recomendada: <code>C:\Java</code></p>
+<p>Nomes de pastas a evitar: <code>C:\Program Files</code>, <code>C:\Users\João</code></p>
+<p>Uma alternativa à instalação manual é a utilização de gestores de pacotes (<em>package managers</em>) para a instalação e actualização automática de dependências, da maioria das ferramentas necessárias no vosso sistema operativo:</p>
+<ul>
+<li>Em sistemas Windows o <em>package manager</em> sugerido é o Chocolatey.</li>
+<li>Em sistemas MacOS o <em>package manager</em> sugerido é o Homebrew.</li>
+<li>Em sistemas Linux derivados do Debian, como o Ubuntu, o <em>package manager</em> é o APT (<em>Advanced Packaging Tool</em>).</li>
+</ul>
+<p>A maior parte das ferramentas necessita de configurar <strong>variáveis de ambiente</strong>.
+O procedimento para definir variáveis de ambiente depende do sistema operativo: <a href="http://superuser.com/questions/25037/change-environment-variables-as-standard-user-windows-7">Windows</a>, <a href="http://www.cyberciti.biz/faq/set-environment-variable-linux/">Linux</a> e <a href="http://www.mkyong.com/mac/how-to-set-environment-variables-on-mac-os-x/">Mac</a>.</p>
+<h3 id="software-a-instalar"><a class="header" href="#software-a-instalar">Software a instalar</a></h3>
+<h4 id="1--java-developer-kit-jdk"><a class="header" href="#1--java-developer-kit-jdk">1.  Java Developer Kit (JDK)</a></h4>
+<p>Este é o ambiente para programação na linguagem Java. Inclui o Java Runtime Environment (JRE).</p>
+<ul>
+<li>Obter <a href="https://adoptium.net/?variant=openjdk17&amp;jvmVariant=hotspot">JDK 17 LTS</a></li>
+<li>Instalar</li>
+<li>Configurar:
+<ul>
+<li>Definir variável de ambiente <code>JAVA_HOME</code> com o caminho para a pasta de instalação do JDK</li>
+<li>Acrescentar <code>JAVA_HOME/bin</code> à variável de ambiente `PATH</li>
+<li>Executar comando <code>javac -version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-apache-maven-mvn"><a class="header" href="#2-apache-maven-mvn">2. Apache Maven (MVN)</a></h4>
+<p>Esta é a ferramenta de linha de comando para a gestão do ciclo de vida de uma aplicação, incluindo a gestão de dependências de bibliotecas.</p>
+<ul>
+<li><a href="http://maven.apache.org/download.cgi">Obter a versão estável mais recente do Apache Maven</a>
+<ul>
+<li>Instalar</li>
+<li>Configurar:
+<ul>
+<li>Definir variável de ambiente M2_HOME com o caminho para a pasta de instalação</li>
+<li>Acrescentar <code>M2_HOME/bin</code> à <code>PATH</code></li>
+<li>Executar <code>comando mvn --version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-git"><a class="header" href="#3-git">3. Git</a></h4>
+<p>Ferramenta de linha de comando para fazer controlo de versões.</p>
+<ul>
+<li><a href="http://git-scm.com/download/">Obter a versão estável mais recente do Git</a></li>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Instalar</a></li>
+<li>Configurar:
+<ul>
+<li>Executar comando <code>git --version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-plataforma-de-desenvolvimento-java"><a class="header" href="#4-plataforma-de-desenvolvimento-java">4. Plataforma de desenvolvimento Java</a></h4>
+<p>Existem várias plataformas de desenvolvimento Java à escolha, das quais só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!</p>
+<ul>
+<li>
+<p>IntelliJ IDEA</p>
+<ul>
+<li>Obter a <a href="https://www.jetbrains.com/toolbox-app/">Toolbox</a> da JetBrains para gerir todas as ferramentas JetBrains facilmente.</li>
+<li>Para instalar o Toolbox no Linux, sigam os <a href="https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b">passos</a>. Para instalá-lo no Windows e MacOS, basta executar o executável obtido.</li>
+<li>Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o <a href="https://www.jetbrains.com/shop/eform/students">formulário</a>.</li>
+<li>Após instalarem o IntelliJ, recomendamos instalar o plugin <a href="https://plugins.jetbrains.com/plugin/8527-google-java-format">google-java-format</a> para maior legibilidade do código que produzem.</li>
+</ul>
+</li>
+<li>
+<p>Eclipse IDE for Java Developers</p>
+<ul>
+<li><a href="https://www.eclipse.org/downloads/packages/">Obter a versão estável mais recente do Eclipse IDE for Java Developers</a></li>
+<li>Pode obter o installer e depois especificar que pretende a opção acima.
+Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
+<li>Instalar.
+<ul>
+<li>Se precisar, consulte as <a href="https://www.eclipse.org/downloads/packages/installer">instruções</a>.</li>
+<li>Configurar:
+<ul>
+<li>Especificar o JDK como Standard VM (em vez do JRE)
+Nota: só deverá ser necessário este passo em Windows.
+<ul>
+<li>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add...</li>
+<li>Indicar o caminho até ao diretório do JDK: ex. <code>C:\Java\jdk-17.0.2</code></li>
+<li>Confirmar que as "Installed JREs" apenas fazem referência ao JDK instalado nas opções ativadas</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Visual Studio Code</p>
+<ul>
+<li><a href="https://code.visualstudio.com/download">Obter a versão mais recente</a></li>
+<li>Instalar</li>
+<li>Instalar <a href="https://code.visualstudio.com/docs/languages/java">extensões para programação em Java</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="dúvidas-ou-erros"><a class="header" href="#dúvidas-ou-erros">Dúvidas ou erros?</a></h2>
+<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./faq.html">lista de respostas a perguntas frequentes</a>.</p>
+<p>Se detetar algum erro nas instruções acima, avise-nos!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="1-apresentação-e-ferramentas-java-maven-ide"><a class="header" href="#1-apresentação-e-ferramentas-java-maven-ide">1. Apresentação e ferramentas (Java, Maven, IDE)</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
+<ul>
+<li>Apresentação da/o docente e formação de grupos de projeto</li>
+<li>Familiarizar-se com as ferramentas de desenvolvimento que usaremos na cadeira</li>
+</ul>
+<hr />
+<h2 id="apoio-ao-trabalho-laboratorial-durante-o-período"><a class="header" href="#apoio-ao-trabalho-laboratorial-durante-o-período">Apoio ao trabalho laboratorial durante o período</a></h2>
+<p>O professor do laboratório vai acompanhar o vosso percurso ao longo de todo o semestre. É importante ficar a conhecê-lo desde já. :-)</p>
+<p>O apoio a dúvidas fora das aulas é feito através do Moodle de SD, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.</p>
+<h2 id="inscrição-de-grupo"><a class="header" href="#inscrição-de-grupo">Inscrição de grupo</a></h2>
+<p>O trabalho de laboratório e no projeto é realizado em grupo, com 3 elementos. Os grupos terão de ser formados entre estudantes inscritos no mesmo turno de laboratório.</p>
+<p>Para fazer:</p>
+<ul>
+<li>Para registar o grupo, indicar na aula, a pedido do professor, os números de aluno IST e os nomes de utilizadores GitHub de todos os membros
+<ul>
+<li>Caso ainda não tenha uma conta GitHub, deve <a href="https://github.com/join">criar uma</a></li>
+<li>Atualize a sua foto na conta de perfil, para que possa ser reconhecido</li>
+<li>Aproveite e atualize também a foto do Fénix</li>
+</ul>
+</li>
+</ul>
+<p>Caso ainda não tenha grupo completo:</p>
+<ul>
+<li>Compareça no seu turno de laboratório e fale com colegas na mesma situação. Esta é a forma mais eficaz de formar grupo!</li>
+<li>Procure colegas no fórum no Moodle, onde os docentes criarão um tópico de discussão sobre este tema. Deixe lá a indicação de que procura elemento(s) para formar grupo ou respondendo a mensagens lá publicadas por colegas. Indique sempre o(s) turno(s) que pode frequentar e onde ainda há vagas.</li>
+<li>Note bem: a formação do grupo é da responsabilidade dos estudantes; os professores apenas fazem o registo.</li>
+</ul>
+<hr />
+<h2 id="familiarização-com-as-ferramentas-de-desenvolvimento"><a class="header" href="#familiarização-com-as-ferramentas-de-desenvolvimento">Familiarização com as ferramentas de desenvolvimento</a></h2>
+<p>As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.</p>
+<p>Esta página contém textos introdutórios a cada uma das ferramentas e um exercício.</p>
+<p>A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse),
+que entenderemos melhor ao longo desta aula.</p>
+<p><img src="./images/java-tools-table.png" alt="Java tools reference card" /></p>
+<p>Atenção: antes de começar, é necessário <a href="./00-software.html">já ter o software instalado</a>.</p>
+<h3 id="java"><a class="header" href="#java">Java</a></h3>
+<p>O JDK (<em>Java Developer Kit</em>) é um conjunto de ferramentas para programação na linguagem Java.
+As mais importantes são o <em>javac</em> que compila os programas e o <em>java</em> que lança as aplicações.</p>
+<p>Os <em>javac</em> e <em>java</em> são suficientes para construir pequenos programas. No entanto, para programas de maior dimensão, é muito útil ter:</p>
+<ul>
+<li>Uma ferramenta que dê suporte a todas as tarefas de forma integrada, incluíndo a gestão de dependências: Maven.</li>
+<li>Um ambiente de desenvolvimento (IDE) que apoie o programador em todas as tarefas (por exemplo, IntelliJ, Eclipse, VSCode, ou outro).</li>
+</ul>
+<h3 id="maven"><a class="header" href="#maven">Maven</a></h3>
+<p>A ferramenta Maven é a mais importante logo a seguir ao próprio JDK. A utilização do Maven é obrigatória em SD para permitir a construção dos projetos de forma automática na linha de comandos.</p>
+<p>O Maven desempenha o papel muito importante de automatizar toda a construção do código e de explicitar dependências de outros programas. Todos os programas devem ter a configuração Maven no ficheiro <code>pom.xml</code> para que possam ser (re)construídos de forma repetível. Os programas devem ter também um ficheiro <code>README</code> com instruções de construção e de execução.</p>
+<h4 id="introdução-ao-maven"><a class="header" href="#introdução-ao-maven">Introdução ao Maven</a></h4>
+<p>O Maven é uma ferramenta Java para a gestão de projetos que fornece aos programadores uma estrutura completa para suportar o ciclo de desenvolvimento de uma aplicação. Em particular, o Maven trata da compilação, distribuição, documentação, e colaboração em equipa, entre outras atividades.</p>
+<p>A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<em>Project Object Model</em>) <code>pom.xml</code>, que é a unidade fundamental deste sistema. Cada POM descreve um módulo.</p>
+<p>Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documentação</a>):</p>
+<pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;!--
+    Os elementos de configuração básicos permitem identificar unicamente o projeto, 
+    especificar dependências e definir propriedades (variáveis). 
+  --&gt;
+  &lt;groupId&gt;...&lt;/groupId&gt;
+  &lt;artifactId&gt;...&lt;/artifactId&gt;
+  &lt;version&gt;...&lt;/version&gt;
+  &lt;packaging&gt;...&lt;/packaging&gt;
+
+  &lt;dependencies&gt;...&lt;/dependencies&gt;
+  &lt;parent&gt;...&lt;/parent&gt;
+  &lt;dependencyManagement&gt;...&lt;/dependencyManagement&gt;
+  &lt;modules&gt;...&lt;/modules&gt;
+
+  &lt;properties&gt;...&lt;/properties&gt;
+
+  &lt;!-- 
+    Os elementos de configuração de construção permitem declarar 
+    a estrutura de pastas do projeto e a gestão de extensões (plugins).
+  --&gt;
+  &lt;build&gt;...&lt;/build&gt;
+  &lt;reporting&gt;...&lt;/reporting&gt;
+
+  &lt;!-- 
+    Informações adicionais do projeto 
+  --&gt;
+  &lt;name&gt;...&lt;/name&gt;
+  &lt;description&gt;...&lt;/description&gt;
+  &lt;url&gt;...&lt;/url&gt;
+  &lt;inceptionYear&gt;...&lt;/inceptionYear&gt;
+  &lt;licenses&gt;...&lt;/licenses&gt;
+  &lt;organization&gt;...&lt;/organization&gt;
+  &lt;developers&gt;...&lt;/developers&gt;
+  &lt;contributors&gt;...&lt;/contributors&gt;
+
+  &lt;!-- 
+    Elementos de configuração do ambiente 
+  --&gt;
+  &lt;issueManagement&gt;...&lt;/issueManagement&gt;
+  &lt;ciManagement&gt;...&lt;/ciManagement&gt;
+  &lt;mailingLists&gt;...&lt;/mailingLists&gt;
+  &lt;scm&gt;...&lt;/scm&gt;
+  &lt;prerequisites&gt;...&lt;/prerequisites&gt;
+  &lt;repositories&gt;...&lt;/repositories&gt;
+  &lt;pluginRepositories&gt;...&lt;/pluginRepositories&gt;
+  &lt;distributionManagement&gt;...&lt;/distributionManagement&gt;
+  &lt;profiles&gt;...&lt;/profiles&gt;
+&lt;/project&gt;
+</code></pre>
+<p>Exemplo de ficheiro POM:</p>
+<pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;!-- http://maven.apache.org/pom.html#Quick_Overview --&gt;
+
+  &lt;!-- The Basics --&gt;
+  &lt;groupId&gt;example&lt;/groupId&gt;
+  &lt;artifactId&gt;java-app&lt;/artifactId&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+  &lt;name&gt;java-app&lt;/name&gt;
+  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+  
+  &lt;!-- Build Settings --&gt;
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.10&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;programs&gt;
+            &lt;program&gt;
+              &lt;mainClass&gt;mypackage.MyClass&lt;/mainClass&gt;
+              &lt;id&gt;java-app&lt;/id&gt;
+            &lt;/program&gt;
+          &lt;/programs&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+<h4 id="estrutura-típica-de-pastas"><a class="header" href="#estrutura-típica-de-pastas">Estrutura típica de pastas</a></h4>
+<p>Assumindo que ${basedir} corresponde à localização do projeto Maven, a estrutura de pastas associada é a seguinte:</p>
+<ul>
+<li><code>${basedir}/src/main/java</code> - código fonte</li>
+<li><code>${basedir}/src/main/resources</code> - recursos</li>
+<li><code>${basedir}/src/test</code> - código de teste</li>
+<li><code>${basedir}/target</code> - A pasta target é temporária e serve para guardar as classes do programa compiladas (<code>*.class</code>) e outros ficheiros auxiliares - pode ser descartada a qualquer momento e não deve ser guardada em controlo de versões</li>
+</ul>
+<h4 id="comandos-mais-frequentes"><a class="header" href="#comandos-mais-frequentes">Comandos mais frequentes</a></h4>
+<p>A lista seguinte apresenta alguns dos comandos Maven mais frequentes:</p>
+<ul>
+<li><code>mvn clean</code> - limpa a pasta temporária</li>
+<li><code>mvn compile</code> - compila o código do programa</li>
+<li><code>mvn compile exec:java</code> - compila o código do programa e executa a classe definida como principal no <code>pom.xml</code></li>
+<li><code>mvn test</code> - compila o código do programa e executa os testes</li>
+<li><code>mvn verify</code> - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)</li>
+</ul>
+<h4 id="conceitos-fundamentais"><a class="header" href="#conceitos-fundamentais">Conceitos fundamentais</a></h4>
+<h5 id="ciclos-de-vida-de-construção-fases-e-objetivos-documentação"><a class="header" href="#ciclos-de-vida-de-construção-fases-e-objetivos-documentação">Ciclos de vida de construção, fases e objetivos (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics">documentação</a>)</a></h5>
+<p>Em Maven, o processo de construção é dividido em ciclos de vida de construção, fases e objetivos. Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos.</p>
+<p>Por exemplo, o ciclo default inclui as seguintes fases (lista completa de fases):</p>
+<ul>
+<li><em>validate</em> - verifica se projecto está correcto e toda a informação está disponível</li>
+<li><em>compile</em> - compila o código fonte</li>
+<li><em>test</em> - testa o código fonte compilado</li>
+<li><em>package</em> - pega no código compilado e empacota-o num formato que se pode partilhar/distribuir, como JAR.</li>
+<li><em>integration-test</em> - processa e integra o pacote se necessário num ambiente onde testes de integração possam correr</li>
+<li><em>verify</em> - corre verificações para confirmar que o pacote é válido e corresponde aos critérios de qualidade definidos</li>
+<li><em>install</em> - instala o pacote no repositório local, para poder ser usado localmente como dependência noutros projectos</li>
+<li><em>deploy</em> - copia pacote final para um repositório remoto</li>
+</ul>
+<p>Uma execução no Maven consiste em passar um argumento ao executável <code>mvn</code>. Este argumento corresponde ao nome dum ciclo de vida de construção, fase ou objetivo.</p>
+<p>Se um ciclo de vida solicitado é executado, todas as fases de construção deste ciclo de vida são executadas. Por conseguinte, se uma fase de construção solicitada é executada, todas as fases de construção que a antecedem na sequência pré-definida de fases de construção são também executadas.</p>
+<p>Por exemplo, executar
+<code>mvn install</code>
+irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- antes de empacotar e instalar o módulo no repositório local.</p>
+<h5 id="dependências-e-repositórios"><a class="header" href="#dependências-e-repositórios">Dependências e repositórios</a></h5>
+<p>Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto. As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto. Se as dependências não forem encontrados no repositório local, isto é, numa pasta no disco rígido do computador local, o Maven descarrega-as de um repositório central para o repositório local. Por omissão, o repositório local encontra-se na pasta <code>%USER_HOME%</code>. Contudo, é possível especificar um repositório local onde Maven irá guardar os artefactos.</p>
+<pre><code class="language-xml">&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+    &lt;localRepository&gt;C:/RepositorioLocal&lt;/localRepository&gt;
+    ...
+</code></pre>
+<p><em><strong>TODO: substituir por outro plugin</strong></em></p>
+<p>Um exemplo de uma dependência é o JUnit, que como pode ser vista abaixo.</p>
+<pre><code class="language-xml">&lt;project&gt;
+  ...
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;
+</code></pre>
+<p>Os três primeiros campos identificam a dependência. O parâmetro scope especifica que a dependência apenas existe para os testes. Isto significa que o Maven vai providenciar um <em>classpath</em> sem o JUnit para compilação do código principal e um <em>classpath</em> com o JUnit (na versão indicada) para compilação e execução do código de testes.</p>
+<p>As dependências podem ser pesquisadas no motor de pesquisa amigável do repositório central Maven. Por exemplo, o JUnit 4.12 tem a seguinte página informativa: http://mvnrepository.com/artifact/junit/junit/4.12</p>
+<p>Para o caso de projetos em desenvolvimento com inúmeros módulos (por exemplo: módulos A, B e C), com dependências entre eles, o conceito de <em>SNAPSHOT</em> é muitas vezes usado. Se um módulo A está em desenvolvimento rápido, e a criar novas versões com muita frequência, o sufixo <code>-SNAPSHOT</code> é adicionado no elemento <code>&lt;version&gt;</code>.</p>
+<p>Exemplo do <code>pom.xml</code> de A:</p>
+<pre><code class="language-xml">&lt;project&gt;
+  ...
+  &lt;groupId&gt;exemplo&lt;/groupId&gt;
+  &lt;artifactId&gt;modA&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+  ...
+&lt;/project&gt;
+</code></pre>
+<p>Assim, cada vez que o módulo A enviar uma <em>SNAPSHOT</em> do seu código actualizado para o repositório, vai substituir a versão que existia anteriormente. Por sua vez, os outros módulos, B e C, que dependem de A escolhem essa mesma versão <em>SNAPSHOT</em> como dependência.</p>
+<p>O <code>pom.xml</code> de B e C iriam conter:</p>
+<pre><code class="language-xml">&lt;project&gt;
+  ...
+    &lt;dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;exemplo&lt;/groupId&gt;
+            &lt;artifactId&gt;modA&lt;/artifactId&gt;
+            &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;
+</code></pre>
+<p>Deste modo, sempre que os módulos B e C são construídos, o Maven automaticamente actualiza o módulo A, obtendo fazendo o JAR correspondente ao SNAPSHOT mais recente.</p>
+<h5 id="plugins-de-construção-documentação"><a class="header" href="#plugins-de-construção-documentação">Plugins de construção (<a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">documentação</a>)</a></h5>
+<p>Os plugins de construção são utilizados para inserir objetivos adicionais numa fase de construção, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.</p>
+<p>Damos como exemplo o <em>plugin</em> <code>AppAssembler</code>:</p>
+<pre><code class="language-xml">&lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.10&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;programs&gt;
+            &lt;program&gt;
+              &lt;mainClass&gt;mypackage.MyClass&lt;/mainClass&gt;
+              &lt;id&gt;java-app&lt;/id&gt;
+            &lt;/program&gt;
+          &lt;/programs&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<p>Este plugin é usado para criar um script de arranque do programa, tanto para Windows (ficheiro <code>.bat</code>) como para Linux (ficheiro com o atributo executável definido). Neste caso, o programa a executar é um programa de exemplo (<code>java-app</code>) cuja classe principal se chama <code>mypackage.MyClass</code>.</p>
+<h5 id="perfis-de-construção"><a class="header" href="#perfis-de-construção">Perfis de construção</a></h5>
+<p>Os perfis de construção são utilizados caso seja necessário construir um projeto de maneira diferente. Por exemplo, pode ser necessário construir num computador pessoal projetos para desenvolvimento e teste. Pode ainda ser necesssário construí-los para um ambiente de produção. Estas versões poderão ser diferentes. Para permitir diferentes versões, diferentes perfis de construção podem ser adicionados aos ficheiros POM. Durante a execução pode ser especificado que perfil de construção deve ser usado.</p>
+<hr />
+<h3 id="java-ide"><a class="header" href="#java-ide">Java IDE</a></h3>
+<p>Tanto o Eclipse, o IntelliJ como o VSCode podem ser configurados em cima do JDK ou do Maven.
+Veja abaixo algumas instruções (basta ver para o seu IDE favorito).</p>
+<ul>
+<li>
+<p><a href="https://www.jetbrains.com/help/idea/maven-support.html">Maven no IntelliJ</a></p>
+</li>
+<li>
+<p>Maven no Eclipse:</p>
+<ul>
+<li>
+<p>Se já tiver um projeto com os ficheiros de configuração do Maven (<code>pom.xml</code>):</p>
+<ul>
+<li>'File', 'Import...', 'Maven'-'Existing Maven Projects</li>
+<li>'Select root directory' e 'Browse' até à pasta do projecto.</li>
+<li>Confirmar que está tudo como desejado e 'Finish'.</li>
+</ul>
+</li>
+<li>
+<p>Se não existirem os ficheiros de configuração do Maven:</p>
+<ul>
+<li>Criar um 'Project', do tipo 'Maven Project'.</li>
+<li>Selecionar 'Create a simple project (skip architype selection)'.</li>
+<li>Remover a seleção 'Use default Workspace location' e 'Browse' até à pasta raiz do projecto (pasta mãe das 'sources').</li>
+<li>Preencher os campos em 'New Maven Project'.</li>
+</ul>
+</li>
+<li>
+<p>Para executar ou depurar (<em>debug</em>) o projeto Maven no eclipse:</p>
+<ul>
+<li>Carregar com o botão direito do rato sobre o projeto.</li>
+<li>Seleccionar 'Run As' ou 'Debug As' e depois carregar em 'Maven build ...'.</li>
+<li>Indicar os objectivos (p.ex: compile, package) do ciclo de vida de construção em 'Edit Configuration'.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="https://code.visualstudio.com/docs/java/java-build">Maven no Visual Studio Code</a></p>
+</li>
+</ul>
+<hr />
+<h2 id="experimentar"><a class="header" href="#experimentar">Experimentar</a></h2>
+<h3 id="exemplo-de-aplicação-java"><a class="header" href="#exemplo-de-aplicação-java">Exemplo de aplicação Java</a></h3>
+<ul>
+<li>Obtenha este <a href="https://github.com/tecnico-distsys/example_java-app">projeto de exemplo</a>, que utiliza o Maven para compilar e executar o código Java.</li>
+<li>Para experimentar o código: fazer <em>Clone or Download</em> e depois seguir as instruções do <code>README</code></li>
+<li>O comando <code>mvn compile exec:java</code> compila o programa e executa a classe principal indicada no <code>pom.xml</code></li>
+<li>Experimente as funcionalidades de depuração (debug) do seu IDE favorito:
+<ul>
+<li>Criar um ponto de paragem (breakpoint) no programa e fazer debug</li>
+<li>Alterar os argumentos do programa (-Dexec.args="(...)" pode ser usado para especificar os argumentos do programa quando executado através do comando mvn) e inspecionar as variáveis durante a execução</li>
+</ul>
+</li>
+<li>O exemplo tem variantes que podem ser consultadas noutros ramos (<em>branches</em>) do Git
+<ul>
+<li><code>appassembler</code>: permite gerar scripts de lançamento da aplicação em Linux e Windows
+<ul>
+<li><a href="https://github.com/tecnico-distsys/example_java-app/tree/appassembler">Ver código alternativo</a> e comparar com <a href="https://github.com/tecnico-distsys/example_java-app/compare/master...appassembler">exemplo base</a></li>
+</ul>
+</li>
+<li><code>config</code>: utiliza ficheiro com propriedades de configuração, algumas delas preenchidas dinamicamente pelo Maven
+<ul>
+<li><a href="https://github.com/tecnico-distsys/example_java-app/tree/config">Ver código alternativo</a> e comparar com <a href="https://github.com/tecnico-distsys/example_java-app/compare/master...config">exemplo base</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="exemplo-de-biblioteca-java-github"><a class="header" href="#exemplo-de-biblioteca-java-github">Exemplo de biblioteca Java GitHub</a></h3>
+<ul>
+<li><a href="https://github.com/tecnico-distsys/example_java-lib">Obtenha o projeto</a></li>
+<li>Este projeto permite agrupar um conjunto de classes comuns, que podem depois ser reutilizadas por outros programas</li>
+<li>Para experimentar o código: fazer <em>Clone or Download</em> e depois seguir as instruções do <code>README</code></li>
+<li>O comando <code>mvn install</code> disponibiliza o módulo no repositório local</li>
+<li>O módulo instalado pode depois ser usado como dependência (<em>dependency</em>) através das coordenadas (groupId, artifactId, e version).</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="2--java-avançado-concorrência-exceções-e-troca-de-mensagens"><a class="header" href="#2--java-avançado-concorrência-exceções-e-troca-de-mensagens">2.  Java avançado (concorrência, exceções e troca de mensagens)</a></h1>
+<h2 id="objetivos-desta-aula-1"><a class="header" href="#objetivos-desta-aula-1">Objetivos desta aula:</a></h2>
+<ul>
+<li>Programação concorrente em Java</li>
+<li>Exceções em Java</li>
+<li>Troca de mensagens usando <em>sockets</em> em Java</li>
+</ul>
+<hr />
+<h2 id="programação-concorrente-em-java"><a class="header" href="#programação-concorrente-em-java">Programação concorrente em Java</a></h2>
+<p>A linguagem Java permite a programação de programas concorrentes com múltiplas <em>threads</em>.</p>
+<p><em><strong>TODO: threads em java</strong></em></p>
+<p>Como as <em>threads</em>  partilham objetos, que os seus dados estão coerentes.
+Caso a sincronização não seja implementada, pode ocorrer interferência entre <em>threads</em>, levando a situações de incoerência nos dados partilhados.
+Por outro lado, a presença de mecanismos de sincronização pode originar contenção quando duas ou mais <em>threads</em> tentam aceder ao mesmo recurso em simultâneo.</p>
+<h3 id="sincronização-em-java"><a class="header" href="#sincronização-em-java">Sincronização em Java</a></h3>
+<p>De seguida resumimos as principais primitivas de sincronização disponíveis em Java.
+Para saber mais sobre este tema, <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html">recomendamos que consulte este tutorial</a>.</p>
+<p>Cada objeto Java tem um trinco lógico (<em>mutex</em>) implícito, que pode ser (implicitamente) adquirido através da primitiva synchronized.</p>
+<p><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html">A primitiva <code>synchronized</code> pode ser aplicada a métodos da classe de um objeto.</a> Ao fazermos isso, qualquer chamada a um método de uma instância dessa classe é executada em exclusão mútua (em relação a outras chamadas concorrentes a outros métodos synchronized da mesma instância).
+Um método sincronizado adquire o trinco implícito do objeto no início de execução e liberta-o no fim.</p>
+<p>O seguinte exemplo mostra uma utilização da sincronização em Java:</p>
+<pre><code class="language-java">public class MySynchronizedCounter {
+   private int c = 0;
+
+   public synchronized void increment() {
+       c++;
+   }
+
+   public synchronized void decrement() {
+       c--;
+   }
+
+   public synchronized int value() {
+       return c;
+   }
+}
+</code></pre>
+<p>Os métodos <code>increment()</code>, <code>decrement()</code> e <code>value()</code> da classe <code>MySynchronizedCounter</code> estão sincronizados. Isto significa que, caso um dos três métodos seja invocado, o trinco do objeto é adquirido, e se houver outra tarefa a tentar aceder a qualquer um deles, ficará bloqueada à espera que o recurso/método seja libertado pela primeira invocação.</p>
+<p>Também é possível usar o synchronized para adquirir o trinco apenas numa parte do código.</p>
+<pre><code class="language-java">    // acquire lock of object referenced by 'this'
+    synchronized (this) {
+
+        // access shared variables protected by lock
+
+    }
+    // release lock
+</code></pre>
+<p>No contexto de uma região <code>synchronized</code>, é também possível <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/guardmeth.html">utilizar variáveis de condição, usando as primitivas <code>wait</code>, <code>notify</code> e <code>notifyAll</code></a>.</p>
+<h3 id="concorrência-com-coleções"><a class="header" href="#concorrência-com-coleções">Concorrência com coleções</a></h3>
+<p>As coleções são objetos que armazenam vários outros objetos. Algumas das coleções mais conhecidas no Java são: <code>ArrayList</code>, <code>LinkedList</code>, <code>HashMap</code>, <code>HashSet</code>, <code>TreeMap</code>, <code>TreeSet</code>, etc.
+Cada coleção implementa uma interface que dita o tipo de acesso esperado:</p>
+<ul>
+<li><code>List</code> é uma lista (preserva a ordem e pode haver repetidos);</li>
+<li><code>Set</code> é um conjunto (sem ordem nem repetidos);</li>
+<li><code>Map</code> estabelece uma associação entre chave e valor;</li>
+<li>etc.</li>
+</ul>
+<p>Por omissão, as coleções não são sincronizadas, pois assim conseguem melhor desempenho sequencial.</p>
+<p>Para situações em que é necessário sincronizar os acessos às coleções, existem versões sincronizadas que apenas permitem um acesso de cada vez.
+Para construir uma coleção sincronizada usa-se um método especial da classe <code>Collections</code>, que cria a nova coleção "embrulhando" uma coleção do mesmo tipo:</p>
+<pre><code class="language-java">    List synchronizedList = Collections.synchronizedList(regularList);
+</code></pre>
+<p>Posteriormente, foram acrescentadas ao Java <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/collections.html">coleções concorrentes</a> (<em>Concurrent Collections</em> no pacote <code>java.util.concurrent</code>), que utilizam estruturas de dados sofisticadas, desenhadas de raiz para garantir a consistência da coleção mesmo quando esta é acedida concorrentemente por muitas tarefas. Exemplos destas coleções concorrentes são: <code>ConcurrentHashMap</code>, <code>CopyOnWriteArrayList</code>, e <code>CopyOnWriteHashSet</code>.
+No exemplo seguinte constroi-se um mapa optimizado para acessos concorrentes:</p>
+<pre><code class="language-java">    Map&lt;String,Object&gt; map = new ConcurrentHashMap&lt;&gt;();
+</code></pre>
+<hr />
+<h2 id="exceções"><a class="header" href="#exceções">Exceções</a></h2>
+<p>O tratamento de exceções é também um aspeto muito importante, e que irá ser especialmente importante para lidar com problemas de comunicação.</p>
+<p>As exceções são usadas na linguagem Java para assinalar que algo não correu como esperado.
+São classes que herdam de <code>java.lang.Exception</code> e cujos objetos podem ser atirados (<em>throw</em>) e apanhados (<em>caught</em>).</p>
+<p>As exceções que herdam de <code>java.lang.RuntimeException</code> (RTE) são chamadas exceções não verificadas (<em>unchecked exceptions</em>). Neste caso, o compilador não obriga o programador a declarar se apanha ou se atira. Por este motivo, qualquer linha de código pode atirar uma exceção destas. A mais conhecida é a <code>NullPointerException</code> (NPE).</p>
+<p>As exceções que herdam de <code>java.lang.Exception</code> são chamadas exceções verificadas (<em>checked exceptions</em>), no sentido, em que a sua utilização é verificada pelo compilador. Nestes casos é preciso explicitar se se apanha a exceção (<em>catch</em>) ou se se lança (<em>throws</em>). Normalmente, se não se vai tentar recuperar a exceção, pode simplesmente dizer que se atira. É preferível atirar do que fazer um falso tratamento de exceção.</p>
+<h3 id="abordagens-ao-tratamento-de-exceções"><a class="header" href="#abordagens-ao-tratamento-de-exceções">Abordagens ao tratamento de exceções</a></h3>
+<p>Podemos ter as seguintes abordagens em relação às exceções:</p>
+<ul>
+<li>Deixar-passar (pass-through)</li>
+<li>Apanhar-e-tratar (catch-and-handle)
+<ul>
+<li>Apanhar-e-ignorar! (swallow!)</li>
+<li>Apanhar-registar-e-atirar (logging)</li>
+<li>Apanhar-embrulhar-e-atirar (wrapping)</li>
+<li>Apanhar-e-recuperar (recovery)</li>
+</ul>
+</li>
+</ul>
+<p>A abordagem 'apanhar-e-ignorar' é claramente errada porque perde informação e torna muito mais difícil diagnosticar e resolver problemas.</p>
+<h3 id="exceções-impressas-na-consola"><a class="header" href="#exceções-impressas-na-consola">Exceções impressas na consola</a></h3>
+<p>Os outputs seguintes foram produzidos por uma aplicação que usa sockets para comunicação, e ilustram diversas situações.</p>
+<p>Na situação abaixo, o servidor tenta criar o socket com um porto fora do intervalo [0;65535].</p>
+<pre><code class="language-java">java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:293)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: Port value out of range: 65536
+	at java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:232)
+	at java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:128)
+	at example.SocketServer.main(SocketServer.java:24)
+    ... 6 more
+</code></pre>
+<p>Na situação abaixo, o cliente tenta ligar ao servidor por meio dum porto incorreto e não consegue.</p>
+<pre><code class="language-java">java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:293)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at java.net.Socket.&lt;init&gt;(Socket.java:434)
+	at java.net.Socket.&lt;init&gt;(Socket.java:211)
+	at example.SocketClient.main(SocketClient.java:32)
+    ... 6 more
+</code></pre>
+<p>As linhas mais importantes dos outputs são as começadas por <em>Caused by</em>. É aí que se podem encontrar as mensagens das exceções. Dado que uma exceção pode ter outra exceção aninhada (<em>cause</em>) pode ser necessário consultar várias linhas para perceber o que causou a exceção de topo.</p>
+<p>As linhas começadas por at indicam o contexto de execução. Observando estas linhas é possível ver o conteúdo da pilha de execução do programa, que diz que parte do código estava a chamar que outra parte.</p>
+<h3 id="código-de-tratamento-de-exceções"><a class="header" href="#código-de-tratamento-de-exceções">Código de tratamento de exceções</a></h3>
+<p>O seguinte código mostra <strong>maus exemplos</strong> de tratamento de exceções.</p>
+<pre><code class="language-java">    // ANTI-padrão 'apanhar-e-ignorar!'
+    // Ignorar a exceção sem dizer nada a ninguém.
+    // Evitar! 
+    try {
+        doSomething();
+        
+    } catch(Exception e) {
+    }
+    
+    ...
+    
+    // ANTI-padrão 'apanhar-imprimir-e-ignorar!' 
+    // Imprimir o stack trace, não resolve nada.
+    // O programa vai "rebentar" mais à frente, onde será mais difícil perceber porquê.
+    // Evitar também! 
+    try {
+        doSomething();
+        
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+</code></pre>
+<p>Ignorar a exceção torna muito mais difícil detetar e corrigir erros no código!</p>
+<p>Vamos então ilustrar alguns <strong>bons exemplos</strong>:</p>
+<pre><code class="language-java">    // padrão 'deixar-passar'
+    // Se a exceção não vai ser tratada, mais vale lançá-la (throws)
+    public static void main(String[] args) throws Exception {
+        doSomething();
+    }
+
+    ...
+    
+    // padrão 'apanhar-imprimir-e-atirar'
+    // Registar onde foi apanhada a exceção, mas voltar a atirá-la para que seja tratada depois
+    try {
+        doSomething();
+    
+    } catch(MyException e) {
+        System.err.println("Caught exception when doing something: " + e);
+        System.err.println("Rethrowing"):
+        throw e;
+    }
+    
+    
+    // padrão 'apanhar-embrulhar-e-atirar'
+    // Apanhar exceção da camada inferior
+    // Envolver com mais contexto (novo tipo, mensagem de erro melhor)
+    // Atirar
+    try {
+        doSomething();
+    
+    } catch(MyLowerLevelException e) {
+        System.err.println("Caught exception when doing something: " + e);
+        System.err.println("Wrapping and throwing, adding meaningful message")
+        throw new MyHigherLevelException("Failed to do something.", e);
+    }
+</code></pre>
+<hr />
+<h2 id="troca-de-mensagens-usando-sockets-em-java"><a class="header" href="#troca-de-mensagens-usando-sockets-em-java">Troca de mensagens usando <em>sockets</em> em Java</a></h2>
+<p>O Java disponibiliza uma <a href="https://docs.oracle.com/javase/tutorial/networking/sockets/index.html">biblioteca de sockets</a> que está disponível no pacote <code>java.net</code>.</p>
+<p>Os sockets definem uma interface de programação, mas não definem o conteúdo e significado das mensagens que vão ser trocadas. Para isso é necessário um protocolo de comunicação. Um protocolo é um sistema de regras que define uma convenção para permitir que diferentes entidades troquem informação de forma não ambígua. Assim tem que ser na comunicação em sockets. É preciso "dizer" como é enviado um pedido, quando termina o pedido, quando chega a resposta, quando já foi recebida, e assim por diante.</p>
+<p>Um exemplo de protocolo é o HTTP (<em>HyperText Transfer Protocol</em>), que está na base da comunicação na WWW (<em>World Wide Web</em>).
+Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulouris et al.) sobre a World Wide Web e Sockets.</p>
+<hr />
+<h2 id="exercício-a-resolver-até-ao-fim-da-aula"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula">Exercício a resolver até ao fim da aula</a></h2>
+<p>O ponto de partida para o exercício ilustra a comunicação entre dois programas Java usando a biblioteca de sockets:
+<a href="https://github.com/tecnico-distsys/exercise_java-sockets">Java Sockets</a></p>
+<ol>
+<li>Obter o código: fazer <em>Clone or Download</em>. Temos dois programas que colaboram entre si: servidor e cliente.
+<ul>
+<li>Estudar o código fonte e os ficheiros pom.xml do servidor e do cliente</li>
+<li>Configurar os dois projetos no Java IDE</li>
+<li>Compilar e executar primeiro o servidor e depois o cliente, seguindo as instruções no ficheiro <code>README</code></li>
+</ul>
+</li>
+</ol>
+<p><strong>Problemas</strong>? Observar atentamente as exceções produzidas.</p>
+<ol start="2">
+<li>
+<p>Analisar o output do Maven, em especial as linhas começadas por [WARNING]:</p>
+<ul>
+<li>Qual foi a causa da exceção?</li>
+<li>Que exceção foi lançada?</li>
+<li>Em que linha do código do cliente é que foi lançada a exceção?
+<ul>
+<li>Será um problema na configuração dos argumentos?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Compilar e executar o servidor até funcionar sem erros.</p>
+<ul>
+<li>Em casos mais complicados, pode usar-se o depurador (debugger).</li>
+<li>Problema resolvido? <a href="http://www.phdcomics.com/comics/archive.php?comicid=180">Sim</a> ou <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Keep_Calm_and_Carry_On_Poster.svg/683px-Keep_Calm_and_Carry_On_Poster.svg.png">Não</a> :)</li>
+</ul>
+</li>
+<li>
+<p>Modificar os programas para que o servidor responda ao cliente com uma mensagem de confirmação.</p>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="3--invocação-de-procedimentos-remotos-com-grpc-conceitos-base"><a class="header" href="#3--invocação-de-procedimentos-remotos-com-grpc-conceitos-base">3.  Invocação de procedimentos remotos com gRPC: conceitos base</a></h1>
+<h2 id="objetivos-desta-aula-2"><a class="header" href="#objetivos-desta-aula-2">Objetivos desta aula:</a></h2>
+<ul>
+<li>Distribuir uma aplicação originalmente centralizada usando o gRPC</li>
+<li>Descrever, em detalhe, os componentes do sistema gRPC</li>
+</ul>
+<h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
+<ul>
+<li><a href="./introducao-ao-gRPC.pdf">Introdução ao gRPC (slides)</a></li>
+<li><a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a></li>
+<li><a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação de Protocol Buffers</a></li>
+<li><a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a></li>
+</ul>
+<hr />
+<h2 id="antes-de-começar-a-programar-com-grpc"><a class="header" href="#antes-de-começar-a-programar-com-grpc">Antes de começar a programar com gRPC</a></h2>
+<p>Comece por folhear os <a href="./introducao-ao-gRPC.pdf">slides de introdução ao gRPC</a> que fornecemos acima.
+Como são sucintos, é natural que suscitem algumas dúvidas.
+O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima.
+E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
+<h2 id="exercício-a-resolver-até-ao-fim-da-aula-1"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula-1">Exercício a resolver até ao fim da aula</a></h2>
+<p>Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.</p>
+<p><img src="./images/ttt.png" alt="Tic Tac Toe" /></p>
+<h3 id="i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe"><a class="header" href="#i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe">I. Começar por uma implementação local do Jogo do Galo/Tic Tac Toe.</a></h3>
+<ul>
+<li>Faça Clone ou Download do código fonte do <a href="https://github.com/tecnico-distsys/example_ttt">jogo</a></li>
+<li>Analise o código do jogo de forma a compreender a implementação.</li>
+<li>Compile e execute o código com o comando:
+<code>mvn compile exec:java</code></li>
+</ul>
+<h3 id="ii-estudar-a-tecnologia-grpc"><a class="header" href="#ii-estudar-a-tecnologia-grpc">II. Estudar a tecnologia gRPC.</a></h3>
+<p>Pretende-se que a nova versão da aplicação seja dividida em dois processos: servidor e cliente, através do gRPC.
+Para tal, vamos começar por estudar a tecnologia gRPC.</p>
+<ul>
+<li>Faça Clone ou Download do código fonte do <a href="https://github.com/tecnico-distsys/example_grpc">exemplo gRPC</a></li>
+<li>Veja como a aplicação está estruturada em três módulos: <code>contract</code>, <code>server</code> e <code>client</code>.</li>
+<li>Cada módulo tem um POM próprio.</li>
+</ul>
+<p>Nos passos seguintes, vamos compilar e executar o exemplo seguindo as instruções <code>README.md</code> de cada módulo.</p>
+<ul>
+<li>Comece pelo módulo <code>contract</code>, executando o comando: <code>mvn install</code>.
+Este comando vai passar pela etapa generate-sources, que vai invocar o protoc, o compilador de protocol buffers que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro .proto.
+Familiarize-se com o código e responda às seguintes questões:
+<ul>
+<li>Onde estão definidas as mensagens trocadas entre o cliente e o servidor?</li>
+<li>Onde estão definidos os procedimentos remotos no servidor?</li>
+<li>Onde estão os ficheiros gerados pelo compilador de Protocol Buffers?</li>
+<li>Onde são feitas as invocações remotas no cliente?</li>
+<li>As invocações remotas são síncronas (bloqueantes) ou assíncronas?</li>
+</ul>
+</li>
+<li>Abra uma consola, entre na diretoria do módulo <code>server</code> e corra o servidor:
+<code>mvn compile exec:java</code></li>
+<li>Abra uma outra consola, entre na diretoria do módulo <code>client</code> e execute o cliente:
+<code>mvn compile exec:java</code></li>
+<li>Depois de ver o <code>Hello World</code> a funcionar corretamente no seu computador, avance para o passo seguinte.</li>
+</ul>
+<h3 id="iii-transformar-o-jogo-do-galo-numa-aplicação-cliente-servidor-com-grpc"><a class="header" href="#iii-transformar-o-jogo-do-galo-numa-aplicação-cliente-servidor-com-grpc">III. Transformar o Jogo do Galo numa aplicação cliente-servidor com gRPC</a></h3>
+<p>A aplicação distribuída será organizada em três módulos.
+À semelhança do exemplo, o contrato irá definir a interface remota, com detalhes sobre as mensagens a trocar.
+O servidor irá manter o estado do jogo (tabuleiro).
+O cliente irá ter a interface utilizador na consola.</p>
+<ul>
+<li>
+<p>Faça Clone ou Download do <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc">código inicial do exercício</a></p>
+</li>
+<li>
+<p>Baseando-se no módulo contract da aplicação de exemplo, modifique o ficheiro .proto com as definições necessárias para as chamadas remotas de procedimentos <code>currentBoard</code>, <code>play</code> e <code>checkWinner</code>.</p>
+<ul>
+<li>Sugestão: consulte a documentação dos <a href="https://developers.google.com/protocol-buffers/docs/overview">Protocol Buffers</a>.</li>
+<li>Declare todas as mensagens de pedido e resposta para cada procedimento do jogo.
+Note que algumas mensagens podem ser vazias, mas devem ser declaradas na mesma.</li>
+<li>Cada campo deve ter uma etiqueta numérica única.</li>
+<li>Complete o serviço TTT com as definições dos procedimentos que definiu (assim como as mensagens que definiu).
+<ul>
+<li>Instale o módulo com o comando <code>mvn install</code>.</li>
+<li>Analise o código Java gerado na pasta <code>target/generated-sources/</code>.
+<ul>
+<li>Onde estão definidas as mensagens?</li>
+<li>E os procedimentos?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Baseando-se no módulo server da aplicação de exemplo, modifique o código inicial do módulo <code>server</code>.</p>
+<ul>
+<li>Confirme que o módulo <code>contract</code> é uma dependência do projeto.</li>
+<li>Modifique a classe <code>TTTServiceImpl</code> de forma a implementar os procedimentos remotos declarados no contrato, utilizando a classe <code>TTTGame</code> (que implementa a lógica do jogo) definida no código base. A classe de implementação do serviço estende a classe do serviço definido no contrato e faz <em>override</em> dos procedimentos declarados no contrato.</li>
+</ul>
+<p>Exemplo de um método:</p>
+<pre><code class="language-java">public class TTTServiceImpl extends TTTGrpc.TTTImplBase {
+    private TTTGame ttt = new TTTGame();
+
+    @Override
+    public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
+        CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(ttt.toString()).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+</code></pre>
+<p>Relembre a mensagem definida no contrato:</p>
+<pre><code class="language-java">message CurrentBoardRequest {
+    // No arguments for this request.
+}
+message CurrentBoardResponse {
+    string board = 1;
+}		
+</code></pre>
+</li>
+<li>
+<p>Confirme que a classe <code>TTTServer</code> inicia um servidor numa porta que recebe como argumento, instanciando a classe de implementação do serviço.
+Tenha em conta que o acesso a variáveis partilhadas <a href="./02-java-avancado.html">tem de ser sincronizado</a>.</p>
+<ul>
+<li>Porque é que esta sincronização é necessária?</li>
+<li>Onde é que há possibilidade de concorrência?</li>
+</ul>
+</li>
+<li>
+<p>Lance o servidor:
+<code>mvn compile exec:java</code></p>
+</li>
+<li>
+<p>Por fim, complete o código do módulo client.</p>
+<ul>
+<li>Confirme que o módulo <code>contract</code> é uma dependência do projeto.
+Confirme que a classe <code>TTTClient</code> instancia um stub do serviço <code>TTT</code> (através de um endereço e porta recebidos como argumentos).</li>
+<li>Adicione as chamadas remotas aos procedimentos play e checkWinner que estão em falta.</li>
+</ul>
+<p>Exemplo de chamada local:</p>
+<pre><code class="language-java">winner = ttt.checkWinner();
+</code></pre>
+<p>Exemplo de chamada remota correspondente:</p>
+<pre><code class="language-java">winner = stub.checkWinner(CheckWinnerRequest.getDefaultInstance()).getResult();
+</code></pre>
+</li>
+<li>
+<p>Experimente jogar remotamente através do cliente construído:
+<code>mvn compile exec:java</code></p>
+</li>
+</ul>
+<h2 id="já-resolveram"><a class="header" href="#já-resolveram">Já resolveram?</a></h2>
+<p>Podem conferir <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc_solution">a nossa proposta de resolução</a>.</p>
+<p>Nota: esta solução resolve também o exercício do <a href="./04-grpc-erros.html">próximo guião</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes"><a class="header" href="#4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes">4.  gRPC: tratamento de erros e métodos remotos bloqueantes</a></h1>
+<h2 id="objetivos-desta-aula-3"><a class="header" href="#objetivos-desta-aula-3">Objetivos desta aula:</a></h2>
+<ul>
+<li>Aprender a enviar e receber erros com gRPC</li>
+<li>Aprender a implementar métodos remotos bloqueantes</li>
+</ul>
+<h2 id="materiais-de-apoio-à-aula-1"><a class="header" href="#materiais-de-apoio-à-aula-1">Materiais de apoio à aula</a></h2>
+<ul>
+<li>Tratamento de erros com gRPC Concorrência e Sincronização em Java</li>
+</ul>
+<hr />
+<h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
+<p>O ponto de partida será a <a href="./03-grpc.html">solução construída pelo seu grupo na aula anterior para o Jogo do Galo em gRPC</a>.</p>
+<p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
+<p>Vamos então começar!</p>
+<h3 id="enviar-informação-de-erro-do-servidor-para-o-cliente"><a class="header" href="#enviar-informação-de-erro-do-servidor-para-o-cliente">Enviar informação de erro do servidor para o cliente</a></h3>
+<p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
+<ul>
+<li>Comece por aprender sobre ler os materiais sobre o tratamento de erros com gRPC. <em><strong>TODO: passar estes materiais para aqui</strong></em></li>
+</ul>
+<p><em><strong>TODO: rever para ser menos papinha feita</strong></em></p>
+<ul>
+<li>
+<p>Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:</p>
+<pre><code class="language-java">import static io.grpc.Status.INVALID_ARGUMENT;
+...
+</code></pre>
+<p>Verifique se a jogada está fora do tabuleiro e, em caso afirmativo, devolver o erro.</p>
+<pre><code class="language-java">...
+PlayResult result = ttt.play(row, column, player);
+
+if (result == PlayResult.OUT_OF_BOUNDS){
+    responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid position").asRuntimeException());
+}
+else{
+    // Send a single response through the stream.
+    PlayResponse response = PlayResponse.newBuilder().setPlay(result).build();
+    responseObserver.onNext(response);
+    // Notify the client that the operation has been completed.
+    responseObserver.onCompleted();
+} 
+...
+</code></pre>
+</li>
+<li>
+<p>Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:</p>
+<pre><code class="language-java">play_res = null;
+...
+try{
+    play_res =  stub.play(PlayRequest.newBuilder().setRow(row).setColumn(column).setPlayer(player).build()).getPlay();
+    if (play_res != PlayResult.SUCCESS) {
+        displayResult(play_res);
+    }
+}
+catch (StatusRuntimeException e) {
+    System.out.println("Caught exception with description: " + 
+        e.getStatus().getDescription());
+} 
+</code></pre>
+</li>
+</ul>
+<h2 id="implementar-um-método-bloqueante"><a class="header" href="#implementar-um-método-bloqueante">Implementar um método bloqueante</a></h2>
+<p>Vamos agora adicionar uma variante bloqueante da operação checkWinner.</p>
+<ul>
+<li>No ficheiro <code>.proto</code>, acrescente uma nova operação chamada <code>waitForWinner</code>, cujas mensagens de pedido e respostas são idênticas às da operação <code>checkWinner</code>. A grande diferença é que a <code>waitForWinner</code> deve bloquear-se enquanto o jogo não tiver terminado.</li>
+<li>Depois de gerar os novos stubs, acrescente o novo método à classe do servidor.</li>
+<li>Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a>.</li>
+<li>No novo método, use a primitiva <code>wait()</code> para, enquanto o jogo não tenha ainda terminado, a <em>thread</em> que executa esse método se bloquear. Lembre-se que, para chamar <code>wait()</code>, precisa estar dentro de um método (ou bloco) <code>synchronized</code>.</li>
+<li>Precisa também chamar <code>notifyAll()</code> sempre que o estado do jogo muda com uma nova jogada.</li>
+<li>Finalmente, estenda o cliente para também invocar esta nova operação.</li>
+<li>Experimente! Lance um cliente que fará as jogadas. Em paralelo, lance outro cliente que simplesmente invoca <code>waitForWinner</code>.</li>
+</ul>
+<h2 id="já-resolveram-1"><a class="header" href="#já-resolveram-1">Já resolveram?</a></h2>
+<p>Podem conferir a <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc_solution">nossa proposta de resolução</a>.</p>
+<p>Nota: esta solução resolve o conjunto dos exercícios deste guião e <a href="03-grpc.html">do anterior</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="5--grpc-multi-linguagem"><a class="header" href="#5--grpc-multi-linguagem">5.  gRPC: multi-linguagem</a></h1>
+<h2 id="objetivos-desta-aula-4"><a class="header" href="#objetivos-desta-aula-4">Objetivos desta aula:</a></h2>
+<ul>
+<li>Desenvolvimento de aplicações distribuídas com gRPC com múltiplas linguagens de programação.</li>
+<li>Em particular, desenvolvimento de um servidor de nomes que permite publicar e pesquisar serviços gRPC no servidor de nomes</li>
+</ul>
+<h2 id="materiais-de-apoio-à-aula-2"><a class="header" href="#materiais-de-apoio-à-aula-2">Materiais de apoio à aula</a></h2>
+<ul>
+<li>Tutorial de <a href="https://grpc.io/docs/languages/python/basics/">introdução ao gRPC em Python</a></li>
+</ul>
+<hr />
+<h2 id="pré-requisitos"><a class="header" href="#pré-requisitos">Pré-requisitos</a></h2>
+<ul>
+<li>Python 3.5+</li>
+<li>Packages: grpcio, grpcio-tools e venv</li>
+</ul>
+<h2 id="instalação-das-packages"><a class="header" href="#instalação-das-packages">Instalação das <em>packages</em></a></h2>
+<ul>
+<li>
+<p>Windows:</p>
+<ul>
+<li>Correr o seguinte comando para criar um ambiente virtual:</li>
+</ul>
+<p><code>python -m venv .venv</code></p>
+<ul>
+<li>Correr o comando para ativar o ambiente virtual:</li>
+</ul>
+<p><code>.venv\Scripts\activate</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio-tools</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio-tools</code></p>
+<ul>
+<li>Correr o comando para desativar o ambiente virtual:</li>
+</ul>
+<p><code>deactivate</code></p>
+</li>
+<li>
+<p>Linux:</p>
+<ul>
+<li>Correr o seguinte comando para criar um ambiente virtual:</li>
+</ul>
+<p><code>python -m venv .venv</code></p>
+<ul>
+<li>Correr o comando para ativar o ambiente virtual:</li>
+</ul>
+<p><code>source .venv/bin/activate</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio-tools</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio-tools</code></p>
+<ul>
+<li>Correr o comando para desativar o ambiente virtual:</li>
+</ul>
+<p><code>deactivate</code></p>
+</li>
+</ul>
+<h2 id="java-vs-python-grpc"><a class="header" href="#java-vs-python-grpc">Java vs Python gRPC</a></h2>
+<ul>
+<li>
+<p>Começe por fazer Clone ou Download do código fonte do <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage">exemplo de gRPC multi-linguagem</a>.</p>
+</li>
+<li>
+<p>Crie um ambiente virtual na diretoria base seguindo as instruções dadas acima.</p>
+</li>
+<li>
+<p>Na diretoria <code>contract</code>, compile e execute os seguintes comandos:</p>
+<pre><code>mvn install
+mvn exec:exec
+</code></pre>
+<ul>
+<li>Assegure-se que, na sua máquina, o interpretador Python é lançado pelo comando que está indicado na <em>tag</em> <code>executable</code> no POM. Se não for, corrija o valor nessa tag e corra o último comando de novo.</li>
+</ul>
+</li>
+<li>
+<p>Analise a diretoria <code>generated-sources/protobuf</code> e o código gerado nas diretorias <code>java</code> e <code>python</code>.</p>
+</li>
+<li>
+<p>Teste o servidor, executando na diretoria <code>java_server</code> o comando <code>mvn compile exec:java</code>.</p>
+</li>
+<li>
+<p>Teste o cliente, executando na diretoria <code>python_client</code> o comando python <code>client.py</code>.</p>
+</li>
+<li>
+<p>Analise as diferenças e as semelhanças entre os dois clientes java (na pasta <code>java_client</code>) e python (na pasta <code>python_client</code>):</p>
+<ul>
+<li>
+<p>Criação de stubs:</p>
+<ul>
+<li>
+<p>Java:</p>
+<pre><code class="language-java">  final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
+  HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub = HelloWorldServiceGrpc.newBlockingStub(channel);
+</code></pre>
+</li>
+<li>
+<p>Python:</p>
+<pre><code class="language-python">  with grpc.insecure_channel('localhost:8080') as channel:
+      stub = pb2_grpc.HelloWorldServiceStub(channel)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Chamadas aos procedimentos remotos:</p>
+<ul>
+<li>Java:</li>
+</ul>
+<pre><code class="language-java">      HelloWorld.HelloRequest request = HelloWorld.HelloRequest.newBuilder().setName("friend").build();
+      HelloWorld.HelloResponse response = stub.greeting(request);
+</code></pre>
+<ul>
+<li>Python:</li>
+</ul>
+<pre><code class="language-python">      response = stub.greeting(pb2.HelloRequest(name='friend'))
+</code></pre>
+</li>
+<li>
+<p>Termine agora o servidor java e teste o servidor python na pasta <code>python_server</code> correndo o comando <code>python HelloServer.py 8080</code>. Corra ambos os clientes java e python.</p>
+</li>
+<li>
+<p>Analise as diferencças e as semelhanças entre os dois servidores java (na pasta <code>java_server</code>) e python (na pasta <code>python_server</code>):</p>
+<ul>
+<li>
+<p>Adição do serviço ao servidor:</p>
+<ul>
+<li>Java:</li>
+</ul>
+<pre><code class="language-java">  Server server = ServerBuilder.forPort(port).addService(impl).build();;
+</code></pre>
+<ul>
+<li>Python:</li>
+</ul>
+<pre><code class="language-python">  pb2_grpc.add_HelloWorldServiceServicer_to_server(HelloWorldServiceImpl(), server)
+</code></pre>
+</li>
+<li>
+<p>Acesso aos campos dos pedidos:</p>
+<ul>
+<li>Java:</li>
+</ul>
+<pre><code class="language-java">  List hobbies = request.getHobbiesList();
+</code></pre>
+<ul>
+<li>Python:</li>
+</ul>
+<pre><code class="language-python">  hobbies = request.hobbies
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="sobre-a-compilação-do-proto-para-python"><a class="header" href="#sobre-a-compilação-do-proto-para-python">Sobre a compilação do proto para Python</a></h2>
+<p>O comando descrito abaixo gera 2 ficheiros .py na <diretoria-output> indicada: o <nome-do-proto>_pb2.py e o <nome-do-proto>_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven Plugin.</p>
+<pre><code>python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;
+</code></pre>
+<h2 id="exercício-1"><a class="header" href="#exercício-1">Exercício</a></h2>
+<p>Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="grpc-chamadas-assíncronas"><a class="header" href="#grpc-chamadas-assíncronas">gRPC: chamadas assíncronas</a></h1>
+<h2 id="objetivos-desta-aula-5"><a class="header" href="#objetivos-desta-aula-5">Objetivos desta aula:</a></h2>
+<ul>
+<li>Fazer chamadas remotas assíncronas usando <em>stubs</em> não bloqueantes em gRPC</li>
+</ul>
+<hr />
+<h2 id="operações-assíncronas"><a class="header" href="#operações-assíncronas">Operações assíncronas</a></h2>
+<p>Até agora vimos exemplos de chamadas remotas síncronas, usando um <em>stub</em> bloqueante: o cliente faz um pedido ao servidor e fica bloqueado à espera da resposta. Caso o cliente não pretenda ficar bloqueado à espera da resposta do servidor, é possível fazê-lo através de uma <strong>chamada assíncrona</strong>. Neste caso o cliente faz o pedido, continua a executar, e vai receber a resposta mais tarde.</p>
+<p>A forma de fazer chamadas assíncronas é através de um <em>stub</em> diferente, não-bloqueante, no cliente.
+Não é preciso alterar o servidor.</p>
+<h3 id="chamada-remota-assíncrona-em-stub-não-bloqueante"><a class="header" href="#chamada-remota-assíncrona-em-stub-não-bloqueante">Chamada remota assíncrona em <em>stub</em> não bloqueante</a></h3>
+<p>Para fazer este tipo de chamada, é passado, como argumento na chamada do cliente, um objeto de <em>callback</em> do tipo StreamObserver. Quando chega uma resposta, um método do objeto de <em>callback</em> (que foi passado ao <em>stub</em> quando a operação remota foi invocada) será executado.</p>
+<p>O excerto seguinte ilustra a criação e invocação de um <em>stub</em> não bloqueante</p>
+<pre><code class="language-java">final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
+
+// Criamos um *stub* não bloqueante
+HelloWorldServiceGrpc.HelloWorldService*stub* *stub* = HelloWorldServiceGrpc.new*stub*(channel);
+
+[...]
+
+// Fazemos a chamada (assíncrona), passando um objeto de *callback* (HelloObserver implementa StreamObserver)
+*stub*.greeting(request, new HelloObserver());
+
+//O programa continua a sua execução, mesmo antes de chegar alguma resposta ao pedido acima!
+
+[...]
+</code></pre>
+<p>O objeto de tipo <code>StreamObserver</code> precisa implementar três métodos: <code>onNext</code> (executado quando chega uma resposta normal), <code>onError</code> (resposta de erro) e, finalmente, <code>onCompleted</code> (fim).</p>
+<pre><code class="language-java">public class HelloObserver implements StreamObserver {
+    @Override
+    public void onNext(R r) {
+        //Aqui deve estar o código a executar no caso de resposta normal
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        //Aqui deve estar o código a executar no caso de resposta de erro
+    }
+
+    @Override
+    public void onCompleted() {
+        //Aqui deve estar o código a executar no caso do final das respostas
+    }
+}
+</code></pre>
+<h2 id="exercício-2"><a class="header" href="#exercício-2">Exercício</a></h2>
+<ul>
+<li>Analise o código do cliente neste <a href="https://github.com/tecnico-distsys/example_grpc/tree/async">exemplo do uso de gRPC com chamadas assíncronas</a>.</li>
+<li>Experimente correr este projeto e confira o que acontece.</li>
+<li>Compare esse cliente com <a href="https://github.com/tecnico-distsys/example_grpc/compare/main...async">o cliente do exemplo base, que fazia chamadas síncronas através de <em>stub</em> bloqueante</a>.</li>
+</ul>
+<h3 id="vamos-tornar-este-projeto-mais-interessante"><a class="header" href="#vamos-tornar-este-projeto-mais-interessante">Vamos tornar este projeto mais interessante</a></h3>
+<ul>
+<li>Lance 2 processos servidores, um no porto 8080 e outro no porto 8081. Para o segundo, pode fazer <code>mvn exec:java -Dexec.args="8081"</code> (e assim substitui o argumento que está definido no <code>pom.xml</code>).</li>
+<li>Estenda o cliente para passar a ter dois <em>stubs</em> não bloqueantes, cada um ligado a um dos dois servidores.</li>
+<li>Agora que tem 2 <em>stubs</em>, chame o método remoto <code>greeting</code> a ambos. Ao primeiro passe "Alice", ao segundo passe "Bob".</li>
+<li>Experimente executar este novo cliente e confirme que ambas as respostas são impressas assincronamente.</li>
+<li>No servidor, na classe <code>HelloWorldServiceImpl.java</code>, acrescente um atraso pseudo-aleatório no método greeting antes deste retornar a resposta. Sugestão: use <code>Thread.sleep()</code>, passando um número pseudo-aleatório entre 0 e 5000 (milisegundos).</li>
+<li>Experimente de novo lançar os dois servidores e, finalmente, o cliente. Agora deverá observar as respostas a serem impressas em ordens que podem variar de cada vez que executa o cliente.</li>
+</ul>
+<h3 id="ainda-mais-interessante"><a class="header" href="#ainda-mais-interessante">Ainda mais interessante...</a></h3>
+<ul>
+<li>Agora queremos que o cliente, depois de enviar os pedidos a ambos os servidores, se bloqueie até ambas as respostas chegarem. Só nesse momento, é que ele deve imprimir ambas as respostas.</li>
+<li>Isto é possível fazer com <em>stub</em> bloqueante? Veja a resposta no fundo desta página [1]. De qualquer forma, cumprir este objetivo mantendo a solução que compôs até aqui, com <em>stubs</em> não bloqueantes.</li>
+<li><strong>Primeiro objetivo</strong>: acumular as respostas num objeto comum, referenciado pelos objetos de <em>callback</em>.
+<ul>
+<li>Crie uma classe que é capaz de guardar as múltiplas respostas. Pode, por exemplo, chamá-la ResponseCollector.</li>
+<li>Crie uma instância de ResponseCollector e faça com que ambos os objetos de <em>callback</em> passem a manter uma referência a ela (por exemplo, passada pelo método construtor de <code>HelloObserver</code>).</li>
+<li>Altere o método onNext de HelloObserver para, em vez de imprimir a resposta, a adicionar ao objeto <code>ResponseCollector</code>.</li>
+</ul>
+</li>
+<li><strong>Segundo objetivo</strong>: bloquear o cliente até todas as respostas terem sido adicionadas ao objeto ResponseCollector.
+<ul>
+<li>Acrescente um método <code>waitUntilAllReceived</code> na classe <code>ResponseCollector</code>.</li>
+<li>Este método deve bloquear até que o número de respostas acumuladas nesse objeto seja 2. Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a> e implemente a lógica bloqueante pretendida.</li>
+<li>No método <code>Main</code> do cliente, após as duas chamadas assíncronas, chame o método <code>waitUntilAllReceived</code> e, quando este retornar, imprima as respostas guardadas no objeto ResponseCollector.</li>
+<li>Experimente e confirme que a sua solução cumpre o pretendido!</li>
+</ul>
+</li>
+</ul>
+<h3 id="e-ainda-mais-uma-variante"><a class="header" href="#e-ainda-mais-uma-variante">E ainda mais uma variante.</a></h3>
+<ul>
+<li>Adapte a solução que compôs, mas agora para que o cliente só se bloqueie até chegar a primeira resposta (que chegará do servidor que responder mais cedo).</li>
+</ul>
+<h2 id="já-resolveram-2"><a class="header" href="#já-resolveram-2">Já resolveram?</a></h2>
+<p>Podem conferir a <a href="https://github.com/tecnico-distsys/example_grpc/tree/async-solution">nossa proposta de resolução</a>.</p>
+<h2 id="aproveite-o-que-construiu-para-aplicar-no-seu-projeto"><a class="header" href="#aproveite-o-que-construiu-para-aplicar-no-seu-projeto">Aproveite o que construiu para aplicar no seu projeto</a></h2>
+<p>Uma vez bem percebidos os mecanismos de chamadas assíncronas e de sincronização, pode começar a desenhar os próximos passos do projeto.</p>
+<p>No seu projeto também tem operações que implicam enviar um pedido a múltiplos servidores e a esperar ou pelas respostas de todos, ou simplesmente pela resposta mais rápida. Quais operações correspondem a cada caso?</p>
+<p>Se já concluiu o exercício acima, pense como pode incorporar a mesma estratégia no seu projeto.</p>
+<hr />
+<p>[1] Sim, é possível se criarmos múltiplas threads, sendo que cada uma invoca um <em>stub</em> bloqueante. Mesmo que essas threads fiquem bloqueadas até receberem a sua resposta, a thread principal fica livre para continuar a sua execução. No entanto, esta via é tipicamente mais difícil de programar.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

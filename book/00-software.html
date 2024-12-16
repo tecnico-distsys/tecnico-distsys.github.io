@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html lang="pt" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Instalação das ferramentas de desenvolvimento - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2025)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="instalação-das-ferramentas-de-desenvolvimento"><a class="header" href="#instalação-das-ferramentas-de-desenvolvimento">Instalação das ferramentas de desenvolvimento</a></h1>
+<p>As ferramentas de desenvolvimento permitem realizar os exercícios das aulas e depois o projeto.
+Podem ser usadas nos computadores dos laboratórios, mas é também aconselhável instalar no seu computador pessoal.</p>
+<p>Todo o software listado abaixo está disponível em sistemas Windows, Linux e Mac.</p>
+<h3 id="antes-de-começar"><a class="header" href="#antes-de-começar">Antes de começar</a></h3>
+<p>Nos caminhos de ficheiros (<em>paths</em>) em Windows usa-se a barra para trás \ (<em>backslash</em>) como separador; nos caminhos Linux e Mac usa-se a barra para a frente / (<em>slash</em>).</p>
+<p>As instalações seguintes devem ser feitas numa pasta que <strong>não</strong> tenha espaços nem caracteres acentuados no nome, para evitar bugs existentes e ainda não resolvidos, sobretudo nas ferramentas Java em Windows.</p>
+<p>Nome de pasta raiz recomendada: <code>C:\Java</code></p>
+<p>Nomes de pastas a evitar: <code>C:\Program Files</code>, <code>C:\Users\João</code></p>
+<p>Uma alternativa à instalação manual é a utilização de gestores de pacotes (<em>package managers</em>) para a instalação e actualização automática de dependências, da maioria das ferramentas necessárias no vosso sistema operativo:</p>
+<ul>
+<li>Em sistemas Windows o <em>package manager</em> sugerido é o Chocolatey.</li>
+<li>Em sistemas MacOS o <em>package manager</em> sugerido é o Homebrew.</li>
+<li>Em sistemas Linux derivados do Debian, como o Ubuntu, o <em>package manager</em> é o APT (<em>Advanced Packaging Tool</em>).</li>
+</ul>
+<p>A maior parte das ferramentas necessita de configurar <strong>variáveis de ambiente</strong>.
+O procedimento para definir variáveis de ambiente depende do sistema operativo: <a href="http://superuser.com/questions/25037/change-environment-variables-as-standard-user-windows-7">Windows</a>, <a href="http://www.cyberciti.biz/faq/set-environment-variable-linux/">Linux</a> e <a href="http://www.mkyong.com/mac/how-to-set-environment-variables-on-mac-os-x/">Mac</a>.</p>
+<h3 id="software-a-instalar"><a class="header" href="#software-a-instalar">Software a instalar</a></h3>
+<h4 id="1--java-developer-kit-jdk"><a class="header" href="#1--java-developer-kit-jdk">1.  Java Developer Kit (JDK)</a></h4>
+<p>Este é o ambiente para programação na linguagem Java. Inclui o Java Runtime Environment (JRE).</p>
+<ul>
+<li>Obter <a href="https://adoptium.net/?variant=openjdk17&amp;jvmVariant=hotspot">JDK 17 LTS</a></li>
+<li>Instalar</li>
+<li>Configurar:
+<ul>
+<li>Definir variável de ambiente <code>JAVA_HOME</code> com o caminho para a pasta de instalação do JDK</li>
+<li>Acrescentar <code>JAVA_HOME/bin</code> à variável de ambiente `PATH</li>
+<li>Executar comando <code>javac -version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-apache-maven-mvn"><a class="header" href="#2-apache-maven-mvn">2. Apache Maven (MVN)</a></h4>
+<p>Esta é a ferramenta de linha de comando para a gestão do ciclo de vida de uma aplicação, incluindo a gestão de dependências de bibliotecas.</p>
+<ul>
+<li><a href="http://maven.apache.org/download.cgi">Obter a versão estável mais recente do Apache Maven</a>
+<ul>
+<li>Instalar</li>
+<li>Configurar:
+<ul>
+<li>Definir variável de ambiente M2_HOME com o caminho para a pasta de instalação</li>
+<li>Acrescentar <code>M2_HOME/bin</code> à <code>PATH</code></li>
+<li>Executar <code>comando mvn --version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-git"><a class="header" href="#3-git">3. Git</a></h4>
+<p>Ferramenta de linha de comando para fazer controlo de versões.</p>
+<ul>
+<li><a href="http://git-scm.com/download/">Obter a versão estável mais recente do Git</a></li>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Instalar</a></li>
+<li>Configurar:
+<ul>
+<li>Executar comando <code>git --version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-plataforma-de-desenvolvimento-java"><a class="header" href="#4-plataforma-de-desenvolvimento-java">4. Plataforma de desenvolvimento Java</a></h4>
+<p>Existem várias plataformas de desenvolvimento Java à escolha, das quais só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!</p>
+<ul>
+<li>
+<p>IntelliJ IDEA</p>
+<ul>
+<li>Obter a <a href="https://www.jetbrains.com/toolbox-app/">Toolbox</a> da JetBrains para gerir todas as ferramentas JetBrains facilmente.</li>
+<li>Para instalar o Toolbox no Linux, sigam os <a href="https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b">passos</a>. Para instalá-lo no Windows e MacOS, basta executar o executável obtido.</li>
+<li>Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o <a href="https://www.jetbrains.com/shop/eform/students">formulário</a>.</li>
+<li>Após instalarem o IntelliJ, recomendamos instalar o plugin <a href="https://plugins.jetbrains.com/plugin/8527-google-java-format">google-java-format</a> para maior legibilidade do código que produzem.</li>
+</ul>
+</li>
+<li>
+<p>Eclipse IDE for Java Developers</p>
+<ul>
+<li><a href="https://www.eclipse.org/downloads/packages/">Obter a versão estável mais recente do Eclipse IDE for Java Developers</a></li>
+<li>Pode obter o installer e depois especificar que pretende a opção acima.
+Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
+<li>Instalar.
+<ul>
+<li>Se precisar, consulte as <a href="https://www.eclipse.org/downloads/packages/installer">instruções</a>.</li>
+<li>Configurar:
+<ul>
+<li>Especificar o JDK como Standard VM (em vez do JRE)
+Nota: só deverá ser necessário este passo em Windows.
+<ul>
+<li>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add...</li>
+<li>Indicar o caminho até ao diretório do JDK: ex. <code>C:\Java\jdk-17.0.2</code></li>
+<li>Confirmar que as "Installed JREs" apenas fazem referência ao JDK instalado nas opções ativadas</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Visual Studio Code</p>
+<ul>
+<li><a href="https://code.visualstudio.com/download">Obter a versão mais recente</a></li>
+<li>Instalar</li>
+<li>Instalar <a href="https://code.visualstudio.com/docs/languages/java">extensões para programação em Java</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="dúvidas-ou-erros"><a class="header" href="#dúvidas-ou-erros">Dúvidas ou erros?</a></h2>
+<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./faq.html">lista de respostas a perguntas frequentes</a>.</p>
+<p>Se detetar algum erro nas instruções acima, avise-nos!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="01-ferramentas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="01-ferramentas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

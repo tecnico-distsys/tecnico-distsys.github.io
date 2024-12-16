@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html lang="pt" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>gRPC: conceitos base - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2025)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="3--grpc-conceitos-base"><a class="header" href="#3--grpc-conceitos-base">3.  gRPC: conceitos base</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
+<ul>
+<li>Distribuir uma aplicação originalmente centralizada usando o gRPC</li>
+<li>Descrever, em detalhe, os componentes do sistema gRPC</li>
+</ul>
+<h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
+<ul>
+<li><a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">Introdução ao gRPC (slides)</a></li>
+<li><a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a></li>
+<li><a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação de Protocol Buffers</a></li>
+<li><a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a></li>
+</ul>
+<hr />
+<h2 id="antes-de-começar-a-programar-com-grpc"><a class="header" href="#antes-de-começar-a-programar-com-grpc">Antes de começar a programar com gRPC</a></h2>
+<p>Comece por folhear os <a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">slides de introdução ao gRPC</a> que fornecemos acima. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).
+Exercício a resolver até ao fim da aula</p>
+<p>Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.</p>
+<p><img src="./images/ttt.png" alt="Tic Tac Toe" /></p>
+<h3 id="i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe"><a class="header" href="#i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe">I. Começar por uma implementação local do Jogo do Galo/Tic Tac Toe.</a></h3>
+<ul>
+<li>Faça Clone ou Download do <a href="https://github.com/tecnico-distsys/example_ttt">código fonte do jogo</a></li>
+<li>Analise o código do jogo de forma a compreender a implementação.</li>
+<li>Compile e execute o código com o comando: <code>mvn compile exec:java</code></li>
+</ul>
+<h3 id="ii-estudar-a-tecnologia-grpc"><a class="header" href="#ii-estudar-a-tecnologia-grpc">II. Estudar a tecnologia gRPC.</a></h3>
+<p>Pretende-se que a nova versão da aplicação seja dividida em dois processos: servidor e cliente, através do gRPC. Para tal, vamos começar por estudar a tecnologia gRPC.</p>
+<ul>
+<li>Faça Clone ou Download do código fonte do <a href="https://github.com/tecnico-distsys/example_grpc">exemplo gRPC</a></li>
+<li>Veja como a aplicação está estruturada em três módulos: <code>contract</code>, <code>server</code> e <code>client</code>.</li>
+<li>Cada módulo tem um POM próprio.</li>
+</ul>
+<p>Nos passos seguintes, vamos compilar e executar o exemplo seguindo as instruções <code>README.md</code> de cada módulo.</p>
+<ul>
+<li>Comece pelo módulo contract, executando o comando: mvn install. Este comando vai passar pela etapa generate-sources, que vai invocar o protoc, o compilador de protocol buffers que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro .proto.</li>
+<li>Familiarize-se com o código e responda às seguintes questões:
+<ul>
+<li>Onde estão definidas as mensagens trocadas entre o cliente e o servidor?</li>
+<li>Onde estão definidos os procedimentos remotos no servidor?</li>
+<li>Onde estão os ficheiros gerados pelo compilador de Protocol Buffers?</li>
+<li>Onde são feitas as invocações remotas no cliente?</li>
+<li>As invocações remotas são síncronas (bloqueantes) ou assíncronas?</li>
+</ul>
+</li>
+<li>Abra uma consola, entre na diretoria do módulo <code>server</code> e corra o servidor: <code>mvn compile exec:java</code></li>
+<li>Abra uma outra consola, entre na diretoria do módulo <code>client</code> e execute o cliente: <code>mvn compile exec:java</code></li>
+<li>Depois de ver o <code>Hello World</code> a funcionar corretamente no seu computador, avance para o passo seguinte.</li>
+</ul>
+<h3 id="iii-transformar-o-jogo-do-galo-numa-aplicação-cliente-servidor-com-grpc"><a class="header" href="#iii-transformar-o-jogo-do-galo-numa-aplicação-cliente-servidor-com-grpc">III. Transformar o Jogo do Galo numa aplicação cliente-servidor com gRPC</a></h3>
+<p>A aplicação distribuída será organizada em três módulos. À semelhança do exemplo, o contrato irá definir a interface remota, com detalhes sobre as mensagens a trocar. O servidor irá manter o estado do jogo (tabuleiro). O cliente irá ter a interface utilizador na consola.</p>
+<ul>
+<li>
+<p>Faça Clone ou Download do <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc">código inicial do exercício</a></p>
+</li>
+<li>
+<p>Baseando-se no módulo contract da aplicação de exemplo, modifique o ficheiro .proto com as definições necessárias para as chamadas remotas de procedimentos <code>currentBoard</code>, <code>play</code> e <code>checkWinner</code>.</p>
+<ul>
+<li>Sugestão: consulte a documentação dos <a href="https://developers.google.com/protocol-buffers/docs/overview">Protocol Buffers</a>.</li>
+<li>Declare todas as mensagens de pedido e resposta para cada procedimento do jogo. Note que algumas mensagens podem ser vazias, mas devem ser declaradas na mesma.</li>
+<li>Cada campo deve ter uma etiqueta numérica única.</li>
+<li>Complete o serviço TTT com as definições dos procedimentos que definiu (assim como as mensagens que definiu).
+<ul>
+<li>Instale o módulo com o comando <code>mvn install</code>.</li>
+<li>Analise o código Java gerado na pasta <code>target/generated-sources/</code>.
+<ul>
+<li>Onde estão definidas as mensagens?</li>
+<li>E os procedimentos?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Baseando-se no módulo server da aplicação de exemplo, modifique o código inicial do módulo <code>server</code>.</p>
+<ul>
+<li>Confirme que o módulo contract é uma dependência do projeto.</li>
+<li>Modifique a classe <code>TTTServiceImpl</code> de forma a implementar os procedimentos remotos declarados no contrato, utilizando a classe <code>TTTGame</code> (que implementa a lógica do jogo) definida no código base. A classe de implementação do serviço estende a classe do serviço definido no contrato e faz <em>override</em> dos procedimentos declarados no contrato.</li>
+</ul>
+<p>Exemplo de um método:</p>
+<pre><code class="language-java">public class TTTServiceImpl extends TTTGrpc.TTTImplBase {
+    private TTTGame ttt = new TTTGame();
+
+    @Override
+    public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
+        CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(ttt.toString()).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+</code></pre>
+<p>Relembre a mensagem definida no contrato:</p>
+<pre><code class="language-java">message CurrentBoardRequest {
+    // No arguments for this request.
+}
+message CurrentBoardResponse {
+    string board = 1;
+}		
+</code></pre>
+</li>
+<li>
+<p>Confirme que a classe <code>TTTServer</code> inicia um servidor numa porta que recebe como argumento, instanciando a classe de implementação do serviço. Tenha em conta que o acesso a variáveis partilhadas tem de ser sincronizado.</p>
+<ul>
+<li>Porque é que esta sincronização é necessária?</li>
+<li>Onde é que há possibilidade de concorrência?</li>
+</ul>
+</li>
+<li>
+<p>Lance o servidor: <code>mvn compile exec:java</code></p>
+</li>
+<li>
+<p>Por fim, complete o código do módulo <code>client</code>.</p>
+<ul>
+<li>Confirme que o módulo <code>contract</code> é uma dependência do projeto. Confirme que a classe <code>TTTClient</code> instancia um stub do serviço <code>TTT</code> (através de um endereço e porta recebidos como argumentos).</li>
+<li>Adicione as chamadas remotas aos procedimentos <code>play</code> e <code>checkWinner</code> que estão em falta.</li>
+</ul>
+<p>Exemplo de chamada local:</p>
+<pre><code class="language-java">winner = ttt.checkWinner();
+</code></pre>
+<p>Exemplo de chamada remota correspondente:</p>
+<pre><code class="language-java">winner = stub.checkWinner(CheckWinnerRequest.getDefaultInstance()).getResult();
+</code></pre>
+</li>
+<li>
+<p>Experimente jogar remotamente através do cliente construído: <code>mvn compile exec:java</code></p>
+</li>
+</ul>
+<h2 id="já-resolveram"><a class="header" href="#já-resolveram">Já resolveram?</a></h2>
+<p>Podem conferir a <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc_solution">nossa proposta de resolução</a>.</p>
+<p>Nota: esta solução resolve também o exercício do <a href="./04-grpc-erros.html">próximo guião</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="02-java-avancado.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="04-grpc-erros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="02-java-avancado.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="04-grpc-erros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="pt" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Java avançado Ferramentas: Java, Maven, Java IDE; Sockets - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2025)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="2--java-avançado-exceções-concorrência-e-troca-de-mensagens"><a class="header" href="#2--java-avançado-exceções-concorrência-e-troca-de-mensagens">2.  Java avançado (exceções, concorrência e troca de mensagens)</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
+<ul>
+<li>Programação concorrente em Java</li>
+<li>Exceções em Java</li>
+<li>Troca de mensagens usando sockets em Java</li>
+</ul>
+<hr />
+<h2 id="programação-concorrente-em-java"><a class="header" href="#programação-concorrente-em-java">Programação concorrente em Java</a></h2>
+<p>A linguagem Java permite a programação de programas concorrentes com múltiplas <em>threads</em>.</p>
+<p><em><strong>TODO: threads em java</strong></em></p>
+<p>Como as <em>threads</em>  partilham objetos, que os seus dados estão coerentes.
+Caso a sincronização não seja implementada, pode ocorrer interferência entre <em>threads</em>, levando a situações de incoerência nos dados partilhados.
+Por outro lado, a presença de mecanismos de sincronização pode originar contenção quando duas ou mais <em>threads</em> tentam aceder ao mesmo recurso em simultâneo.</p>
+<h3 id="sincronização-em-java"><a class="header" href="#sincronização-em-java">Sincronização em Java</a></h3>
+<p>De seguida resumimos as principais primitivas de sincronização disponíveis em Java.
+Para saber mais sobre este tema, <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html">recomendamos que consulte este tutorial</a>.</p>
+<p>Cada objeto Java tem um trinco lógico (<em>mutex</em>) implícito, que pode ser (implicitamente) adquirido através da primitiva synchronized.</p>
+<p><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html">A primitiva <code>synchronized</code> pode ser aplicada a métodos da classe de um objeto.</a> Ao fazermos isso, qualquer chamada a um método de uma instância dessa classe é executada em exclusão mútua (em relação a outras chamadas concorrentes a outros métodos synchronized da mesma instância).
+Um método sincronizado adquire o trinco implícito do objeto no início de execução e liberta-o no fim.</p>
+<p>O seguinte exemplo mostra uma utilização da sincronização em Java:</p>
+<pre><code class="language-java">public class MySynchronizedCounter {
+   private int c = 0;
+
+   public synchronized void increment() {
+       c++;
+   }
+
+   public synchronized void decrement() {
+       c--;
+   }
+
+   public synchronized int value() {
+       return c;
+   }
+}
+</code></pre>
+<p>Os métodos <code>increment()</code>, <code>decrement()</code> e <code>value()</code> da classe <code>MySynchronizedCounter</code> estão sincronizados. Isto significa que, caso um dos três métodos seja invocado, o trinco do objeto é adquirido, e se houver outra tarefa a tentar aceder a qualquer um deles, ficará bloqueada à espera que o recurso/método seja libertado pela primeira invocação.</p>
+<p>Também é possível usar o synchronized para adquirir o trinco apenas numa parte do código.</p>
+<pre><code class="language-java">    // acquire lock of object referenced by 'this'
+    synchronized (this) {
+
+        // access shared variables protected by lock
+
+    }
+    // release lock
+</code></pre>
+<p>No contexto de uma região <code>synchronized</code>, é também possível <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/guardmeth.html">utilizar variáveis de condição, usando as primitivas <code>wait</code>, <code>notify</code> e <code>notifyAll</code></a>.</p>
+<h3 id="concorrência-com-coleções"><a class="header" href="#concorrência-com-coleções">Concorrência com coleções</a></h3>
+<p>As coleções são objetos que armazenam vários outros objetos. Algumas das coleções mais conhecidas no Java são: <code>ArrayList</code>, <code>LinkedList</code>, <code>HashMap</code>, <code>HashSet</code>, <code>TreeMap</code>, <code>TreeSet</code>, etc.
+Cada coleção implementa uma interface que dita o tipo de acesso esperado:</p>
+<ul>
+<li><code>List</code> é uma lista (preserva a ordem e pode haver repetidos);</li>
+<li><code>Set</code> é um conjunto (sem ordem nem repetidos);</li>
+<li><code>Map</code> estabelece uma associação entre chave e valor;</li>
+<li>etc.</li>
+</ul>
+<p>Por omissão, as coleções não são sincronizadas, pois assim conseguem melhor desempenho sequencial.</p>
+<p>Para situações em que é necessário sincronizar os acessos às coleções, existem versões sincronizadas que apenas permitem um acesso de cada vez.
+Para construir uma coleção sincronizada usa-se um método especial da classe <code>Collections</code>, que cria a nova coleção "embrulhando" uma coleção do mesmo tipo:</p>
+<pre><code class="language-java">    List synchronizedList = Collections.synchronizedList(regularList);
+</code></pre>
+<p>Posteriormente, foram acrescentadas ao Java <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/collections.html">coleções concorrentes</a> (<em>Concurrent Collections</em> no pacote <code>java.util.concurrent</code>), que utilizam estruturas de dados sofisticadas, desenhadas de raiz para garantir a consistência da coleção mesmo quando esta é acedida concorrentemente por muitas tarefas. Exemplos destas coleções concorrentes são: <code>ConcurrentHashMap</code>, <code>CopyOnWriteArrayList</code>, e <code>CopyOnWriteHashSet</code>.
+No exemplo seguinte constroi-se um mapa optimizado para acessos concorrentes:</p>
+<pre><code class="language-java">    Map&lt;String,Object&gt; map = new ConcurrentHashMap&lt;&gt;();
+</code></pre>
+<hr />
+<h2 id="exceções"><a class="header" href="#exceções">Exceções</a></h2>
+<p>O tratamento de exceções é também um aspeto muito importante, e que irá ser especialmente importante para lidar com problemas de comunicação.</p>
+<p>As exceções são usadas na linguagem Java para assinalar que algo não correu como esperado.
+São classes que herdam de <code>java.lang.Exception</code> e cujos objetos podem ser atirados (<em>throw</em>) e apanhados (<em>caught</em>).</p>
+<p>As exceções que herdam de <code>java.lang.RuntimeException</code> (RTE) são chamadas exceções não verificadas (<em>unchecked exceptions</em>). Neste caso, o compilador não obriga o programador a declarar se apanha ou se atira. Por este motivo, qualquer linha de código pode atirar uma exceção destas. A mais conhecida é a <code>NullPointerException</code> (NPE).</p>
+<p>As exceções que herdam de <code>java.lang.Exception</code> são chamadas exceções verificadas (<em>checked exceptions</em>), no sentido, em que a sua utilização é verificada pelo compilador. Nestes casos é preciso explicitar se se apanha a exceção (<em>catch</em>) ou se se lança (<em>throws</em>). Normalmente, se não se vai tentar recuperar a exceção, pode simplesmente dizer que se atira. É preferível atirar do que fazer um falso tratamento de exceção.</p>
+<h3 id="abordagens-ao-tratamento-de-exceções"><a class="header" href="#abordagens-ao-tratamento-de-exceções">Abordagens ao tratamento de exceções</a></h3>
+<p>Podemos ter as seguintes abordagens em relação às exceções:</p>
+<ul>
+<li>Deixar-passar (pass-through)</li>
+<li>Apanhar-e-tratar (catch-and-handle)
+<ul>
+<li>Apanhar-e-ignorar! (swallow!)</li>
+<li>Apanhar-registar-e-atirar (logging)</li>
+<li>Apanhar-embrulhar-e-atirar (wrapping)</li>
+<li>Apanhar-e-recuperar (recovery)</li>
+</ul>
+</li>
+</ul>
+<p>A abordagem 'apanhar-e-ignorar' é claramente errada porque perde informação e torna muito mais difícil diagnosticar e resolver problemas.</p>
+<h3 id="exceções-impressas-na-consola"><a class="header" href="#exceções-impressas-na-consola">Exceções impressas na consola</a></h3>
+<p>Os outputs seguintes foram produzidos por uma aplicação que usa sockets para comunicação, e ilustram diversas situações.</p>
+<p>Na situação abaixo, o servidor tenta criar o socket com um porto fora do intervalo [0;65535].</p>
+<pre><code class="language-java">java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:293)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: Port value out of range: 65536
+	at java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:232)
+	at java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:128)
+	at example.SocketServer.main(SocketServer.java:24)
+    ... 6 more
+</code></pre>
+<p>Na situação abaixo, o cliente tenta ligar ao servidor por meio dum porto incorreto e não consegue.</p>
+<pre><code class="language-java">java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:293)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at java.net.Socket.&lt;init&gt;(Socket.java:434)
+	at java.net.Socket.&lt;init&gt;(Socket.java:211)
+	at example.SocketClient.main(SocketClient.java:32)
+    ... 6 more
+</code></pre>
+<p>As linhas mais importantes dos outputs são as começadas por <em>Caused by</em>. É aí que se podem encontrar as mensagens das exceções. Dado que uma exceção pode ter outra exceção aninhada (<em>cause</em>) pode ser necessário consultar várias linhas para perceber o que causou a exceção de topo.</p>
+<p>As linhas começadas por at indicam o contexto de execução. Observando estas linhas é possível ver o conteúdo da pilha de execução do programa, que diz que parte do código estava a chamar que outra parte.</p>
+<h3 id="código-de-tratamento-de-exceções"><a class="header" href="#código-de-tratamento-de-exceções">Código de tratamento de exceções</a></h3>
+<p>O seguinte código mostra <strong>maus exemplos</strong> de tratamento de exceções.</p>
+<pre><code class="language-java">    // ANTI-padrão 'apanhar-e-ignorar!'
+    // Ignorar a exceção sem dizer nada a ninguém.
+    // Evitar! 
+    try {
+        doSomething();
+        
+    } catch(Exception e) {
+    }
+    
+    ...
+    
+    // ANTI-padrão 'apanhar-imprimir-e-ignorar!' 
+    // Imprimir o stack trace, não resolve nada.
+    // O programa vai "rebentar" mais à frente, onde será mais difícil perceber porquê.
+    // Evitar também! 
+    try {
+        doSomething();
+        
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+</code></pre>
+<p>Ignorar a exceção torna muito mais difícil detetar e corrigir erros no código!</p>
+<p>Vamos então ilustrar alguns <strong>bons exemplos</strong>:</p>
+<pre><code class="language-java">    // padrão 'deixar-passar'
+    // Se a exceção não vai ser tratada, mais vale lançá-la (throws)
+    public static void main(String[] args) throws Exception {
+        doSomething();
+    }
+
+    ...
+    
+    // padrão 'apanhar-imprimir-e-atirar'
+    // Registar onde foi apanhada a exceção, mas voltar a atirá-la para que seja tratada depois
+    try {
+        doSomething();
+    
+    } catch(MyException e) {
+        System.err.println("Caught exception when doing something: " + e);
+        System.err.println("Rethrowing"):
+        throw e;
+    }
+    
+    
+    // padrão 'apanhar-embrulhar-e-atirar'
+    // Apanhar exceção da camada inferior
+    // Envolver com mais contexto (novo tipo, mensagem de erro melhor)
+    // Atirar
+    try {
+        doSomething();
+    
+    } catch(MyLowerLevelException e) {
+        System.err.println("Caught exception when doing something: " + e);
+        System.err.println("Wrapping and throwing, adding meaningful message")
+        throw new MyHigherLevelException("Failed to do something.", e);
+    }
+</code></pre>
+<hr />
+<h2 id="comunicação-usando-sockets-em-java"><a class="header" href="#comunicação-usando-sockets-em-java">Comunicação usando <em>sockets</em> em Java</a></h2>
+<p>O Java disponibiliza uma <a href="https://docs.oracle.com/javase/tutorial/networking/sockets/index.html">biblioteca de sockets</a> que está disponível no pacote <code>java.net</code>.</p>
+<p>Os sockets definem uma interface de programação, mas não definem o conteúdo e significado das mensagens que vão ser trocadas. Para isso é necessário um protocolo de comunicação. Um protocolo é um sistema de regras que define uma convenção para permitir que diferentes entidades troquem informação de forma não ambígua. Assim tem que ser na comunicação em sockets. É preciso "dizer" como é enviado um pedido, quando termina o pedido, quando chega a resposta, quando já foi recebida, e assim por diante.</p>
+<p>Um exemplo de protocolo é o HTTP (<em>HyperText Transfer Protocol</em>), que está na base da comunicação na WWW (<em>World Wide Web</em>).
+Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulouris et al.) sobre a World Wide Web e Sockets.</p>
+<hr />
+<h2 id="exercício-a-resolver-até-ao-fim-da-aula"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula">Exercício a resolver até ao fim da aula</a></h2>
+<p>O ponto de partida para o exercício ilustra a comunicação entre dois programas Java usando a biblioteca de sockets:
+<a href="https://github.com/tecnico-distsys/exercise_java-sockets">Java Sockets</a></p>
+<ol>
+<li>Obter o código: fazer <em>Clone or Download</em>. Temos dois programas que colaboram entre si: servidor e cliente.
+<ul>
+<li>Estudar o código fonte e os ficheiros pom.xml do servidor e do cliente</li>
+<li>Configurar os dois projetos no Java IDE</li>
+<li>Compilar e executar primeiro o servidor e depois o cliente, seguindo as instruções no ficheiro <code>README</code></li>
+</ul>
+</li>
+</ol>
+<p><strong>Problemas</strong>? Observar atentamente as exceções produzidas.</p>
+<ol start="2">
+<li>
+<p>Analisar o output do Maven, em especial as linhas começadas por [WARNING]:</p>
+<ul>
+<li>Qual foi a causa da exceção?</li>
+<li>Que exceção foi lançada?</li>
+<li>Em que linha do código do cliente é que foi lançada a exceção?
+<ul>
+<li>Será um problema na configuração dos argumentos?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Compilar e executar o servidor até funcionar sem erros.</p>
+<ul>
+<li>Em casos mais complicados, pode usar-se o depurador (debugger).</li>
+<li>Problema resolvido? <a href="http://www.phdcomics.com/comics/archive.php?comicid=180">Sim</a> ou <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Keep_Calm_and_Carry_On_Poster.svg/683px-Keep_Calm_and_Carry_On_Poster.svg.png">Não</a> :)</li>
+</ul>
+</li>
+<li>
+<p>Modificar os programas para que o servidor responda ao cliente com uma mensagem de confirmação.</p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="01-ferramentas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="03-grpc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="01-ferramentas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="03-grpc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

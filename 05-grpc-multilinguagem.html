@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Laboratórios de Sistemas Distribuídos (edição 2025) - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+        <title>gRPC: multi-linguagem - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
 
 
         <!-- Custom HTML head -->
@@ -152,45 +152,184 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="laboratórios-de-sistemas-distribuídos"><a class="header" href="#laboratórios-de-sistemas-distribuídos">Laboratórios de Sistemas Distribuídos</a></h1>
-<p>Bem-vinda/o ao site dos materiais laboratoriais da disciplina de Sistemas Distribuídos da
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis36/2024-2025/2-semestre">LEIC-T/LETI</a>
-e
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis236/2024-2025/2-semestre">LEIC-A</a>
-do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tecnico.ulisboa.pt/">Instituto Superior Técnico</a></p>
-<h2 id="antes-das-aulas-arrancarem"><a class="header" href="#antes-das-aulas-arrancarem">Antes das aulas arrancarem</a></h2>
-<p>Começar por <a href="./00-software.html">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
-<h2 id="calendário-de-aulas-de-laboratório"><a class="header" href="#calendário-de-aulas-de-laboratório">Calendário de aulas de laboratório</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr></thead><tbody>
-<tr><td>fev</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td><a href="./01-ferramentas.html">Apresentação e instalação de software</a></td><td><a href="./02-java-avancado.html">Ferramentas: Java, Maven, Java IDE; Sockets</a></td></tr>
-<tr><td>fev</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td></tr>
-<tr><td>mar</td><td>3</td><td>4</td><td>5</td><td>6</td><td>P1</td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td><td>Apoio ao projeto, <strong>Entrega 1</strong></td></tr>
-<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: chamadas assíncronas</a></td><td>Apoio ao projeto</td></tr>
-<tr><td>mar</td><td>17</td><td>18</td><td>19</td><td>20</td><td>P2</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 2</strong></td></tr>
-<tr><td>mar</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
-<tr><td>mar/abr</td><td>31</td><td>1</td><td>2</td><td>3</td><td>P3</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 3</strong></td></tr>
-</tbody></table>
-</div>
-<h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
-<p>Recursos do projeto:</p>
+                        <h1 id="5--grpc-multi-linguagem"><a class="header" href="#5--grpc-multi-linguagem">5.  gRPC: multi-linguagem</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+<li>Desenvolvimento de aplicações distribuídas com gRPC com múltiplas linguagens de programação.</li>
+<li>Em particular, desenvolvimento de um servidor de nomes que permite publicar e pesquisar serviços gRPC no servidor de nomes</li>
 </ul>
-<p>Datas das entregas (via fenix):</p>
+<h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
 <ul>
-<li>1ª entrega: 7 março</li>
-<li>2ª entrega: 21 março</li>
-<li>3ª entrega: 4 abril</li>
+<li>Tutorial de <a href="https://grpc.io/docs/languages/python/basics/">introdução ao gRPC em Python</a></li>
 </ul>
-<p>Hora limite para todas as entregas: 23:59.</p>
+<hr />
+<h2 id="pré-requisitos"><a class="header" href="#pré-requisitos">Pré-requisitos</a></h2>
+<ul>
+<li>Python 3.5+</li>
+<li>Packages: grpcio, grpcio-tools e venv</li>
+</ul>
+<h2 id="instalação-das-packages"><a class="header" href="#instalação-das-packages">Instalação das <em>packages</em></a></h2>
+<ul>
+<li>
+<p>Windows:</p>
+<ul>
+<li>Correr o seguinte comando para criar um ambiente virtual:</li>
+</ul>
+<p><code>python -m venv .venv</code></p>
+<ul>
+<li>Correr o comando para ativar o ambiente virtual:</li>
+</ul>
+<p><code>.venv\Scripts\activate</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio-tools</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio-tools</code></p>
+<ul>
+<li>Correr o comando para desativar o ambiente virtual:</li>
+</ul>
+<p><code>deactivate</code></p>
+</li>
+<li>
+<p>Linux:</p>
+<ul>
+<li>Correr o seguinte comando para criar um ambiente virtual:</li>
+</ul>
+<p><code>python -m venv .venv</code></p>
+<ul>
+<li>Correr o comando para ativar o ambiente virtual:</li>
+</ul>
+<p><code>source .venv/bin/activate</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio</code></p>
+<ul>
+<li>Correr o comando para instalar a package <code>grpcio-tools</code>:</li>
+</ul>
+<p><code>python -m pip install grpcio-tools</code></p>
+<ul>
+<li>Correr o comando para desativar o ambiente virtual:</li>
+</ul>
+<p><code>deactivate</code></p>
+</li>
+</ul>
+<h2 id="java-vs-python-grpc"><a class="header" href="#java-vs-python-grpc">Java vs Python gRPC</a></h2>
+<ul>
+<li>
+<p>Começe por fazer Clone ou Download do código fonte do <a href="https://github.com/tecnico-distsys/example_grpc_multilanguage">exemplo de gRPC multi-linguagem</a>.</p>
+</li>
+<li>
+<p>Crie um ambiente virtual na diretoria base seguindo as instruções dadas acima.</p>
+</li>
+<li>
+<p>Na diretoria <code>contract</code>, compile e execute os seguintes comandos:</p>
+<pre><code>mvn install
+mvn exec:exec
+</code></pre>
+<ul>
+<li>Assegure-se que, na sua máquina, o interpretador Python é lançado pelo comando que está indicado na <em>tag</em> <code>executable</code> no POM. Se não for, corrija o valor nessa tag e corra o último comando de novo.</li>
+</ul>
+</li>
+<li>
+<p>Analise a diretoria <code>generated-sources/protobuf</code> e o código gerado nas diretorias <code>java</code> e <code>python</code>.</p>
+</li>
+<li>
+<p>Teste o servidor, executando na diretoria <code>java_server</code> o comando <code>mvn compile exec:java</code>.</p>
+</li>
+<li>
+<p>Teste o cliente, executando na diretoria <code>python_client</code> o comando python <code>client.py</code>.</p>
+</li>
+<li>
+<p>Analise as diferenças e as semelhanças entre os dois clientes java (na pasta <code>java_client</code>) e python (na pasta <code>python_client</code>):</p>
+<ul>
+<li>
+<p>Criação de stubs:</p>
+<ul>
+<li>
+<p>Java:</p>
+<pre><code class="language-java">  final ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
+  HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stub = HelloWorldServiceGrpc.newBlockingStub(channel);
+</code></pre>
+</li>
+<li>
+<p>Python:</p>
+<pre><code class="language-python">  with grpc.insecure_channel('localhost:8080') as channel:
+      stub = pb2_grpc.HelloWorldServiceStub(channel)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Chamadas aos procedimentos remotos:</p>
+<ul>
+<li>Java:</li>
+</ul>
+<pre><code class="language-java">      HelloWorld.HelloRequest request = HelloWorld.HelloRequest.newBuilder().setName("friend").build();
+      HelloWorld.HelloResponse response = stub.greeting(request);
+</code></pre>
+<ul>
+<li>Python:</li>
+</ul>
+<pre><code class="language-python">      response = stub.greeting(pb2.HelloRequest(name='friend'))
+</code></pre>
+</li>
+<li>
+<p>Termine agora o servidor java e teste o servidor python na pasta <code>python_server</code> correndo o comando <code>python HelloServer.py 8080</code>. Corra ambos os clientes java e python.</p>
+</li>
+<li>
+<p>Analise as diferencças e as semelhanças entre os dois servidores java (na pasta <code>java_server</code>) e python (na pasta <code>python_server</code>):</p>
+<ul>
+<li>
+<p>Adição do serviço ao servidor:</p>
+<ul>
+<li>Java:</li>
+</ul>
+<pre><code class="language-java">  Server server = ServerBuilder.forPort(port).addService(impl).build();;
+</code></pre>
+<ul>
+<li>Python:</li>
+</ul>
+<pre><code class="language-python">  pb2_grpc.add_HelloWorldServiceServicer_to_server(HelloWorldServiceImpl(), server)
+</code></pre>
+</li>
+<li>
+<p>Acesso aos campos dos pedidos:</p>
+<ul>
+<li>Java:</li>
+</ul>
+<pre><code class="language-java">  List hobbies = request.getHobbiesList();
+</code></pre>
+<ul>
+<li>Python:</li>
+</ul>
+<pre><code class="language-python">  hobbies = request.hobbies
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="sobre-a-compilação-do-proto-para-python"><a class="header" href="#sobre-a-compilação-do-proto-para-python">Sobre a compilação do proto para Python</a></h2>
+<p>O comando descrito abaixo gera 2 ficheiros .py na <diretoria-output> indicada: o <nome-do-proto>_pb2.py e o <nome-do-proto>_pb2_grpc.py com classes que representam os tipos de dados das mensagens e com classes de suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven Plugin.</p>
+<pre><code>python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;
+</code></pre>
+<h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
+<p>Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="04-grpc-erros.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="00-software.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="06-grpc-assincronas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -200,8 +339,11 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="04-grpc-erros.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="00-software.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="06-grpc-assincronas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

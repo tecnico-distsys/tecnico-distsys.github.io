@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Laboratórios de Sistemas Distribuídos (edição 2025) - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+        <title>gRPC: tratamento de erros e métodos remotos bloqueantes - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
 
 
         <!-- Custom HTML head -->
@@ -152,45 +152,91 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="laboratórios-de-sistemas-distribuídos"><a class="header" href="#laboratórios-de-sistemas-distribuídos">Laboratórios de Sistemas Distribuídos</a></h1>
-<p>Bem-vinda/o ao site dos materiais laboratoriais da disciplina de Sistemas Distribuídos da
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis36/2024-2025/2-semestre">LEIC-T/LETI</a>
-e
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis236/2024-2025/2-semestre">LEIC-A</a>
-do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tecnico.ulisboa.pt/">Instituto Superior Técnico</a></p>
-<h2 id="antes-das-aulas-arrancarem"><a class="header" href="#antes-das-aulas-arrancarem">Antes das aulas arrancarem</a></h2>
-<p>Começar por <a href="./00-software.html">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
-<h2 id="calendário-de-aulas-de-laboratório"><a class="header" href="#calendário-de-aulas-de-laboratório">Calendário de aulas de laboratório</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr></thead><tbody>
-<tr><td>fev</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td><a href="./01-ferramentas.html">Apresentação e instalação de software</a></td><td><a href="./02-java-avancado.html">Ferramentas: Java, Maven, Java IDE; Sockets</a></td></tr>
-<tr><td>fev</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td></tr>
-<tr><td>mar</td><td>3</td><td>4</td><td>5</td><td>6</td><td>P1</td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td><td>Apoio ao projeto, <strong>Entrega 1</strong></td></tr>
-<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: chamadas assíncronas</a></td><td>Apoio ao projeto</td></tr>
-<tr><td>mar</td><td>17</td><td>18</td><td>19</td><td>20</td><td>P2</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 2</strong></td></tr>
-<tr><td>mar</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
-<tr><td>mar/abr</td><td>31</td><td>1</td><td>2</td><td>3</td><td>P3</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 3</strong></td></tr>
-</tbody></table>
-</div>
-<h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
-<p>Recursos do projeto:</p>
+                        <h1 id="4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes"><a class="header" href="#4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes">4.  gRPC: tratamento de erros e métodos remotos bloqueantes</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+<li>Aprender a enviar e receber erros com gRPC</li>
+<li>Aprender a implementar métodos remotos bloqueantes</li>
 </ul>
-<p>Datas das entregas (via fenix):</p>
+<h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
 <ul>
-<li>1ª entrega: 7 março</li>
-<li>2ª entrega: 21 março</li>
-<li>3ª entrega: 4 abril</li>
+<li>Tratamento de erros com gRPC Concorrência e Sincronização em Java</li>
 </ul>
-<p>Hora limite para todas as entregas: 23:59.</p>
+<hr />
+<h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
+<p>O ponto de partida será a <a href="./03-grpc.html">solução construída pelo seu grupo na aula anterior para o Jogo do Galo em gRPC</a>.</p>
+<p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
+<p>Vamos então começar!</p>
+<h3 id="enviar-informação-de-erro-do-servidor-para-o-cliente"><a class="header" href="#enviar-informação-de-erro-do-servidor-para-o-cliente">Enviar informação de erro do servidor para o cliente</a></h3>
+<p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
+<ul>
+<li>Comece por aprender sobre ler os materiais sobre o tratamento de erros com gRPC. <em><strong>TODO: passar estes materiais para aqui</strong></em></li>
+</ul>
+<p><em><strong>TODO: rever para ser menos papinha feita</strong></em></p>
+<ul>
+<li>
+<p>Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:</p>
+<pre><code class="language-java">import static io.grpc.Status.INVALID_ARGUMENT;
+...
+</code></pre>
+<p>Verifique se a jogada está fora do tabuleiro e, em caso afirmativo, devolver o erro.</p>
+<pre><code class="language-java">...
+PlayResult result = ttt.play(row, column, player);
+
+if (result == PlayResult.OUT_OF_BOUNDS){
+    responseObserver.onError(INVALID_ARGUMENT.withDescription("Input has to be a valid position").asRuntimeException());
+}
+else{
+    // Send a single response through the stream.
+    PlayResponse response = PlayResponse.newBuilder().setPlay(result).build();
+    responseObserver.onNext(response);
+    // Notify the client that the operation has been completed.
+    responseObserver.onCompleted();
+} 
+...
+</code></pre>
+</li>
+<li>
+<p>Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:</p>
+<pre><code class="language-java">play_res = null;
+...
+try{
+    play_res =  stub.play(PlayRequest.newBuilder().setRow(row).setColumn(column).setPlayer(player).build()).getPlay();
+    if (play_res != PlayResult.SUCCESS) {
+        displayResult(play_res);
+    }
+}
+catch (StatusRuntimeException e) {
+    System.out.println("Caught exception with description: " + 
+        e.getStatus().getDescription());
+} 
+</code></pre>
+</li>
+</ul>
+<h2 id="implementar-um-método-bloqueante"><a class="header" href="#implementar-um-método-bloqueante">Implementar um método bloqueante</a></h2>
+<p>Vamos agora adicionar uma variante bloqueante da operação checkWinner.</p>
+<ul>
+<li>No ficheiro <code>.proto</code>, acrescente uma nova operação chamada <code>waitForWinner</code>, cujas mensagens de pedido e respostas são idênticas às da operação <code>checkWinner</code>. A grande diferença é que a <code>waitForWinner</code> deve bloquear-se enquanto o jogo não tiver terminado.</li>
+<li>Depois de gerar os novos stubs, acrescente o novo método à classe do servidor.</li>
+<li>Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a>.</li>
+<li>No novo método, use a primitiva <code>wait()</code> para, enquanto o jogo não tenha ainda terminado, a <em>thread</em> que executa esse método se bloquear. Lembre-se que, para chamar <code>wait()</code>, precisa estar dentro de um método (ou bloco) <code>synchronized</code>.</li>
+<li>Precisa também chamar <code>notifyAll()</code> sempre que o estado do jogo muda com uma nova jogada.</li>
+<li>Finalmente, estenda o cliente para também invocar esta nova operação.</li>
+<li>Experimente! Lance um cliente que fará as jogadas. Em paralelo, lance outro cliente que simplesmente invoca <code>waitForWinner</code>.</li>
+</ul>
+<h2 id="já-resolveram"><a class="header" href="#já-resolveram">Já resolveram?</a></h2>
+<p>Podem conferir a <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc_solution">nossa proposta de resolução</a>.</p>
+<p>Nota: esta solução resolve o conjunto dos exercícios deste guião e <a href="03-grpc.html">do anterior</a>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="03-grpc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="00-software.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="05-grpc-multilinguagem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -200,8 +246,11 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="03-grpc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="00-software.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="05-grpc-multilinguagem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

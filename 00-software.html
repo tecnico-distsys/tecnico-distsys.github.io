@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Laboratórios de Sistemas Distribuídos (edição 2025) - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+        <title>Instalação das ferramentas de desenvolvimento - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
 
 
         <!-- Custom HTML head -->
@@ -152,45 +152,123 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="laboratórios-de-sistemas-distribuídos"><a class="header" href="#laboratórios-de-sistemas-distribuídos">Laboratórios de Sistemas Distribuídos</a></h1>
-<p>Bem-vinda/o ao site dos materiais laboratoriais da disciplina de Sistemas Distribuídos da
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis36/2024-2025/2-semestre">LEIC-T/LETI</a>
-e
-<a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis236/2024-2025/2-semestre">LEIC-A</a>
-do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tecnico.ulisboa.pt/">Instituto Superior Técnico</a></p>
-<h2 id="antes-das-aulas-arrancarem"><a class="header" href="#antes-das-aulas-arrancarem">Antes das aulas arrancarem</a></h2>
-<p>Começar por <a href="./00-software.html">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
-<h2 id="calendário-de-aulas-de-laboratório"><a class="header" href="#calendário-de-aulas-de-laboratório">Calendário de aulas de laboratório</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr></thead><tbody>
-<tr><td>fev</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td><a href="./01-ferramentas.html">Apresentação e instalação de software</a></td><td><a href="./02-java-avancado.html">Ferramentas: Java, Maven, Java IDE; Sockets</a></td></tr>
-<tr><td>fev</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td></tr>
-<tr><td>mar</td><td>3</td><td>4</td><td>5</td><td>6</td><td>P1</td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td><td>Apoio ao projeto, <strong>Entrega 1</strong></td></tr>
-<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: chamadas assíncronas</a></td><td>Apoio ao projeto</td></tr>
-<tr><td>mar</td><td>17</td><td>18</td><td>19</td><td>20</td><td>P2</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 2</strong></td></tr>
-<tr><td>mar</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
-<tr><td>mar/abr</td><td>31</td><td>1</td><td>2</td><td>3</td><td>P3</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 3</strong></td></tr>
-</tbody></table>
-</div>
-<h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
-<p>Recursos do projeto:</p>
+                        <h1 id="instalação-das-ferramentas-de-desenvolvimento"><a class="header" href="#instalação-das-ferramentas-de-desenvolvimento">Instalação das ferramentas de desenvolvimento</a></h1>
+<p>As ferramentas de desenvolvimento permitem realizar os exercícios das aulas e depois o projeto.
+Podem ser usadas nos computadores dos laboratórios, mas é também aconselhável instalar no seu computador pessoal.</p>
+<p>Todo o software listado abaixo está disponível em sistemas Windows, Linux e Mac.</p>
+<h3 id="antes-de-começar"><a class="header" href="#antes-de-começar">Antes de começar</a></h3>
+<p>Nos caminhos de ficheiros (<em>paths</em>) em Windows usa-se a barra para trás \ (<em>backslash</em>) como separador; nos caminhos Linux e Mac usa-se a barra para a frente / (<em>slash</em>).</p>
+<p>As instalações seguintes devem ser feitas numa pasta que <strong>não</strong> tenha espaços nem caracteres acentuados no nome, para evitar bugs existentes e ainda não resolvidos, sobretudo nas ferramentas Java em Windows.</p>
+<p>Nome de pasta raiz recomendada: <code>C:\Java</code></p>
+<p>Nomes de pastas a evitar: <code>C:\Program Files</code>, <code>C:\Users\João</code></p>
+<p>Uma alternativa à instalação manual é a utilização de gestores de pacotes (<em>package managers</em>) para a instalação e actualização automática de dependências, da maioria das ferramentas necessárias no vosso sistema operativo:</p>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+<li>Em sistemas Windows o <em>package manager</em> sugerido é o Chocolatey.</li>
+<li>Em sistemas MacOS o <em>package manager</em> sugerido é o Homebrew.</li>
+<li>Em sistemas Linux derivados do Debian, como o Ubuntu, o <em>package manager</em> é o APT (<em>Advanced Packaging Tool</em>).</li>
 </ul>
-<p>Datas das entregas (via fenix):</p>
+<p>A maior parte das ferramentas necessita de configurar <strong>variáveis de ambiente</strong>.
+O procedimento para definir variáveis de ambiente depende do sistema operativo: <a href="http://superuser.com/questions/25037/change-environment-variables-as-standard-user-windows-7">Windows</a>, <a href="http://www.cyberciti.biz/faq/set-environment-variable-linux/">Linux</a> e <a href="http://www.mkyong.com/mac/how-to-set-environment-variables-on-mac-os-x/">Mac</a>.</p>
+<h3 id="software-a-instalar"><a class="header" href="#software-a-instalar">Software a instalar</a></h3>
+<h4 id="1--java-developer-kit-jdk"><a class="header" href="#1--java-developer-kit-jdk">1.  Java Developer Kit (JDK)</a></h4>
+<p>Este é o ambiente para programação na linguagem Java. Inclui o Java Runtime Environment (JRE).</p>
 <ul>
-<li>1ª entrega: 7 março</li>
-<li>2ª entrega: 21 março</li>
-<li>3ª entrega: 4 abril</li>
+<li>Obter <a href="https://adoptium.net/?variant=openjdk17&amp;jvmVariant=hotspot">JDK 17 LTS</a></li>
+<li>Instalar</li>
+<li>Configurar:
+<ul>
+<li>Definir variável de ambiente <code>JAVA_HOME</code> com o caminho para a pasta de instalação do JDK</li>
+<li>Acrescentar <code>JAVA_HOME/bin</code> à variável de ambiente `PATH</li>
+<li>Executar comando <code>javac -version</code> para confirmar</li>
 </ul>
-<p>Hora limite para todas as entregas: 23:59.</p>
+</li>
+</ul>
+<h4 id="2-apache-maven-mvn"><a class="header" href="#2-apache-maven-mvn">2. Apache Maven (MVN)</a></h4>
+<p>Esta é a ferramenta de linha de comando para a gestão do ciclo de vida de uma aplicação, incluindo a gestão de dependências de bibliotecas.</p>
+<ul>
+<li><a href="http://maven.apache.org/download.cgi">Obter a versão estável mais recente do Apache Maven</a>
+<ul>
+<li>Instalar</li>
+<li>Configurar:
+<ul>
+<li>Definir variável de ambiente M2_HOME com o caminho para a pasta de instalação</li>
+<li>Acrescentar <code>M2_HOME/bin</code> à <code>PATH</code></li>
+<li>Executar <code>comando mvn --version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-git"><a class="header" href="#3-git">3. Git</a></h4>
+<p>Ferramenta de linha de comando para fazer controlo de versões.</p>
+<ul>
+<li><a href="http://git-scm.com/download/">Obter a versão estável mais recente do Git</a></li>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Instalar</a></li>
+<li>Configurar:
+<ul>
+<li>Executar comando <code>git --version</code> para confirmar</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-plataforma-de-desenvolvimento-java"><a class="header" href="#4-plataforma-de-desenvolvimento-java">4. Plataforma de desenvolvimento Java</a></h4>
+<p>Existem várias plataformas de desenvolvimento Java à escolha, das quais só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!</p>
+<ul>
+<li>
+<p>IntelliJ IDEA</p>
+<ul>
+<li>Obter a <a href="https://www.jetbrains.com/toolbox-app/">Toolbox</a> da JetBrains para gerir todas as ferramentas JetBrains facilmente.</li>
+<li>Para instalar o Toolbox no Linux, sigam os <a href="https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b">passos</a>. Para instalá-lo no Windows e MacOS, basta executar o executável obtido.</li>
+<li>Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o <a href="https://www.jetbrains.com/shop/eform/students">formulário</a>.</li>
+<li>Após instalarem o IntelliJ, recomendamos instalar o plugin <a href="https://plugins.jetbrains.com/plugin/8527-google-java-format">google-java-format</a> para maior legibilidade do código que produzem.</li>
+</ul>
+</li>
+<li>
+<p>Eclipse IDE for Java Developers</p>
+<ul>
+<li><a href="https://www.eclipse.org/downloads/packages/">Obter a versão estável mais recente do Eclipse IDE for Java Developers</a></li>
+<li>Pode obter o installer e depois especificar que pretende a opção acima.
+Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalado, ou seja, para o JDK 32 bit, usar o Eclipse 32 bits, para o JDK 64 bit, usar o Eclipse 64 bit.</li>
+<li>Instalar.
+<ul>
+<li>Se precisar, consulte as <a href="https://www.eclipse.org/downloads/packages/installer">instruções</a>.</li>
+<li>Configurar:
+<ul>
+<li>Especificar o JDK como Standard VM (em vez do JRE)
+Nota: só deverá ser necessário este passo em Windows.
+<ul>
+<li>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add...</li>
+<li>Indicar o caminho até ao diretório do JDK: ex. <code>C:\Java\jdk-17.0.2</code></li>
+<li>Confirmar que as "Installed JREs" apenas fazem referência ao JDK instalado nas opções ativadas</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Visual Studio Code</p>
+<ul>
+<li><a href="https://code.visualstudio.com/download">Obter a versão mais recente</a></li>
+<li>Instalar</li>
+<li>Instalar <a href="https://code.visualstudio.com/docs/languages/java">extensões para programação em Java</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="dúvidas-ou-erros"><a class="header" href="#dúvidas-ou-erros">Dúvidas ou erros?</a></h2>
+<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./faq.html">lista de respostas a perguntas frequentes</a>.</p>
+<p>Se detetar algum erro nas instruções acima, avise-nos!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="00-software.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="01-ferramentas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -200,8 +278,11 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="00-software.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="01-ferramentas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

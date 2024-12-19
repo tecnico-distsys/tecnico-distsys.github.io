@@ -39,8 +39,7 @@ Caso ainda não tenha grupo completo:
 
 As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.
 
-Esta página contém textos introdutórios a cada uma das ferramentas e um exercício.
-
+No resto desta aula estudremos cada uma das ferramentas.
 A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse), 
 que entenderemos melhor ao longo desta aula.
 
@@ -57,7 +56,7 @@ As mais importantes são o *javac* que compila os programas e o *java* que lanç
 Os *javac* e *java* são suficientes para construir pequenos programas. No entanto, para programas de maior dimensão, é muito útil ter:
 
 - Uma ferramenta que dê suporte a todas as tarefas de forma integrada, incluíndo a gestão de dependências: Maven.
-- Um ambiente de desenvolvimento (IDE) que apoie o programador em todas as tarefas (por exemplo, IntelliJ, Eclipse, VSCode, ou outro).
+- Um ambiente de desenvolvimento (IDE) que apoie o programador em todas as tarefas (por exemplo, Eclipse, IntelliJ, VSCode, ou outro).
 
 
 
@@ -68,7 +67,9 @@ A ferramenta Maven é a mais importante logo a seguir ao próprio JDK. A utiliza
 
 O Maven desempenha o papel muito importante de automatizar toda a construção do código e de explicitar dependências de outros programas. Todos os programas devem ter a configuração Maven no ficheiro `pom.xml` para que possam ser (re)construídos de forma repetível. Os programas devem ter também um ficheiro `README` com instruções de construção e de execução.
 
-#### Introdução ao Maven
+*Antes de avançar:** No resto desta secção, aprender Maven usando este [projeto de exemplo](https://github.com/tecnico-distsys/example_java-app), que utiliza o Maven para compilar e executar o código Java. Antes de avançar, faça *Clone or Download*.
+
+#### *Project Object Model (POM)*
 
 O Maven é uma ferramenta Java para a gestão de projetos que fornece aos programadores uma estrutura completa para suportar o ciclo de desenvolvimento de uma aplicação. Em particular, o Maven trata da compilação, distribuição, documentação, e colaboração em equipa, entre outras atividades.
 
@@ -133,10 +134,10 @@ A estrutura de um ficheiro POM é a seguinte:
   <profiles>...</profiles>
 </project>
 ```
- 
-Para ilustrar, vamos considerar [este exemplo de projeto Maven](https://github.com/tecnico-distsys/example_java-app).
 
-**Exercício:** Estude cada porção do POM deste exemplo e tente entender o seu significado.
+
+*Experimente:*
+Estude cada porção do POM no nosso exemplo e tente entender o seu significado.
 
  
 #### Estrutura típica de pastas
@@ -148,12 +149,12 @@ Assumindo que ${basedir} corresponde à localização do projeto Maven, a estrut
 - `${basedir}/src/test` - código de teste
 - `${basedir}/target` - A pasta target é temporária e serve para guardar as classes do programa compiladas (`*.class`) e outros ficheiros auxiliares - pode ser descartada a qualquer momento e não deve ser guardada em controlo de versões
 
-**Exercício:** confirme no mesmo exemplo de projeto onde estas pastas se encontram. 
+*Experimente:* confirme no mesmo exemplo de projeto onde estas pastas se encontram. 
 É natural que não encontre todas as pastas, pois nem todas são usadas sempre.
 
  
 
-##### Ciclo de vida e comandos
+#### Ciclo de vida e comandos
 
 Em Maven, o processo de construção é dividido em [ciclos de vida de construção, fases e objetivos](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics). Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos. 
 
@@ -181,10 +182,30 @@ A lista seguinte apresenta alguns dos comandos Maven mais frequentes:
 - `mvn test` - compila o código do programa e executa os testes
 - `mvn verify` - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)
 
-**Exercício:** experimente executar todos os comandos da lista acima com o nosso exemplo. Estude o que se passa em cada um deles. *Nota: os últimos dois comandos não têm efeito neste projeto, pois ele não inclui testes.*
+*Experimente:* experimente executar todos os comandos da lista acima com o nosso exemplo. Estude o que se passa em cada um deles. *Nota: os últimos dois comandos não têm efeito neste projeto, pois ele não inclui testes.*
  
 
-##### Dependências e repositórios
+#### Plugins de construção
+
+Os [plugins de construção (*build plugins*)](http://maven.apache.org/guides/mini/guide-configuring-plugins.html) são utilizados para inserir objetivos adicionais numa fase de *build*, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.
+
+*Experimente:* 
+
+- No nosso POM de exemplo é definido um plugin. 
+  - Onde?
+  - Experimente alterar os valores dos argumentos lá especificados e execute de novo o comando `mvn exec:java`.
+
+- O exemplo tem variantes que podem ser consultadas noutros ramos (*branches*) do Git
+    - `appassembler`: permite gerar scripts de lançamento da aplicação em Linux e Windows
+      - [Ver código alternativo](https://github.com/tecnico-distsys/example_java-app/tree/appassembler) e comparar com [exemplo base](https://github.com/tecnico-distsys/example_java-app/compare/master...appassembler)
+    - `config`: utiliza ficheiro com propriedades de configuração, algumas delas preenchidas dinamicamente pelo Maven
+      - [Ver código alternativo](https://github.com/tecnico-distsys/example_java-app/tree/config) e comparar com [exemplo base](https://github.com/tecnico-distsys/example_java-app/compare/master...config)
+  - Experimente usar estas funcionalidades de ambas as variantes.
+  
+
+
+
+#### Dependências e repositórios
 
 Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto. As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto. 
 
@@ -253,16 +274,12 @@ O `pom.xml` de B e C iriam conter:
 </project>
 ```
 
-Deste modo, sempre que os módulos B e C são construídos, o Maven automaticamente actualiza o módulo A, obtendo fazendo o JAR correspondente ao SNAPSHOT mais recente.
+Deste modo, sempre que os módulos B e C são construídos, o Maven automaticamente actualiza o módulo A, obtendo o JAR correspondente ao SNAPSHOT mais recente.
+
+Experimentaremos esta matéria daqui a algumas aulas, quando precisarmos de compor projetos com módulos e dependências entre eles.
 
 
-##### Plugins de construção
 
-Os [plugins de construção (*build plugins*)](http://maven.apache.org/guides/mini/guide-configuring-plugins.html) são utilizados para inserir objetivos adicionais numa fase de *build*, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.
-
-
-**Exercício: encontre o excerto do POM do nosso exemplo em que é definido um plugin. 
-Experimente alterar os valores dos argumentos lá especificados e execute de novo o comando `mvn exec:java`.
 
 ***
 
@@ -272,7 +289,7 @@ Experimente alterar os valores dos argumentos lá especificados e execute de nov
 Tanto o Eclipse, o IntelliJ como o VSCode podem ser configurados em cima do JDK ou do Maven. 
 Veja abaixo algumas instruções (basta ver para o seu IDE favorito).
 
-- [Maven no IntelliJ](https://www.jetbrains.com/help/idea/maven-support.html)
+
 
 - Maven no Eclipse:
   
@@ -294,32 +311,16 @@ Veja abaixo algumas instruções (basta ver para o seu IDE favorito).
 
 
 
-
+- [Maven no IntelliJ](https://www.jetbrains.com/help/idea/maven-support.html)
 
 - [Maven no Visual Studio Code](https://code.visualstudio.com/docs/java/java-build)
 
-***
 
-## Experimentar
-
-### Exemplo de aplicação Java
-        
-  - Obtenha este [projeto de exemplo](https://github.com/tecnico-distsys/example_java-app), que utiliza o Maven para compilar e executar o código Java.
-  - Para experimentar o código: fazer *Clone or Download* e depois seguir as instruções do `README`
-  - O comando `mvn compile exec:java` compila o programa e executa a classe principal indicada no `pom.xml`
+*Experimente:*
   - Experimente as funcionalidades de depuração (debug) do seu IDE favorito:
     - Criar um ponto de paragem (breakpoint) no programa e fazer debug
     - Alterar os argumentos do programa (-Dexec.args="(...)" pode ser usado para especificar os argumentos do programa quando executado através do comando mvn) e inspecionar as variáveis durante a execução
-  - O exemplo tem variantes que podem ser consultadas noutros ramos (*branches*) do Git
-    - `appassembler`: permite gerar scripts de lançamento da aplicação em Linux e Windows
-      - [Ver código alternativo](https://github.com/tecnico-distsys/example_java-app/tree/appassembler) e comparar com [exemplo base](https://github.com/tecnico-distsys/example_java-app/compare/master...appassembler)
-    - `config`: utiliza ficheiro com propriedades de configuração, algumas delas preenchidas dinamicamente pelo Maven
-      - [Ver código alternativo](https://github.com/tecnico-distsys/example_java-app/tree/config) e comparar com [exemplo base](https://github.com/tecnico-distsys/example_java-app/compare/master...config)
 
-### Exemplo de biblioteca Java GitHub
-  - [Obtenha o projeto](https://github.com/tecnico-distsys/example_java-lib) 
-  - Este projeto permite agrupar um conjunto de classes comuns, que podem depois ser reutilizadas por outros programas
-  - Para experimentar o código: fazer *Clone or Download* e depois seguir as instruções do `README`
-  - O comando `mvn install` disponibiliza o módulo no repositório local
-  - O módulo instalado pode depois ser usado como dependência (*dependency*) através das coordenadas (groupId, artifactId, e version).
+  
+
 

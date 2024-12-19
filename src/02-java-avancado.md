@@ -14,7 +14,24 @@
 
 A linguagem Java permite a programação de programas concorrentes com múltiplas *threads*.
 
-***TODO: threads em java***
+Aqui está um exemplo de um programa que, no seu método `Main`, cria e inicia uma *thread*.
+A *thread* é um objeto que implementa `Runnable`. 
+
+```java
+public class HelloRunnable implements Runnable {
+
+    public void run() {
+        System.out.println("Hello from a thread!");
+    }
+
+    public static void main(String args[]) {
+        (new Thread(new HelloRunnable())).start();
+    }
+
+}
+```
+
+Para saber mais, consulte [esta documentação](https://docs.oracle.com/javase/tutorial/essential/concurrency/runthread.html).
 
 
 Como as *threads*  partilham objetos, que os seus dados estão coerentes.
@@ -282,6 +299,10 @@ O ponto de partida para o exercício ilustra a comunicação entre dois programa
 
 4. Modificar os programas para que o servidor responda ao cliente com uma mensagem de confirmação.
 
-
-
+5. Estenda o programa com uma *thread* que conta os pedidos em *background*:
+    - Crie a nova *thread* no início da execução do método `Main`. Crie também um objeto da classe `Integer`, que deve ser passado à nova *thread* quando esta é criada. Esse objeto será um contador partilhado entre ambas as *threads*. 
+    - Sempre que a *thread* principal recebe um pedido, deve incrementar o contador. Como este é partilhado, é preciso assegurar a necessária sincronização.
+    - Por outro lado, programe o método `run` da nova *thread* de forma a que esta se bloqueie até que o contador atinja 
+    múltiplos de 3. Sempre que tal acontece, a *thread* deve imprimir uma mensagem com o valor do contador e voltar a bloquear-se 
+    até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lógica, deve usar `wait` e `notify`.
 

@@ -162,7 +162,21 @@
 <hr />
 <h2 id="programação-concorrente-em-java"><a class="header" href="#programação-concorrente-em-java">Programação concorrente em Java</a></h2>
 <p>A linguagem Java permite a programação de programas concorrentes com múltiplas <em>threads</em>.</p>
-<p><em><strong>TODO: threads em java</strong></em></p>
+<p>Aqui está um exemplo de um programa que, no seu método <code>Main</code>, cria e inicia uma <em>thread</em>.
+A <em>thread</em> é um objeto que implementa <code>Runnable</code>.</p>
+<pre><code class="language-java">public class HelloRunnable implements Runnable {
+
+    public void run() {
+        System.out.println("Hello from a thread!");
+    }
+
+    public static void main(String args[]) {
+        (new Thread(new HelloRunnable())).start();
+    }
+
+}
+</code></pre>
+<p>Para saber mais, consulte <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/runthread.html">esta documentação</a>.</p>
 <p>Como as <em>threads</em>  partilham objetos, que os seus dados estão coerentes.
 Caso a sincronização não seja implementada, pode ocorrer interferência entre <em>threads</em>, levando a situações de incoerência nos dados partilhados.
 Por outro lado, a presença de mecanismos de sincronização pode originar contenção quando duas ou mais <em>threads</em> tentam aceder ao mesmo recurso em simultâneo.</p>
@@ -381,6 +395,16 @@ Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulour
 </li>
 <li>
 <p>Modificar os programas para que o servidor responda ao cliente com uma mensagem de confirmação.</p>
+</li>
+<li>
+<p>Estenda o programa com uma <em>thread</em> que conta os pedidos em <em>background</em>:</p>
+<ul>
+<li>Crie a nova <em>thread</em> no início da execução do método <code>Main</code>. Crie também um objeto da classe <code>Integer</code>, que deve ser passado à nova <em>thread</em> quando esta é criada. Esse objeto será um contador partilhado entre ambas as <em>threads</em>.</li>
+<li>Sempre que a <em>thread</em> principal recebe um pedido, deve incrementar o contador. Como este é partilhado, é preciso assegurar a necessária sincronização.</li>
+<li>Por outro lado, programe o método <code>run</code> da nova <em>thread</em> de forma a que esta se bloqueie até que o contador atinja
+múltiplos de 3. Sempre que tal acontece, a <em>thread</em> deve imprimir uma mensagem com o valor do contador e voltar a bloquear-se
+até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lógica, deve usar <code>wait</code> e <code>notify</code>.</li>
+</ul>
 </li>
 </ol>
 

@@ -244,17 +244,12 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
 </li>
 </ul>
 <h4 id="4-plataforma-de-desenvolvimento-java"><a class="header" href="#4-plataforma-de-desenvolvimento-java">4. Plataforma de desenvolvimento Java</a></h4>
-<p>Existem várias plataformas de desenvolvimento Java à escolha, das quais só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!</p>
+<p>Existem várias plataformas de desenvolvimento Java à escolha.</p>
+<p>Só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!</p>
+<p>No entanto, devem ter em atenção que os recursos disponíveis neste site dos laboratórios de SD
+assumem o Eclipse como IDE por omissão.
+Portanto, encontrarão mais documentação e apoio a esse IDE.</p>
 <ul>
-<li>
-<p>IntelliJ IDEA</p>
-<ul>
-<li>Obter a <a href="https://www.jetbrains.com/toolbox-app/">Toolbox</a> da JetBrains para gerir todas as ferramentas JetBrains facilmente.</li>
-<li>Para instalar o Toolbox no Linux, sigam os <a href="https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b">passos</a>. Para instalá-lo no Windows e MacOS, basta executar o executável obtido.</li>
-<li>Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o <a href="https://www.jetbrains.com/shop/eform/students">formulário</a>.</li>
-<li>Após instalarem o IntelliJ, recomendamos instalar o plugin <a href="https://plugins.jetbrains.com/plugin/8527-google-java-format">google-java-format</a> para maior legibilidade do código que produzem.</li>
-</ul>
-</li>
 <li>
 <p>Eclipse IDE for Java Developers</p>
 <ul>
@@ -281,6 +276,15 @@ Nota: só deverá ser necessário este passo em Windows.
 </ul>
 </li>
 <li>
+<p>IntelliJ IDEA</p>
+<ul>
+<li>Obter a <a href="https://www.jetbrains.com/toolbox-app/">Toolbox</a> da JetBrains para gerir todas as ferramentas JetBrains facilmente.</li>
+<li>Para instalar o Toolbox no Linux, sigam os <a href="https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b">passos</a>. Para instalá-lo no Windows e MacOS, basta executar o executável obtido.</li>
+<li>Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o <a href="https://www.jetbrains.com/shop/eform/students">formulário</a>.</li>
+<li>Após instalarem o IntelliJ, recomendamos instalar o plugin <a href="https://plugins.jetbrains.com/plugin/8527-google-java-format">google-java-format</a> para maior legibilidade do código que produzem.</li>
+</ul>
+</li>
+<li>
 <p>Visual Studio Code</p>
 <ul>
 <li><a href="https://code.visualstudio.com/download">Obter a versão mais recente</a></li>
@@ -290,7 +294,7 @@ Nota: só deverá ser necessário este passo em Windows.
 </li>
 </ul>
 <h2 id="dúvidas-ou-erros"><a class="header" href="#dúvidas-ou-erros">Dúvidas ou erros?</a></h2>
-<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./faq.html">lista de respostas a perguntas frequentes</a>.</p>
+<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./00-software-faq.html">lista de respostas a perguntas frequentes</a>.</p>
 <p>Se detetar algum erro nas instruções acima, avise-nos!</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="1-apresentação-e-ferramentas-java-maven-ide"><a class="header" href="#1-apresentação-e-ferramentas-java-maven-ide">1. Apresentação e ferramentas (Java, Maven, IDE)</a></h1>
 <h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
@@ -341,8 +345,9 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 <p>O Maven desempenha o papel muito importante de automatizar toda a construção do código e de explicitar dependências de outros programas. Todos os programas devem ter a configuração Maven no ficheiro <code>pom.xml</code> para que possam ser (re)construídos de forma repetível. Os programas devem ter também um ficheiro <code>README</code> com instruções de construção e de execução.</p>
 <h4 id="introdução-ao-maven"><a class="header" href="#introdução-ao-maven">Introdução ao Maven</a></h4>
 <p>O Maven é uma ferramenta Java para a gestão de projetos que fornece aos programadores uma estrutura completa para suportar o ciclo de desenvolvimento de uma aplicação. Em particular, o Maven trata da compilação, distribuição, documentação, e colaboração em equipa, entre outras atividades.</p>
-<p>A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<em>Project Object Model</em>) <code>pom.xml</code>, que é a unidade fundamental deste sistema. Cada POM descreve um módulo.</p>
-<p>Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documentação</a>):</p>
+<p>A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<em>Project Object Model</em>) <code>pom.xml</code>, que é a unidade fundamental deste sistema. Cada POM descreve um módulo.
+A [documentação sobre POM, pode ser consultada aqui].(http://maven.apache.org/pom.html)</p>
+<p>A estrutura de um ficheiro POM é a seguinte:</p>
 <pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -398,41 +403,8 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
   &lt;profiles&gt;...&lt;/profiles&gt;
 &lt;/project&gt;
 </code></pre>
-<p>Exemplo de ficheiro POM:</p>
-<pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
-  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-  &lt;!-- http://maven.apache.org/pom.html#Quick_Overview --&gt;
-
-  &lt;!-- The Basics --&gt;
-  &lt;groupId&gt;example&lt;/groupId&gt;
-  &lt;artifactId&gt;java-app&lt;/artifactId&gt;
-  &lt;packaging&gt;jar&lt;/packaging&gt;
-  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
-  &lt;name&gt;java-app&lt;/name&gt;
-  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
-  
-  &lt;!-- Build Settings --&gt;
-  &lt;build&gt;
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.10&lt;/version&gt;
-        &lt;configuration&gt;
-          &lt;programs&gt;
-            &lt;program&gt;
-              &lt;mainClass&gt;mypackage.MyClass&lt;/mainClass&gt;
-              &lt;id&gt;java-app&lt;/id&gt;
-            &lt;/program&gt;
-          &lt;/programs&gt;
-        &lt;/configuration&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-  &lt;/build&gt;
-
-&lt;/project&gt;
-</code></pre>
+<p>Para ilustrar, vamos considerar <a href="https://github.com/tecnico-distsys/example_java-app">este exemplo de projeto Maven</a>.</p>
+<p><strong>Exercício:</strong> Estude cada porção do POM deste exemplo e tente entender o seu significado.</p>
 <h4 id="estrutura-típica-de-pastas"><a class="header" href="#estrutura-típica-de-pastas">Estrutura típica de pastas</a></h4>
 <p>Assumindo que ${basedir} corresponde à localização do projeto Maven, a estrutura de pastas associada é a seguinte:</p>
 <ul>
@@ -441,19 +413,11 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 <li><code>${basedir}/src/test</code> - código de teste</li>
 <li><code>${basedir}/target</code> - A pasta target é temporária e serve para guardar as classes do programa compiladas (<code>*.class</code>) e outros ficheiros auxiliares - pode ser descartada a qualquer momento e não deve ser guardada em controlo de versões</li>
 </ul>
-<h4 id="comandos-mais-frequentes"><a class="header" href="#comandos-mais-frequentes">Comandos mais frequentes</a></h4>
-<p>A lista seguinte apresenta alguns dos comandos Maven mais frequentes:</p>
-<ul>
-<li><code>mvn clean</code> - limpa a pasta temporária</li>
-<li><code>mvn compile</code> - compila o código do programa</li>
-<li><code>mvn compile exec:java</code> - compila o código do programa e executa a classe definida como principal no <code>pom.xml</code></li>
-<li><code>mvn test</code> - compila o código do programa e executa os testes</li>
-<li><code>mvn verify</code> - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)</li>
-</ul>
-<h4 id="conceitos-fundamentais"><a class="header" href="#conceitos-fundamentais">Conceitos fundamentais</a></h4>
-<h5 id="ciclos-de-vida-de-construção-fases-e-objetivos-documentação"><a class="header" href="#ciclos-de-vida-de-construção-fases-e-objetivos-documentação">Ciclos de vida de construção, fases e objetivos (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics">documentação</a>)</a></h5>
-<p>Em Maven, o processo de construção é dividido em ciclos de vida de construção, fases e objetivos. Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos.</p>
-<p>Por exemplo, o ciclo default inclui as seguintes fases (lista completa de fases):</p>
+<p><strong>Exercício:</strong> confirme no mesmo exemplo de projeto onde estas pastas se encontram.
+É natural que não encontre todas as pastas, pois nem todas são usadas sempre.</p>
+<h5 id="ciclo-de-vida-e-comandos"><a class="header" href="#ciclo-de-vida-e-comandos">Ciclo de vida e comandos</a></h5>
+<p>Em Maven, o processo de construção é dividido em <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics">ciclos de vida de construção, fases e objetivos</a>. Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos.</p>
+<p>Por exemplo, o ciclo <em>default</em> inclui as seguintes fases (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference">lista completa de fases</a>):</p>
 <ul>
 <li><em>validate</em> - verifica se projecto está correcto e toda a informação está disponível</li>
 <li><em>compile</em> - compila o código fonte</li>
@@ -466,18 +430,26 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 </ul>
 <p>Uma execução no Maven consiste em passar um argumento ao executável <code>mvn</code>. Este argumento corresponde ao nome dum ciclo de vida de construção, fase ou objetivo.</p>
 <p>Se um ciclo de vida solicitado é executado, todas as fases de construção deste ciclo de vida são executadas. Por conseguinte, se uma fase de construção solicitada é executada, todas as fases de construção que a antecedem na sequência pré-definida de fases de construção são também executadas.</p>
-<p>Por exemplo, executar
-<code>mvn install</code>
-irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- antes de empacotar e instalar o módulo no repositório local.</p>
+<p>A lista seguinte apresenta alguns dos comandos Maven mais frequentes:</p>
+<ul>
+<li><code>mvn clean</code> - limpa a pasta temporária</li>
+<li><code>mvn compile</code> - compila o código do programa</li>
+<li><code>mvn compile exec:java</code> - compila o código do programa e executa a classe definida como principal no <code>pom.xml</code></li>
+<li><code>mvn test</code> - compila o código do programa e executa os testes</li>
+<li><code>mvn verify</code> - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)</li>
+</ul>
+<p><strong>Exercício:</strong> experimente executar todos os comandos da lista acima com o nosso exemplo. Estude o que se passa em cada um deles. <em>Nota: os últimos dois comandos não têm efeito neste projeto, pois ele não inclui testes.</em></p>
 <h5 id="dependências-e-repositórios"><a class="header" href="#dependências-e-repositórios">Dependências e repositórios</a></h5>
-<p>Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto. As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto. Se as dependências não forem encontrados no repositório local, isto é, numa pasta no disco rígido do computador local, o Maven descarrega-as de um repositório central para o repositório local. Por omissão, o repositório local encontra-se na pasta <code>%USER_HOME%</code>. Contudo, é possível especificar um repositório local onde Maven irá guardar os artefactos.</p>
+<p>Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto. As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto.</p>
+<p>Se as dependências não forem encontrados no repositório local, isto é, numa pasta no disco rígido do computador local, o Maven descarrega-as de um repositório central para o repositório local.</p>
+<p>Por omissão, o repositório local encontra-se na pasta <code>%USER_HOME%</code>.</p>
+<p>Contudo, é possível especificar um repositório local onde Maven irá guardar os artefactos. Por exemplo:</p>
 <pre><code class="language-xml">&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
     &lt;localRepository&gt;C:/RepositorioLocal&lt;/localRepository&gt;
     ...
 </code></pre>
-<p><em><strong>TODO: substituir por outro plugin</strong></em></p>
 <p>Um exemplo de uma dependência é o JUnit, que como pode ser vista abaixo.</p>
 <pre><code class="language-xml">&lt;project&gt;
   ...
@@ -491,7 +463,7 @@ irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- ante
 &lt;/project&gt;
 </code></pre>
 <p>Os três primeiros campos identificam a dependência. O parâmetro scope especifica que a dependência apenas existe para os testes. Isto significa que o Maven vai providenciar um <em>classpath</em> sem o JUnit para compilação do código principal e um <em>classpath</em> com o JUnit (na versão indicada) para compilação e execução do código de testes.</p>
-<p>As dependências podem ser pesquisadas no motor de pesquisa amigável do repositório central Maven. Por exemplo, o JUnit 4.12 tem a seguinte página informativa: http://mvnrepository.com/artifact/junit/junit/4.12</p>
+<p>As dependências podem ser pesquisadas em motores de pesquisa <a href="https://mvnrepository.com/">como este repositório</a>.</p>
 <p>Para o caso de projetos em desenvolvimento com inúmeros módulos (por exemplo: módulos A, B e C), com dependências entre eles, o conceito de <em>SNAPSHOT</em> é muitas vezes usado. Se um módulo A está em desenvolvimento rápido, e a criar novas versões com muita frequência, o sufixo <code>-SNAPSHOT</code> é adicionado no elemento <code>&lt;version&gt;</code>.</p>
 <p>Exemplo do <code>pom.xml</code> de A:</p>
 <pre><code class="language-xml">&lt;project&gt;
@@ -517,30 +489,10 @@ irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- ante
 &lt;/project&gt;
 </code></pre>
 <p>Deste modo, sempre que os módulos B e C são construídos, o Maven automaticamente actualiza o módulo A, obtendo fazendo o JAR correspondente ao SNAPSHOT mais recente.</p>
-<h5 id="plugins-de-construção-documentação"><a class="header" href="#plugins-de-construção-documentação">Plugins de construção (<a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">documentação</a>)</a></h5>
-<p>Os plugins de construção são utilizados para inserir objetivos adicionais numa fase de construção, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.</p>
-<p>Damos como exemplo o <em>plugin</em> <code>AppAssembler</code>:</p>
-<pre><code class="language-xml">&lt;build&gt;
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.10&lt;/version&gt;
-        &lt;configuration&gt;
-          &lt;programs&gt;
-            &lt;program&gt;
-              &lt;mainClass&gt;mypackage.MyClass&lt;/mainClass&gt;
-              &lt;id&gt;java-app&lt;/id&gt;
-            &lt;/program&gt;
-          &lt;/programs&gt;
-        &lt;/configuration&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-&lt;/build&gt;
-</code></pre>
-<p>Este plugin é usado para criar um script de arranque do programa, tanto para Windows (ficheiro <code>.bat</code>) como para Linux (ficheiro com o atributo executável definido). Neste caso, o programa a executar é um programa de exemplo (<code>java-app</code>) cuja classe principal se chama <code>mypackage.MyClass</code>.</p>
-<h5 id="perfis-de-construção"><a class="header" href="#perfis-de-construção">Perfis de construção</a></h5>
-<p>Os perfis de construção são utilizados caso seja necessário construir um projeto de maneira diferente. Por exemplo, pode ser necessário construir num computador pessoal projetos para desenvolvimento e teste. Pode ainda ser necesssário construí-los para um ambiente de produção. Estas versões poderão ser diferentes. Para permitir diferentes versões, diferentes perfis de construção podem ser adicionados aos ficheiros POM. Durante a execução pode ser especificado que perfil de construção deve ser usado.</p>
+<h5 id="plugins-de-construção"><a class="header" href="#plugins-de-construção">Plugins de construção</a></h5>
+<p>Os <a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">plugins de construção (<em>build plugins</em>)</a> são utilizados para inserir objetivos adicionais numa fase de <em>build</em>, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.</p>
+<p>**Exercício: encontre o excerto do POM do nosso exemplo em que é definido um plugin.
+Experimente alterar os valores dos argumentos lá especificados e execute de novo o comando <code>mvn exec:java</code>.</p>
 <hr />
 <h3 id="java-ide"><a class="header" href="#java-ide">Java IDE</a></h3>
 <p>Tanto o Eclipse, o IntelliJ como o VSCode podem ser configurados em cima do JDK ou do Maven.
@@ -1321,6 +1273,143 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 <p>Se já concluiu o exercício acima, pense como pode incorporar a mesma estratégia no seu projeto.</p>
 <hr />
 <p>[1] Sim, é possível se criarmos múltiplas threads, sendo que cada uma invoca um <em>stub</em> bloqueante. Mesmo que essas threads fiquem bloqueadas até receberem a sua resposta, a thread principal fica livre para continuar a sua execução. No entanto, esta via é tipicamente mais difícil de programar.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="perguntas-frequentes-sobre-as-ferramentas"><a class="header" href="#perguntas-frequentes-sobre-as-ferramentas">Perguntas frequentes sobre as ferramentas</a></h1>
+<h2 id="perguntas-sobre-java"><a class="header" href="#perguntas-sobre-java">Perguntas sobre Java</a></h2>
+<h3 id="importante-existe-alguma-restrição-sobre-a-directoria-de-instalação-do-software"><a class="header" href="#importante-existe-alguma-restrição-sobre-a-directoria-de-instalação-do-software">[IMPORTANTE] Existe alguma restrição sobre a directoria de instalação do software?</a></h3>
+<p>Sim, infelizmente devido a diversos bugs em ferramentas, o software não funciona corretamente em pastas cujo caminho tenha espaços e/ou caracteres acentuados (sobretudo em Windows). Exemplos de pastas problemáticas:</p>
+<p><code>C:\program files</code>
+<code>C:\users\André</code>
+<code>C:\users\Alice Silva</code></p>
+<p>Dado este problema a sugestão é instalar o software numa pasta sem acentos nem espaços, como <code>C:\java\</code>.</p>
+<h3 id="devem-se-instalar-exatamente-as-versões-pedidas-ou-podem-ser-outras"><a class="header" href="#devem-se-instalar-exatamente-as-versões-pedidas-ou-podem-ser-outras">Devem-se instalar exatamente as versões pedidas ou podem ser outras?</a></h3>
+<p>Sim, devem procurar instalar as versões pedidas de forma a terem um ambiente igual (ou o mais parecido possível) com o ambiente de referência (dos laboratórios).</p>
+<p>Se não for possível encontrar a versão exata, pode-se instalar a versão mais próxima disponível.</p>
+<h3 id="como-confirmar-se-estou-a-usar-as-versões-certas-das-ferramentas"><a class="header" href="#como-confirmar-se-estou-a-usar-as-versões-certas-das-ferramentas">Como confirmar se estou a usar as versões certas das ferramentas?</a></h3>
+<p>Abrir uma consola e executar os seguintes comandos:</p>
+<pre><code>$ java -version`
+$ javac -version
+$ mvn -version
+</code></pre>
+<h3 id="pergunta-na-rnl-laboratórios-da-alameda-que-versões-do-java-estão-disponíveis-e-como-as-posso-usar"><a class="header" href="#pergunta-na-rnl-laboratórios-da-alameda-que-versões-do-java-estão-disponíveis-e-como-as-posso-usar">Pergunta: Na RNL (laboratórios da Alameda), que versões do Java estão disponíveis e como as posso usar?</a></h3>
+<p>Ver resposta na <a href="https://rnl.tecnico.ulisboa.pt/laboratorios/software">página da RNL</a>.</p>
+<h3 id="como-confirmar-se-o-path-está-correcto"><a class="header" href="#como-confirmar-se-o-path-está-correcto">Como confirmar se o PATH está correcto?</a></h3>
+<ul>
+<li>Abrir uma consola Linux e executar <code>$ echo $PATH</code></li>
+<li>Abrir uma consola Windows e executar <code>$ echo %PATH%</code></li>
+</ul>
+<h3 id="como-resolver-o-seguinte-problema-na-compilação-exception-in-thread-main-javalangerror-unresolved-compilation-problems"><a class="header" href="#como-resolver-o-seguinte-problema-na-compilação-exception-in-thread-main-javalangerror-unresolved-compilation-problems">Como resolver o seguinte problema na compilação? <code>Exception in thread "main" java.lang.Error: Unresolved compilation problems</code></a></h3>
+<p>As classes foram corrompidas por diferentes compiladores em simultâneo (por ex. Eclipse e Maven).
+Para corrigir ir a Eclipse -&gt; Menu 'Project', 'Clean', 'clean all projects". Depois, correr mvn clean.</p>
+<hr />
+<h2 id="perguntas-sobre-maven"><a class="header" href="#perguntas-sobre-maven">Perguntas sobre Maven</a></h2>
+<h3 id="o-meu-nome-de-utilizador-tem-acentos-ou-espaços-e-preciso-de-mudar-a-localização-do-repositório-local-maven-como-se-faz"><a class="header" href="#o-meu-nome-de-utilizador-tem-acentos-ou-espaços-e-preciso-de-mudar-a-localização-do-repositório-local-maven-como-se-faz">O meu nome de utilizador tem acentos ou espaços e preciso de mudar a localização do repositório local Maven. Como se faz?</a></h3>
+<p>O repositório local do Maven é a pasta onde são guardadas todas as dependências obtidas pelo Maven.</p>
+<p>Por omissão, a localização do repositório local é:
+- <code>~/.m2</code> (Unix/Mac)
+- <code>C:\Users\Username\.m2</code> (Windows)</p>
+<p>Para alterar a configuração, editar o ficheiro conf\setting.xml que está na pasta de instalação do Maven (tipicamente apontada pela variável de ambiente <code>M2_HOME</code>).</p>
+<p><a href="http://www.mkyong.com/maven/where-is-maven-local-repository/">Mais informação</a></p>
+<p>Não esquecer também de atualizar a configuração do repositório Maven no seu IDE. Por exemplo, no Eclipse, aceder a Window - Preferences - Maven - User Settings e indicar a nova configuração.</p>
+<h3 id="como-posso-consultar-o-effective-pom-de-um-projeto-maven"><a class="header" href="#como-posso-consultar-o-effective-pom-de-um-projeto-maven">Como posso consultar o effective POM de um projeto Maven?</a></h3>
+<p>O effective POM é o resultado da combinação do POM do projeto com os valores das propriedades por omissão. É útil para perceber todas as definições que são assumidas pela ferramenta, como valores de propriedades, por exemplo.</p>
+<p>Pode-se consulta através do seguinte comando:</p>
+<p><code>$ mvn help:effective-pom</code></p>
+<h3 id="existe-forma-de-consultar-a-árvore-de-dependências-de-um-projeto-maven"><a class="header" href="#existe-forma-de-consultar-a-árvore-de-dependências-de-um-projeto-maven">Existe forma de consultar a árvore de dependências de um projeto Maven?</a></h3>
+<p>Sim, através do seguinte comando:</p>
+<p><code>$ mvn dependency:tree</code></p>
+<h3 id="como-remover-o-aviso-de-character-encoding-do-maven"><a class="header" href="#como-remover-o-aviso-de-character-encoding-do-maven">Como remover o aviso de <em>character encoding</em> do Maven?</a></h3>
+<p>Acrescentar a seguinte configuração ao pom.xml:</p>
+<pre><code class="language-xml">...
+&lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+    ...
+</code></pre>
+<h3 id="como-remover-o-aviso-warning-killafter-is-now-deprecated-do-maven"><a class="header" href="#como-remover-o-aviso-warning-killafter-is-now-deprecated-do-maven">Como remover o aviso <code>Warning: killAfter is now deprecated" do Maven</code>?</a></h3>
+<p>Para remover este aviso (inofensivo) pode-se acrescentar a seguinte configuração ao <code>pom.xml</code>:</p>
+<pre><code class="language-xml">    &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
+        ...
+            &lt;configuration&gt;
+            &lt;killAfter&gt;-1&lt;/killAfter&gt;
+            ...
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+</code></pre>
+<h3 id="como-definir-a-versão-do-java-considerada-pelo-maven"><a class="header" href="#como-definir-a-versão-do-java-considerada-pelo-maven">Como definir a versão do Java considerada pelo Maven?</a></h3>
+<p><a href="https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html">Ver a resposta aqui.</a></p>
+<h3 id="qual-a-diferença-entre-execjava-e-appassembler-"><a class="header" href="#qual-a-diferença-entre-execjava-e-appassembler-">Qual a diferença entre <code>exec:java</code> e <code>appassembler</code> ?</a></h3>
+<p><code>mvn exec:java</code> corre dentro do maven e tem os argumentos definidos no <code>pom.xml</code> com bons valores por omissão (opção preferida para desenvolvimento).</p>
+<p><code>mvn package appassembler:assemble</code> corre de forma autónoma do Maven e necessita que sejam indicados os argumentos (opção preferida para demonstração)</p>
+<p><code>target/bin/appassembler/... .bat arg0 arg1 ...</code></p>
+<p>Via Eclipse também se pode correr, depois de compilado, definindo-se os argumentos nas "Run Configurations".</p>
+<h3 id="como-se-faz-a-partilha-de-código-através-de-módulos-maven-"><a class="header" href="#como-se-faz-a-partilha-de-código-através-de-módulos-maven-">Como se faz a partilha de código através de módulos Maven ?</a></h3>
+<p>Para o fazer, criar um projeto à parte (ex. my-library).
+No <code>pom.xml</code>, definir as coordenadas <em>groupId</em> (ex. <code>example</code>), <em>artifactId</em> (ex. <code>my-library</code>) e <em>version</em> (ex. <code>1.0-SNAPSHOT</code>).</p>
+<p>Para disponibilizar o módulo no repositório Maven local (<code>~/.m2</code>), fazer: <code>mvn install</code>.</p>
+<p>Para usar o módulo noutro projeto, basta acrescentar a dependência, indicando as coordenadas <em>groupId</em>, <em>artifactId</em> e <em>version</em> tal como se faz em relação a módulos que estão no repositório Maven central.</p>
+<h3 id="É-possível-ter-poms-hierárquicos-como-se-usam"><a class="header" href="#É-possível-ter-poms-hierárquicos-como-se-usam">É possível ter POMs hierárquicos? Como se usam?</a></h3>
+<p>O Maven tem dois conceitos hierárquicos: <em>modules</em> e <em>parent</em>.</p>
+<pre><code class="language-xml">&lt;project ...&gt;
+    &lt;!-- the parent relation --&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;example&lt;/groupId&gt;
+        &lt;artifactId&gt;parent&lt;/artifactId&gt;
+        &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;artifactId&gt;module1&lt;/artifactId&gt;
+    &lt;!-- the modules --&gt;
+    &lt;modules&gt;
+        &lt;module&gt;submodule1&lt;/module&gt;
+        &lt;module&gt;submodule2&lt;/module&gt;
+    &lt;/modules&gt;
+&lt;/project&gt;
+</code></pre>
+<p>A relação <em>parent</em> indica que configurações de propriedades, repositórios e <em>plug-ins</em> devem ser herdadas do projeto pai.</p>
+<p>Um <em>module</em> indica que o subprojeto deve ser incluído no processamento do ciclo de vida do projeto de topo.</p>
+<hr />
+<h2 id="dúvidas-sobre-eclipse"><a class="header" href="#dúvidas-sobre-eclipse">Dúvidas sobre Eclipse</a></h2>
+<h3 id="pergunta-consigo-compilar-e-executar-os-exercícios-de-código-com-o-maven-no-terminal-mas-como-o-faço-dentro-do-eclipse"><a class="header" href="#pergunta-consigo-compilar-e-executar-os-exercícios-de-código-com-o-maven-no-terminal-mas-como-o-faço-dentro-do-eclipse">Pergunta: Consigo compilar e executar os exercícios de código com o Maven no terminal, mas como o faço dentro do Eclipse?</a></h3>
+<p>O Eclipse, depois de instalado seguindo o guia, consegue invocar ações de Maven.</p>
+<p>Para um projeto Maven no Eclipse, é necessário criar configurações de Maven Build, como é descrito em seguida:</p>
+<p><em>Package Explorer: Right-click no nome do projeto -&gt; Run As -&gt; Run Configurations... -&gt; Maven Build -&gt; New launch configuration</em></p>
+<p><img src="./images/faq-maven-eclipse.PNG" alt="Configuração de Maven goals em Eclipse" /></p>
+<p>Especificando em <em>Base directory:</em> o caminho para o diretório do projeto e em <em>Goals:</em> a sequência de ações Maven a desempenhar, pode clicar em <em>Apply</em> e a partir daí poderá executar com esta parametrização através do botão <em>Run</em>.</p>
+<p>Neste exemplo específico, ao clicar em <em>Run</em> serão executados para o projeto <code>hello-ws-cli_juddi</code> os comandos:</p>
+<pre><code>mvn generate-sources
+mvn compile
+mvn exec:java
+</code></pre>
+<h3 id="já-segui-todas-as-instruções-no-guia-de-software-mas-mesmo-assim-o-eclipse-não-consegue-compilar-código-java-o-que-poderá-ser-o-problema"><a class="header" href="#já-segui-todas-as-instruções-no-guia-de-software-mas-mesmo-assim-o-eclipse-não-consegue-compilar-código-java-o-que-poderá-ser-o-problema">Já segui todas as instruções no guia de software mas mesmo assim o Eclipse não consegue compilar código Java, o que poderá ser o problema?</a></h3>
+<p>É possível que, apesar do JDK estar instalado, o Eclipse esteja a apontar para um módulo JRE (Java Runtime Environment), que apenas permite executar programas Java mas não compilar.
+Para resolver esta questão, por exemplo em Windows, é necessário seguir os seguintes passos:</p>
+<ul>
+<li>Ir a <em>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add...</em></li>
+<li>Indicando o diretório do JDK instalado, deve obter o seguinte resultado (ajustando a versão):</li>
+</ul>
+<p><img src="./images/eclipse-jdk1.PNG" alt="Adição do JDK aos Installed JREs" /></p>
+<p>Carregue em <em>Apply, OK</em>. A partir de agora, o Eclipse está configurado para invocar as ferramentas de compilação de Java, tais como o <em>javac</em>.</p>
+<h3 id="já-configurei-o-eclipse-para-usar-o-jdk-mais-recente-mas-mesmo-assim-quando-importo-um-projeto-maven-o-eclipse-assume-que-é-para-usar-j2se5-ou-outra-qualquer-versão-estranha-como-corrigir-isto"><a class="header" href="#já-configurei-o-eclipse-para-usar-o-jdk-mais-recente-mas-mesmo-assim-quando-importo-um-projeto-maven-o-eclipse-assume-que-é-para-usar-j2se5-ou-outra-qualquer-versão-estranha-como-corrigir-isto">Já configurei o Eclipse para usar o JDK mais recente, mas mesmo assim quando importo um projeto Maven, o Eclipse assume que é para usar J2SE5 ou outra qualquer versão estranha, como corrigir isto?</a></h3>
+<p>Para assegurar que o projeto Maven funciona como esperado, recomenda-se dar uma indicação explícita da versão de JDK a usar para o projeto.</p>
+<p>Para resolver esta questão, é necessário especificar a versão no pom.xml do projeto, inserindo as tags
+<code>maven.compiler.source</code> e <code>maven.compiler.target</code> aninhadas na tag <code>properties</code>.</p>
+<p>Exemplo concreto, aplicado ao pom.xml do projeto hello-ws-cli_juddi:</p>
+<pre><code class="language-xml">...
+&lt;/dependencies&gt;
+
+&lt;properties&gt;
+&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;mainclass&gt;example.cli.HelloClient&lt;/mainclass&gt;
+&lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+...
+&lt;/properties&gt;
+
+&lt;build&gt;
+...
+</code></pre>
+<h3 id="quando-tento-executar-o-eclipse-este-pára-com-erro-13-como-resolver"><a class="header" href="#quando-tento-executar-o-eclipse-este-pára-com-erro-13-como-resolver">Quando tento executar o Eclipse este pára com erro 13. Como resolver?</a></h3>
+<p>Não vale a pena reinstalar o Eclipse.
+Basta editar a PATH e remover <code>C:\ProgramData\Oracle\Java\javapath</code> caso exista, e garantir que o caminho certo é o primeiro na lista de caminhos da PATH. Se existirem outros caminhos devido a atualizações, estes devem ser removidos.</p>
 
                     </main>
 

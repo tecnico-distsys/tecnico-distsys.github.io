@@ -201,8 +201,9 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 <p>O Maven desempenha o papel muito importante de automatizar toda a construção do código e de explicitar dependências de outros programas. Todos os programas devem ter a configuração Maven no ficheiro <code>pom.xml</code> para que possam ser (re)construídos de forma repetível. Os programas devem ter também um ficheiro <code>README</code> com instruções de construção e de execução.</p>
 <h4 id="introdução-ao-maven"><a class="header" href="#introdução-ao-maven">Introdução ao Maven</a></h4>
 <p>O Maven é uma ferramenta Java para a gestão de projetos que fornece aos programadores uma estrutura completa para suportar o ciclo de desenvolvimento de uma aplicação. Em particular, o Maven trata da compilação, distribuição, documentação, e colaboração em equipa, entre outras atividades.</p>
-<p>A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<em>Project Object Model</em>) <code>pom.xml</code>, que é a unidade fundamental deste sistema. Cada POM descreve um módulo.</p>
-<p>Estrutura de um ficheiro POM (<a href="http://maven.apache.org/pom.html">documentação</a>):</p>
+<p>A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<em>Project Object Model</em>) <code>pom.xml</code>, que é a unidade fundamental deste sistema. Cada POM descreve um módulo.
+A [documentação sobre POM, pode ser consultada aqui].(http://maven.apache.org/pom.html)</p>
+<p>A estrutura de um ficheiro POM é a seguinte:</p>
 <pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -258,41 +259,8 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
   &lt;profiles&gt;...&lt;/profiles&gt;
 &lt;/project&gt;
 </code></pre>
-<p>Exemplo de ficheiro POM:</p>
-<pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
-  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-  &lt;!-- http://maven.apache.org/pom.html#Quick_Overview --&gt;
-
-  &lt;!-- The Basics --&gt;
-  &lt;groupId&gt;example&lt;/groupId&gt;
-  &lt;artifactId&gt;java-app&lt;/artifactId&gt;
-  &lt;packaging&gt;jar&lt;/packaging&gt;
-  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
-  &lt;name&gt;java-app&lt;/name&gt;
-  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
-  
-  &lt;!-- Build Settings --&gt;
-  &lt;build&gt;
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.10&lt;/version&gt;
-        &lt;configuration&gt;
-          &lt;programs&gt;
-            &lt;program&gt;
-              &lt;mainClass&gt;mypackage.MyClass&lt;/mainClass&gt;
-              &lt;id&gt;java-app&lt;/id&gt;
-            &lt;/program&gt;
-          &lt;/programs&gt;
-        &lt;/configuration&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-  &lt;/build&gt;
-
-&lt;/project&gt;
-</code></pre>
+<p>Para ilustrar, vamos considerar <a href="https://github.com/tecnico-distsys/example_java-app">este exemplo de projeto Maven</a>.</p>
+<p><strong>Exercício:</strong> Estude cada porção do POM deste exemplo e tente entender o seu significado.</p>
 <h4 id="estrutura-típica-de-pastas"><a class="header" href="#estrutura-típica-de-pastas">Estrutura típica de pastas</a></h4>
 <p>Assumindo que ${basedir} corresponde à localização do projeto Maven, a estrutura de pastas associada é a seguinte:</p>
 <ul>
@@ -301,19 +269,11 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 <li><code>${basedir}/src/test</code> - código de teste</li>
 <li><code>${basedir}/target</code> - A pasta target é temporária e serve para guardar as classes do programa compiladas (<code>*.class</code>) e outros ficheiros auxiliares - pode ser descartada a qualquer momento e não deve ser guardada em controlo de versões</li>
 </ul>
-<h4 id="comandos-mais-frequentes"><a class="header" href="#comandos-mais-frequentes">Comandos mais frequentes</a></h4>
-<p>A lista seguinte apresenta alguns dos comandos Maven mais frequentes:</p>
-<ul>
-<li><code>mvn clean</code> - limpa a pasta temporária</li>
-<li><code>mvn compile</code> - compila o código do programa</li>
-<li><code>mvn compile exec:java</code> - compila o código do programa e executa a classe definida como principal no <code>pom.xml</code></li>
-<li><code>mvn test</code> - compila o código do programa e executa os testes</li>
-<li><code>mvn verify</code> - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)</li>
-</ul>
-<h4 id="conceitos-fundamentais"><a class="header" href="#conceitos-fundamentais">Conceitos fundamentais</a></h4>
-<h5 id="ciclos-de-vida-de-construção-fases-e-objetivos-documentação"><a class="header" href="#ciclos-de-vida-de-construção-fases-e-objetivos-documentação">Ciclos de vida de construção, fases e objetivos (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics">documentação</a>)</a></h5>
-<p>Em Maven, o processo de construção é dividido em ciclos de vida de construção, fases e objetivos. Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos.</p>
-<p>Por exemplo, o ciclo default inclui as seguintes fases (lista completa de fases):</p>
+<p><strong>Exercício:</strong> confirme no mesmo exemplo de projeto onde estas pastas se encontram.
+É natural que não encontre todas as pastas, pois nem todas são usadas sempre.</p>
+<h5 id="ciclo-de-vida-e-comandos"><a class="header" href="#ciclo-de-vida-e-comandos">Ciclo de vida e comandos</a></h5>
+<p>Em Maven, o processo de construção é dividido em <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics">ciclos de vida de construção, fases e objetivos</a>. Um ciclo de vida de construção é composto por uma sequência de fases de construção e por sua vez cada fase de construção consiste numa sequência de objetivos.</p>
+<p>Por exemplo, o ciclo <em>default</em> inclui as seguintes fases (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference">lista completa de fases</a>):</p>
 <ul>
 <li><em>validate</em> - verifica se projecto está correcto e toda a informação está disponível</li>
 <li><em>compile</em> - compila o código fonte</li>
@@ -326,18 +286,26 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 </ul>
 <p>Uma execução no Maven consiste em passar um argumento ao executável <code>mvn</code>. Este argumento corresponde ao nome dum ciclo de vida de construção, fase ou objetivo.</p>
 <p>Se um ciclo de vida solicitado é executado, todas as fases de construção deste ciclo de vida são executadas. Por conseguinte, se uma fase de construção solicitada é executada, todas as fases de construção que a antecedem na sequência pré-definida de fases de construção são também executadas.</p>
-<p>Por exemplo, executar
-<code>mvn install</code>
-irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- antes de empacotar e instalar o módulo no repositório local.</p>
+<p>A lista seguinte apresenta alguns dos comandos Maven mais frequentes:</p>
+<ul>
+<li><code>mvn clean</code> - limpa a pasta temporária</li>
+<li><code>mvn compile</code> - compila o código do programa</li>
+<li><code>mvn compile exec:java</code> - compila o código do programa e executa a classe definida como principal no <code>pom.xml</code></li>
+<li><code>mvn test</code> - compila o código do programa e executa os testes</li>
+<li><code>mvn verify</code> - compila o código do programa e executa os testes de integração (e.g. cliente-servidor)</li>
+</ul>
+<p><strong>Exercício:</strong> experimente executar todos os comandos da lista acima com o nosso exemplo. Estude o que se passa em cada um deles. <em>Nota: os últimos dois comandos não têm efeito neste projeto, pois ele não inclui testes.</em></p>
 <h5 id="dependências-e-repositórios"><a class="header" href="#dependências-e-repositórios">Dependências e repositórios</a></h5>
-<p>Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto. As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto. Se as dependências não forem encontrados no repositório local, isto é, numa pasta no disco rígido do computador local, o Maven descarrega-as de um repositório central para o repositório local. Por omissão, o repositório local encontra-se na pasta <code>%USER_HOME%</code>. Contudo, é possível especificar um repositório local onde Maven irá guardar os artefactos.</p>
+<p>Um dos primeiros objetivos executados pelo Maven é a verificação das dependências do projeto. As dependências são arquivos externos JAR (bibliotecas Java) necessárias para o projeto.</p>
+<p>Se as dependências não forem encontrados no repositório local, isto é, numa pasta no disco rígido do computador local, o Maven descarrega-as de um repositório central para o repositório local.</p>
+<p>Por omissão, o repositório local encontra-se na pasta <code>%USER_HOME%</code>.</p>
+<p>Contudo, é possível especificar um repositório local onde Maven irá guardar os artefactos. Por exemplo:</p>
 <pre><code class="language-xml">&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
     &lt;localRepository&gt;C:/RepositorioLocal&lt;/localRepository&gt;
     ...
 </code></pre>
-<p><em><strong>TODO: substituir por outro plugin</strong></em></p>
 <p>Um exemplo de uma dependência é o JUnit, que como pode ser vista abaixo.</p>
 <pre><code class="language-xml">&lt;project&gt;
   ...
@@ -351,7 +319,7 @@ irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- ante
 &lt;/project&gt;
 </code></pre>
 <p>Os três primeiros campos identificam a dependência. O parâmetro scope especifica que a dependência apenas existe para os testes. Isto significa que o Maven vai providenciar um <em>classpath</em> sem o JUnit para compilação do código principal e um <em>classpath</em> com o JUnit (na versão indicada) para compilação e execução do código de testes.</p>
-<p>As dependências podem ser pesquisadas no motor de pesquisa amigável do repositório central Maven. Por exemplo, o JUnit 4.12 tem a seguinte página informativa: http://mvnrepository.com/artifact/junit/junit/4.12</p>
+<p>As dependências podem ser pesquisadas em motores de pesquisa <a href="https://mvnrepository.com/">como este repositório</a>.</p>
 <p>Para o caso de projetos em desenvolvimento com inúmeros módulos (por exemplo: módulos A, B e C), com dependências entre eles, o conceito de <em>SNAPSHOT</em> é muitas vezes usado. Se um módulo A está em desenvolvimento rápido, e a criar novas versões com muita frequência, o sufixo <code>-SNAPSHOT</code> é adicionado no elemento <code>&lt;version&gt;</code>.</p>
 <p>Exemplo do <code>pom.xml</code> de A:</p>
 <pre><code class="language-xml">&lt;project&gt;
@@ -377,30 +345,10 @@ irá correr todas as fases anteriores -- <em>validate, compile, ...</em> -- ante
 &lt;/project&gt;
 </code></pre>
 <p>Deste modo, sempre que os módulos B e C são construídos, o Maven automaticamente actualiza o módulo A, obtendo fazendo o JAR correspondente ao SNAPSHOT mais recente.</p>
-<h5 id="plugins-de-construção-documentação"><a class="header" href="#plugins-de-construção-documentação">Plugins de construção (<a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">documentação</a>)</a></h5>
-<p>Os plugins de construção são utilizados para inserir objetivos adicionais numa fase de construção, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.</p>
-<p>Damos como exemplo o <em>plugin</em> <code>AppAssembler</code>:</p>
-<pre><code class="language-xml">&lt;build&gt;
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.10&lt;/version&gt;
-        &lt;configuration&gt;
-          &lt;programs&gt;
-            &lt;program&gt;
-              &lt;mainClass&gt;mypackage.MyClass&lt;/mainClass&gt;
-              &lt;id&gt;java-app&lt;/id&gt;
-            &lt;/program&gt;
-          &lt;/programs&gt;
-        &lt;/configuration&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-&lt;/build&gt;
-</code></pre>
-<p>Este plugin é usado para criar um script de arranque do programa, tanto para Windows (ficheiro <code>.bat</code>) como para Linux (ficheiro com o atributo executável definido). Neste caso, o programa a executar é um programa de exemplo (<code>java-app</code>) cuja classe principal se chama <code>mypackage.MyClass</code>.</p>
-<h5 id="perfis-de-construção"><a class="header" href="#perfis-de-construção">Perfis de construção</a></h5>
-<p>Os perfis de construção são utilizados caso seja necessário construir um projeto de maneira diferente. Por exemplo, pode ser necessário construir num computador pessoal projetos para desenvolvimento e teste. Pode ainda ser necesssário construí-los para um ambiente de produção. Estas versões poderão ser diferentes. Para permitir diferentes versões, diferentes perfis de construção podem ser adicionados aos ficheiros POM. Durante a execução pode ser especificado que perfil de construção deve ser usado.</p>
+<h5 id="plugins-de-construção"><a class="header" href="#plugins-de-construção">Plugins de construção</a></h5>
+<p>Os <a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">plugins de construção (<em>build plugins</em>)</a> são utilizados para inserir objetivos adicionais numa fase de <em>build</em>, caso seja necessário executar um conjunto de ações no projeto que não estejam cobertos pelas fases e objetivos padrão do Maven. Os plugins podem ser adicionados ao ficheiro POM. Para além dos plugins padrão disponibilizados, outros podem também ser implementados em Java.</p>
+<p>**Exercício: encontre o excerto do POM do nosso exemplo em que é definido um plugin.
+Experimente alterar os valores dos argumentos lá especificados e execute de novo o comando <code>mvn exec:java</code>.</p>
 <hr />
 <h3 id="java-ide"><a class="header" href="#java-ide">Java IDE</a></h3>
 <p>Tanto o Eclipse, o IntelliJ como o VSCode podem ser configurados em cima do JDK ou do Maven.

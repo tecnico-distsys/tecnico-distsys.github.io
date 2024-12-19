@@ -59,13 +59,14 @@ Ferramenta de linha de comando para fazer controlo de versões.
 
 #### 4. Plataforma de desenvolvimento Java
 
-Existem várias plataformas de desenvolvimento Java à escolha, das quais só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!
+Existem várias plataformas de desenvolvimento Java à escolha.
 
-- IntelliJ IDEA
-  - Obter a [Toolbox](https://www.jetbrains.com/toolbox-app/) da JetBrains para gerir todas as ferramentas JetBrains facilmente.
-  - Para instalar o Toolbox no Linux, sigam os [passos](https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b). Para instalá-lo no Windows e MacOS, basta executar o executável obtido.
-  - Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o [formulário](https://www.jetbrains.com/shop/eform/students).
-  - Após instalarem o IntelliJ, recomendamos instalar o plugin [google-java-format](https://plugins.jetbrains.com/plugin/8527-google-java-format) para maior legibilidade do código que produzem.
+Só precisam de escolher uma delas. Podem até escolher uma que não esteja nesta lista!
+
+No entanto, devem ter em atenção que os recursos disponíveis neste site dos laboratórios de SD 
+assumem o Eclipse como IDE por omissão. 
+Portanto, encontrarão mais documentação e apoio a esse IDE.
+
 
 - Eclipse IDE for Java Developers
   - [Obter a versão estável mais recente do Eclipse IDE for Java Developers](https://www.eclipse.org/downloads/packages/)
@@ -80,6 +81,13 @@ Existem várias plataformas de desenvolvimento Java à escolha, das quais só pr
         - Indicar o caminho até ao diretório do JDK: ex. `C:\Java\jdk-17.0.2`
         - Confirmar que as "Installed JREs" apenas fazem referência ao JDK instalado nas opções ativadas
 
+- IntelliJ IDEA
+  - Obter a [Toolbox](https://www.jetbrains.com/toolbox-app/) da JetBrains para gerir todas as ferramentas JetBrains facilmente.
+  - Para instalar o Toolbox no Linux, sigam os [passos](https://thirddriver.medium.com/jetbrains-toolbox-the-best-way-to-install-intellij-idea-on-linux-53c1070cd03b). Para instalá-lo no Windows e MacOS, basta executar o executável obtido.
+  - Na Toolbox instalem o IntelliJ Ultimate, para isso deve obter uma licença de estudante, a qual pode ser obtida preenchendo o [formulário](https://www.jetbrains.com/shop/eform/students).
+  - Após instalarem o IntelliJ, recomendamos instalar o plugin [google-java-format](https://plugins.jetbrains.com/plugin/8527-google-java-format) para maior legibilidade do código que produzem.
+
+
 - Visual Studio Code
   - [Obter a versão mais recente](https://code.visualstudio.com/download)
   - Instalar
@@ -88,7 +96,7 @@ Existem várias plataformas de desenvolvimento Java à escolha, das quais só pr
 
 ## Dúvidas ou erros?
 
-Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a [lista de respostas a perguntas frequentes](./faq.md).
+Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a [lista de respostas a perguntas frequentes](./00-software-faq.md).
 
 Se detetar algum erro nas instruções acima, avise-nos!
 

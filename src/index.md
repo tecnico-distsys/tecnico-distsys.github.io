@@ -17,7 +17,7 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 
 | Mês    | 2a   | 3a     | 4a    | 	5a   | 	6a   | 	Laboratório 1 | Laboratório 2 | 
 |--------|-------|-------|--------|--------|--------|--------|--------|
-| fev |	17 |	18 |	19 |	20 |	21 |	[Apresentação e instalação de software](./01-ferramentas.md) |	[Ferramentas: Java, Maven, Java IDE; Sockets](./02-java-avancado.md)  | 
+| fev |	17 |	18 |	19 |	20 |	21 |	[Apresentação e instalação de software](./01-ferramentas.md) |	[Java avançado (exceções, concorrência e troca de mensagens)](./02-java-avancado.md)  | 
 |fev |	24 |	25 |	26 |	27 |	28 |	[gRPC: conceitos base](./03-grpc.md) | [gRPC: tratamento de erros e métodos remotos bloqueantes](./04-grpc-erros.md) |
 | mar |	3 |	4 |	5 |	6 |	P1 |	[gRPC: multi-linguagem](./05-grpc-multilinguagem.md) |	Apoio ao projeto, **Entrega 2**|
 | mar |	10 |	11 |	12 |	13 |	14 |	[rRPC: Invocações assíncronas](./06-grpc-assincronas.md) |	Apoio ao projeto |

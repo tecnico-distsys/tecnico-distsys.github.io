@@ -226,3 +226,26 @@ Exemplo concreto, aplicado ao pom.xml do projeto hello-ws-cli_juddi:
 
 Não vale a pena reinstalar o Eclipse. 
 Basta editar a PATH e remover `C:\ProgramData\Oracle\Java\javapath` caso exista, e garantir que o caminho certo é o primeiro na lista de caminhos da PATH. Se existirem outros caminhos devido a atualizações, estes devem ser removidos. 
+
+
+## Perguntas sobre gRPC
+
+### Não consigo correr o `protoc`no meu portátil Mac. Como resolver?
+
+O compilador do gRPC (`protoc`) tem uma ["open issue" com os processadores M1 da Apple](https://github.com/grpc/grpc-java/issues/7690). Quando se tenta executar o `protoc` (por exemplo, fazendo `mvn install` num projeto contendo o contrato de um gRPC), ocorre um erro.
+
+Para contornar este problema, devem procurar estas duas *tags* `<protocArtifact>` no  POM:  
+
+```xml
+<protocArtifact>com.google.protobuf:protoc:${version.protoc}:exe:${os.detected.classifier}</protocArtifact>
+<pluginId>grpc-java</pluginId>
+<pluginArtifact>io.grpc:protoc-gen-grpc-java:${version.grpc}:exe:${os.detected.classifier}</pluginArtifact>
+```
+
+E substituí-las por estas:
+  
+```xml
+<protocArtifact>com.google.protobuf:protoc:${version.protoc}:exe:osx-x86_64</protocArtifact>
+<pluginId>grpc-java</pluginId>
+<pluginArtifact>io.grpc:protoc-gen-grpc-java:${version.grpc}:exe:osx-x86_64</pluginArtifact>
+```

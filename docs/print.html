@@ -1433,6 +1433,19 @@ Para resolver esta questão, por exemplo em Windows, é necessário seguir os se
 <h3 id="quando-tento-executar-o-eclipse-este-pára-com-erro-13-como-resolver"><a class="header" href="#quando-tento-executar-o-eclipse-este-pára-com-erro-13-como-resolver">Quando tento executar o Eclipse este pára com erro 13. Como resolver?</a></h3>
 <p>Não vale a pena reinstalar o Eclipse.
 Basta editar a PATH e remover <code>C:\ProgramData\Oracle\Java\javapath</code> caso exista, e garantir que o caminho certo é o primeiro na lista de caminhos da PATH. Se existirem outros caminhos devido a atualizações, estes devem ser removidos.</p>
+<h2 id="perguntas-sobre-grpc"><a class="header" href="#perguntas-sobre-grpc">Perguntas sobre gRPC</a></h2>
+<h3 id="não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code>no meu portátil Mac. Como resolver?</a></h3>
+<p>O compilador do gRPC (<code>protoc</code>) tem uma <a href="https://github.com/grpc/grpc-java/issues/7690">"open issue" com os processadores M1 da Apple</a>. Quando se tenta executar o <code>protoc</code> (por exemplo, fazendo <code>mvn install</code> num projeto contendo o contrato de um gRPC), ocorre um erro.</p>
+<p>Para contornar este problema, devem procurar estas duas <em>tags</em> <code>&lt;protocArtifact&gt;</code> no  POM:</p>
+<pre><code class="language-xml">&lt;protocArtifact&gt;com.google.protobuf:protoc:${version.protoc}:exe:${os.detected.classifier}&lt;/protocArtifact&gt;
+&lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
+&lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:${version.grpc}:exe:${os.detected.classifier}&lt;/pluginArtifact&gt;
+</code></pre>
+<p>E substituí-las por estas:</p>
+<pre><code class="language-xml">&lt;protocArtifact&gt;com.google.protobuf:protoc:${version.protoc}:exe:osx-x86_64&lt;/protocArtifact&gt;
+&lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
+&lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:${version.grpc}:exe:osx-x86_64&lt;/pluginArtifact&gt;
+</code></pre>
 
                     </main>
 

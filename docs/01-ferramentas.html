@@ -183,7 +183,7 @@
 <hr />
 <h2 id="familiarização-com-as-ferramentas-de-desenvolvimento"><a class="header" href="#familiarização-com-as-ferramentas-de-desenvolvimento">Familiarização com as ferramentas de desenvolvimento</a></h2>
 <p>As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.</p>
-<p>No resto desta aula estudremos cada uma das ferramentas.
+<p>No resto desta aula estudaremos cada uma das ferramentas.
 A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse),
 que entenderemos melhor ao longo desta aula.</p>
 <p><img src="./images/java-tools-table.png" alt="Java tools reference card" /></p>
@@ -199,11 +199,11 @@ As mais importantes são o <em>javac</em> que compila os programas e o <em>java<
 <h3 id="maven"><a class="header" href="#maven">Maven</a></h3>
 <p>A ferramenta Maven é a mais importante logo a seguir ao próprio JDK. A utilização do Maven é obrigatória em SD para permitir a construção dos projetos de forma automática na linha de comandos.</p>
 <p>O Maven desempenha o papel muito importante de automatizar toda a construção do código e de explicitar dependências de outros programas. Todos os programas devem ter a configuração Maven no ficheiro <code>pom.xml</code> para que possam ser (re)construídos de forma repetível. Os programas devem ter também um ficheiro <code>README</code> com instruções de construção e de execução.</p>
-<p><em>Antes de avançar:</em>* No resto desta secção, aprender Maven usando este <a href="https://github.com/tecnico-distsys/example_java-app">projeto de exemplo</a>, que utiliza o Maven para compilar e executar o código Java. Antes de avançar, faça <em>Clone or Download</em>.</p>
+<p><em>Antes de avançar:</em> No resto desta secção, aprender Maven usando este <a href="https://github.com/tecnico-distsys/example_java-app">projeto de exemplo</a>, que utiliza o Maven para compilar e executar o código Java. Antes de avançar, faça <em>Clone or Download</em>.</p>
 <h4 id="project-object-model-pom"><a class="header" href="#project-object-model-pom"><em>Project Object Model (POM)</em></a></h4>
 <p>O Maven é uma ferramenta Java para a gestão de projetos que fornece aos programadores uma estrutura completa para suportar o ciclo de desenvolvimento de uma aplicação. Em particular, o Maven trata da compilação, distribuição, documentação, e colaboração em equipa, entre outras atividades.</p>
 <p>A estrutura e conteúdo do projeto Maven são declaradas num ficheiro XML, chamado POM (<em>Project Object Model</em>) <code>pom.xml</code>, que é a unidade fundamental deste sistema. Cada POM descreve um módulo.
-A [documentação sobre POM, pode ser consultada aqui].(http://maven.apache.org/pom.html)</p>
+A documentação sobre POM, pode ser consultada <a href="http://maven.apache.org/pom.html">aqui</a></p>
 <p>A estrutura de um ficheiro POM é a seguinte:</p>
 <pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

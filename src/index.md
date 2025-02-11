@@ -29,8 +29,8 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 
 Recursos do projeto:
 
-- [Enunciado]() 
-- [Fórum de discussão para dúvidas (via Moodle)]()
+- [Enunciado (a publicar em breve)]() 
+- [Fórum de discussão para dúvidas (via Moodle)](https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941)
 
 Datas das entregas (via fenix):
 

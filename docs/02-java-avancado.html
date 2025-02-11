@@ -177,7 +177,7 @@ A <em>thread</em> é um objeto que implementa <code>Runnable</code>.</p>
 }
 </code></pre>
 <p>Para saber mais, consulte <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/runthread.html">esta documentação</a>.</p>
-<p>Como as <em>threads</em>  partilham objetos, é através da sincronização que os seus dados estão coerentes.
+<p>Como as <em>threads</em>  partilham objetos, que os seus dados estão coerentes.
 Caso a sincronização não seja implementada, pode ocorrer interferência entre <em>threads</em>, levando a situações de incoerência nos dados partilhados.
 Por outro lado, a presença de mecanismos de sincronização pode originar contenção quando duas ou mais <em>threads</em> tentam aceder ao mesmo recurso em simultâneo.</p>
 <h3 id="sincronização-em-java"><a class="header" href="#sincronização-em-java">Sincronização em Java</a></h3>
@@ -437,6 +437,22 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

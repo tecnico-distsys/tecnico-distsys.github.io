@@ -300,7 +300,7 @@ O ponto de partida para o exercício ilustra a comunicação entre dois programa
 4. Modificar os programas para que o servidor responda ao cliente com uma mensagem de confirmação.
 
 5. Estenda o programa com uma *thread* que conta os pedidos em *background*:
-    - Crie a nova *thread* no início da execução do método `Main`. Crie também um objeto da classe `Integer`, que deve ser passado à nova *thread* quando esta é criada. Esse objeto será um contador partilhado entre ambas as *threads*. 
+    - Crie a nova *thread* no início da execução do método `Main`. Defina a classe `Counter`, que será um contador partilhado entre ambas as *threads*. Instancie **apenas um** objeto dessa classe e passe-o à nova *thread* quando esta é criada.
     - Sempre que a *thread* principal recebe um pedido, deve incrementar o contador. Como este é partilhado, é preciso assegurar a necessária sincronização.
     - Por outro lado, programe o método `run` da nova *thread* de forma a que esta se bloqueie até que o contador atinja 
     múltiplos de 3. Sempre que tal acontece, a *thread* deve imprimir uma mensagem com o valor do contador e voltar a bloquear-se 

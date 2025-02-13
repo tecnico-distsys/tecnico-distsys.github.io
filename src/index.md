@@ -19,8 +19,8 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 |--------|-------|-------|--------|--------|--------|--------|--------|
 | fev |	17 |	18 |	19 |	20 |	21 |	[Apresentação e ferramentas](./01-ferramentas.md) |	[Java avançado (exceções, concorrência e troca de mensagens)](./02-java-avancado.md)  | 
 |fev |	24 |	25 |	26 |	27 |	28 |	[gRPC: conceitos base](./03-grpc.md) | [gRPC: tratamento de erros e métodos remotos bloqueantes](./04-grpc-erros.md) |
-| mar |	3 |	4 |	5 |	6 |	P1 |	[gRPC: multi-linguagem](./05-grpc-multilinguagem.md) |	Apoio ao projeto, **Entrega 2**|
-| mar |	10 |	11 |	12 |	13 |	14 |	[rRPC: Invocações assíncronas](./06-grpc-assincronas.md) |	Apoio ao projeto |
+| mar |	3 |	4 |	5 |	6 |	P1 |	[gRPC: multi-linguagem](./05-grpc-multilinguagem.md) |	Apoio ao projeto, **Entrega 1**|
+| mar |	10 |	11 |	12 |	13 |	14 |	[gRPC: Invocações assíncronas](./06-grpc-assincronas.md) |	Apoio ao projeto |
 | mar |	17 |	18 |	19 |	20 |	P2 |	Apoio ao projeto |	Apoio ao projeto, **Entrega 2**|
 | mar |	24 |	25 |	26 |	27 |	28 |	Apoio ao projeto |	Apoio ao projeto |
 | mar/abr |	31 |	1 |	2 |	3 |	P3 |	Apoio ao projeto | Apoio ao projeto, **Entrega 3**|

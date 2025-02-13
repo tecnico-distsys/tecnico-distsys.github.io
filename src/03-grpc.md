@@ -8,7 +8,7 @@
 
 ## Materiais de apoio à aula
 
-- [Introdução ao gRPC (ver slides da aula teórica)]
+- [Introdução ao gRPC (https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf)]
 - [Tutorial de gRPC para Java](https://grpc.io/docs/tutorials/basic/java.html)
 - [Documentação de Protocol Buffers](https://developers.google.com/protocol-buffers/docs/overview)
 - [API de gRPC para Java](https://grpc.io/grpc-java/javadoc/index.html)
@@ -18,8 +18,9 @@
 
 ## Antes de começar a programar com gRPC
 
-Comece por folhear os [slides de introdução ao gRPC](https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf) que fornecemos acima. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).
-Exercício a resolver até ao fim da aula
+Comece por folhear os [slides de introdução ao gRPC](https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf). Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).
+
+## Exercício a resolver até ao fim da aula
 
 Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.
 

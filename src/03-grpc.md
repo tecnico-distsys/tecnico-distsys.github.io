@@ -8,7 +8,7 @@
 
 ## Materiais de apoio à aula
 
-- [Introdução ao gRPC (slides)](https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf)
+- [Introdução ao gRPC (ver slides da aula teórica)]
 - [Tutorial de gRPC para Java](https://grpc.io/docs/tutorials/basic/java.html)
 - [Documentação de Protocol Buffers](https://developers.google.com/protocol-buffers/docs/overview)
 - [API de gRPC para Java](https://grpc.io/grpc-java/javadoc/index.html)

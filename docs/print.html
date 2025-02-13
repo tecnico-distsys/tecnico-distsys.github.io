@@ -967,7 +967,7 @@ Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulour
 <li>
 <p>Estenda o programa com uma <em>thread</em> que conta os pedidos em <em>background</em>:</p>
 <ul>
-<li>Crie a nova <em>thread</em> no início da execução do método <code>Main</code>. Crie também um objeto da classe <code>Integer</code>, que deve ser passado à nova <em>thread</em> quando esta é criada. Esse objeto será um contador partilhado entre ambas as <em>threads</em>.</li>
+<li>Crie a nova <em>thread</em> no início da execução do método <code>Main</code>. Defina a classe <code>Counter</code>, que será um contador partilhado entre ambas as <em>threads</em>. Instancie <strong>apenas um</strong> objeto dessa classe e passe-o à nova <em>thread</em> quando esta é criada.</li>
 <li>Sempre que a <em>thread</em> principal recebe um pedido, deve incrementar o contador. Como este é partilhado, é preciso assegurar a necessária sincronização.</li>
 <li>Por outro lado, programe o método <code>run</code> da nova <em>thread</em> de forma a que esta se bloqueie até que o contador atinja
 múltiplos de 3. Sempre que tal acontece, a <em>thread</em> deve imprimir uma mensagem com o valor do contador e voltar a bloquear-se
@@ -983,15 +983,15 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 </ul>
 <h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
 <ul>
-<li><a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">Introdução ao gRPC (slides)</a></li>
+<li><a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">Introdução ao gRPC</a></li>
 <li><a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a></li>
 <li><a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação de Protocol Buffers</a></li>
 <li><a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a></li>
 </ul>
 <hr />
 <h2 id="antes-de-começar-a-programar-com-grpc"><a class="header" href="#antes-de-começar-a-programar-com-grpc">Antes de começar a programar com gRPC</a></h2>
-<p>Comece por folhear os <a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">slides de introdução ao gRPC</a> que fornecemos acima. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).
-Exercício a resolver até ao fim da aula</p>
+<p>Comece por folhear os <a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
+<h2 id="exercício-a-resolver-até-ao-fim-da-aula-1"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula-1">Exercício a resolver até ao fim da aula</a></h2>
 <p>Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.</p>
 <p><img src="./images/ttt.png" alt="Tic Tac Toe" /></p>
 <h3 id="i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe"><a class="header" href="#i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe">I. Começar por uma implementação local do Jogo do Galo/Tic Tac Toe.</a></h3>
@@ -1123,8 +1123,7 @@ message CurrentBoardResponse {
 <p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
 <ul>
 <li>
-<p>Comece por aprender sobre ler os materiais sobre o tratamento de erros com gRPC. <em><strong>TODO: passar estes materiais para aqui</strong></em></p>
-<p><em><strong>TODO: rever para dar menos código pronto</strong></em></p>
+<p>Comece por ler os materiais sobre o <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html">tratamento de erros com gRPC</a>.</p>
 </li>
 <li>
 <p>Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:</p>
@@ -1169,7 +1168,7 @@ catch (StatusRuntimeException e) {
 <p>Vamos agora adicionar uma variante bloqueante da operação checkWinner.</p>
 <ul>
 <li>No ficheiro <code>.proto</code>, acrescente uma nova operação chamada <code>waitForWinner</code>, cujas mensagens de pedido e respostas são idênticas às da operação <code>checkWinner</code>. A grande diferença é que a <code>waitForWinner</code> deve bloquear-se enquanto o jogo não tiver terminado.</li>
-<li>Depois de gerar os novos <em>stubs</em>, acrescente o novo método à classe do servidor.</li>
+<li>Depois de gerar os novos <em>stubs</em>, crie o método associado à operação <code>waitForWinner</code> e acrescente-o à classe do servidor.</li>
 <li>Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a>.</li>
 <li>No novo método, use a primitiva <code>wait()</code> para, enquanto o jogo não tenha ainda terminado, a <em>thread</em> que executa esse método se bloquear. Lembre-se que, para chamar <code>wait()</code>, precisa estar dentro de um método (ou bloco) synchronized.</li>
 <li>Precisa também chamar <code>notifyAll()</code> sempre que o estado do jogo muda com uma nova jogada.</li>
@@ -1464,6 +1463,22 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

@@ -399,7 +399,7 @@ Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulour
 <li>
 <p>Estenda o programa com uma <em>thread</em> que conta os pedidos em <em>background</em>:</p>
 <ul>
-<li>Crie a nova <em>thread</em> no início da execução do método <code>Main</code>. Crie também um objeto da classe <code>Integer</code>, que deve ser passado à nova <em>thread</em> quando esta é criada. Esse objeto será um contador partilhado entre ambas as <em>threads</em>.</li>
+<li>Crie a nova <em>thread</em> no início da execução do método <code>Main</code>. Defina a classe <code>Counter</code>, que será um contador partilhado entre ambas as <em>threads</em>. Instancie <strong>apenas um</strong> objeto dessa classe e passe-o à nova <em>thread</em> quando esta é criada.</li>
 <li>Sempre que a <em>thread</em> principal recebe um pedido, deve incrementar o contador. Como este é partilhado, é preciso assegurar a necessária sincronização.</li>
 <li>Por outro lado, programe o método <code>run</code> da nova <em>thread</em> de forma a que esta se bloqueie até que o contador atinja
 múltiplos de 3. Sempre que tal acontece, a <em>thread</em> deve imprimir uma mensagem com o valor do contador e voltar a bloquear-se
@@ -437,6 +437,22 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

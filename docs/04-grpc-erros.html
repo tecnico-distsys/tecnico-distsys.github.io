@@ -171,8 +171,7 @@
 <p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
 <ul>
 <li>
-<p>Comece por aprender sobre ler os materiais sobre o tratamento de erros com gRPC. <em><strong>TODO: passar estes materiais para aqui</strong></em></p>
-<p><em><strong>TODO: rever para dar menos código pronto</strong></em></p>
+<p>Comece por ler os materiais sobre o <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html">tratamento de erros com gRPC</a>.</p>
 </li>
 <li>
 <p>Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:</p>
@@ -217,7 +216,7 @@ catch (StatusRuntimeException e) {
 <p>Vamos agora adicionar uma variante bloqueante da operação checkWinner.</p>
 <ul>
 <li>No ficheiro <code>.proto</code>, acrescente uma nova operação chamada <code>waitForWinner</code>, cujas mensagens de pedido e respostas são idênticas às da operação <code>checkWinner</code>. A grande diferença é que a <code>waitForWinner</code> deve bloquear-se enquanto o jogo não tiver terminado.</li>
-<li>Depois de gerar os novos <em>stubs</em>, acrescente o novo método à classe do servidor.</li>
+<li>Depois de gerar os novos <em>stubs</em>, crie o método associado à operação <code>waitForWinner</code> e acrescente-o à classe do servidor.</li>
 <li>Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a>.</li>
 <li>No novo método, use a primitiva <code>wait()</code> para, enquanto o jogo não tenha ainda terminado, a <em>thread</em> que executa esse método se bloquear. Lembre-se que, para chamar <code>wait()</code>, precisa estar dentro de um método (ou bloco) synchronized.</li>
 <li>Precisa também chamar <code>notifyAll()</code> sempre que o estado do jogo muda com uma nova jogada.</li>
@@ -257,6 +256,22 @@ catch (StatusRuntimeException e) {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

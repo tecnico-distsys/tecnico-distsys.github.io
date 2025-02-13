@@ -205,8 +205,12 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
 <h3 id="software-a-instalar"><a class="header" href="#software-a-instalar">Software a instalar</a></h3>
 <h4 id="1--java-developer-kit-jdk"><a class="header" href="#1--java-developer-kit-jdk">1.  Java Developer Kit (JDK)</a></h4>
 <p>Este é o ambiente para programação na linguagem Java. Inclui o Java Runtime Environment (JRE).</p>
+<p>Em Sistemas Distribuídos, os exemplos de código fornecidos nos nossos recursos laboratoriais estão baseados
+no JDK 17 (LTS).
+No entanto, permitimos que usem até ao JDK 21 (LTS).
+Tanto quanto sabemos, esses JDK também são capazes de compilar o código que fornecemos.</p>
 <ul>
-<li>Obter <a href="https://adoptium.net/?variant=openjdk17&amp;jvmVariant=hotspot">JDK 17 LTS</a></li>
+<li>Obter o <a href="https://adoptium.net/?variant=openjdk17&amp;jvmVariant=hotspot">JDK 17 LTS</a> ou outro (até JDK 21 LTS).</li>
 <li>Instalar</li>
 <li>Configurar:
 <ul>
@@ -1463,22 +1467,6 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

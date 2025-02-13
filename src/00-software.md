@@ -30,9 +30,14 @@ O procedimento para definir variáveis de ambiente depende do sistema operativo:
 
 #### 1.  Java Developer Kit (JDK)
 
-Este é o ambiente para programação na linguagem Java. Inclui o Java Runtime Environment (JRE).    
+Este é o ambiente para programação na linguagem Java. Inclui o Java Runtime Environment (JRE).
+
+Em Sistemas Distribuídos, os exemplos de código fornecidos nos nossos recursos laboratoriais estão baseados
+no JDK 17 (LTS). 
+No entanto, permitimos que usem até ao JDK 21 (LTS). 
+Tanto quanto sabemos, esses JDK também são capazes de compilar o código que fornecemos.
         
-  - Obter [JDK 17 LTS](https://adoptium.net/?variant=openjdk17&jvmVariant=hotspot)
+  - Obter o [JDK 17 LTS](https://adoptium.net/?variant=openjdk17&jvmVariant=hotspot) ou outro (até JDK 21 LTS).
   - Instalar
   - Configurar:
     - Definir variável de ambiente `JAVA_HOME` com o caminho para a pasta de instalação do JDK

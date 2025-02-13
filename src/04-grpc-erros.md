@@ -25,9 +25,7 @@ Vamos então começar!
 
 Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.
 
-- Comece por aprender sobre ler os materiais sobre o tratamento de erros com gRPC. ***TODO: passar estes materiais para aqui***
-
-    ***TODO: rever para dar menos código pronto***
+- Comece por ler os materiais sobre o [tratamento de erros com gRPC](https://grpc.github.io/grpc/core/md_doc_statuscodes.html).
 
 - Vamos agora estender a sua solução. No servidor, comece por importar a definição de um estado de erro para argumentos inválidos:
 
@@ -77,7 +75,7 @@ Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido s
 Vamos agora adicionar uma variante bloqueante da operação checkWinner.
 
 - No ficheiro `.proto`, acrescente uma nova operação chamada `waitForWinner`, cujas mensagens de pedido e respostas são idênticas às da operação `checkWinner`. A grande diferença é que a `waitForWinner` deve bloquear-se enquanto o jogo não tiver terminado.
-- Depois de gerar os novos *stubs*, acrescente o novo método à classe do servidor.
+- Depois de gerar os novos *stubs*, crie o método associado à operação `waitForWinner` e acrescente-o à classe do servidor.
 - Relembre as [primitivas para programação concorrente em Java](./02-java-avancado.md).
 - No novo método, use a primitiva `wait()` para, enquanto o jogo não tenha ainda terminado, a *thread* que executa esse método se bloquear. Lembre-se que, para chamar `wait()`, precisa estar dentro de um método (ou bloco) synchronized.
 - Precisa também chamar `notifyAll()` sempre que o estado do jogo muda com uma nova jogada.

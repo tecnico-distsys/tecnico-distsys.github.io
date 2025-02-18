@@ -459,7 +459,7 @@ Basta editar a PATH e remover <code>C:\ProgramData\Oracle\Java\javapath</code> c
 <hr />
 <h2 id="apoio-ao-trabalho-laboratorial-durante-o-período"><a class="header" href="#apoio-ao-trabalho-laboratorial-durante-o-período">Apoio ao trabalho laboratorial durante o período</a></h2>
 <p>O professor do laboratório vai acompanhar o vosso percurso ao longo de todo o semestre. É importante ficar a conhecê-lo desde já. :-)</p>
-<p>O apoio a dúvidas fora das aulas é feito através do Moodle de SD, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.</p>
+<p>O apoio a dúvidas fora das aulas é feito através do <a href="https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941">Moodle de SD</a>, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.</p>
 <h2 id="inscrição-de-grupo"><a class="header" href="#inscrição-de-grupo">Inscrição de grupo</a></h2>
 <p>O trabalho de laboratório e no projeto é realizado em grupo, com 3 elementos. Os grupos terão de ser formados entre estudantes inscritos no mesmo turno de laboratório.</p>
 <p>Para fazer:</p>
@@ -1467,6 +1467,22 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

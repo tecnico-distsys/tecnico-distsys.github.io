@@ -12,7 +12,7 @@
 
 O professor do laboratório vai acompanhar o vosso percurso ao longo de todo o semestre. É importante ficar a conhecê-lo desde já. :-)
 
-O apoio a dúvidas fora das aulas é feito através do Moodle de SD, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.
+O apoio a dúvidas fora das aulas é feito através do [Moodle de SD](https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941), onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.
 
  
 ## Inscrição de grupo

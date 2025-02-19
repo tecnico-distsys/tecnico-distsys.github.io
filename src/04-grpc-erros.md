@@ -6,10 +6,6 @@
 - Aprender a enviar e receber erros com gRPC
 - Aprender a implementar métodos remotos bloqueantes
 
-## Materiais de apoio à aula
-
-- Tratamento de erros com gRPC Concorrência e Sincronização em Java
-
 ***
 
 

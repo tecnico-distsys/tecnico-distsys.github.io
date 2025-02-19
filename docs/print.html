@@ -1129,10 +1129,6 @@ message CurrentBoardResponse {
 <li>Aprender a enviar e receber erros com gRPC</li>
 <li>Aprender a implementar métodos remotos bloqueantes</li>
 </ul>
-<h2 id="materiais-de-apoio-à-aula-1"><a class="header" href="#materiais-de-apoio-à-aula-1">Materiais de apoio à aula</a></h2>
-<ul>
-<li>Tratamento de erros com gRPC Concorrência e Sincronização em Java</li>
-</ul>
 <hr />
 <h2 id="tratamento-de-erros-com-grpc"><a class="header" href="#tratamento-de-erros-com-grpc">Tratamento de erros com gRPC</a></h2>
 <p>Uma chamada remota de procedimento (RPC) pode falhar devido a problemas na rede, no servidor ou no próprio cliente.
@@ -1284,7 +1280,7 @@ catch (StatusRuntimeException e) {
 <li>Desenvolvimento de aplicações distribuídas com gRPC com múltiplas linguagens de programação.</li>
 <li>Em particular, desenvolvimento de um servidor de nomes que permite publicar e pesquisar serviços gRPC no servidor de nomes</li>
 </ul>
-<h2 id="materiais-de-apoio-à-aula-2"><a class="header" href="#materiais-de-apoio-à-aula-2">Materiais de apoio à aula</a></h2>
+<h2 id="materiais-de-apoio-à-aula-1"><a class="header" href="#materiais-de-apoio-à-aula-1">Materiais de apoio à aula</a></h2>
 <ul>
 <li>Tutorial de introdução ao <a href="https://grpc.io/docs/languages/python/basics/">gRPC em Python</a></li>
 </ul>
@@ -1563,22 +1559,6 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

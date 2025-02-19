@@ -160,14 +160,14 @@
 </ul>
 <h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
 <ul>
-<li><a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">Introdução ao gRPC</a></li>
+<li><a href="./resources/grpc-slides-labs.pdf">Introdução ao gRPC</a></li>
 <li><a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a></li>
 <li><a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação de Protocol Buffers</a></li>
 <li><a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a></li>
 </ul>
 <hr />
 <h2 id="antes-de-começar-a-programar-com-grpc"><a class="header" href="#antes-de-começar-a-programar-com-grpc">Antes de começar a programar com gRPC</a></h2>
-<p>Comece por folhear os <a href="https://tecnico-distsys.github.io/introducao-ao-gRPC.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
+<p>Comece por folhear os <a href="./resources/grpc-slides-labs.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
 <h2 id="exercício-a-resolver-até-ao-fim-da-aula"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula">Exercício a resolver até ao fim da aula</a></h2>
 <p>Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.</p>
 <p><img src="./images/ttt.png" alt="Tic Tac Toe" /></p>
@@ -311,6 +311,22 @@ message CurrentBoardResponse {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

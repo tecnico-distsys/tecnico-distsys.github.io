@@ -163,10 +163,91 @@
 <li>Tratamento de erros com gRPC Concorrência e Sincronização em Java</li>
 </ul>
 <hr />
+<h2 id="tratamento-de-erros-com-grpc"><a class="header" href="#tratamento-de-erros-com-grpc">Tratamento de erros com gRPC</a></h2>
+<p>Uma chamada remota de procedimento (RPC) pode falhar devido a problemas na rede, no servidor ou no próprio cliente.
+Mesmo quando a comunicação é possível entre cliente e servidor, este último pode detetar um problema nos argumentos recebidos ou ter um problema interno que precisa de reportar ao cliente.</p>
+<p>O gRPC reporta todos os problemas através de um código de estado de erro (<em>status code</em>) que é devolvido em situações de erro. Este mecanismo é básico e menos sofiscado, por exemplo, do que as exceções do Java. A opção de desenho deve-se ao facto do gRPC ser uma biblioteca agnóstica relativamente à linguagem de programação que se utiliza, pelo que o recurso a um conjunto limitado de códigos de erro é a forma base de tratar situações em que a invocação remota falha.</p>
+<p>De acordo com a <a href="https://grpc.io/docs/guides/error/">documentação oficial</a>, existem três categorias de códigos de erro suportadas por todas as bibliotecas cliente/servidor gRPC e independentes do formato de dados:</p>
+<ul>
+<li>Erros gerais, como o cancelamento do pedido por parte do cliente ou a invocação de um método que não está implementado no servidor;</li>
+<li>Falhas na rede, como a situação em que apenas parte dos dados é transmitida antes de a ligação terminar;</li>
+<li>Erros de protocolo, como acesso não autenticado ou violação do protocolo de fluxo de controlo.</li>
+</ul>
+<p>Os código de base são suficientes em muitas situações, mas não permitem comunicar informações mais detalhadas acerca do erro em causa. Por este motivo, o gRPC tem também um conjunto mais alargado de códigos de erro, que já são definidos em <em>protocol buffers</em>.</p>
+<p>A utilização de <em>protocol buffers</em> <a href="https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto">permite incluir detalhes</a> que podem ser relevantes para o cliente conseguir recuperar do erro, como uma descrição textual do erro e/ou metadados. Nem todas as implementações de gRPC suportam este modelo, mas o Java, que usaremos, suporta. Felizmente, a união dos conjuntos de códigos de erro é apresentada ao programador Java através de uma classe apenas: <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/grpc/Status.java"><code>io.grpc.Status</code></a>.</p>
+<h2 id="como-retornar-um-erro"><a class="header" href="#como-retornar-um-erro">Como retornar um erro?</a></h2>
+<p>Após a invocação de um procedimento remoto com gRPC, a chamada pode ter sucesso ou falhar, sendo enviado para o cliente um código de erro (ou <em>error status code</em>) neste último caso.</p>
+<p>Tome como exemplo a implementação do método <code>currentBoard</code> do <a href="03-grpc.html">laboratório anterior</a>:</p>
+<pre><code class="language-java">public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
+    String board = ttt.currentBoard();
+    CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(board).build();
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+}
+</code></pre>
+<p>Em caso de erro, é importante notificar o cliente de que a execução remota falhou, para que consiga recuperar (por exemplo, repetindo a invocação ou reportando o erro ao utilizador). Esse estado de erro pode ser induzido, por exemplo, por uma falha na conexão entre cliente e servidor (como descrito anteriormente) ou introduzido pelo próprio programador, para acautelar violações do domínio da aplicação. A validação de argumentos é um exemplo clássico.</p>
+<p>No caso de Java, é possível explicitar que a chamada remota falhou invocando <code>responseObserver.onError(...)</code> quando necessário. Este método recebe um <code>Throwable</code>, sendo qualquer exceção em Java uma subclasse desta. Esta invocação altera o fluxo de execução do programa. Quer isto dizer que, num determinado fluxo, <code>onCompleted</code> e <code>onError</code> só podem ser invocadas uma vez e, se forem, devem ser as últimas (não podendo, por isso, ser executadas em conjunto). A título de exemplo, e considerando a guarda <code>errorCondition</code>, deve ter-se algo como:</p>
+<pre><code class="language-java">    ...
+
+    if (errorCondition) {
+        ...
+        responseObserver.onError(...);
+
+    } else {
+        ...
+        responseObserver.onNext(...);
+        responseObserver.onCompleted();
+    }
+
+    ...
+</code></pre>
+<p>No entanto, há que ter em conta que as exceções passadas como argumento a <code>onError</code> são automaticamente encapsuladas dentro de <code>StatusRuntimeException</code> ou <code>StatusException</code>, perdendo informação relevante sobre a sua origem/causa (uma vez que esta informação pertence exclusivamente ao domínio do servidor e não deve ser enviada ao cliente). Assim sendo, as únicas exceções que o cliente poderá receber do seu lado são do tipo <code>StatusRuntimeException</code> (que herda de <code>RuntimeException</code>) ou <code>StatusException</code> (que herda de <code>Exception</code>).</p>
+<p>O gRPC oferece uma estrutura que permite representar o estado de erro devolvido por uma invocação remota, Status. Em Java, a classe com o mesmo nome define um código e uma descrição textual do estado de erro. Há vários códigos previstos,
+que <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/grpc/Status.java">podem ser consultados aqui</a>.</p>
+<p>Um exemplo é o código <code>INVALID_ARGUMENT</code>, para representar situações em que o cliente especificou um argumento inválido. Os códigos <code>NOT_FOUND</code>, <code>ALREADY_EXISTS</code> e <code>FAILED_PRECONDITION</code> cobrem outras situações em que a invocação remota não pode ser executada por alguma condição da lógica do domínio não estar satisfeita. A grande vantagem de usar a classe <code>Status</code> para retornar estados de erro em gRPC é que esta possui um método que encapsula automaticamente o código pretendido numa exceção, pronta a ser passada ao método onError.</p>
+<p>Por exemplo, para que o cliente receba uma <code>StatusRuntimeException</code> (análogo para <code>StatusException</code>) ao especificar um argumento inválido, o servidor pode invocar:</p>
+<pre><code class="language-java">        ...
+
+        responseObserver.onError(Status.INVALID_ARGUMENT.asRuntimeException());
+
+        ...
+</code></pre>
+<h3 id="como-adicionar-informação-ao-erro"><a class="header" href="#como-adicionar-informação-ao-erro">Como adicionar informação ao erro?</a></h3>
+<p>Como discutido anteriormente, é ainda possível passar mais informação ao cliente acerca do erro em causa. Por exemplo, para passar uma descrição textual do erro, o servidor pode invocar:</p>
+<pre><code class="language-java">        ...
+
+        responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Invalid input!").asRuntimeException());
+
+        ...
+</code></pre>
+<h3 id="como-captar-o-erro-no-cliente"><a class="header" href="#como-captar-o-erro-no-cliente">Como captar o erro no cliente?</a></h3>
+<p>Para captar o erro do lado do cliente, basta introduzir um bloco <code>try-catch</code> para uma exceção do tipo <code>StatusRuntimeException</code>, que oferece o método <code>getStatus</code>, que devolve a instância de <code>Status</code> previamente encapsulada. Supondo, então, que existe, do lado do cliente, um stub, imprimir o código é simples:</p>
+<pre><code class="language-java">    ...
+    try {
+        CurrentBoardResponse response = stub.currentBoard(request);
+
+    } catch (StatusRuntimeException e) {
+        Status status = e.getStatus();
+        System.out.println(status.getDescription());
+    }
+    ...
+</code></pre>
+<p>Atente-se que a descrição que se obtém ao invocar <code>status.getDescription()</code> é igual à descrição que foi passada no servidor em <code>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</code>.</p>
 <h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
 <p>O ponto de partida será a solução construída pelo seu grupo na <a href="./03-grpc.html">aula anterior para o Jogo do Galo em gRPC</a>.</p>
 <p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
 <p>Vamos então começar!</p>
+<h3 id="apanhar-erros-simples-de-comunicação"><a class="header" href="#apanhar-erros-simples-de-comunicação">Apanhar erros simples de comunicação</a></h3>
+<p>Experimente as seguintes situações.</p>
+<ol>
+<li>
+<p>Lançar o cliente sem que o servidor tenha ainda sido lançado.</p>
+</li>
+<li>
+<p>Lançar o servidor; lançar o cliente; realizar uma jogada (com sucesso); desligar o servidor; tentar realizar nova jogada (agora sem sucesso).</p>
+</li>
+</ol>
+<p>Em casa cenário acima, que exceções foram apanhadas pelo cliente?</p>
 <h3 id="enviar-informação-de-erro-do-servidor-para-o-cliente"><a class="header" href="#enviar-informação-de-erro-do-servidor-para-o-cliente">Enviar informação de erro do servidor para o cliente</a></h3>
 <p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
 <ul>

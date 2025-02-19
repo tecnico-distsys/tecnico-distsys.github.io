@@ -153,7 +153,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="perguntas-frequentes-sobre-as-ferramentas"><a class="header" href="#perguntas-frequentes-sobre-as-ferramentas">Perguntas frequentes sobre as ferramentas</a></h1>
-<h2 id="perguntas-sobre-java"><a class="header" href="#perguntas-sobre-java">Perguntas sobre Java</a></h2>
+<h3 id="Índice"><a class="header" href="#Índice">Índice:</a></h3>
+<ul>
+<li><a href="#java">Java</a></li>
+<li><a href="#maven">Maven</a></li>
+<li><a href="#python">Python</a></li>
+<li><a href="#grpc">gRPC</a></li>
+</ul>
+<hr />
+<h2 id="perguntas-sobre-java"><a class="header" href="#perguntas-sobre-java"><a name="java"></a> Perguntas sobre Java</a></h2>
 <h3 id="importante-existe-alguma-restrição-sobre-a-directoria-de-instalação-do-software"><a class="header" href="#importante-existe-alguma-restrição-sobre-a-directoria-de-instalação-do-software">[IMPORTANTE] Existe alguma restrição sobre a directoria de instalação do software?</a></h3>
 <p>Sim, infelizmente devido a diversos bugs em ferramentas, o software não funciona corretamente em pastas cujo caminho tenha espaços e/ou caracteres acentuados (sobretudo em Windows). Exemplos de pastas problemáticas:</p>
 <p><code>C:\program files</code>
@@ -180,7 +188,7 @@ $ mvn -version
 <p>As classes foram corrompidas por diferentes compiladores em simultâneo (por ex. Eclipse e Maven).
 Para corrigir ir a Eclipse -&gt; Menu 'Project', 'Clean', 'clean all projects". Depois, correr mvn clean.</p>
 <hr />
-<h2 id="perguntas-sobre-maven"><a class="header" href="#perguntas-sobre-maven">Perguntas sobre Maven</a></h2>
+<h2 id="perguntas-sobre-maven"><a class="header" href="#perguntas-sobre-maven"><a name="maven"></a> Perguntas sobre Maven</a></h2>
 <h3 id="o-meu-nome-de-utilizador-tem-acentos-ou-espaços-e-preciso-de-mudar-a-localização-do-repositório-local-maven-como-se-faz"><a class="header" href="#o-meu-nome-de-utilizador-tem-acentos-ou-espaços-e-preciso-de-mudar-a-localização-do-repositório-local-maven-como-se-faz">O meu nome de utilizador tem acentos ou espaços e preciso de mudar a localização do repositório local Maven. Como se faz?</a></h3>
 <p>O repositório local do Maven é a pasta onde são guardadas todas as dependências obtidas pelo Maven.</p>
 <p>Por omissão, a localização do repositório local é:
@@ -289,7 +297,14 @@ Para resolver esta questão, por exemplo em Windows, é necessário seguir os se
 <h3 id="quando-tento-executar-o-eclipse-este-pára-com-erro-13-como-resolver"><a class="header" href="#quando-tento-executar-o-eclipse-este-pára-com-erro-13-como-resolver">Quando tento executar o Eclipse este pára com erro 13. Como resolver?</a></h3>
 <p>Não vale a pena reinstalar o Eclipse.
 Basta editar a PATH e remover <code>C:\ProgramData\Oracle\Java\javapath</code> caso exista, e garantir que o caminho certo é o primeiro na lista de caminhos da PATH. Se existirem outros caminhos devido a atualizações, estes devem ser removidos.</p>
-<h2 id="perguntas-sobre-grpc"><a class="header" href="#perguntas-sobre-grpc">Perguntas sobre gRPC</a></h2>
+<h2 id="perguntas-sobre-python"><a class="header" href="#perguntas-sobre-python"><a name="python"></a> Perguntas sobre Python</a></h2>
+<h3 id="ocorreu-um-erro-na-criação-do-ambiente-virtual-o-que-devo-fazer"><a class="header" href="#ocorreu-um-erro-na-criação-do-ambiente-virtual-o-que-devo-fazer">Ocorreu um erro na criação do Ambiente Virtual, o que devo fazer?</a></h3>
+<p>Geralmente o erro vem acompanhado de uma mensagem de erro descritiva e possivelmente do comando/ação necessária para resolvê-lo.
+Caso o erro se assemelhe ao apresentado em seguida:
+<img src="./images/erro-python-env.png" alt="erro" /></p>
+<p>E o comando sugerido não o resolva, deve experimentar o seguinte comando:
+<code>sudo apt install python3-venv</code></p>
+<h2 id="perguntas-sobre-grpc"><a class="header" href="#perguntas-sobre-grpc"><a name="grpc"></a> Perguntas sobre gRPC</a></h2>
 <h3 id="não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code>no meu portátil Mac. Como resolver?</a></h3>
 <p>O compilador do gRPC (<code>protoc</code>) tem uma <a href="https://github.com/grpc/grpc-java/issues/7690">"open issue" com os processadores M1 da Apple</a>. Quando se tenta executar o <code>protoc</code> (por exemplo, fazendo <code>mvn install</code> num projeto contendo o contrato de um gRPC), ocorre um erro.</p>
 <p>Para contornar este problema, devem procurar estas duas <em>tags</em> <code>&lt;protocArtifact&gt;</code> no  POM:</p>

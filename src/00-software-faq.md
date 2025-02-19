@@ -1,6 +1,17 @@
 # Perguntas frequentes sobre as ferramentas
 
-## Perguntas sobre Java
+
+### Índice:
+
+- [Java](#java)
+- [Maven](#maven)
+- [Python](#python)
+- [gRPC](#grpc)
+
+---
+
+
+## <a name="java"></a> Perguntas sobre Java
 
 ### [IMPORTANTE] Existe alguma restrição sobre a directoria de instalação do software?
 
@@ -49,7 +60,7 @@ Para corrigir ir a Eclipse -> Menu 'Project', 'Clean', 'clean all projects". Dep
 
 ---
 
-## Perguntas sobre Maven
+## <a name="maven"></a> Perguntas sobre Maven
 
 ### O meu nome de utilizador tem acentos ou espaços e preciso de mudar a localização do repositório local Maven. Como se faz?
 
@@ -227,8 +238,19 @@ Exemplo concreto, aplicado ao pom.xml do projeto hello-ws-cli_juddi:
 Não vale a pena reinstalar o Eclipse. 
 Basta editar a PATH e remover `C:\ProgramData\Oracle\Java\javapath` caso exista, e garantir que o caminho certo é o primeiro na lista de caminhos da PATH. Se existirem outros caminhos devido a atualizações, estes devem ser removidos. 
 
+## <a name="python"></a> Perguntas sobre Python
 
-## Perguntas sobre gRPC
+### Ocorreu um erro na criação do Ambiente Virtual, o que devo fazer? 
+
+Geralmente o erro vem acompanhado de uma mensagem de erro descritiva e possivelmente do comando/ação necessária para resolvê-lo.
+Caso o erro se assemelhe ao apresentado em seguida:
+![erro](./images/erro-python-env.png)
+
+E o comando sugerido não o resolva, deve experimentar o seguinte comando:
+`sudo apt install python3-venv`
+
+
+## <a name="grpc"></a> Perguntas sobre gRPC
 
 ### Não consigo correr o `protoc`no meu portátil Mac. Como resolver?
 

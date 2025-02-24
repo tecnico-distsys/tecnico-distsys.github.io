@@ -30,6 +30,7 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 Recursos do projeto:
 
 - [Enunciado](https://github.com/tecnico-distsys/Tuplespaces-2025/blob/master/tuplespaces.md) 
+- [Código inicial](https://github.com/tecnico-distsys/Tuplespaces-2025/tree/master/initial-code) 
 - [Fórum de discussão para dúvidas (via Moodle)](https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941)
 
 Datas das entregas (via fenix):

@@ -20,5 +20,5 @@
 - [gRPC: tratamento de erros e métodos remotos bloqueantes](./04-grpc-erros.md)
 - [gRPC: multi-linguagem](./05-grpc-multilinguagem.md)
 - [gRPC: chamadas assíncronas](./06-grpc-assincronas.md)
-
+- [gRPC: metadados](./07-grpc-metadata.md)
 ---

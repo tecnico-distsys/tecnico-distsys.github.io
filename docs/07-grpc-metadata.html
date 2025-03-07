@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html lang="pt" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>gRPC: metadados - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2025)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="metadados-em-grpc"><a class="header" href="#metadados-em-grpc">Metadados em gRPC</a></h1>
+<h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
+<ul>
+<li>Enviar e receber metadados usando <em>gRPC headers</em></li>
+</ul>
+<hr />
+<h2 id="metadados-em-chamada-remota-de-procedimentos"><a class="header" href="#metadados-em-chamada-remota-de-procedimentos">Metadados em chamada remota de procedimentos</a></h2>
+<p>Em chamada remota de procedimentos (RPC), a interface remota de um servidor define
+os parâmetros de entrada e de saída de cada operação oferecida pelo servidor.
+A implementação de cada operação do servidor (em Java, cada método) recebe
+os parâmetros de entrada e devolve os parâmetros de saída.</p>
+<p>No caso de gRPC, esses parâmetros são definidos nas mensagens (de pedido e de resposta)
+declaradas no ficheiro <code>.proto</code>.</p>
+<p>Ora, em muitas aplicações distribuídas, é conveniente que o cliente e servidor possam
+trocar <em>metadados</em> que não fazem parte dos parâmetros definidos pela interface remota,
+<em>sem que tal exija alterar a interface remota nem as implementações de cada operação</em>.</p>
+<p>Há diferentes situações em que a troca de metadados pode ser útil.
+Por exemplo, para autenticação, <em>tracing</em> ou <em>debugging</em>, ou balanceamento de carga.
+Para uma melhor explicação destas situações, consultar <a href="https://grpc.io/docs/guides/metadata/">este link</a>.</p>
+<p>Tal como em outros RPCs, o gRPC suporta que um cliente e um servidor mantenham um <em>canal lateral</em>
+através do qual podem trocar metadados, sem que o <code>.proto</code> ou os métodos que implementam
+as operações no servidor tenham de ser modificados.</p>
+<p>Em gRPC, cada elemento de metadados consiste num par chave-valor que é transportado como um cabeçalho (<em>header</em>) HTTP/2.
+As chaves são <em>ASCII strings</em>. Os valores podem ser <em>ASCII strings</em> ou conteúdo binário.</p>
+<p>Existe suporte para enviar e receber metadados gRPC em diferentes linguagens, incluindo Java.</p>
+<p>Para mais detalhes, devem consultar a <a href="https://grpc.io/docs/guides/metadata/">documentação do gRPC</a>.</p>
+<h2 id="exercício-um-hello-world-com-metadados-grpc"><a class="header" href="#exercício-um-hello-world-com-metadados-grpc">Exercício: um <em>hello world</em> com metadados gRPC</a></h2>
+<p>Para ilustrar o envio e a receção de metadados em gRPC, vamos estender o exemplo
+simples de gRPC que vimos na aula de introdução ao gRPC de forma a que o cliente envie uma
+<em>string</em> adicional ao servidor.
+Esta <em>string</em> será, claro, enviada como metadados (ou seja, como um cabeçalho HTTP/2), sem precisarmos
+de alterar o <code>.proto</code> ou a implementação das operações remotas.</p>
+<h3 id="antes-de-começar"><a class="header" href="#antes-de-começar">Antes de começar</a></h3>
+<ul>
+<li>
+<p>Comece por obter o código do <a href="https://github.com/tecnico-distsys/example_grpc">exemplo gRPC</a>.</p>
+</li>
+<li>
+<p>Compile o servidor e o cliente (não se esqueça de, antes, compilar o <code>.proto</code>!) e experimente
+correr o projeto para confirmar que funciona.</p>
+</li>
+</ul>
+<h3 id="cliente-a-enviar-metadados"><a class="header" href="#cliente-a-enviar-metadados">Cliente a enviar metadados</a></h3>
+<ul>
+<li>
+<p>No cliente, comece por importar as <em>packages</em> <code>io.grpc.Metadata</code> e
+<code>io.grpc.stub.MetadataUtils</code>, pois serão usadas nos passos seguintes.</p>
+</li>
+<li>
+<p>Defina uma chave para o cabeçalho que será enviado ao servidor. Pode escolher um nome que ache melhor para a chave, claro.</p>
+</li>
+</ul>
+<pre><code class="language-java">static final Metadata.Key&lt;String&gt; MY_HEADER_KEY =
+      Metadata.Key.of("my_header_key", Metadata.ASCII_STRING_MARSHALLER);
+</code></pre>
+<ul>
+<li>Antes de usarmos o <em>stub</em>, vamos estendê-lo com um <em>interceptor</em> que tratará de,
+a cada pedido que sai, lhe adicionar o cabeçalho que desejarmos.
+Para obtermos o <em>stub</em> com *interceptor, basta adicionar estas linhas imediatamente após
+termos o <em>stub</em> original criado:</li>
+</ul>
+<pre><code class="language-java">Metadata metadata = new Metadata();
+metadata.put(MY_HEADER_KEY, "aqui substituir pela string que quiserem enviar no cabecalho!");
+
+HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stubWithHeader = 
+  stub.withInterceptors(MetadataUtils.newAttachHeadersInterceptor((metadata)));
+</code></pre>
+<ul>
+<li>
+<p>A partir deste momento, quando o cliente quiser enviar um pedido que transportará o cabeçalho,
+basta invocar o <em>stub</em> criado acima, <code>stubWithHeader</code>.
+Caso contrário, se se invocar o <em>stub</em> original (<code>stub</code>), o pedido não levará cabeçalhos adicionais.</p>
+</li>
+<li>
+<p>Experimente compilar e executar este cliente modificado. Notou alguma diferença no servidor?...</p>
+</li>
+</ul>
+<h3 id="adicionar-um-interceptor-no-servidor-para"><a class="header" href="#adicionar-um-interceptor-no-servidor-para">Adicionar um interceptor no servidor para</a></h3>
+<p>Até agora, o servidor não está ainda a tentar obter o novo cabeçalho que o cliente lhe passou a enviar. Por isso, ele está a ignorar esse novo cabeçalho.</p>
+<p>Vamos agora modificá-lo para que ele passe a ter também um <em>interceptor</em> que procura,
+nos pedidos que recebe, um cabeçalho com a chave pretendida.
+Como veremos já de seguida, esta parte é um pouco mais complicada.</p>
+<ul>
+<li>Para termos um <em>interceptor</em> que processa mensagens recebidas, precisamos
+definir uma classe com esse <em>interceptor</em>.
+Como ponto de partida, adicione a classe seguinte ao projeto do servidor.</li>
+</ul>
+<pre><code class="language-java">package pt.tecnico.grpc.server;
+
+import io.grpc.Metadata;
+import io.grpc.ServerCall;
+import io.grpc.ServerCallHandler;
+import io.grpc.ServerInterceptor;
+
+public class HeaderServerInterceptor implements ServerInterceptor {
+
+  /* TO DO: Ensure that the name of the header key to match the header key used by the sender */
+  static final Metadata.Key&lt;String&gt; CUSTOM_HEADER_KEY =
+      Metadata.Key.of("my_header_key", Metadata.ASCII_STRING_MARSHALLER);
+
+  @Override
+  public &lt;ReqT, RespT&gt; ServerCall.Listener&lt;ReqT&gt; interceptCall(
+      ServerCall&lt;ReqT, RespT&gt; call,
+      final Metadata requestHeaders,
+      ServerCallHandler&lt;ReqT, RespT&gt; next) {
+        
+        String headerValue = requestHeaders.get(CUSTOM_HEADER_KEY);
+
+        if (headerValue != null) {
+          /* We found the expected header in the request message! */
+
+          /* TO DO: do something with the header value. 
+              For instance, save it in io.grpc.Context, so that the 
+              invoked server method can access and use it. 
+          */
+        }
+
+        return next.startCall(call, requestHeaders);
+  }
+}
+</code></pre>
+<ul>
+<li>
+<p>Se, no código do seu cliente, alterou a chave do cabeçalho que este envia, altere-a também na classe acima.</p>
+</li>
+<li>
+<p>Para observarmos o cabeçalho a chegar ao servidor, imprima o valor do cabelaho (<code>headerValue</code>) dentro do <code>if</code>
+no <em>stdout</em> do servidor.
+<em>Nota: num projeto a sério, o valor do cabeçalho deve ser usado de forma mais útil.
+A sugestão dada no comentário acima pode ser útil no vosso projeto de Sistemas Distribuídos.</em></p>
+</li>
+<li>
+<p>Até agora, já tem a classe do <em>interceptor</em> mas ele ainda não é usado pelo servidor.
+Para tal é preciso de instalar uma instância deste <em>interceptor</em> no serviço que é criado no <code>Main</code> do servidor.</p>
+</li>
+<li>
+<p>Para fazer isso, deve substituir a chamada ao método <code>addService</code> (no <code>Main</code> do servidor) por esta variante.</p>
+</li>
+</ul>
+<pre><code class="language-java">.addService(ServerInterceptors.intercept(impl, new HeaderServerInterceptor())).build();
+</code></pre>
+<ul>
+<li>Compile o servidor. Agora, experimente lançar o servidor e, depois, o cliente.
+E agora, notou alguma diferença no <em>stdout</em> do servidor?
+Se cumpriu todos os passos até este ponto, devia observar o servidor a imprimir o valor enviado pelo cliente.</li>
+</ul>
+<h2 id="curiosao-por-saber-mais"><a class="header" href="#curiosao-por-saber-mais">Curiosa/o por saber mais?</a></h2>
+<p>O exercício acima ilustra o envio de metadados no pedido.
+No entanto, é também possível enviar metadados na resposta devolvida pelo servidor.</p>
+<p>A documentação gRPC fornece <a href="https://github.com/grpc/grpc-java/tree/master/examples/src/main/java/io/grpc/examples/header">um outro exemplo de código</a> que explora essa e outras possibilidades.</p>
+<h2 id="passo-seguinte"><a class="header" href="#passo-seguinte">Passo seguinte</a></h2>
+<p>Aplicar esta tecnologia ao seu projeto!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="06-grpc-assincronas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="06-grpc-assincronas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

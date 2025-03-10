@@ -166,7 +166,7 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
 <tr><td>fev</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td><a href="./01-ferramentas.html">Apresentação e ferramentas</a></td><td><a href="./02-java-avancado.html">Java avançado (exceções, concorrência e troca de mensagens)</a></td></tr>
 <tr><td>fev</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td></tr>
 <tr><td>mar</td><td>3</td><td>4</td><td>5</td><td>6</td><td>P1</td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td><td>Apoio ao projeto, <strong>Entrega 1</strong></td></tr>
-<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: Invocações assíncronas</a></td><td>Apoio ao projeto</td></tr>
+<tr><td>mar</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td><a href="./06-grpc-assincronas.html">gRPC: Invocações assíncronas</a></td><td><a href="./07-grpc-metadata.html">gRPC: metadados</a></td></tr>
 <tr><td>mar</td><td>17</td><td>18</td><td>19</td><td>20</td><td>P2</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 2</strong></td></tr>
 <tr><td>mar</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
 <tr><td>mar/abr</td><td>31</td><td>1</td><td>2</td><td>3</td><td>P3</td><td>Apoio ao projeto</td><td>Apoio ao projeto, <strong>Entrega 3</strong></td></tr>
@@ -1542,6 +1542,159 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 <p>Se já concluiu o exercício acima, pense como pode incorporar a mesma estratégia no seu projeto.</p>
 <hr />
 <p>[1] Sim, é possível se criarmos múltiplas threads, sendo que cada uma invoca um <em>stub</em> bloqueante. Mesmo que essas threads fiquem bloqueadas até receberem a sua resposta, a thread principal fica livre para continuar a sua execução. No entanto, esta via é tipicamente mais difícil de programar.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="metadados-em-grpc"><a class="header" href="#metadados-em-grpc">Metadados em gRPC</a></h1>
+<h2 id="objetivos-desta-aula-6"><a class="header" href="#objetivos-desta-aula-6">Objetivos desta aula:</a></h2>
+<ul>
+<li>Enviar e receber metadados usando <em>gRPC headers</em></li>
+</ul>
+<hr />
+<h2 id="metadados-em-chamada-remota-de-procedimentos"><a class="header" href="#metadados-em-chamada-remota-de-procedimentos">Metadados em chamada remota de procedimentos</a></h2>
+<p>Em chamada remota de procedimentos (RPC), a interface remota de um servidor define
+os parâmetros de entrada e de saída de cada operação oferecida pelo servidor.
+A implementação de cada operação do servidor (em Java, cada método) recebe
+os parâmetros de entrada e devolve os parâmetros de saída.</p>
+<p>No caso de gRPC, esses parâmetros são definidos nas mensagens (de pedido e de resposta)
+declaradas no ficheiro <code>.proto</code>.</p>
+<p>Ora, em muitas aplicações distribuídas, é conveniente que o cliente e servidor possam
+trocar <em>metadados</em> que não fazem parte dos parâmetros definidos pela interface remota,
+<em>sem que tal exija alterar a interface remota nem as implementações de cada operação</em>.</p>
+<p>Há diferentes situações em que a troca de metadados pode ser útil.
+Por exemplo, para autenticação, <em>tracing</em> ou <em>debugging</em>, ou balanceamento de carga.
+Para uma melhor explicação destas situações, consultar <a href="https://grpc.io/docs/guides/metadata/">este link</a>.</p>
+<p>Tal como em outros RPCs, o gRPC suporta que um cliente e um servidor mantenham um <em>canal lateral</em>
+através do qual podem trocar metadados, sem que o <code>.proto</code> ou os métodos que implementam
+as operações no servidor tenham de ser modificados.</p>
+<p>Em gRPC, cada elemento de metadados consiste num par chave-valor que é transportado como um cabeçalho (<em>header</em>) HTTP/2.
+As chaves são <em>ASCII strings</em>. Os valores podem ser <em>ASCII strings</em> ou conteúdo binário.</p>
+<p>Existe suporte para enviar e receber metadados gRPC em diferentes linguagens, incluindo Java.</p>
+<p>Para mais detalhes, devem consultar a <a href="https://grpc.io/docs/guides/metadata/">documentação do gRPC</a>.</p>
+<h2 id="exercício-um-hello-world-com-metadados-grpc"><a class="header" href="#exercício-um-hello-world-com-metadados-grpc">Exercício: um <em>hello world</em> com metadados gRPC</a></h2>
+<p>Para ilustrar o envio e a receção de metadados em gRPC, vamos estender o exemplo
+simples de gRPC que vimos na aula de introdução ao gRPC de forma a que o cliente envie uma
+<em>string</em> adicional ao servidor.
+Esta <em>string</em> será, claro, enviada como metadados (ou seja, como um cabeçalho HTTP/2), sem precisarmos
+de alterar o <code>.proto</code> ou a implementação das operações remotas.</p>
+<h3 id="antes-de-começar-1"><a class="header" href="#antes-de-começar-1">Antes de começar</a></h3>
+<ul>
+<li>
+<p>Comece por obter o código do <a href="https://github.com/tecnico-distsys/example_grpc">exemplo gRPC</a>.</p>
+</li>
+<li>
+<p>Compile o servidor e o cliente (não se esqueça de, antes, compilar o <code>.proto</code>!) e experimente
+correr o projeto para confirmar que funciona.</p>
+</li>
+</ul>
+<h3 id="cliente-a-enviar-metadados"><a class="header" href="#cliente-a-enviar-metadados">Cliente a enviar metadados</a></h3>
+<ul>
+<li>
+<p>No cliente, comece por importar as <em>packages</em> <code>io.grpc.Metadata</code> e
+<code>io.grpc.stub.MetadataUtils</code>, pois serão usadas nos passos seguintes.</p>
+</li>
+<li>
+<p>Defina uma chave para o cabeçalho que será enviado ao servidor. Pode escolher um nome que ache melhor para a chave, claro.</p>
+</li>
+</ul>
+<pre><code class="language-java">static final Metadata.Key&lt;String&gt; MY_HEADER_KEY =
+      Metadata.Key.of("my_header_key", Metadata.ASCII_STRING_MARSHALLER);
+</code></pre>
+<ul>
+<li>Antes de usarmos o <em>stub</em>, vamos estendê-lo com um <em>interceptor</em> que tratará de,
+a cada pedido que sai, lhe adicionar o cabeçalho que desejarmos.
+Para obtermos o <em>stub</em> com *interceptor, basta adicionar estas linhas imediatamente após
+termos o <em>stub</em> original criado:</li>
+</ul>
+<pre><code class="language-java">Metadata metadata = new Metadata();
+metadata.put(MY_HEADER_KEY, "aqui substituir pela string que quiserem enviar no cabecalho!");
+
+HelloWorldServiceGrpc.HelloWorldServiceBlockingStub stubWithHeader = 
+  stub.withInterceptors(MetadataUtils.newAttachHeadersInterceptor((metadata)));
+</code></pre>
+<ul>
+<li>
+<p>A partir deste momento, quando o cliente quiser enviar um pedido que transportará o cabeçalho,
+basta invocar o <em>stub</em> criado acima, <code>stubWithHeader</code>.
+Caso contrário, se se invocar o <em>stub</em> original (<code>stub</code>), o pedido não levará cabeçalhos adicionais.</p>
+</li>
+<li>
+<p>Experimente compilar e executar este cliente modificado. Notou alguma diferença no servidor?...</p>
+</li>
+</ul>
+<h3 id="adicionar-um-interceptor-no-servidor-para-receber-metadados"><a class="header" href="#adicionar-um-interceptor-no-servidor-para-receber-metadados">Adicionar um <em>interceptor</em> no servidor para receber metadados</a></h3>
+<p>Até agora, o servidor não está ainda a tentar obter o novo cabeçalho que o cliente lhe passou a enviar. Por isso, ele está a ignorar esse novo cabeçalho.</p>
+<p>Vamos agora modificá-lo para que ele passe a ter também um <em>interceptor</em> que procura,
+nos pedidos que recebe, um cabeçalho com a chave pretendida.
+Como veremos já de seguida, esta parte é um pouco mais complicada.</p>
+<ul>
+<li>Para termos um <em>interceptor</em> que processa mensagens recebidas, precisamos
+definir uma classe com esse <em>interceptor</em>.
+Como ponto de partida, adicione a classe seguinte ao projeto do servidor.</li>
+</ul>
+<pre><code class="language-java">package pt.tecnico.grpc.server;
+
+import io.grpc.Metadata;
+import io.grpc.ServerCall;
+import io.grpc.ServerCallHandler;
+import io.grpc.ServerInterceptor;
+
+public class HeaderServerInterceptor implements ServerInterceptor {
+
+  /* TO DO: Ensure that the name of the header key to match the header key used by the sender */
+  static final Metadata.Key&lt;String&gt; CUSTOM_HEADER_KEY =
+      Metadata.Key.of("my_header_key", Metadata.ASCII_STRING_MARSHALLER);
+
+  @Override
+  public &lt;ReqT, RespT&gt; ServerCall.Listener&lt;ReqT&gt; interceptCall(
+      ServerCall&lt;ReqT, RespT&gt; call,
+      final Metadata requestHeaders,
+      ServerCallHandler&lt;ReqT, RespT&gt; next) {
+        
+        String headerValue = requestHeaders.get(CUSTOM_HEADER_KEY);
+
+        if (headerValue != null) {
+          /* We found the expected header in the request message! */
+
+          /* TO DO: do something with the header value. 
+              For instance, save it in io.grpc.Context, so that the 
+              invoked server method can access and use it. 
+              See: https://grpc.github.io/grpc-java/javadoc/io/grpc/Context.html
+          */
+        }
+
+        return next.startCall(call, requestHeaders);
+  }
+}
+</code></pre>
+<ul>
+<li>
+<p>Se, no código do seu cliente, alterou a chave do cabeçalho que este envia, altere-a também na classe acima.</p>
+</li>
+<li>
+<p>Para observarmos o cabeçalho a chegar ao servidor, imprima o valor do cabelaho (<code>headerValue</code>) dentro do <code>if</code>
+no <em>stdout</em> do servidor.
+<em>Nota: num projeto a sério, o valor do cabeçalho deve ser usado de forma mais útil.
+A sugestão dada no comentário acima pode ser útil no vosso projeto de Sistemas Distribuídos.</em></p>
+</li>
+<li>
+<p>Até agora, já tem a classe do <em>interceptor</em> mas ele ainda não é usado pelo servidor.
+Para tal é preciso de instalar uma instância deste <em>interceptor</em> no serviço que é criado no <code>Main</code> do servidor.</p>
+</li>
+<li>
+<p>Para fazer isso, deve substituir a chamada ao método <code>addService</code> (no <code>Main</code> do servidor) por esta variante.</p>
+</li>
+</ul>
+<pre><code class="language-java">.addService(ServerInterceptors.intercept(impl, new HeaderServerInterceptor())).build();
+</code></pre>
+<ul>
+<li>Compile o servidor. Agora, experimente lançar o servidor e, depois, o cliente.
+E agora, notou alguma diferença no <em>stdout</em> do servidor?
+Se cumpriu todos os passos até este ponto, devia observar o servidor a imprimir o valor enviado pelo cliente.</li>
+</ul>
+<h2 id="curiosao-por-saber-mais"><a class="header" href="#curiosao-por-saber-mais">Curiosa/o por saber mais?</a></h2>
+<p>O exercício acima ilustra o envio de metadados no pedido.
+No entanto, é também possível enviar metadados na resposta devolvida pelo servidor.</p>
+<p>A documentação gRPC fornece <a href="https://github.com/grpc/grpc-java/tree/master/examples/src/main/java/io/grpc/examples/header">um outro exemplo de código</a> que explora essa e outras possibilidades.</p>
+<h2 id="passo-seguinte"><a class="header" href="#passo-seguinte">Passo seguinte</a></h2>
+<p>Aplicar esta tecnologia ao seu projeto!</p>
 
                     </main>
 
@@ -1560,6 +1713,22 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

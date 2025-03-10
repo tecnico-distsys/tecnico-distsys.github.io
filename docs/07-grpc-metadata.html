@@ -229,7 +229,7 @@ Caso contrário, se se invocar o <em>stub</em> original (<code>stub</code>), o p
 <p>Experimente compilar e executar este cliente modificado. Notou alguma diferença no servidor?...</p>
 </li>
 </ul>
-<h3 id="adicionar-um-interceptor-no-servidor-para"><a class="header" href="#adicionar-um-interceptor-no-servidor-para">Adicionar um interceptor no servidor para</a></h3>
+<h3 id="adicionar-um-interceptor-no-servidor-para-receber-metadados"><a class="header" href="#adicionar-um-interceptor-no-servidor-para-receber-metadados">Adicionar um <em>interceptor</em> no servidor para receber metadados</a></h3>
 <p>Até agora, o servidor não está ainda a tentar obter o novo cabeçalho que o cliente lhe passou a enviar. Por isso, ele está a ignorar esse novo cabeçalho.</p>
 <p>Vamos agora modificá-lo para que ele passe a ter também um <em>interceptor</em> que procura,
 nos pedidos que recebe, um cabeçalho com a chave pretendida.
@@ -266,6 +266,7 @@ public class HeaderServerInterceptor implements ServerInterceptor {
           /* TO DO: do something with the header value. 
               For instance, save it in io.grpc.Context, so that the 
               invoked server method can access and use it. 
+              See: https://grpc.github.io/grpc-java/javadoc/io/grpc/Context.html
           */
         }
 

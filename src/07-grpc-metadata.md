@@ -83,7 +83,7 @@ Caso contrário, se se invocar o *stub* original (`stub`), o pedido não levará
 - Experimente compilar e executar este cliente modificado. Notou alguma diferença no servidor?...
 
 
-### Adicionar um interceptor no servidor para 
+### Adicionar um *interceptor* no servidor para receber metadados
 
 Até agora, o servidor não está ainda a tentar obter o novo cabeçalho que o cliente lhe passou a enviar. Por isso, ele está a ignorar esse novo cabeçalho. 
 
@@ -123,6 +123,7 @@ public class HeaderServerInterceptor implements ServerInterceptor {
           /* TO DO: do something with the header value. 
               For instance, save it in io.grpc.Context, so that the 
               invoked server method can access and use it. 
+              See: https://grpc.github.io/grpc-java/javadoc/io/grpc/Context.html
           */
         }
 

@@ -120,11 +120,7 @@ public class HeaderServerInterceptor implements ServerInterceptor {
         if (headerValue != null) {
           /* We found the expected header in the request message! */
 
-          /* TO DO: do something with the header value. 
-              For instance, save it in io.grpc.Context, so that the 
-              invoked server method can access and use it. 
-              See: https://grpc.github.io/grpc-java/javadoc/io/grpc/Context.html
-          */
+          /* TO DO: do something with the header value (see some ideas in the text below). */
         }
 
         return next.startCall(call, requestHeaders);
@@ -134,10 +130,9 @@ public class HeaderServerInterceptor implements ServerInterceptor {
 
 - Se, no código do seu cliente, alterou a chave do cabeçalho que este envia, altere-a também na classe acima.
 
-- Para observarmos o cabeçalho a chegar ao servidor, imprima o valor do cabelaho (`headerValue`) dentro do `if` 
+- Para observarmos o cabeçalho a chegar ao servidor, imprima o valor do cabeçalho (`headerValue`) dentro do `if` 
 no *stdout* do servidor. 
-*Nota: num projeto a sério, o valor do cabeçalho deve ser usado de forma mais útil. 
-A sugestão dada no comentário acima pode ser útil no vosso projeto de Sistemas Distribuídos.*
+*(Na secção seguinte veremos uma alternativa mais interessante.)*
 
 - Até agora, já tem a classe do *interceptor* mas ele ainda não é usado pelo servidor.
 Para tal é preciso de instalar uma instância deste *interceptor* no serviço que é criado no `Main` do servidor.
@@ -152,6 +147,54 @@ Para tal é preciso de instalar uma instância deste *interceptor* no serviço q
 E agora, notou alguma diferença no *stdout* do servidor? 
 Se cumpriu todos os passos até este ponto, devia observar o servidor a imprimir o valor enviado pelo cliente.
 
+## Utilizar os metadados na implementação do serviço
+
+Já vimos como conseguimos enviar informação extra no cliente através de metadados e como podemos obter essa informação no servidor utilizando um *interceptor*.
+
+No entanto, uma das utilidades de enviar informação extra através de metadados é conseguir utilizar essa informação na implementação do serviço do lado do servidor.
+
+Conseguimos fazer isto adicionando esta informação através do mecanismo que o gRPC tem para representar contextos (`io.grpc.Context`).
+
+Para tal, basta importar as seguintes *packages*:
+```java
+import io.grpc.Context;
+import io.grpc.Contexts;
+```
+e estender o código da classe `HeaderServerInterceptor` com os seguintes excertos de código:
+
+```java
+public static final Context.Key<String> HEADER_VALUE_CONTEXT_KEY = Context.key("contextKey");
+```
+
+Aqui, a chave do par chave/valor a ser adicionado ao contexto será `"contextKey"`.
+
+E as seguintes linhas à função `interceptCall`:
+
+```java
+if (headerValue != null) {
+    Context context = Context.current().withValue(HEADER_VALUE_CONTEXT_KEY, headerValue);
+    return Contexts.interceptCall(context, call, requestHeaders, next);
+}
+```
+
+Desta forma, estamos a adicionar um novo par chave/valor ao contexto atual, onde a chave é `HEADER_VALUE_CONTEXT_KEY` e o valor associado é `headerValue`.
+
+Depois, na implementação do método `greeting` do nosso serviço (`HelloWorldServiceImpl.java`), podemos simplesmente aceder a este valor fazendo:
+
+```java
+@Override
+public void greeting(HelloWorld.HelloRequest request, StreamObserver<HelloWorld.HelloResponse> responseObserver) {
+
+  // HelloRequest has auto-generated toString method that shows its contents
+  System.out.println(request);
+  String headerValue = HeaderServerInterceptor.HEADER_VALUE_CONTEXT_KEY.get();
+
+  if (headerValue != null) {
+      // do something with headerValue ...
+  }
+  ...
+}
+```
 
 ## Curiosa/o por saber mais?
 

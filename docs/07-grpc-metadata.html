@@ -263,11 +263,7 @@ public class HeaderServerInterceptor implements ServerInterceptor {
         if (headerValue != null) {
           /* We found the expected header in the request message! */
 
-          /* TO DO: do something with the header value. 
-              For instance, save it in io.grpc.Context, so that the 
-              invoked server method can access and use it. 
-              See: https://grpc.github.io/grpc-java/javadoc/io/grpc/Context.html
-          */
+          /* TO DO: do something with the header value (see some ideas in the text below). */
         }
 
         return next.startCall(call, requestHeaders);
@@ -279,10 +275,9 @@ public class HeaderServerInterceptor implements ServerInterceptor {
 <p>Se, no código do seu cliente, alterou a chave do cabeçalho que este envia, altere-a também na classe acima.</p>
 </li>
 <li>
-<p>Para observarmos o cabeçalho a chegar ao servidor, imprima o valor do cabelaho (<code>headerValue</code>) dentro do <code>if</code>
+<p>Para observarmos o cabeçalho a chegar ao servidor, imprima o valor do cabeçalho (<code>headerValue</code>) dentro do <code>if</code>
 no <em>stdout</em> do servidor.
-<em>Nota: num projeto a sério, o valor do cabeçalho deve ser usado de forma mais útil.
-A sugestão dada no comentário acima pode ser útil no vosso projeto de Sistemas Distribuídos.</em></p>
+<em>(Na secção seguinte veremos uma alternativa mais interessante.)</em></p>
 </li>
 <li>
 <p>Até agora, já tem a classe do <em>interceptor</em> mas ele ainda não é usado pelo servidor.
@@ -299,6 +294,39 @@ Para tal é preciso de instalar uma instância deste <em>interceptor</em> no ser
 E agora, notou alguma diferença no <em>stdout</em> do servidor?
 Se cumpriu todos os passos até este ponto, devia observar o servidor a imprimir o valor enviado pelo cliente.</li>
 </ul>
+<h2 id="utilizar-os-metadados-na-implementação-do-serviço"><a class="header" href="#utilizar-os-metadados-na-implementação-do-serviço">Utilizar os metadados na implementação do serviço</a></h2>
+<p>Já vimos como conseguimos enviar informação extra no cliente através de metadados e como podemos obter essa informação no servidor utilizando um <em>interceptor</em>.</p>
+<p>No entanto, uma das utilidades de enviar informação extra através de metadados é conseguir utilizar essa informação na implementação do serviço do lado do servidor.</p>
+<p>Conseguimos fazer isto adicionando esta informação através do mecanismo que o gRPC tem para representar contextos (<code>io.grpc.Context</code>).</p>
+<p>Para tal, basta importar as seguintes <em>packages</em>:</p>
+<pre><code class="language-java">import io.grpc.Context;
+import io.grpc.Contexts;
+</code></pre>
+<p>e estender o código da classe <code>HeaderServerInterceptor</code> com os seguintes excertos de código:</p>
+<pre><code class="language-java">public static final Context.Key&lt;String&gt; HEADER_VALUE_CONTEXT_KEY = Context.key("contextKey");
+</code></pre>
+<p>Aqui, a chave do par chave/valor a ser adicionado ao contexto será <code>"contextKey"</code>.</p>
+<p>E as seguintes linhas à função <code>interceptCall</code>:</p>
+<pre><code class="language-java">if (headerValue != null) {
+    Context context = Context.current().withValue(HEADER_VALUE_CONTEXT_KEY, headerValue);
+    return Contexts.interceptCall(context, call, requestHeaders, next);
+}
+</code></pre>
+<p>Desta forma, estamos a adicionar um novo par chave/valor ao contexto atual, onde a chave é <code>HEADER_VALUE_CONTEXT_KEY</code> e o valor associado é <code>headerValue</code>.</p>
+<p>Depois, na implementação do método <code>greeting</code> do nosso serviço (<code>HelloWorldServiceImpl.java</code>), podemos simplesmente aceder a este valor fazendo:</p>
+<pre><code class="language-java">@Override
+public void greeting(HelloWorld.HelloRequest request, StreamObserver&lt;HelloWorld.HelloResponse&gt; responseObserver) {
+
+  // HelloRequest has auto-generated toString method that shows its contents
+  System.out.println(request);
+  String headerValue = HeaderServerInterceptor.HEADER_VALUE_CONTEXT_KEY.get();
+
+  if (headerValue != null) {
+      // do something with headerValue ...
+  }
+  ...
+}
+</code></pre>
 <h2 id="curiosao-por-saber-mais"><a class="header" href="#curiosao-por-saber-mais">Curiosa/o por saber mais?</a></h2>
 <p>O exercício acima ilustra o envio de metadados no pedido.
 No entanto, é também possível enviar metadados na resposta devolvida pelo servidor.</p>

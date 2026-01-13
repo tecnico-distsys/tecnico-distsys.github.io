@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>gRPC: multi-linguagem - Laboratórios de Sistemas Distribuídos (edição 2025)</title>
+        <title>gRPC: multi-linguagem - Laboratórios de Sistemas Distribuídos (edição 2026)</title>
 
 
         <!-- Custom HTML head -->
@@ -120,7 +120,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2025)</h1>
+                    <h1 class="menu-title">Laboratórios de Sistemas Distribuídos (edição 2026)</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -231,7 +231,7 @@
 </li>
 <li>
 <p>Na diretoria <code>contract</code>, compile e execute os seguintes comandos:</p>
-<pre><code>mvn install
+<pre><code class="language-bash">mvn install
 mvn exec:exec
 </code></pre>
 <ul>
@@ -324,7 +324,7 @@ HelloWorld.HelloResponse response = stub.greeting(request);
 </ul>
 <h3 id="sobre-a-compilação-do-proto-para-python"><a class="header" href="#sobre-a-compilação-do-proto-para-python">Sobre a compilação do proto para Python</a></h3>
 <p>O comando descrito abaixo gera 2 ficheiros .py na indicada: o <code>_pb2.py</code> e o <code>_pb2_grpc.py</code> com classes que representam os tipos de dados das mensagens e com classes de suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven Plugin.</p>
-<pre><code>python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;
+<pre><code class="language-bash">python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;
 </code></pre>
 <h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
 <p>Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.</p>

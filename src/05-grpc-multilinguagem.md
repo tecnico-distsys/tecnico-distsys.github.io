@@ -68,7 +68,7 @@
 - Crie um ambiente virtual na diretoria base seguindo as instruções dadas acima.
 
 - Na diretoria `contract`, compile e execute os seguintes comandos:
-    ```
+    ```bash
     mvn install
     mvn exec:exec
     ```
@@ -140,7 +140,7 @@
 
 O comando descrito abaixo gera 2 ficheiros .py na indicada: o `_pb2.py` e o `_pb2_grpc.py` com classes que representam os tipos de dados das mensagens e com classes de suporte ao servidor e ao cliente do RPC. Nos exemplos deste guião a compilação é automatizada com o Exec Maven Plugin.
 
-```
+```bash
 python -m grpc_tools.protoc -I<pasta-para-o-contrato> --python_out=<diretoria-output> --grpc_python_out=<diretoria-output> <protos-para-compilar>
 ```
 

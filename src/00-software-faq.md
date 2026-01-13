@@ -34,8 +34,8 @@ Se não for possível encontrar a versão exata, pode-se instalar a versão mais
 
 Abrir uma consola e executar os seguintes comandos:
 
-```
-$ java -version`
+```bash
+$ java -version
 $ javac -version
 $ mvn -version
 ```
@@ -190,7 +190,7 @@ Especificando em *Base directory:* o caminho para o diretório do projeto e em *
 
 Neste exemplo específico, ao clicar em *Run* serão executados para o projeto `hello-ws-cli_juddi` os comandos:
 
-```
+```bash
 mvn generate-sources
 mvn compile
 mvn exec:java

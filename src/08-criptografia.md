@@ -38,7 +38,7 @@ O ponto de partida para o exercício é um serviço fornecedor de produtos para 
 ### Distribuição de chaves
 
 Num mundo real, a lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante. É necessário acrescentar uma assinatura para proteger a resposta do servidor. Vamos fazer uma assinatura digital. O servidor utilizará a sua chave privada para assinar e o cliente verificará a assintura com a chave pública do servidor.
-1. Descarregue e descomprima as [chaves de exemplo](https://github.com/tecnico-distsys/tecnico-distsys.github.io/blob/master/src/resources/keys.zip).
+1. Descarregue e descomprima as [chaves de exemplo](https://github.com/tecnico-distsys/tecnico-distsys.github.io/blob/crypto-lab-updated/src/resources/keys.zip).
 2. Copie a chave privada (ficheiro ```priv.key```) para o servidor (pasta ```server/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
 3. Copie a chave pública (ficheiro ```pub.key```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
 
@@ -104,19 +104,19 @@ Uma forma simples de implementar uma assinatura digital consiste em calcular um 
 MessageDigest message_digest = MessageDigest.getInstance("SHA-256");
 ...
 ```
-1. Para obter os dados a resumir, serialize o resultado com o seguinte método:
+3. Para obter os dados a resumir, serialize o resultado com o seguinte método:
 ```java
 ...
 byte[] responseBytes = response.toByteArray();
 ...
 ```
-1. Para calcular o resumo, use o método ```digest``` do objecto ```MessageDigest```:
+4. Para calcular o resumo, use o método ```digest``` do objecto ```MessageDigest```:
 ```java
 ...
 byte[] hash = message_digest.digest(responseBytes);
 ...
 ```
-1. Para cifrar o resumo, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS5Padding* e inicialize em *ENCRYPT_MODE* com a chave:
+5. Para cifrar o resumo, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS5Padding* e inicialize em *ENCRYPT_MODE* com a chave:
 ```java
 ...
 private static byte[] readFile(String path) throws FileNotFoundException, IOException {
@@ -150,7 +150,7 @@ try{
 }
 ...
 ```
-1. Calcule a assinatura cifrando o resumo:
+6. Calcule a assinatura cifrando o resumo:
 ```java
 ...
 try{
@@ -162,7 +162,7 @@ try{
 }
 ...
 ```
-1. Preencha a resposta a devolver com a assinatura. A assinatura deve ser codificada em *Base64* para ser convertida num formato texto:
+7. Preencha a resposta a devolver com a assinatura. A assinatura deve ser codificada em *Base64* para ser convertida num formato texto:
 ```java
 ...
 String signatureString = Base64.getEncoder().encodeToString(signatureBytes);

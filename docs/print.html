@@ -13,40 +13,52 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2dea4b3b.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-d98a7392.js"></script>
     </head>
     <body>
-    <div id="body-container">
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -60,7 +72,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -69,55 +82,59 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -125,33 +142,38 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="laboratórios-de-sistemas-distribuídos"><a class="header" href="#laboratórios-de-sistemas-distribuídos">Laboratórios de Sistemas Distribuídos</a></h1>
 <p>Bem-vinda/o ao site dos materiais laboratoriais da disciplina de Sistemas Distribuídos da
@@ -160,24 +182,30 @@ e
 <a href="https://fenix.tecnico.ulisboa.pt/disciplinas/SDis23610/2025-2026/2-semestre">LEIC-A</a>
 do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tecnico.ulisboa.pt/">Instituto Superior Técnico</a></p>
 <h2 id="antes-das-aulas-arrancarem"><a class="header" href="#antes-das-aulas-arrancarem">Antes das aulas arrancarem</a></h2>
-<p>Começar por <a href="./00-software.html">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
+<p>Começar por <a href="#instalação-das-ferramentas-de-desenvolvimento">instalar as ferramentas de desenvolvimento que serão usadas nas aulas laboratoriais</a>.</p>
 <h2 id="calendário-de-aulas-de-laboratório"><a class="header" href="#calendário-de-aulas-de-laboratório">Calendário de aulas de laboratório</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr></thead><tbody>
-<tr><td>fev</td><td></td><td></td><td>18</td><td>19</td><td>20</td><td></td><td><a href="./01-ferramentas.html">Apresentação e ferramentas</a></td></tr>
-<tr><td>fev</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td><a href="./02-java-avancado.html">Java avançado (exceções, concorrência e troca de mensagens)</a></td><td><a href="./03-grpc.html">gRPC: conceitos base</a></td></tr>
-<tr><td>mar</td><td>2</td><td>3</td><td>4</td><td>5</td><td><strong>P1</strong></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td></tr>
-<tr><td>mar</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td><a href="./06-grpc-assincronas.html">gRPC: Invocações assíncronas</a></td><td><a href="./07-grpc-metadata.html">gRPC: metadados</a></td></tr>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Mês</th><th>2a</th><th>3a</th><th>4a</th><th>5a</th><th>6a</th><th>Laboratório 1</th><th>Laboratório 2</th></tr>
+</thead>
+<tbody>
+<tr><td>fev</td><td></td><td></td><td>18</td><td>19</td><td>20</td><td></td><td><a href="#1-apresentação-e-ferramentas-java-maven-ide">Apresentação e ferramentas</a></td></tr>
+<tr><td>fev</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td><a href="#2--java-avançado-exceções-concorrência-e-troca-de-mensagens">Java avançado (exceções, concorrência e troca de mensagens)</a></td><td><a href="#3--grpc-conceitos-base">gRPC: conceitos base</a></td></tr>
+<tr><td>mar</td><td>2</td><td>3</td><td>4</td><td>5</td><td><strong>P1</strong></td><td><a href="#4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td><td><a href="#5--grpc-multi-linguagem">gRPC: multi-linguagem</a></td></tr>
+<tr><td>mar</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td><a href="#invocações-assíncronas-em-grpc">gRPC: Invocações assíncronas</a></td><td><a href="#metadados-em-grpc">gRPC: metadados</a></td></tr>
 <tr><td>mar</td><td>16</td><td>17</td><td>18</td><td>19</td><td><strong>P2</strong></td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
 <tr><td>mar</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
 <tr><td>mar/abr</td><td>30</td><td>31</td><td>1</td><td><strong>P3</strong></td><td></td><td>Apoio ao projeto</td><td></td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
 <p>Recursos do projeto (a disponibilizar quando o período letivo arrancar):</p>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Código inicial</a></li>
-<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+<li><a href="#laboratórios-de-sistemas-distribuídos">Enunciado</a></li>
+<li><a href="#laboratórios-de-sistemas-distribuídos">Código inicial</a></li>
+<li><a href="#laboratórios-de-sistemas-distribuídos">Fórum de discussão para dúvidas (via Moodle)</a></li>
 </ul>
 <p>Datas das entregas (via fenix):</p>
 <ul>
@@ -186,7 +214,8 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
 <li>3ª entrega: 2 abril</li>
 </ul>
 <p>Hora limite para todas as entregas: 23:59.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="instalação-das-ferramentas-de-desenvolvimento"><a class="header" href="#instalação-das-ferramentas-de-desenvolvimento">Instalação das ferramentas de desenvolvimento</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="instalação-das-ferramentas-de-desenvolvimento"><a class="header" href="#instalação-das-ferramentas-de-desenvolvimento">Instalação das ferramentas de desenvolvimento</a></h1>
 <p>As ferramentas de desenvolvimento permitem realizar os exercícios das aulas e depois o projeto.
 Podem ser usadas nos computadores dos laboratórios, mas é também aconselhável instalar no seu computador pessoal.</p>
 <p>Todo o software listado abaixo está disponível em sistemas Windows, Linux e Mac.</p>
@@ -269,9 +298,9 @@ Atenção: 32 vs 64 bit - a versão do Eclipse deve concordar com o JDK instalad
 <li>Especificar o JDK como Standard VM (em vez do JRE)
 Nota: só deverá ser necessário este passo em Windows.
 <ul>
-<li>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add...</li>
+<li>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add…</li>
 <li>Indicar o caminho até ao diretório do JDK: ex. <code>C:\Java\jdk-17.0.2</code></li>
-<li>Confirmar que as "Installed JREs" apenas fazem referência ao JDK instalado nas opções ativadas</li>
+<li>Confirmar que as “Installed JREs” apenas fazem referência ao JDK instalado nas opções ativadas</li>
 </ul>
 </li>
 </ul>
@@ -299,17 +328,18 @@ Nota: só deverá ser necessário este passo em Windows.
 </li>
 </ul>
 <h2 id="dúvidas-ou-erros"><a class="header" href="#dúvidas-ou-erros">Dúvidas ou erros?</a></h2>
-<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./00-software-faq.html">lista de respostas a perguntas frequentes</a>.</p>
+<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="#perguntas-frequentes-sobre-as-ferramentas">lista de respostas a perguntas frequentes</a>.</p>
 <p>Se detetar algum erro nas instruções acima, avise-nos!</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="perguntas-frequentes-sobre-as-ferramentas"><a class="header" href="#perguntas-frequentes-sobre-as-ferramentas">Perguntas frequentes sobre as ferramentas</a></h1>
-<h3 id="Índice"><a class="header" href="#Índice">Índice:</a></h3>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="perguntas-frequentes-sobre-as-ferramentas"><a class="header" href="#perguntas-frequentes-sobre-as-ferramentas">Perguntas frequentes sobre as ferramentas</a></h1>
+<h3 id="índice"><a class="header" href="#índice">Índice:</a></h3>
 <ul>
-<li><a href="00-software-faq.html#java">Java</a></li>
-<li><a href="00-software-faq.html#maven">Maven</a></li>
-<li><a href="00-software-faq.html#python">Python</a></li>
-<li><a href="00-software-faq.html#grpc">gRPC</a></li>
+<li><a href="#java">Java</a></li>
+<li><a href="#maven">Maven</a></li>
+<li><a href="#python">Python</a></li>
+<li><a href="#grpc">gRPC</a></li>
 </ul>
-<hr />
+<hr>
 <h2 id="perguntas-sobre-java"><a class="header" href="#perguntas-sobre-java"><a name="java"></a> Perguntas sobre Java</a></h2>
 <h3 id="importante-existe-alguma-restrição-sobre-a-directoria-de-instalação-do-software"><a class="header" href="#importante-existe-alguma-restrição-sobre-a-directoria-de-instalação-do-software">[IMPORTANTE] Existe alguma restrição sobre a directoria de instalação do software?</a></h3>
 <p>Sim, infelizmente devido a diversos bugs em ferramentas, o software não funciona corretamente em pastas cujo caminho tenha espaços e/ou caracteres acentuados (sobretudo em Windows). Exemplos de pastas problemáticas:</p>
@@ -335,8 +365,8 @@ $ mvn -version
 </ul>
 <h3 id="como-resolver-o-seguinte-problema-na-compilação-exception-in-thread-main-javalangerror-unresolved-compilation-problems"><a class="header" href="#como-resolver-o-seguinte-problema-na-compilação-exception-in-thread-main-javalangerror-unresolved-compilation-problems">Como resolver o seguinte problema na compilação? <code>Exception in thread "main" java.lang.Error: Unresolved compilation problems</code></a></h3>
 <p>As classes foram corrompidas por diferentes compiladores em simultâneo (por ex. Eclipse e Maven).
-Para corrigir ir a Eclipse -&gt; Menu 'Project', 'Clean', 'clean all projects". Depois, correr mvn clean.</p>
-<hr />
+Para corrigir ir a Eclipse -&gt; Menu ‘Project’, ‘Clean’, ’clean all projects“. Depois, correr mvn clean.</p>
+<hr>
 <h2 id="perguntas-sobre-maven"><a class="header" href="#perguntas-sobre-maven"><a name="maven"></a> Perguntas sobre Maven</a></h2>
 <h3 id="o-meu-nome-de-utilizador-tem-acentos-ou-espaços-e-preciso-de-mudar-a-localização-do-repositório-local-maven-como-se-faz"><a class="header" href="#o-meu-nome-de-utilizador-tem-acentos-ou-espaços-e-preciso-de-mudar-a-localização-do-repositório-local-maven-como-se-faz">O meu nome de utilizador tem acentos ou espaços e preciso de mudar a localização do repositório local Maven. Como se faz?</a></h3>
 <p>O repositório local do Maven é a pasta onde são guardadas todas as dependências obtidas pelo Maven.</p>
@@ -379,13 +409,13 @@ Para corrigir ir a Eclipse -&gt; Menu 'Project', 'Clean', 'clean all projects". 
 <p><code>mvn exec:java</code> corre dentro do maven e tem os argumentos definidos no <code>pom.xml</code> com bons valores por omissão (opção preferida para desenvolvimento).</p>
 <p><code>mvn package appassembler:assemble</code> corre de forma autónoma do Maven e necessita que sejam indicados os argumentos (opção preferida para demonstração)</p>
 <p><code>target/bin/appassembler/... .bat arg0 arg1 ...</code></p>
-<p>Via Eclipse também se pode correr, depois de compilado, definindo-se os argumentos nas "Run Configurations".</p>
+<p>Via Eclipse também se pode correr, depois de compilado, definindo-se os argumentos nas “Run Configurations”.</p>
 <h3 id="como-se-faz-a-partilha-de-código-através-de-módulos-maven-"><a class="header" href="#como-se-faz-a-partilha-de-código-através-de-módulos-maven-">Como se faz a partilha de código através de módulos Maven ?</a></h3>
 <p>Para o fazer, criar um projeto à parte (ex. my-library).
 No <code>pom.xml</code>, definir as coordenadas <em>groupId</em> (ex. <code>example</code>), <em>artifactId</em> (ex. <code>my-library</code>) e <em>version</em> (ex. <code>1.0-SNAPSHOT</code>).</p>
 <p>Para disponibilizar o módulo no repositório Maven local (<code>~/.m2</code>), fazer: <code>mvn install</code>.</p>
 <p>Para usar o módulo noutro projeto, basta acrescentar a dependência, indicando as coordenadas <em>groupId</em>, <em>artifactId</em> e <em>version</em> tal como se faz em relação a módulos que estão no repositório Maven central.</p>
-<h3 id="É-possível-ter-poms-hierárquicos-como-se-usam"><a class="header" href="#É-possível-ter-poms-hierárquicos-como-se-usam">É possível ter POMs hierárquicos? Como se usam?</a></h3>
+<h3 id="é-possível-ter-poms-hierárquicos-como-se-usam"><a class="header" href="#é-possível-ter-poms-hierárquicos-como-se-usam">É possível ter POMs hierárquicos? Como se usam?</a></h3>
 <p>O Maven tem dois conceitos hierárquicos: <em>modules</em> e <em>parent</em>.</p>
 <pre><code class="language-xml">&lt;project ...&gt;
     &lt;!-- the parent relation --&gt;
@@ -404,13 +434,13 @@ No <code>pom.xml</code>, definir as coordenadas <em>groupId</em> (ex. <code>exam
 </code></pre>
 <p>A relação <em>parent</em> indica que configurações de propriedades, repositórios e <em>plug-ins</em> devem ser herdadas do projeto pai.</p>
 <p>Um <em>module</em> indica que o subprojeto deve ser incluído no processamento do ciclo de vida do projeto de topo.</p>
-<hr />
+<hr>
 <h2 id="dúvidas-sobre-eclipse"><a class="header" href="#dúvidas-sobre-eclipse">Dúvidas sobre Eclipse</a></h2>
 <h3 id="pergunta-consigo-compilar-e-executar-os-exercícios-de-código-com-o-maven-no-terminal-mas-como-o-faço-dentro-do-eclipse"><a class="header" href="#pergunta-consigo-compilar-e-executar-os-exercícios-de-código-com-o-maven-no-terminal-mas-como-o-faço-dentro-do-eclipse">Pergunta: Consigo compilar e executar os exercícios de código com o Maven no terminal, mas como o faço dentro do Eclipse?</a></h3>
 <p>O Eclipse, depois de instalado seguindo o guia, consegue invocar ações de Maven.</p>
 <p>Para um projeto Maven no Eclipse, é necessário criar configurações de Maven Build, como é descrito em seguida:</p>
-<p><em>Package Explorer: Right-click no nome do projeto -&gt; Run As -&gt; Run Configurations... -&gt; Maven Build -&gt; New launch configuration</em></p>
-<p><img src="./images/faq-maven-eclipse.PNG" alt="Configuração de Maven goals em Eclipse" /></p>
+<p><em>Package Explorer: Right-click no nome do projeto -&gt; Run As -&gt; Run Configurations… -&gt; Maven Build -&gt; New launch configuration</em></p>
+<p><img src="images/faq-maven-eclipse.PNG" alt="Configuração de Maven goals em Eclipse"></p>
 <p>Especificando em <em>Base directory:</em> o caminho para o diretório do projeto e em <em>Goals:</em> a sequência de ações Maven a desempenhar, pode clicar em <em>Apply</em> e a partir daí poderá executar com esta parametrização através do botão <em>Run</em>.</p>
 <p>Neste exemplo específico, ao clicar em <em>Run</em> serão executados para o projeto <code>hello-ws-cli_juddi</code> os comandos:</p>
 <pre><code class="language-bash">mvn generate-sources
@@ -421,10 +451,10 @@ mvn exec:java
 <p>É possível que, apesar do JDK estar instalado, o Eclipse esteja a apontar para um módulo JRE (Java Runtime Environment), que apenas permite executar programas Java mas não compilar.
 Para resolver esta questão, por exemplo em Windows, é necessário seguir os seguintes passos:</p>
 <ul>
-<li>Ir a <em>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add...</em></li>
+<li>Ir a <em>Window -&gt; Preferences -&gt; Java -&gt; Installed JREs -&gt; Add…</em></li>
 <li>Indicando o diretório do JDK instalado, deve obter o seguinte resultado (ajustando a versão):</li>
 </ul>
-<p><img src="./images/eclipse-jdk1.PNG" alt="Adição do JDK aos Installed JREs" /></p>
+<p><img src="images/eclipse-jdk1.PNG" alt="Adição do JDK aos Installed JREs"></p>
 <p>Carregue em <em>Apply, OK</em>. A partir de agora, o Eclipse está configurado para invocar as ferramentas de compilação de Java, tais como o <em>javac</em>.</p>
 <h3 id="já-configurei-o-eclipse-para-usar-o-jdk-mais-recente-mas-mesmo-assim-quando-importo-um-projeto-maven-o-eclipse-assume-que-é-para-usar-j2se5-ou-outra-qualquer-versão-estranha-como-corrigir-isto"><a class="header" href="#já-configurei-o-eclipse-para-usar-o-jdk-mais-recente-mas-mesmo-assim-quando-importo-um-projeto-maven-o-eclipse-assume-que-é-para-usar-j2se5-ou-outra-qualquer-versão-estranha-como-corrigir-isto">Já configurei o Eclipse para usar o JDK mais recente, mas mesmo assim quando importo um projeto Maven, o Eclipse assume que é para usar J2SE5 ou outra qualquer versão estranha, como corrigir isto?</a></h3>
 <p>Para assegurar que o projeto Maven funciona como esperado, recomenda-se dar uma indicação explícita da versão de JDK a usar para o projeto.</p>
@@ -450,12 +480,12 @@ Basta editar a PATH e remover <code>C:\ProgramData\Oracle\Java\javapath</code> c
 <h3 id="ocorreu-um-erro-na-criação-do-ambiente-virtual-o-que-devo-fazer"><a class="header" href="#ocorreu-um-erro-na-criação-do-ambiente-virtual-o-que-devo-fazer">Ocorreu um erro na criação do Ambiente Virtual, o que devo fazer?</a></h3>
 <p>Geralmente o erro vem acompanhado de uma mensagem de erro descritiva e possivelmente do comando/ação necessária para resolvê-lo.
 Caso o erro se assemelhe ao apresentado em seguida:
-<img src="./images/erro-python-env.png" alt="erro" /></p>
+<img src="images/erro-python-env.png" alt="erro"></p>
 <p>E o comando sugerido não o resolva, deve experimentar o seguinte comando:
 <code>sudo apt install python3-venv</code></p>
 <h2 id="perguntas-sobre-grpc"><a class="header" href="#perguntas-sobre-grpc"><a name="grpc"></a> Perguntas sobre gRPC</a></h2>
 <h3 id="não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code>no meu portátil Mac. Como resolver?</a></h3>
-<p>O compilador do gRPC (<code>protoc</code>) tem uma <a href="https://github.com/grpc/grpc-java/issues/7690">"open issue" com os processadores M1 da Apple</a>. Quando se tenta executar o <code>protoc</code> (por exemplo, fazendo <code>mvn install</code> num projeto contendo o contrato de um gRPC), ocorre um erro.</p>
+<p>O compilador do gRPC (<code>protoc</code>) tem uma <a href="https://github.com/grpc/grpc-java/issues/7690">“open issue” com os processadores M1 da Apple</a>. Quando se tenta executar o <code>protoc</code> (por exemplo, fazendo <code>mvn install</code> num projeto contendo o contrato de um gRPC), ocorre um erro.</p>
 <p>Para contornar este problema, devem procurar estas duas <em>tags</em> <code>&lt;protocArtifact&gt;</code> no  POM:</p>
 <pre><code class="language-xml">&lt;protocArtifact&gt;com.google.protobuf:protoc:${version.protoc}:exe:${os.detected.classifier}&lt;/protocArtifact&gt;
 &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
@@ -466,13 +496,14 @@ Caso o erro se assemelhe ao apresentado em seguida:
 &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
 &lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:${version.grpc}:exe:osx-x86_64&lt;/pluginArtifact&gt;
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="1-apresentação-e-ferramentas-java-maven-ide"><a class="header" href="#1-apresentação-e-ferramentas-java-maven-ide">1. Apresentação e ferramentas (Java, Maven, IDE)</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="1-apresentação-e-ferramentas-java-maven-ide"><a class="header" href="#1-apresentação-e-ferramentas-java-maven-ide">1. Apresentação e ferramentas (Java, Maven, IDE)</a></h1>
 <h2 id="objetivos-desta-aula"><a class="header" href="#objetivos-desta-aula">Objetivos desta aula:</a></h2>
 <ul>
 <li>Apresentação da/o docente e formação de grupos de projeto</li>
 <li>Familiarizar-se com as ferramentas de desenvolvimento que usaremos na cadeira</li>
 </ul>
-<hr />
+<hr>
 <h2 id="apoio-ao-trabalho-laboratorial-durante-o-período"><a class="header" href="#apoio-ao-trabalho-laboratorial-durante-o-período">Apoio ao trabalho laboratorial durante o período</a></h2>
 <p>O professor do laboratório vai acompanhar o vosso percurso ao longo de todo o semestre. É importante ficar a conhecê-lo desde já. :-)</p>
 <p>O apoio a dúvidas fora das aulas é feito através do <a href="https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941">Moodle de SD</a>, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.</p>
@@ -494,14 +525,14 @@ Caso o erro se assemelhe ao apresentado em seguida:
 <li>Procure colegas no fórum no Moodle, onde os docentes criarão um tópico de discussão sobre este tema. Deixe lá a indicação de que procura elemento(s) para formar grupo ou respondendo a mensagens lá publicadas por colegas. Indique sempre o(s) turno(s) que pode frequentar e onde ainda há vagas.</li>
 <li>Note bem: a formação do grupo é da responsabilidade dos estudantes; os professores apenas fazem o registo.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="familiarização-com-as-ferramentas-de-desenvolvimento"><a class="header" href="#familiarização-com-as-ferramentas-de-desenvolvimento">Familiarização com as ferramentas de desenvolvimento</a></h2>
 <p>As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.</p>
 <p>No resto desta aula estudremos cada uma das ferramentas.
 A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse),
 que entenderemos melhor ao longo desta aula.</p>
-<p><img src="./images/java-tools-table.png" alt="Java tools reference card" /></p>
-<p>Atenção: antes de começar, é necessário <a href="./00-software.html">já ter o software instalado</a>.</p>
+<p><img src="images/java-tools-table.png" alt="Java tools reference card"></p>
+<p>Atenção: antes de começar, é necessário <a href="#instalação-das-ferramentas-de-desenvolvimento">já ter o software instalado</a>.</p>
 <h3 id="java"><a class="header" href="#java">Java</a></h3>
 <p>O JDK (<em>Java Developer Kit</em>) é um conjunto de ferramentas para programação na linguagem Java.
 As mais importantes são o <em>javac</em> que compila os programas e o <em>java</em> que lança as aplicações.</p>
@@ -689,7 +720,7 @@ Estude cada porção do POM no nosso exemplo e tente entender o seu significado.
 </code></pre>
 <p>Deste modo, sempre que os módulos B e C são construídos, o Maven automaticamente actualiza o módulo A, obtendo o JAR correspondente ao SNAPSHOT mais recente.</p>
 <p>Experimentaremos esta matéria daqui a algumas aulas, quando precisarmos de compor projetos com módulos e dependências entre eles.</p>
-<hr />
+<hr>
 <h3 id="java-ide"><a class="header" href="#java-ide">Java IDE</a></h3>
 <p>Tanto o Eclipse, o IntelliJ como o VSCode podem ser configurados em cima do JDK ou do Maven.
 Veja abaixo algumas instruções (basta ver para o seu IDE favorito).</p>
@@ -700,26 +731,26 @@ Veja abaixo algumas instruções (basta ver para o seu IDE favorito).</p>
 <li>
 <p>Se já tiver um projeto com os ficheiros de configuração do Maven (<code>pom.xml</code>):</p>
 <ul>
-<li>'File', 'Import...', 'Maven'-'Existing Maven Projects</li>
-<li>'Select root directory' e 'Browse' até à pasta do projecto.</li>
-<li>Confirmar que está tudo como desejado e 'Finish'.</li>
+<li>‘File’, ‘Import…’, ‘Maven’-’Existing Maven Projects</li>
+<li>‘Select root directory’ e ‘Browse’ até à pasta do projecto.</li>
+<li>Confirmar que está tudo como desejado e ‘Finish’.</li>
 </ul>
 </li>
 <li>
 <p>Se não existirem os ficheiros de configuração do Maven:</p>
 <ul>
-<li>Criar um 'Project', do tipo 'Maven Project'.</li>
-<li>Selecionar 'Create a simple project (skip architype selection)'.</li>
-<li>Remover a seleção 'Use default Workspace location' e 'Browse' até à pasta raiz do projecto (pasta mãe das 'sources').</li>
-<li>Preencher os campos em 'New Maven Project'.</li>
+<li>Criar um ‘Project’, do tipo ‘Maven Project’.</li>
+<li>Selecionar ‘Create a simple project (skip architype selection)’.</li>
+<li>Remover a seleção ‘Use default Workspace location’ e ‘Browse’ até à pasta raiz do projecto (pasta mãe das ‘sources’).</li>
+<li>Preencher os campos em ‘New Maven Project’.</li>
 </ul>
 </li>
 <li>
 <p>Para executar ou depurar (<em>debug</em>) o projeto Maven no eclipse:</p>
 <ul>
 <li>Carregar com o botão direito do rato sobre o projeto.</li>
-<li>Seleccionar 'Run As' ou 'Debug As' e depois carregar em 'Maven build ...'.</li>
-<li>Indicar os objectivos (p.ex: compile, package) do ciclo de vida de construção em 'Edit Configuration'.</li>
+<li>Seleccionar ‘Run As’ ou ‘Debug As’ e depois carregar em ‘Maven build …’.</li>
+<li>Indicar os objectivos (p.ex: compile, package) do ciclo de vida de construção em ‘Edit Configuration’.</li>
 </ul>
 </li>
 </ul>
@@ -736,18 +767,19 @@ Veja abaixo algumas instruções (basta ver para o seu IDE favorito).</p>
 <li>Experimente as funcionalidades de depuração (debug) do seu IDE favorito:
 <ul>
 <li>Criar um ponto de paragem (breakpoint) no programa e fazer debug</li>
-<li>Alterar os argumentos do programa (-Dexec.args="(...)" pode ser usado para especificar os argumentos do programa quando executado através do comando mvn) e inspecionar as variáveis durante a execução</li>
+<li>Alterar os argumentos do programa (-Dexec.args=“(…)” pode ser usado para especificar os argumentos do programa quando executado através do comando mvn) e inspecionar as variáveis durante a execução</li>
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="2--java-avançado-exceções-concorrência-e-troca-de-mensagens"><a class="header" href="#2--java-avançado-exceções-concorrência-e-troca-de-mensagens">2.  Java avançado (exceções, concorrência e troca de mensagens)</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="2--java-avançado-exceções-concorrência-e-troca-de-mensagens"><a class="header" href="#2--java-avançado-exceções-concorrência-e-troca-de-mensagens">2.  Java avançado (exceções, concorrência e troca de mensagens)</a></h1>
 <h2 id="objetivos-desta-aula-1"><a class="header" href="#objetivos-desta-aula-1">Objetivos desta aula:</a></h2>
 <ul>
 <li>Programação concorrente em Java</li>
 <li>Exceções em Java</li>
 <li>Troca de mensagens usando sockets em Java</li>
 </ul>
-<hr />
+<hr>
 <h2 id="programação-concorrente-em-java"><a class="header" href="#programação-concorrente-em-java">Programação concorrente em Java</a></h2>
 <p>A linguagem Java permite a programação de programas concorrentes com múltiplas <em>threads</em>.</p>
 <p>Aqui está um exemplo de um programa que, no seu método <code>Main</code>, cria e inicia uma <em>thread</em>.
@@ -813,14 +845,14 @@ Cada coleção implementa uma interface que dita o tipo de acesso esperado:</p>
 </ul>
 <p>Por omissão, as coleções não são sincronizadas, pois assim conseguem melhor desempenho sequencial.</p>
 <p>Para situações em que é necessário sincronizar os acessos às coleções, existem versões sincronizadas que apenas permitem um acesso de cada vez.
-Para construir uma coleção sincronizada usa-se um método especial da classe <code>Collections</code>, que cria a nova coleção "embrulhando" uma coleção do mesmo tipo:</p>
+Para construir uma coleção sincronizada usa-se um método especial da classe <code>Collections</code>, que cria a nova coleção “embrulhando” uma coleção do mesmo tipo:</p>
 <pre><code class="language-java">    List synchronizedList = Collections.synchronizedList(regularList);
 </code></pre>
 <p>Posteriormente, foram acrescentadas ao Java <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/collections.html">coleções concorrentes</a> (<em>Concurrent Collections</em> no pacote <code>java.util.concurrent</code>), que utilizam estruturas de dados sofisticadas, desenhadas de raiz para garantir a consistência da coleção mesmo quando esta é acedida concorrentemente por muitas tarefas. Exemplos destas coleções concorrentes são: <code>ConcurrentHashMap</code>, <code>CopyOnWriteArrayList</code>, e <code>CopyOnWriteHashSet</code>.
 No exemplo seguinte constroi-se um mapa optimizado para acessos concorrentes:</p>
 <pre><code class="language-java">    Map&lt;String,Object&gt; map = new ConcurrentHashMap&lt;&gt;();
 </code></pre>
-<hr />
+<hr>
 <h2 id="exceções"><a class="header" href="#exceções">Exceções</a></h2>
 <p>O tratamento de exceções é também um aspeto muito importante, e que irá ser especialmente importante para lidar com problemas de comunicação.</p>
 <p>As exceções são usadas na linguagem Java para assinalar que algo não correu como esperado.
@@ -840,7 +872,7 @@ São classes que herdam de <code>java.lang.Exception</code> e cujos objetos pode
 </ul>
 </li>
 </ul>
-<p>A abordagem 'apanhar-e-ignorar' é claramente errada porque perde informação e torna muito mais difícil diagnosticar e resolver problemas.</p>
+<p>A abordagem ‘apanhar-e-ignorar’ é claramente errada porque perde informação e torna muito mais difícil diagnosticar e resolver problemas.</p>
 <h3 id="exceções-impressas-na-consola"><a class="header" href="#exceções-impressas-na-consola">Exceções impressas na consola</a></h3>
 <p>Os outputs seguintes foram produzidos por uma aplicação que usa sockets para comunicação, e ilustram diversas situações.</p>
 <p>Na situação abaixo, o servidor tenta criar o socket com um porto fora do intervalo [0;65535].</p>
@@ -941,13 +973,13 @@ Caused by: java.net.ConnectException: Connection refused: connect
         throw new MyHigherLevelException("Failed to do something.", e);
     }
 </code></pre>
-<hr />
+<hr>
 <h2 id="comunicação-usando-sockets-em-java"><a class="header" href="#comunicação-usando-sockets-em-java">Comunicação usando <em>sockets</em> em Java</a></h2>
 <p>O Java disponibiliza uma <a href="https://docs.oracle.com/javase/tutorial/networking/sockets/index.html">biblioteca de sockets</a> que está disponível no pacote <code>java.net</code>.</p>
-<p>Os sockets definem uma interface de programação, mas não definem o conteúdo e significado das mensagens que vão ser trocadas. Para isso é necessário um protocolo de comunicação. Um protocolo é um sistema de regras que define uma convenção para permitir que diferentes entidades troquem informação de forma não ambígua. Assim tem que ser na comunicação em sockets. É preciso "dizer" como é enviado um pedido, quando termina o pedido, quando chega a resposta, quando já foi recebida, e assim por diante.</p>
+<p>Os sockets definem uma interface de programação, mas não definem o conteúdo e significado das mensagens que vão ser trocadas. Para isso é necessário um protocolo de comunicação. Um protocolo é um sistema de regras que define uma convenção para permitir que diferentes entidades troquem informação de forma não ambígua. Assim tem que ser na comunicação em sockets. É preciso “dizer” como é enviado um pedido, quando termina o pedido, quando chega a resposta, quando já foi recebida, e assim por diante.</p>
 <p>Um exemplo de protocolo é o HTTP (<em>HyperText Transfer Protocol</em>), que está na base da comunicação na WWW (<em>World Wide Web</em>).
 Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulouris et al.) sobre a World Wide Web e Sockets.</p>
-<hr />
+<hr>
 <h2 id="exercício-a-resolver-até-ao-fim-da-aula"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula">Exercício a resolver até ao fim da aula</a></h2>
 <p>O ponto de partida para o exercício ilustra a comunicação entre dois programas Java usando a biblioteca de sockets:
 <a href="https://github.com/tecnico-distsys/exercise_java-sockets">Java Sockets</a></p>
@@ -995,7 +1027,8 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 </ul>
 </li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="3--grpc-conceitos-base"><a class="header" href="#3--grpc-conceitos-base">3.  gRPC: conceitos base</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="3--grpc-conceitos-base"><a class="header" href="#3--grpc-conceitos-base">3.  gRPC: conceitos base</a></h1>
 <h2 id="objetivos-desta-aula-2"><a class="header" href="#objetivos-desta-aula-2">Objetivos desta aula:</a></h2>
 <ul>
 <li>Distribuir uma aplicação originalmente centralizada usando o gRPC</li>
@@ -1003,17 +1036,17 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 </ul>
 <h2 id="materiais-de-apoio-à-aula"><a class="header" href="#materiais-de-apoio-à-aula">Materiais de apoio à aula</a></h2>
 <ul>
-<li><a href="./resources/grpc-slides-labs.pdf">Introdução ao gRPC</a></li>
+<li><a href="resources/grpc-slides-labs.pdf">Introdução ao gRPC</a></li>
 <li><a href="https://grpc.io/docs/tutorials/basic/java.html">Tutorial de gRPC para Java</a></li>
 <li><a href="https://developers.google.com/protocol-buffers/docs/overview">Documentação de Protocol Buffers</a></li>
 <li><a href="https://grpc.io/grpc-java/javadoc/index.html">API de gRPC para Java</a></li>
 </ul>
-<hr />
+<hr>
 <h2 id="antes-de-começar-a-programar-com-grpc"><a class="header" href="#antes-de-começar-a-programar-com-grpc">Antes de começar a programar com gRPC</a></h2>
-<p>Comece por folhear os <a href="./resources/grpc-slides-labs.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
+<p>Comece por folhear os <a href="resources/grpc-slides-labs.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
 <h2 id="exercício-a-resolver-até-ao-fim-da-aula-1"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula-1">Exercício a resolver até ao fim da aula</a></h2>
 <p>Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.</p>
-<p><img src="./images/ttt.png" alt="Tic Tac Toe" /></p>
+<p><img src="images/ttt.png" alt="Tic Tac Toe"></p>
 <h3 id="i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe"><a class="header" href="#i-começar-por-uma-implementação-local-do-jogo-do-galotic-tac-toe">I. Começar por uma implementação local do Jogo do Galo/Tic Tac Toe.</a></h3>
 <ul>
 <li>Faça Clone ou Download do <a href="https://github.com/tecnico-distsys/example_ttt">código fonte do jogo</a></li>
@@ -1123,14 +1156,15 @@ message CurrentBoardResponse {
 </ul>
 <h2 id="já-resolveram"><a class="header" href="#já-resolveram">Já resolveram?</a></h2>
 <p>Podem conferir a <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc_solution">nossa proposta de resolução</a>.</p>
-<p>Nota: esta solução resolve também o exercício do <a href="./04-grpc-erros.html">próximo guião</a>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes"><a class="header" href="#4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes">4.  gRPC: tratamento de erros e métodos remotos bloqueantes</a></h1>
+<p>Nota: esta solução resolve também o exercício do <a href="#4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes">próximo guião</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes"><a class="header" href="#4--grpc-tratamento-de-erros-e-métodos-remotos-bloqueantes">4.  gRPC: tratamento de erros e métodos remotos bloqueantes</a></h1>
 <h2 id="objetivos-desta-aula-3"><a class="header" href="#objetivos-desta-aula-3">Objetivos desta aula:</a></h2>
 <ul>
 <li>Aprender a enviar e receber erros com gRPC</li>
 <li>Aprender a implementar métodos remotos bloqueantes</li>
 </ul>
-<hr />
+<hr>
 <h2 id="tratamento-de-erros-com-grpc"><a class="header" href="#tratamento-de-erros-com-grpc">Tratamento de erros com gRPC</a></h2>
 <p>Uma chamada remota de procedimento (RPC) pode falhar devido a problemas na rede, no servidor ou no próprio cliente.
 Mesmo quando a comunicação é possível entre cliente e servidor, este último pode detetar um problema nos argumentos recebidos ou ter um problema interno que precisa de reportar ao cliente.</p>
@@ -1145,7 +1179,7 @@ Mesmo quando a comunicação é possível entre cliente e servidor, este último
 <p>A utilização de <em>protocol buffers</em> <a href="https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto">permite incluir detalhes</a> que podem ser relevantes para o cliente conseguir recuperar do erro, como uma descrição textual do erro e/ou metadados. Nem todas as implementações de gRPC suportam este modelo, mas o Java, que usaremos, suporta. Felizmente, a união dos conjuntos de códigos de erro é apresentada ao programador Java através de uma classe apenas: <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/grpc/Status.java"><code>io.grpc.Status</code></a>.</p>
 <h2 id="como-retornar-um-erro"><a class="header" href="#como-retornar-um-erro">Como retornar um erro?</a></h2>
 <p>Após a invocação de um procedimento remoto com gRPC, a chamada pode ter sucesso ou falhar, sendo enviado para o cliente um código de erro (ou <em>error status code</em>) neste último caso.</p>
-<p>Tome como exemplo a implementação do método <code>currentBoard</code> do <a href="03-grpc.html">laboratório anterior</a>:</p>
+<p>Tome como exemplo a implementação do método <code>currentBoard</code> do <a href="#3--grpc-conceitos-base">laboratório anterior</a>:</p>
 <pre><code class="language-java">public void currentBoard(CurrentBoardRequest request, StreamObserver&lt;CurrentBoardResponse&gt; responseObserver) {
     String board = ttt.currentBoard();
     CurrentBoardResponse response = CurrentBoardResponse.newBuilder().setBoard(board).build();
@@ -1202,7 +1236,7 @@ que <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/
 </code></pre>
 <p>Atente-se que a descrição que se obtém ao invocar <code>status.getDescription()</code> é igual à descrição que foi passada no servidor em <code>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</code>.</p>
 <h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
-<p>O ponto de partida será a solução construída pelo seu grupo na <a href="./03-grpc.html">aula anterior para o Jogo do Galo em gRPC</a>.</p>
+<p>O ponto de partida será a solução construída pelo seu grupo na <a href="#3--grpc-conceitos-base">aula anterior para o Jogo do Galo em gRPC</a>.</p>
 <p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
 <p>Vamos então começar!</p>
 <h3 id="apanhar-erros-simples-de-comunicação"><a class="header" href="#apanhar-erros-simples-de-comunicação">Apanhar erros simples de comunicação</a></h3>
@@ -1266,7 +1300,7 @@ catch (StatusRuntimeException e) {
 <ul>
 <li>No ficheiro <code>.proto</code>, acrescente uma nova operação chamada <code>waitForWinner</code>, cujas mensagens de pedido e respostas são idênticas às da operação <code>checkWinner</code>. A grande diferença é que a <code>waitForWinner</code> deve bloquear-se enquanto o jogo não tiver terminado.</li>
 <li>Depois de gerar os novos <em>stubs</em>, crie o método associado à operação <code>waitForWinner</code> e acrescente-o à classe do servidor.</li>
-<li>Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a>.</li>
+<li>Relembre as <a href="#2--java-avançado-exceções-concorrência-e-troca-de-mensagens">primitivas para programação concorrente em Java</a>.</li>
 <li>No novo método, use a primitiva <code>wait()</code> para, enquanto o jogo não tenha ainda terminado, a <em>thread</em> que executa esse método se bloquear. Lembre-se que, para chamar <code>wait()</code>, precisa estar dentro de um método (ou bloco) synchronized.</li>
 <li>Precisa também chamar <code>notifyAll()</code> sempre que o estado do jogo muda com uma nova jogada.</li>
 <li>Finalmente, estenda o cliente para também invocar esta nova operação.</li>
@@ -1275,7 +1309,8 @@ catch (StatusRuntimeException e) {
 <h2 id="já-resolveram-1"><a class="header" href="#já-resolveram-1">Já resolveram?</a></h2>
 <p>Podem conferir a nossa proposta de resolução.</p>
 <p>Nota: esta solução resolve o conjunto dos exercícios deste guião e do anterior.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="5--grpc-multi-linguagem"><a class="header" href="#5--grpc-multi-linguagem">5.  gRPC: multi-linguagem</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="5--grpc-multi-linguagem"><a class="header" href="#5--grpc-multi-linguagem">5.  gRPC: multi-linguagem</a></h1>
 <h2 id="objetivos-desta-aula-4"><a class="header" href="#objetivos-desta-aula-4">Objetivos desta aula:</a></h2>
 <ul>
 <li>Desenvolvimento de aplicações distribuídas com gRPC com múltiplas linguagens de programação.</li>
@@ -1343,7 +1378,7 @@ catch (StatusRuntimeException e) {
 </ul>
 </li>
 </ul>
-<hr />
+<hr>
 <h2 id="java-vs-python-grpc"><a class="header" href="#java-vs-python-grpc">Java vs Python gRPC</a></h2>
 <ul>
 <li>
@@ -1451,12 +1486,13 @@ HelloWorld.HelloResponse response = stub.greeting(request);
 </code></pre>
 <h2 id="exercício-1"><a class="header" href="#exercício-1">Exercício</a></h2>
 <p>Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="invocações-assíncronas-em-grpc"><a class="header" href="#invocações-assíncronas-em-grpc">Invocações assíncronas em gRPC</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="invocações-assíncronas-em-grpc"><a class="header" href="#invocações-assíncronas-em-grpc">Invocações assíncronas em gRPC</a></h1>
 <h2 id="objetivos-desta-aula-5"><a class="header" href="#objetivos-desta-aula-5">Objetivos desta aula:</a></h2>
 <ul>
 <li>Fazer chamadas remotas assíncronas usando <em>stubs</em> não bloqueantes em gRPC</li>
 </ul>
-<hr />
+<hr>
 <h2 id="operações-assíncronas"><a class="header" href="#operações-assíncronas">Operações assíncronas</a></h2>
 <p>Até agora vimos exemplos de chamadas remotas síncronas, usando um <em>stub</em> bloqueante: o cliente faz um pedido ao servidor e fica bloqueado à espera da resposta. Caso o cliente não pretenda ficar bloqueado à espera da resposta do servidor, é possível fazê-lo através de uma <strong>chamada assíncrona</strong>. Neste caso o cliente faz o pedido, continua a executar, e vai receber a resposta mais tarde.</p>
 <p>A forma de fazer chamadas assíncronas é através de um <em>stub</em> diferente, não-bloqueante, no cliente. Não é preciso alterar o servidor.</p>
@@ -1505,12 +1541,12 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 <ul>
 <li>Lance 2 processos servidores, um no porto 8080 e outro no porto 8081. Para o segundo, pode fazer <code>mvn exec:java -Dexec.args="8081"</code> (e assim substitui o argumento que está definido no <code>pom.xml</code>).</li>
 <li>Estenda o cliente para passar a ter dois <em>stubs</em> não bloqueantes, cada um ligado a um dos dois servidores.</li>
-<li>Agora que tem 2 <em>stubs</em>, chame o método remoto <code>greeting</code> a ambos. Ao primeiro passe "Alice", ao segundo passe "Bob".</li>
+<li>Agora que tem 2 <em>stubs</em>, chame o método remoto <code>greeting</code> a ambos. Ao primeiro passe “Alice”, ao segundo passe “Bob”.</li>
 <li>Experimente executar este novo cliente e confirme que ambas as respostas são impressas assincronamente.</li>
 <li>No servidor, na classe <code>HelloWorldServiceImpl.java</code>, acrescente um atraso pseudo-aleatório no método greeting antes deste retornar a resposta. Sugestão: use <code>Thread.sleep()</code>, passando um número pseudo-aleatório entre 0 e 5000 (milisegundos).</li>
 <li>Experimente de novo lançar os dois servidores e, finalmente, o cliente. Agora deverá observar as respostas a serem impressas em ordens que podem variar de cada vez que executa o cliente.</li>
 </ul>
-<h3 id="ainda-mais-interessante"><a class="header" href="#ainda-mais-interessante">Ainda mais interessante...</a></h3>
+<h3 id="ainda-mais-interessante"><a class="header" href="#ainda-mais-interessante">Ainda mais interessante…</a></h3>
 <ul>
 <li>Agora queremos que o cliente, depois de enviar os pedidos a ambos os servidores, se bloqueie até ambas as respostas chegarem. Só nesse momento, é que ele deve imprimir ambas as respostas.</li>
 <li>Isto é possível fazer com <em>stub</em> bloqueante? Veja a resposta no fundo desta página [1]. De qualquer forma, cumprir este objetivo mantendo a solução que compôs até aqui, com <em>stubs</em> não bloqueantes.</li>
@@ -1524,7 +1560,7 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 <li><strong>Segundo objetivo</strong>: bloquear o cliente até todas as respostas terem sido adicionadas ao objeto <code>ResponseCollector</code>.
 <ul>
 <li>Acrescente um método <code>waitUntilAllReceived</code> na classe <code>ResponseCollector</code>.</li>
-<li>Este método deve bloquear até que o número de respostas acumuladas nesse objeto seja 2. Relembre as <a href="./02-java-avancado.html">primitivas para programação concorrente em Java</a> e implemente a lógica bloqueante pretendida.</li>
+<li>Este método deve bloquear até que o número de respostas acumuladas nesse objeto seja 2. Relembre as <a href="#2--java-avançado-exceções-concorrência-e-troca-de-mensagens">primitivas para programação concorrente em Java</a> e implemente a lógica bloqueante pretendida.</li>
 <li>No método <code>Main</code> do cliente, após as duas chamadas assíncronas, chame o método <code>waitUntilAllReceived</code> e, quando este retornar, imprima as respostas guardadas no objeto <code>ResponseCollector</code>.</li>
 <li>Experimente e confirme que a sua solução cumpre o pretendido!</li>
 </ul>
@@ -1540,14 +1576,15 @@ stub.greeting(request, new HelloObserver&lt;HelloWorld.HelloResponse&gt;());
 <p>Uma vez bem percebidos os mecanismos de chamadas assíncronas e de sincronização, pode começar a desenhar os próximos passos do projeto.</p>
 <p>No seu projeto também tem operações que implicam enviar um pedido a múltiplos servidores e a esperar ou pelas respostas de todos, ou simplesmente pela resposta mais rápida. Quais operações correspondem a cada caso?</p>
 <p>Se já concluiu o exercício acima, pense como pode incorporar a mesma estratégia no seu projeto.</p>
-<hr />
+<hr>
 <p>[1] Sim, é possível se criarmos múltiplas threads, sendo que cada uma invoca um <em>stub</em> bloqueante. Mesmo que essas threads fiquem bloqueadas até receberem a sua resposta, a thread principal fica livre para continuar a sua execução. No entanto, esta via é tipicamente mais difícil de programar.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="metadados-em-grpc"><a class="header" href="#metadados-em-grpc">Metadados em gRPC</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="metadados-em-grpc"><a class="header" href="#metadados-em-grpc">Metadados em gRPC</a></h1>
 <h2 id="objetivos-desta-aula-6"><a class="header" href="#objetivos-desta-aula-6">Objetivos desta aula:</a></h2>
 <ul>
 <li>Enviar e receber metadados usando <em>gRPC headers</em></li>
 </ul>
-<hr />
+<hr>
 <h2 id="metadados-em-chamada-remota-de-procedimentos"><a class="header" href="#metadados-em-chamada-remota-de-procedimentos">Metadados em chamada remota de procedimentos</a></h2>
 <p>Em chamada remota de procedimentos (RPC), a interface remota de um servidor define
 os parâmetros de entrada e de saída de cada operação oferecida pelo servidor.
@@ -1616,7 +1653,7 @@ basta invocar o <em>stub</em> criado acima, <code>stubWithHeader</code>.
 Caso contrário, se se invocar o <em>stub</em> original (<code>stub</code>), o pedido não levará cabeçalhos adicionais.</p>
 </li>
 <li>
-<p>Experimente compilar e executar este cliente modificado. Notou alguma diferença no servidor?...</p>
+<p>Experimente compilar e executar este cliente modificado. Notou alguma diferença no servidor?…</p>
 </li>
 </ul>
 <h3 id="adicionar-um-interceptor-no-servidor-para-receber-metadados"><a class="header" href="#adicionar-um-interceptor-no-servidor-para-receber-metadados">Adicionar um <em>interceptor</em> no servidor para receber metadados</a></h3>
@@ -1723,6 +1760,9 @@ No entanto, é também possível enviar metadados na resposta devolvida pelo ser
 <p>A documentação gRPC fornece <a href="https://github.com/grpc/grpc-java/tree/master/examples/src/main/java/io/grpc/examples/header">um outro exemplo de código</a> que explora essa e outras possibilidades.</p>
 <h2 id="passo-seguinte"><a class="header" href="#passo-seguinte">Passo seguinte</a></h2>
 <p>Aplicar esta tecnologia ao seu projeto!</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="criptografia"><a class="header" href="#criptografia">Criptografia</a></h1>
+<p>Under Construction</p>
 
                     </main>
 
@@ -1741,6 +1781,11 @@ No entanto, é também possível enviar metadados na resposta devolvida pelo ser
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -1749,13 +1794,13 @@ No entanto, é também possível enviar metadados na resposta devolvida pelo ser
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 
@@ -1764,6 +1809,7 @@ No entanto, é também possível enviar metadados na resposta devolvida pelo ser
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>

@@ -35,12 +35,38 @@ O ponto de partida para o exercício é um serviço fornecedor de produtos para 
 4. Por fim, na pasta ```client``` execute o comando ```mvn compile exec:java -Ddebug```.
 5. Verifique que o cliente recebe a lista de produtos do servidor.
 
-### Distribuição de chaves
+### Criação e distribuição de chaves
 
-Num mundo real, a lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante. É necessário acrescentar uma assinatura para proteger a resposta do servidor. Vamos fazer uma assinatura digital. O servidor utilizará a sua chave privada para assinar e o cliente verificará a assintura com a chave pública do servidor.
-1. Descarregue e descomprima as [chaves de exemplo](https://github.com/tecnico-distsys/tecnico-distsys.github.io/blob/crypto-lab-updated/src/resources/keys.zip).
-2. Copie a chave privada (ficheiro ```priv.key```) para o servidor (pasta ```server/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
-3. Copie a chave pública (ficheiro ```pub.key```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
+Num mundo real, a lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante. É necessário acrescentar uma assinatura para proteger a resposta do servidor. Vamos fazer uma assinatura digital. O servidor utilizará a sua chave privada para assinar e o cliente verificará a assintura com a chave pública do servidor. 
+
+Vamos começar por criar um par de chaves RSA, que é um algoritmo de criptografia assimétrica amplamente utilizado para assinaturas digitais. Para tal vamos usar o *OpenSSL*, uma ferramenta de linha de comando que suporta uma vasta gama de operações criptográficas. Siga os passos 1,2,3 e 4 para criar as chaves. Caso tenha algum problema na criação, nós oferecemos um par de [chaves de exemplo](https://github.com/tecnico-distsys/tecnico-distsys.github.io/blob/crypto-lab-updated/src/resources/keys.zip) e pode usá-las apartir do passo 5.
+
+1. Verifique que tem o *OpenSSL* instalado no seu sistema:
+```bash
+openssl version
+```
+2. Idealmente, deverá ter uma versão do *OpenSSL* igual ou superior a 3.0.0.
+```bash
+OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
+```
+3. Caso não o tenha, instale-o:
+   3.1. No *Ubuntu*, use o seguinte comando:
+   ```bash
+   sudo apt update
+   sudo apt install openssl
+   ```
+   3.2. No *Windows*, pode descarregar o *OpenSSL* a partir do site oficial: https://www.openssl.org/source/.
+   3.3 No macOS, pode usar o *Homebrew* para instalar o *OpenSSL*:
+   ```bash
+   brew install openssl
+   ```
+4. Para gerar um par de chaves RSA, use os seguintes comando no terminal:
+```bash
+openssl genrsa -out priv.key 2048 # gera a chave privada
+openssl rsa -in priv.key -pubout -out pub.key # gera a chave pública a partir da chave privada
+```
+5. Copie a chave privada (ficheiro ```priv.key```) para o servidor (pasta ```server/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
+6. Copie a chave pública (ficheiro ```pub.key```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
 
 
 ### Acrescentar assinatura à definição da operação

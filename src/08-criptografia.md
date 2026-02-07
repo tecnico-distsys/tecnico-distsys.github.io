@@ -116,7 +116,7 @@ byte[] responseBytes = response.toByteArray();
 byte[] hash = message_digest.digest(responseBytes);
 ...
 ```
-5. Para cifrar o resumo, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS5Padding* e inicialize em *ENCRYPT_MODE* com a chave:
+5. Para cifrar o resumo, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS1Padding* e inicialize em *ENCRYPT_MODE* com a chave:
 ```java
 ...
 private static byte[] readFile(String path) throws FileNotFoundException, IOException {
@@ -182,7 +182,7 @@ byte[] responseBytes = response.getResponse().toByteArray();
 byte[] hash = message_digest.digest(responseBytes);
 ...
 ```
-3. Para decifrar o resumo cifrado recebido na assinatura, crie um objecto ```Cipher``` com o algoritmo *AES/ECB/PKCS5Padding*, e inicialize em *DECRYPT_MODE* com a chave pública do **server**:
+3. Para decifrar o resumo cifrado recebido na assinatura, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS1Padding*, e inicialize em *DECRYPT_MODE* com a chave pública do **server**:
 ```java
 ...
 private static byte[] readFile(String path) throws FileNotFoundException, IOException {

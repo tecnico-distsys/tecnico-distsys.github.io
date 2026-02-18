@@ -39,7 +39,7 @@ Caso ainda não tenha grupo completo:
 
 As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.
 
-No resto desta aula estudremos cada uma das ferramentas.
+No resto desta aula estudaremos cada uma das ferramentas.
 A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse), 
 que entenderemos melhor ao longo desta aula.
 

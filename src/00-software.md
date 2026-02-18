@@ -101,7 +101,7 @@ Portanto, encontrarão mais documentação e apoio a esse IDE.
 
 ## Dúvidas ou erros?
 
-Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a [lista de respostas a perguntas frequentes](./00-software-faq.md).
+Se tiver dificuldades, pode pedir ajuda no Piazza mas, antes, consulte a [lista de respostas a perguntas frequentes](./00-software-faq.md).
 
 Se detetar algum erro nas instruções acima, avise-nos!
 

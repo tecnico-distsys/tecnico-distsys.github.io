@@ -12,7 +12,7 @@
 
 O professor do laboratório vai acompanhar o vosso percurso ao longo de todo o semestre. É importante ficar a conhecê-lo desde já. :-)
 
-O apoio a dúvidas fora das aulas é feito através do [Moodle de SD](https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941), onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.
+O apoio a dúvidas fora das aulas é feito através do [Piazza de SD](https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026), onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Piazza, peça ajuda ao docente laboratorial.
 
  
 ## Inscrição de grupo
@@ -29,7 +29,7 @@ Para fazer:
 Caso ainda não tenha grupo completo:
 
 - Compareça no seu turno de laboratório e fale com colegas na mesma situação. Esta é a forma mais eficaz de formar grupo!
-- Procure colegas no fórum no Moodle, onde os docentes criarão um tópico de discussão sobre este tema. Deixe lá a indicação de que procura elemento(s) para formar grupo ou respondendo a mensagens lá publicadas por colegas. Indique sempre o(s) turno(s) que pode frequentar e onde ainda há vagas.
+- Procure colegas no Piazza, no *post 'Search for Teammates!'*. Deixe lá a indicação de que procura elemento(s) para formar grupo ou respondendo a mensagens lá publicadas por colegas. Indique sempre o(s) turno(s) que pode frequentar e onde ainda há vagas.
 - Note bem: a formação do grupo é da responsabilidade dos estudantes; os professores apenas fazem o registo.
 
 

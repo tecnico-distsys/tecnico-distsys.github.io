@@ -31,7 +31,7 @@ Recursos do projeto (a disponibilizar quando o período letivo arrancar):
 
 - [Enunciado]()
 - [Código inicial]() 
-- [Fórum de discussão para dúvidas (via Moodle)]()
+- [Fórum de discussão para dúvidas (via Piazza)](https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026)
 
 Datas das entregas (via fenix):
 

@@ -175,8 +175,8 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
 <h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
 <p>Recursos do projeto (a disponibilizar quando o período letivo arrancar):</p>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Código inicial</a></li>
+<li><a href="https://github.com/tecnico-distsys/BlockchainIST-2026">Enunciado</a></li>
+<li>Código inicial</li>
 <li><a href="https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026">Fórum de discussão para dúvidas (via Piazza)</a></li>
 </ul>
 <p>Datas das entregas (via fenix):</p>
@@ -454,7 +454,7 @@ Caso o erro se assemelhe ao apresentado em seguida:
 <p>E o comando sugerido não o resolva, deve experimentar o seguinte comando:
 <code>sudo apt install python3-venv</code></p>
 <h2 id="perguntas-sobre-grpc"><a class="header" href="#perguntas-sobre-grpc"><a name="grpc"></a> Perguntas sobre gRPC</a></h2>
-<h3 id="não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code>no meu portátil Mac. Como resolver?</a></h3>
+<h3 id="não-consigo-correr-o-protoc-no-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protoc-no-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code> no meu portátil Mac. Como resolver?</a></h3>
 <p>O compilador do gRPC (<code>protoc</code>) tem uma <a href="https://github.com/grpc/grpc-java/issues/7690">"open issue" com os processadores M1 da Apple</a>. Quando se tenta executar o <code>protoc</code> (por exemplo, fazendo <code>mvn install</code> num projeto contendo o contrato de um gRPC), ocorre um erro.</p>
 <p>Para contornar este problema, devem procurar estas duas <em>tags</em> <code>&lt;protocArtifact&gt;</code> no  POM:</p>
 <pre><code class="language-xml">&lt;protocArtifact&gt;com.google.protobuf:protoc:${version.protoc}:exe:${os.detected.classifier}&lt;/protocArtifact&gt;
@@ -497,7 +497,7 @@ Caso o erro se assemelhe ao apresentado em seguida:
 <hr />
 <h2 id="familiarização-com-as-ferramentas-de-desenvolvimento"><a class="header" href="#familiarização-com-as-ferramentas-de-desenvolvimento">Familiarização com as ferramentas de desenvolvimento</a></h2>
 <p>As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.</p>
-<p>No resto desta aula estudremos cada uma das ferramentas.
+<p>No resto desta aula estudaremos cada uma das ferramentas.
 A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse),
 que entenderemos melhor ao longo desta aula.</p>
 <p><img src="./images/java-tools-table.png" alt="Java tools reference card" /></p>

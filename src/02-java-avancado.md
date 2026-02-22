@@ -290,7 +290,7 @@ O ponto de partida para o exercício ilustra a comunicação entre dois programa
 2. Analisar o output do Maven, em especial as linhas começadas por [WARNING]:
     - Qual foi a causa da exceção?
     - Que exceção foi lançada?
-    - Em que linha do código do cliente é que foi lançada a exceção?
+    - Em que linha do código do servidor é que foi lançada a exceção?
         - Será um problema na configuração dos argumentos?
 
 3. Compilar e executar o servidor até funcionar sem erros.

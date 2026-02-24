@@ -42,11 +42,11 @@ Pretende-se que a nova versão da aplicação seja dividida em dois processos: s
 
 Nos passos seguintes, vamos compilar e executar o exemplo seguindo as instruções `README.md` de cada módulo.
 
-- Comece pelo módulo contract, executando o comando: mvn install. Este comando vai passar pela etapa generate-sources, que vai invocar o protoc, o compilador de protocol buffers que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro .proto. 
+- Comece pelo módulo contract, executando o comando: `mvn install`. Este comando vai passar pela etapa *generate-sources*, que vai invocar o *protoc*, o compilador de *protocol buffers* que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro .proto. 
 - Familiarize-se com o código e responda às seguintes questões:
     - Onde estão definidas as mensagens trocadas entre o cliente e o servidor?
     - Onde estão definidos os procedimentos remotos no servidor?
-    - Onde estão os ficheiros gerados pelo compilador de Protocol Buffers?
+    - Onde estão os ficheiros gerados pelo compilador de *Protocol Buffers*?
     - Onde são feitas as invocações remotas no cliente?
     - As invocações remotas são síncronas (bloqueantes) ou assíncronas?
 - Abra uma consola, entre na diretoria do módulo `server` e corra o servidor: `mvn compile exec:java`

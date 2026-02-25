@@ -30,7 +30,7 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 Recursos do projeto (a disponibilizar quando o período letivo arrancar):
 
 - [Enunciado](https://github.com/tecnico-distsys/BlockchainIST-2026)
-- Código inicial 
+- [Código inicial](https://github.com/tecnico-distsys/BlockchainIST-2026/tree/master/initial-code)
 - [Fórum de discussão para dúvidas (via Piazza)](https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026)
 
 Datas das entregas (via fenix):

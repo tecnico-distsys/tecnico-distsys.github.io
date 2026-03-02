@@ -118,7 +118,7 @@ Atente-se que a descrição que se obtém ao invocar `status.getDescription()` �
 
 O ponto de partida será a solução construída pelo seu grupo na [aula anterior para o Jogo do Galo em gRPC](./03-grpc.md).
 
-O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.
+O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como implementar um método bloqueante.
 
 Vamos então começar!
 

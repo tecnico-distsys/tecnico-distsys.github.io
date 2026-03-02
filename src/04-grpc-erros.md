@@ -197,6 +197,6 @@ Vamos agora adicionar uma variante bloqueante da operação checkWinner.
 
 ## Já resolveram?
 
-Podem conferir a nossa proposta de resolução.
+Podem conferir a [nossa proposta de resolução](https://github.com/tecnico-distsys/exercise_ttt-grpc_solution).
 
-Nota: esta solução resolve o conjunto dos exercícios deste guião e do anterior.
+Nota: esta solução resolve o conjunto dos exercícios deste guião [e do anterior](https://tecnico-distsys.github.io/03-grpc.html).

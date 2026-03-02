@@ -130,7 +130,7 @@ Experimente as seguintes situações.
 
 2. Lançar o servidor; lançar o cliente; realizar uma jogada (com sucesso); desligar o servidor; tentar realizar nova jogada (agora sem sucesso).
 
-Em casa cenário acima, que exceções foram apanhadas pelo cliente?
+Em cada cenário acima, que exceções foram apanhadas pelo cliente?
 
 ### Enviar informação de erro do servidor para o cliente
 

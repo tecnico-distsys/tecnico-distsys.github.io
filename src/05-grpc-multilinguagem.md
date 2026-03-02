@@ -143,7 +143,3 @@ O comando descrito abaixo gera 2 ficheiros .py na indicada: o `_pb2.py` e o `_pb
 ```bash
 python -m grpc_tools.protoc -I<pasta-para-o-contrato> --python_out=<diretoria-output> --grpc_python_out=<diretoria-output> <protos-para-compilar>
 ```
-
-## Exercício
-
-Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.

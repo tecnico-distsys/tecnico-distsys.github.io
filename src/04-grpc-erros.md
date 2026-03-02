@@ -134,7 +134,7 @@ Em cada cenário acima, que exceções foram apanhadas pelo cliente?
 
 ### Enviar informação de erro do servidor para o cliente
 
-Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.
+Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, a coluna e a linha em que o mesmo pretende fazer uma     jogada.
 
 - Comece por ler os materiais sobre o [tratamento de erros com gRPC](https://grpc.github.io/grpc/core/md_doc_statuscodes.html).
 
@@ -167,6 +167,8 @@ Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido s
 - Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:
 
     ```java
+    import io.grpc.StatusRuntimeException;
+    ...
     play_res = null;
     ...
     try{

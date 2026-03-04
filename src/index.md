@@ -24,6 +24,7 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 | mar   |	16 |	17 |	18 |	19 |	**P2** |	Apoio ao projeto |	Apoio ao projeto |
 | mar   |	23 |	24 |	25 |	26 |	27 |	Apoio ao projeto |	Apoio ao projeto |
 | mar/abr |	30 |	31 |	1 |	**P3** |	 |	Apoio ao projeto | |
+| abr |	 |	7 |	8 |	9 |	 |	Teste prático + discussão (individual) | |
 
 ## Projeto 
 

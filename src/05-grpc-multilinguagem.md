@@ -79,7 +79,7 @@
 
 - Teste o servidor, executando na diretoria `java_server` o comando `mvn compile exec:java`.
 
-- Teste o cliente, executando na diretoria `python_client` o comando python `client.py`.
+- Teste o cliente, executando na diretoria `python_client` o comando `python client.py`.
 
 - Analise as diferenças e as semelhanças entre os dois clientes java (na pasta `java_client`) e python (na pasta `python_client`):
 

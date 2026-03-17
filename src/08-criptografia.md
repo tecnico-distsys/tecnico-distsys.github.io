@@ -4,22 +4,25 @@
 
 - Utilizar os mecanismos criptográficos da plataforma Java
 - Concretizar um mecanismo de segurança para um gRPC
+- Utilizar os mecanismos criptográficos da Java Cryptography Extension numa troca de mensagens sobre gRPC
 
 ***
 
 ## Segurança e criptografia em Java
 
-A plataforma Java disponibiliza um conjunto abrangente de bibliotecas para suportar segurança, criptografia e comunicações protegidas, permitindo o desenvolvimento de aplicações fiáveis em ambientes locais e distribuídos. No centro deste ecossistema estão três componentes fundamentais:
+A plataforma Java disponibiliza um conjunto abrangente de bibliotecas para usar mecanismos criptográficos e canais seguros, permitindo o desenvolvimento de aplicações fiáveis em ambientes locais e distribuídos. Inicialmente era necessário o uso de extensões para poder usar estes mecanismos, mas atualmente as funcionalidades fundamentais encontram-se já no JDK, dentro da Java Cryptography Architecture.
 
-- **Java Cryptography Extension (JCE)** – fornece os mecanismos criptográficos base, incluindo cifras simétricas e assimétricas, geração e gestão de chaves, funções de resumo (hash), assinaturas digitais e geração de números aleatórios imprevisíveis. Pode aceder a um [pequeno exemplo](https://github.com/tecnico-distsys/example_crypto) da implementação destes mecanismos em Java. A JCE funciona através de providers, bibliotecas que implementam algoritmos específicos. Esta abordagem permite escolher dinamicamente diferentes implementações, como as fornecidas pela Oracle ou por projetos externos como o Bouncy Castle.
+- **Java Cryptography Architecture (JCA)** – fornece os mecanismos criptográficos base, incluindo cifras simétricas e assimétricas, geração e gestão de chaves, funções de resumo (hash) e assinaturas digitais. Pode aceder a um [pequeno exemplo](https://github.com/tecnico-distsys/example_crypto) da implementação destes mecanismos em Java.
+
+Dois exemplos de bibliotecas que inicialmente tinham de ser importadas de fora mas que agora se encontram disponíveis no JDK:
 
 - **Java Secure Sockets Extension (JSSE)** – abstrai o uso de criptografia nas comunicações em rede, suportando TLS (antigo SSL) e viabilizando canais seguros, como no HTTPS, garantindo confidencialidade, integridade dos dados e autenticação entre cliente e servidor.
 
 - **Java Authentication and Authorization Service (JAAS)** – disponibiliza uma arquitetura modular para autenticação e autorização, centrada no utilizador, permitindo controlar acessos a recursos e integrar diferentes mecanismos de identidade.
 
-Para além dos mecanismos criptográficos, é importante considerar a representação dos dados. Os algoritmos trabalham nativamente com dados binários (```byte[]```), mas frequentemente é necessário armazenar ou transmitir informação cifrada em formato texto (por exemplo, em *XML*). Nesses casos recorre-se à codificação *Base64*, que converte dados binários num conjunto reduzido de caracteres *ASCII* universais. Embora aumente o tamanho dos dados em cerca de 33%, esta técnica garante compatibilidade com sistemas baseados em texto. A plataforma Java fornece utilitários standard para codificar e descodificar Base64 de forma simples.
+Para além dos mecanismos criptográficos, o java também disponibiliza muitos outros utilitários standard que podem complementar o desenvolvimento de código seguro. Por exemplo, nalguns casos pode ser necessário transmitir ou guardar informação cifrada em formato texto (não é o caso do grpc, pois suporta o envio de bytes), para os quais poderiamos usar a codificação em Base64, que permite traduzir dados binários em código ASCII universal.
 
-Em conjunto, JCE, JSSE e JAAS, aliados aos mecanismos criptográficos fundamentais e à codificação *Base64*, constituem uma infraestrutura completa que permite ao Java oferecer proteção de dados, comunicações seguras e controlo de acessos — pilares essenciais para aplicações modernas com elevados requisitos de segurança.
+Resumidamente, o JDK oferece os recursos necessários para construir aplicações com os requisitos de segurança requeridos.
 
 ## Exercício
 
@@ -65,25 +68,32 @@ OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
 openssl genrsa -out priv.key 2048 # gera a chave privada
 openssl rsa -in priv.key -pubout -out pub.key # gera a chave pública a partir da chave privada
 ```
-5. Copie a chave privada (ficheiro ```priv.key```) para o servidor (pasta ```server/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
-6. Copie a chave pública (ficheiro ```pub.key```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
-
+Esta seria uma maneira correta de criar um par de chaves genéricas. No entanto, como vamos usar Java neste exercício, vamos criar as chaves da seguinte maneira para serem mais fácil de importar mais logo:
+```bash
+openssl genrsa -out private.pem 2048 # Gerar a chave privada RSA
+openssl pkcs8 -topk8 -inform PEM -outform DER -in private.pem -out private.der -nocrypt # Converter a privada para PKCS#8 DER (O formato que o Java lê nativamente)
+openssl rsa -in private.pem -pubout -outform DER -out public.der # Gerar a chave pública em formato X.509 DER
+```
+5. Copie a chave privada (ficheiro ```private.der```) para o servidor (pasta ```server/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
+Em sistemas reais, a chave pública é tipicamente distribuída através de uma infraestrutura de chave pública (PKI), num certificado digital de chave pública emitido por uma autoridade de certificação (CA). No entanto, por simplificação, neste exercício vamos entregar a chave pública manualmente ao cliente, copiando-a para a pasta do mesmo.
+6. Copie a chave pública (ficheiro ```public.der```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
+Deste modo criamos e distribuímos um par de chaves público-privadas usando o terminal. No entanto, também teria sido possível fazer isto com o Java, mediante a classe java.security.KeyPairGenerator.
 
 ### Acrescentar assinatura à definição da operação
 
 
-Vamos agora acrescentar uma assinatura à definição da operação RPC.
+Vamos agora acrescentar uma assinatura à definição da mensagem de resposta da operação `listProducts`..
 1. Aceda à definição *Protobuf* no ```contract```.
-2. Acrescente a definição de uma nova estrutura de dados para a assinatura, composta por identificador do assinante e o valor a calcular.
+2. Acrescente a definição de uma nova estrutura de dados (`message`) para a assinatura, composta por identificador do assinante e o valor a calcular.
 ```protobuf
 ...
 message Signature {
 	string signerIdentifier = 1;
-	string signatureValue = 2;
+	bytes signatureValue = 2;
 }
 ...
 ```
-3. Acrescente a definição de uma mensagem para a resposta original com uma assinatura:
+3. Acrescente a `message` com a assinatura digital à mensagem da resposta.
 ```protobuf
 ...
 message SignedResponse {
@@ -121,140 +131,123 @@ SignedResponse response = stub.listProducts(request);
 ```
 ### Assinar a resposta a enviar
 
-Uma forma simples de implementar uma assinatura digital consiste em calcular um resumo da mensagem e cifrar esse resumo com a chave privada. Vamos então calcular o resumo da resposta e depois cifrar esse resumo com a chave privada.
-
-1. Aceda à classe de implementação do serviço no server (ficheiro ```SupplierServiceImpl.java```).
-2. Crie um objecto ```MessageDigest``` com o algoritmo *SHA-256*:
+A partir de agora, as mensagens enviadas pelo servidor serão assinadas.
+1. Para tal, o servidor vai precisar da sua chave privada, que se encontra nos resources.
 ```java
+import java.io.InputStream;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 ...
-MessageDigest message_digest = MessageDigest.getInstance("SHA-256");
-...
+	private byte[] readResource(String path) throws Exception {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
+            if (is == null) {
+                throw new IllegalArgumentException("Ficheiro não encontrado: " + path);
+            }
+            return is.readAllBytes();
+        }
+    }
+	public static PrivateKey loadPrivateKey(String resourcePath) throws Exception {
+        byte[] keyBytes = readResource(resourcePath);
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePrivate(spec);
+    }
 ```
-3. Para obter os dados a resumir, serialize o resultado com o seguinte método:
+Desta maneira podemos obter a nossa chave privada com este método que criamos: `loadPrivateKey`. Podemos obtê-la no momento da criação do serviço, por exemplo, chamando o método no contrutor:
 ```java
-...
-byte[] responseBytes = response.toByteArray();
-...
+	public SupplierServiceImpl() {
+		debug("Loading demo data...");
+		supplier.demoData();
+		try {
+            this.privateKey = loadPrivateKey("private.der");
+            System.out.println("Chave privada do servidor carregada com sucesso.");
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar a chave privada: " + e.getMessage());
+            e.printStackTrace();
+        }
+	}
 ```
-4. Para calcular o resumo, use o método ```digest``` do objecto ```MessageDigest```:
+2. Para assinar vamos usar a classe java.security.Signature. Primeiro queremos obter uma instância do algoritmo que quisermos usar:
 ```java
-...
-byte[] hash = message_digest.digest(responseBytes);
-...
+		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
 ```
-5. Para cifrar o resumo, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS1Padding* e inicialize em *ENCRYPT_MODE* com a chave:
+3. Esta instância pode desempenhar tanto a função de assinar como de verificar a assinatura. Como estamos no servidor, queremos que assine:
 ```java
-...
-private static byte[] readFile(String path) throws FileNotFoundException, IOException {
-	FileInputStream fis = new FileInputStream(path);
-	byte[] content = new byte[fis.available()];
-	fis.read(content);
-	fis.close();
-	return content;
-}
-...
-public static PrivateKey readPrivateKey(String privateKeyPath) throws Exception {
-
-	System.out.println("Reading private key from file " + privateKeyPath + " ...");
-	byte[] privEncoded = readFile(privateKeyPath);
-
-	PKCS8EncodedKeySpec privSpec = new PKCS8EncodedKeySpec(privEncoded);
-	KeyFactory keyFacPriv = KeyFactory.getInstance("RSA");
-	PrivateKey priv = keyFacPriv.generatePrivate(privSpec);
-
-	return priv;
-}
-...
-try{
-	...
-	Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-	cipher.init(Cipher.ENCRYPT_MODE, readPrivateKey("src/main/resources/priv.key"));
-	...
-}catch (Exception e) {
-	e.printStackTrace();
-	...
-}
-...
+		sig.initSign(this.privateKey);
 ```
-6. Calcule a assinatura cifrando o resumo:
+4. Carregamos todos os dados que quisermos assinar (pode ser chamado várias vezes), e assinamos, obtendo assim os bytes da assinatura.
 ```java
-...
-try{
-	...
-	byte[] signatureBytes = cipher.doFinal(hash);
-	...
-}catch (Exception e) {
-	...
-}
-...
+		sig.update(response.toByteArray());
+		byte[] signatureBytes = sig.sign();
 ```
-7. Preencha a resposta a devolver com a assinatura. A assinatura deve ser codificada em *Base64* para ser convertida num formato texto:
+5. Por último, incluímos a assinatura na mensagem de resposta, se bem que tipicamente o mais correto seria enviar esta assinatura como metadado.
 ```java
+import com.google.protobuf.ByteString;
 ...
-String signatureString = Base64.getEncoder().encodeToString(signatureBytes);
-...
+		Signature signature = Signature.newBuilder()
+			.setSignerIdentifier(supplier.getId())
+			.setSignatureValue(ByteString.copyFrom(signatureBytes))
+			.build();
+		SignedResponse signedResponse = SignedResponse.newBuilder()
+			.setResponse(response)
+			.setSignature(signature)
+			.build();
+		responseObserver.onNext(signedResponse);
 ```
-8. Por fim, execute no **server** o comando ```mvn compile exec:java -Ddebug```.
+NOTA: Muitas destas operações lançam exceções, que devem ser tratadas.
 
 ### Verificar a assinatura da resposta recebida
 
-Para verificar a assinatura é necessário calcular o resumo da mensagem recebida e comparar com a decifra do resumo recebido na assinatura. Para tal:
-1. Aceda à classe do **client**.
-3. Para recalcular o resumo, crie um objecto ```MessageDigest``` com o algoritmo *SHA-256*. Calcule o resumo a partir dos dados recebidos:
+O cliente quer certificar-se que as mensagens recebidas foram realmente enviadas pelo servidor, pelo que iremos verificar que a assinatura das mensagens é válida.
+1. Para tal, iremos precisar da chave pública do servidor:
 ```java
+import java.io.InputStream;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 ...
-MessageDigest message_digest = MessageDigest.getInstance("SHA-256");
-byte[] responseBytes = response.getResponse().toByteArray();
-byte[] hash = message_digest.digest(responseBytes);
-...
+	private static PublicKey loadPublicKey(String resourcePath) throws Exception {
+        byte[] keyBytes = readResource(resourcePath);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePublic(spec);
+    }
+	private static byte[] readResource(String path) throws Exception {
+        try (InputStream is = SupplierClient.class.getClassLoader().getResourceAsStream(path)) {
+            if (is == null) {
+                throw new IllegalArgumentException("Ficheiro não encontrado nos resources: " + path);
+            }
+            return is.readAllBytes();
+        }
+    }
+
+
 ```
-3. Para decifrar o resumo cifrado recebido na assinatura, crie um objecto ```Cipher``` com o algoritmo *RSA/ECB/PKCS1Padding*, e inicialize em *DECRYPT_MODE* com a chave pública do **server**:
+Igual que no servidor, estes são dois métodos auxiliares para importar a chave. Agora podemos obtê-la no inicio do main(), por exemplo:
 ```java
-...
-private static byte[] readFile(String path) throws FileNotFoundException, IOException {
-	FileInputStream fis = new FileInputStream(path);
-	byte[] content = new byte[fis.available()];
-	fis.read(content);
-	fis.close();
-	return content;
-}
-...
-public static PublicKey readPublicKey(String publicKeyPath) throws Exception {
-
-	System.out.println("Reading public key from file " + publicKeyPath + " ...");
-	byte[] pubEncoded = readFile(publicKeyPath);
-
-	X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubEncoded);
-	KeyFactory keyFacPub = KeyFactory.getInstance("RSA");
-	PublicKey pub = keyFacPub.generatePublic(pubSpec);
-	System.out.println(pub);
-
-	return pub;
-}
-...
-try{
-	...
-	Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-	cipher.init(Cipher.DECRYPT_MODE, readPublicKey("src/main/resources/pub.key"));
-	byte[] signatureBytes = Base64.getDecoder().decode(signature.getSignatureValue());
-	byte[] decryptedHash = cipher.doFinal(signatureBytes);
-	...
-}catch (Exception e) {
-	...
-}
-...
+		PublicKey publicKey = null;
+        try {
+            publicKey = loadPublicKey("public.der");
+            System.out.println("Chave pública do servidor carregada com sucesso.");
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar a chave pública: " + e.getMessage());
+        }
 ```
-4. Compare o resumo decifrado com o resumo calculado:
+2. Vamos inicializar a assinatura com a chave pública, para poder verificar assinaturas:
 ```java
-...
-if (Arrays.equals(decryptedHash, hash)) {
-	System.out.println("Signature verified.");
-} else {
-	System.out.println("Signature verification failed.");
-}
-...
+		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
+		sig.initVerify(publicKey);
 ```
-5. De seguida, execute também no **client** o comando ```mvn compile exec:java -Ddebug```.
+3. Para verificar, carregamos os dados que foram assinados e depois verificamos se a assinatura recebida coincide:
+```java
+		SignedResponse signedResponse = stub.listProducts(request);
+		ProductsResponse response = signedResponse.getResponse();
+		Signature receivedSignature = signedResponse.getSignature();
+
+		sig.update(response.toByteArray());
+		boolean isValid = sig.verify(receivedSignature.getSignatureValue().toByteArray());
+```
 
 ### Verificar eficácia da assinatura
 
@@ -272,4 +265,4 @@ modifiedProducts.setSupplierIdentifier("modifiedID");
 
 ## Aproveite o que construiu para aplicar no seu projeto
 
-Neste exercício explorou os mecanismos base de criptografia em Java — leitura de chaves, cálculo de resumos e assinaturas digitais — num contexto simples com gRPC. Estes mesmos conceitos devem agora ser aplicados no projeto **BlockchainIST**: os clientes passam a assinar transações, os nós validam essas assinaturas antes de aceitar pedidos, e os blocos produzidos pelo sequenciador são assinados e verificados antes de serem aplicados à blockchain.
+Neste exercício explorou os mecanismos base de criptografia em Java — leitura de chaves, cálculo de resumos e assinaturas digitais — num contexto simples com gRPC. Estes mesmos conceitos devem agora ser aplicados no seu projeto de SD: os clientes passam a assinar transações, os nós validam essas assinaturas antes de aceitar pedidos, e os blocos produzidos pelo sequenciador são assinados e verificados antes de serem aplicados à blockchain.

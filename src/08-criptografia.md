@@ -10,19 +10,9 @@
 
 ## Segurança e criptografia em Java
 
-A plataforma Java disponibiliza um conjunto abrangente de bibliotecas para usar mecanismos criptográficos e canais seguros, permitindo o desenvolvimento de aplicações fiáveis em ambientes locais e distribuídos. Inicialmente era necessário o uso de extensões para poder usar estes mecanismos, mas atualmente as funcionalidades fundamentais encontram-se já no JDK, dentro da Java Cryptography Architecture.
+A plataforma Java disponibiliza um conjunto abrangente de classes para usar mecanismos criptográficos e canais seguros, permitindo o desenvolvimento de aplicações fiáveis em ambientes locais e distribuídos. Atualmente as funcionalidades fundamentais encontram-se no JDK, dentro da Java Cryptography Architecture.
 
 - **Java Cryptography Architecture (JCA)** – fornece os mecanismos criptográficos base, incluindo cifras simétricas e assimétricas, geração e gestão de chaves, funções de resumo (hash) e assinaturas digitais. Pode aceder a um [pequeno exemplo](https://github.com/tecnico-distsys/example_crypto) da implementação destes mecanismos em Java.
-
-Dois exemplos de bibliotecas que inicialmente tinham de ser importadas de fora mas que agora se encontram disponíveis no JDK:
-
-- **Java Secure Sockets Extension (JSSE)** – abstrai o uso de criptografia nas comunicações em rede, suportando TLS (antigo SSL) e viabilizando canais seguros, como no HTTPS, garantindo confidencialidade, integridade dos dados e autenticação entre cliente e servidor.
-
-- **Java Authentication and Authorization Service (JAAS)** – disponibiliza uma arquitetura modular para autenticação e autorização, centrada no utilizador, permitindo controlar acessos a recursos e integrar diferentes mecanismos de identidade.
-
-Para além dos mecanismos criptográficos, o java também disponibiliza muitos outros utilitários standard que podem complementar o desenvolvimento de código seguro. Por exemplo, nalguns casos pode ser necessário transmitir ou guardar informação cifrada em formato texto (não é o caso do grpc, pois suporta o envio de bytes), para os quais poderiamos usar a codificação em Base64, que permite traduzir dados binários em código ASCII universal.
-
-Resumidamente, o JDK oferece os recursos necessários para construir aplicações com os requisitos de segurança requeridos.
 
 ## Exercício
 
@@ -255,13 +245,65 @@ Vamos modificar o conteúdo da mensagem de resposta depois de assinada, para con
 1. No servidor, após a realização da assinatura, modifique um dos campos de um dos produtos. Os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos. Para criar um objeto modificado a partir de um objeto existente pode-se usar o método ```toBuilder()```, semelhante ao seguinte:
 ```java
 ...
-ProductsResponse.Builder modifiedProducts = products.toBuilder();
-modifiedProducts.setSupplierIdentifier("modifiedID");
+			response = response.toBuilder().setSupplierIdentifier("intruder").build();
 ...
 ```
 2. Para testar, execute no **server** o comando ```mvn compile exec:java -Ddebug```.
 3. De seguida, execute também no **client** o comando ```mvn compile exec:java -Ddebug```.
 
+### ...e se alguem quiser ler as nossas mensagens?
+
+Assinar a mensagem proporciona três propriedades: autenticidade, integridade e não repudiação. No entanto, se a mensagem for intercetada, os atacantes podem ler os seus conteúdos. Vamos alterar o nosso programa para que as mensagens sejam confidenciais. Para tal, vamos encriptar a mensagem.
+
+1. Os dados encriptados serão um conjunto de bytes, por isso vamos atualizar o protocolo:
+```protobuf
+message EncryptedResponse {
+	bytes encriptedPayload = 1;
+	Signature signature = 2;
+}
+...
+  rpc listProducts(ProductsRequest) returns (EncryptedResponse);
+```
+2. A criptografia assimétrica é muito pesada e por isso não é adecuada para encriptar grandes pacotes de dados. Nestes casos, usamos chaves simétricas. Com este comando poderá criar uma chave simétrica AES-128 de 16 bytes:
+```bash
+openssl rand -out secret.key 16
+```
+Copie esta chave para os resources do servidor e para os do cliente também. Estamos a fazer esta distribuição manual das chaves simétricas para simplificar o exercício, mas normalmente usam-se algoritmos como Diffie-Helman ou PGP para acordar a chave a usar.
+3. Atualizar o servidor para encriptar a mensagem.
+Primeiro vamos importar a chave usando os métodos que criamos anteriormente:
+```java
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.Cipher;
+...
+private SecretKeySpec aesKey;
+...
+byte[] aesKeyBytes = readResource("secret.key");
+aesKey = new SecretKeySpec(aesKeyBytes, "AES");
+```
+Agora vamos encriptar os dados:
+```java
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); 
+			cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+			byte[] encryptedPayload = cipher.doFinal(response.toByteArray());
+```
+Resta enviar a EncryptedResponse correspondente. Não se esqueça de atualizar a função `listProducts`, uma vez que atualizamos o proto!
+4. Agora o cliente terá de receber a mensagem e desencriptá-la.
+Devemos importar a chave simétrica que partilhamos com o servidor.
+```java
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+...
+byte[] aesKeyBytes = readResource("secret.key");
+SecretKeySpec aesKey = new SecretKeySpec(aesKeyBytes, "AES");
+```
+E desencriptar:
+```java
+		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+		cipher.init(Cipher.DECRYPT_MODE, aesKey);
+		byte[] plainTextBytes = cipher.doFinal(cipherTextBytes);
+		ProductsResponse payload = ProductsResponse.parseFrom(plainTextBytes);	
+```
+Deste modo, os dados estão a transitar encriptados, e mesmo que sejam intercetados não poderão ser lidos sem a chave simétrica!
 
 ## Aproveite o que construiu para aplicar no seu projeto
 

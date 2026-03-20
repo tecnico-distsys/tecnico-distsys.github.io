@@ -69,6 +69,7 @@ Em sistemas reais, a chave pública é tipicamente distribuída através de uma 
 6. Copie a chave pública (ficheiro ```public.der```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
 Deste modo criamos e distribuímos um par de chaves público-privadas usando o terminal. No entanto, também teria sido possível fazer isto com o Java, mediante a classe java.security.KeyPairGenerator.
 
+
 ### Acrescentar assinatura à definição da operação
 
 
@@ -121,8 +122,8 @@ SignedResponse response = stub.listProducts(request);
 ```
 ### Assinar a resposta a enviar
 
-A partir de agora, as mensagens enviadas pelo servidor serão assinadas.
-1. Para tal, o servidor vai precisar da sua chave privada, que se encontra nos resources.
+A partir de agora, as mensagens enviadas pelo servidor serão assinadas. Note que muitas destas operações seguintes lançam exceções, que devem ser capturadas e tratadas adequadamente.
+1. Para tal, o servidor vai precisar da sua chave privada, que se encontra na pasta ```src/main/resources```.
 ```java
 import java.io.InputStream;
 import java.security.KeyFactory;
@@ -144,7 +145,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
         return kf.generatePrivate(spec);
     }
 ```
-Desta maneira podemos obter a nossa chave privada com este método que criamos: `loadPrivateKey`. Podemos obtê-la no momento da criação do serviço, por exemplo, chamando o método no contrutor:
+Desta maneira podemos obter a nossa chave privada com o método que criámos: `loadPrivateKey`. Podemos obtê-la no momento da criação do serviço, por exemplo, chamando o método no contrutor:
 ```java
 	public SupplierServiceImpl() {
 		debug("Loading demo data...");
@@ -158,20 +159,20 @@ Desta maneira podemos obter a nossa chave privada com este método que criamos: 
         }
 	}
 ```
-2. Para assinar vamos usar a classe java.security.Signature. Primeiro queremos obter uma instância do algoritmo que quisermos usar:
+1. Para assinar vamos usar a classe ```java.security.Signature```. Primeiro obtemos uma instância do algoritmo que quisermos usar:
 ```java
 		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
 ```
-3. Esta instância pode desempenhar tanto a função de assinar como de verificar a assinatura. Como estamos no servidor, queremos que assine:
+1. Esta instância pode desempenhar tanto a função de assinar como de verificar a assinatura. Como estamos no servidor, queremos que assine:
 ```java
 		sig.initSign(this.privateKey);
 ```
-4. Carregamos todos os dados que quisermos assinar (pode ser chamado várias vezes), e assinamos, obtendo assim os bytes da assinatura.
+1. Carregamos todos os dados que quisermos assinar (pode ser chamado várias vezes), e assinamos, obtendo assim os bytes da assinatura.
 ```java
 		sig.update(response.toByteArray());
 		byte[] signatureBytes = sig.sign();
 ```
-5. Por último, incluímos a assinatura na mensagem de resposta, se bem que tipicamente o mais correto seria enviar esta assinatura como metadado.
+1. Por último, incluímos a assinatura na mensagem de resposta, se bem que tipicamente o mais correto seria enviar esta assinatura como metadado.
 ```java
 import com.google.protobuf.ByteString;
 ...
@@ -185,7 +186,6 @@ import com.google.protobuf.ByteString;
 			.build();
 		responseObserver.onNext(signedResponse);
 ```
-NOTA: Muitas destas operações lançam exceções, que devem ser tratadas.
 
 ### Verificar a assinatura da resposta recebida
 
@@ -214,7 +214,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 
 ```
-Igual que no servidor, estes são dois métodos auxiliares para importar a chave. Agora podemos obtê-la no inicio do main(), por exemplo:
+Tal como no servidor, estes são dois métodos auxiliares para importar a chave. Agora podemos obtê-la no inicio do ```main()```, por exemplo:
 ```java
 		PublicKey publicKey = null;
         try {
@@ -268,8 +268,8 @@ message EncryptedResponse {
 ```bash
 openssl rand -out secret.key 16
 ```
-Copie esta chave para os resources do servidor e para os do cliente também. Estamos a fazer esta distribuição manual das chaves simétricas para simplificar o exercício, mas normalmente usam-se algoritmos como Diffie-Helman ou PGP para acordar a chave a usar.
-3. Atualizar o servidor para encriptar a mensagem.
+Copie esta chave para a pasta ```src/main/resources``` do servidor e do cliente. Estamos a fazer esta distribuição manual das chaves simétricas para simplificar o exercício, mas normalmente usam-se algoritmos como Diffie-Helman ou PGP para acordar a chave a usar.
+1. Atualizar o servidor para encriptar a mensagem.
 Primeiro vamos importar a chave usando os métodos que criamos anteriormente:
 ```java
 import javax.crypto.spec.SecretKeySpec;
@@ -286,8 +286,8 @@ Agora vamos encriptar os dados:
 			cipher.init(Cipher.ENCRYPT_MODE, aesKey);
 			byte[] encryptedPayload = cipher.doFinal(response.toByteArray());
 ```
-Resta enviar a EncryptedResponse correspondente. Não se esqueça de atualizar a função `listProducts`, uma vez que atualizamos o proto!
-4. Agora o cliente terá de receber a mensagem e desencriptá-la.
+Resta enviar a ```EncryptedResponse``` correspondente. Não se esqueça de atualizar a função `listProducts`, uma vez que atualizamos o proto!
+1. Agora o cliente terá de receber a mensagem e desencriptá-la.
 Devemos importar a chave simétrica que partilhamos com o servidor.
 ```java
 import javax.crypto.Cipher;

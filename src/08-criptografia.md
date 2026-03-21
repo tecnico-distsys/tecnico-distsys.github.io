@@ -2,21 +2,32 @@
 
 ## Objectivos
 
-- Utilizar os mecanismos criptográficos da plataforma Java
-- Concretizar um mecanismo de segurança para um gRPC
-- Utilizar os mecanismos criptográficos da Java Cryptography Extension numa troca de mensagens sobre gRPC
+- Conhecer os mecanismos criptográficos da plataforma Java
+- Gerar pares de chaves assimétricas usando *OpenSSL*
+- Concretizar um mecanismo de segurança, assinaturas digitais de chave pública, num projeto cliente-servidor baseado em gRPC
 
 ***
 
 ## Segurança e criptografia em Java
 
-A plataforma Java disponibiliza um conjunto abrangente de classes para usar mecanismos criptográficos e canais seguros, permitindo o desenvolvimento de aplicações fiáveis em ambientes locais e distribuídos. Atualmente as funcionalidades fundamentais encontram-se no JDK, dentro da Java Cryptography Architecture.
+A plataforma Java disponibiliza um conjunto abrangente de classes que fornece os mecanismos criptográficos de base, incluindo cifras simétricas e assimétricas, geração e gestão de chaves, funções de resumo (hash) e assinaturas digitais.
+Essas funcionalidades encontram-se na Java Cryptography Architecture (JCA), uma das componentes do Java Development Kit (JDK).
 
-- **Java Cryptography Architecture (JCA)** – fornece os mecanismos criptográficos base, incluindo cifras simétricas e assimétricas, geração e gestão de chaves, funções de resumo (hash) e assinaturas digitais. Pode aceder a um [pequeno exemplo](https://github.com/tecnico-distsys/example_crypto) da implementação destes mecanismos em Java.
+Este [pequeno exemplo](https://github.com/tecnico-distsys/example_crypto) ilustra
+alguns mecanismos criptográficos da JCA.
 
-## Exercício
+Neste guião, iremos aprender a gerar assinaturas digitais de chave pública usando o suporte do JCA.
+Aplicaremos esse suporte para garantir que, num projeto cliente-servidor em gRPC, o cliente possa verificar a integridade e autenticidade das respostas que recebe do servidor.
+Além disso, a assinatura garante também a não repudiação.
 
-Neste exercício vamos acrescentar segurança a uma aplicação distribuída que usa gRPC. Nomeadamente, vamos garantir integridade da comunicação entre servidor e cliente.
+Posteriormente, aprenderemos a cifrar mensagens confidenciais.
+
+
+Como o programa que iremos compor precisa de um par de chaves assimétricas do servidor,
+num passo prévio recorreremos à ferramenta *OpenSSL* gerar essas chaves.
+
+
+## Exercício 1: Assinar mensagens em gRPC
 
 
 ### Fornecedor gRPC / Supplier
@@ -30,7 +41,9 @@ O ponto de partida para o exercício é um serviço fornecedor de produtos para 
 
 ### Criação e distribuição de chaves
 
-Num mundo real, a lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante. É necessário acrescentar uma assinatura para proteger a resposta do servidor. Vamos fazer uma assinatura digital. O servidor utilizará a sua chave privada para assinar e o cliente verificará a assinatura com a chave pública do servidor. 
+Num mundo real, a lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante. Para permitir que o cliente, ao receber a mensagem, possa verificar se esta é autêntica (foi enviada pelo seu suposto emissor) e íntegra (não foi modificada no caminho), o emissor deve acrescentar-lhe uma assinatura digital. 
+
+Como iremos usar assinaturas digitais de chave pública, primeiro precisamos gerar um par de chaves assimétricas para o servidor e distribuir a sua chave pública ao cliente. O servidor utilizará a sua chave privada para assinar e o cliente verificará a assinatura com a chave pública do servidor. 
 
 Vamos começar por criar um par de chaves RSA, que é um algoritmo de criptografia assimétrica amplamente utilizado para assinaturas digitais. Para tal vamos usar o *OpenSSL*, uma ferramenta de linha de comando que suporta uma vasta gama de operações criptográficas. Siga os passos 1,2,3 e 4 para criar as chaves. Caso tenha algum problema na criação, nós oferecemos um par de [chaves de exemplo](https://github.com/tecnico-distsys/tecnico-distsys.github.io/blob/crypto-lab-updated/src/resources/keys.zip) e pode usá-las a partir do passo 5.
 
@@ -43,29 +56,32 @@ openssl version
 OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
 ```
 3. Caso não o tenha, instale-o:
+
    3.1. No *Ubuntu*, use o seguinte comando:
    ```bash
    sudo apt update
    sudo apt install openssl
    ```
    3.2. No *Windows*, pode descarregar o *OpenSSL* a partir do site oficial: https://www.openssl.org/source/.
+
    3.3 No macOS, pode usar o *Homebrew* para instalar o *OpenSSL*:
    ```bash
    brew install openssl
    ```
-4. Para gerar um par de chaves RSA, use os seguintes comando no terminal:
+4. Gerar um par de chaves RSA no terminal é tão simples como:
 ```bash
 openssl genrsa -out priv.key 2048 # gera a chave privada
 openssl rsa -in priv.key -pubout -out pub.key # gera a chave pública a partir da chave privada
 ```
-Esta seria uma maneira correta de criar um par de chaves genéricas. No entanto, como vamos usar Java neste exercício, vamos criar as chaves da seguinte maneira para serem mais fácil de importar mais logo:
+No entanto, como vamos usar Java neste exercício, vamos criar as chaves da seguinte maneira que as torna mais fáceis de importar no programa Java que comporemos em breve:
 ```bash
 openssl genrsa -out private.pem 2048 # Gerar a chave privada RSA
 openssl pkcs8 -topk8 -inform PEM -outform DER -in private.pem -out private.der -nocrypt # Converter a privada para PKCS#8 DER (O formato que o Java lê nativamente)
 openssl rsa -in private.pem -pubout -outform DER -out public.der # Gerar a chave pública em formato X.509 DER
 ```
 5. Copie a chave privada (ficheiro ```private.der```) para o servidor (pasta ```server/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
-Em sistemas reais, a chave pública é tipicamente distribuída através de uma infraestrutura de chave pública (PKI), num certificado digital de chave pública emitido por uma autoridade de certificação (CA). No entanto, por simplificação, neste exercício vamos entregar a chave pública manualmente ao cliente, copiando-a para a pasta do mesmo.
+
+> Nota: Em sistemas reais, a chave pública é tipicamente distribuída através de uma infraestrutura de chave pública (PKI), num certificado digital de chave pública emitido por uma autoridade de certificação (CA). No entanto, por simplificação, neste exercício vamos entregar a chave pública manualmente ao cliente, copiando-a para a pasta do mesmo.
 6. Copie a chave pública (ficheiro ```public.der```) para o cliente (pasta ```client/src/main/resources```. Se a pasta ```resources``` não existir, ela deve ser criada no diretório ```main```).
 Deste modo criamos e distribuímos um par de chaves público-privadas usando o terminal. No entanto, também teria sido possível fazer isto com o Java, mediante a classe java.security.KeyPairGenerator.
 
@@ -123,6 +139,7 @@ SignedResponse response = stub.listProducts(request);
 ### Assinar a resposta a enviar
 
 A partir de agora, as mensagens enviadas pelo servidor serão assinadas. Note que muitas destas operações seguintes lançam exceções, que devem ser capturadas e tratadas adequadamente.
+
 1. Para tal, o servidor vai precisar da sua chave privada, que se encontra na pasta ```src/main/resources```.
 ```java
 import java.io.InputStream;
@@ -145,7 +162,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
         return kf.generatePrivate(spec);
     }
 ```
-Desta maneira podemos obter a nossa chave privada com o método que criámos: `loadPrivateKey`. Podemos obtê-la no momento da criação do serviço, por exemplo, chamando o método no contrutor:
+Desta maneira o servidor pode obter a sua chave privada com o método que criámos: `loadPrivateKey`. Podemos obtê-la no momento da criação do serviço, por exemplo, chamando o método no contrutor:
 ```java
 	public SupplierServiceImpl() {
 		debug("Loading demo data...");
@@ -159,20 +176,21 @@ Desta maneira podemos obter a nossa chave privada com o método que criámos: `l
         }
 	}
 ```
-1. Para assinar vamos usar a classe ```java.security.Signature```. Primeiro obtemos uma instância do algoritmo que quisermos usar:
+2. Para assinar vamos usar a classe ```java.security.Signature```. Primeiro obtemos uma instância do algoritmo que quisermos usar:
 ```java
 		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
 ```
-1. Esta instância pode desempenhar tanto a função de assinar como de verificar a assinatura. Como estamos no servidor, queremos que assine:
+3. Esta instância pode desempenhar tanto a função de assinar como de verificar a assinatura. Como estamos no servidor, queremos que assine:
 ```java
 		sig.initSign(this.privateKey);
 ```
-1. Carregamos todos os dados que quisermos assinar (pode ser chamado várias vezes), e assinamos, obtendo assim os bytes da assinatura.
+4. Carregamos todos os dados que quisermos assinar (pode ser chamado várias vezes), e assinamos, obtendo assim os bytes da assinatura.
 ```java
 		sig.update(response.toByteArray());
 		byte[] signatureBytes = sig.sign();
 ```
-1. Por último, incluímos a assinatura na mensagem de resposta, se bem que tipicamente o mais correto seria enviar esta assinatura como metadado.
+5. Por último, incluímos a assinatura na mensagem de resposta. 
+
 ```java
 import com.google.protobuf.ByteString;
 ...
@@ -186,6 +204,8 @@ import com.google.protobuf.ByteString;
 			.build();
 		responseObserver.onNext(signedResponse);
 ```
+
+> Nota: muitas vezes, o mais correto é enviar a assinatura como metadados gRPC.
 
 ### Verificar a assinatura da resposta recebida
 
@@ -224,12 +244,12 @@ Tal como no servidor, estes são dois métodos auxiliares para importar a chave.
             System.err.println("Erro ao carregar a chave pública: " + e.getMessage());
         }
 ```
-2. Vamos inicializar a assinatura com a chave pública, para poder verificar assinaturas:
+2. Vamos criar uma instância de `Signature` e inicializá-la com a chave pública:
 ```java
 		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
 		sig.initVerify(publicKey);
 ```
-3. Para verificar, carregamos os dados que foram assinados e depois verificamos se a assinatura recebida coincide:
+3. Para validar a assinatura digital, carregamos os dados que foram assinados e depois verificamos se a assinatura recebida coincide:
 ```java
 		SignedResponse signedResponse = stub.listProducts(request);
 		ProductsResponse response = signedResponse.getResponse();
@@ -241,21 +261,26 @@ Tal como no servidor, estes são dois métodos auxiliares para importar a chave.
 
 ### Verificar eficácia da assinatura
 
-Vamos modificar o conteúdo da mensagem de resposta depois de assinada, para confirmar que o cliente é capaz de detetar a alteração.
+Vamos vestir a pele de um atacante e modificar o conteúdo da mensagem de resposta depois de assinada, para confirmar que o cliente é capaz de detetar a alteração.
+
 1. No servidor, após a realização da assinatura, modifique um dos campos de um dos produtos. Os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos. Para criar um objeto modificado a partir de um objeto existente pode-se usar o método ```toBuilder()```, semelhante ao seguinte:
 ```java
 ...
-			response = response.toBuilder().setSupplierIdentifier("intruder").build();
+    response = response.toBuilder().setSupplierIdentifier("intruder").build();
 ...
 ```
 2. Para testar, execute no **server** o comando ```mvn compile exec:java -Ddebug```.
 3. De seguida, execute também no **client** o comando ```mvn compile exec:java -Ddebug```.
 
-### ...e se alguem quiser ler as nossas mensagens?
+> O seu projeto de SD precisa de assinaturas digitais? Este é um bom momento para pensar como pode aplicar no seu projeto o que aprendeu no exercício acima.
 
-Assinar a mensagem proporciona três propriedades: autenticidade, integridade e não repudiação. No entanto, se a mensagem for intercetada, os atacantes podem ler os seus conteúdos. Vamos alterar o nosso programa para que as mensagens sejam confidenciais. Para tal, vamos encriptar a mensagem.
+## Exercício 2: Cifrar mensagens confidenciais
 
-1. Os dados encriptados serão um conjunto de bytes, por isso vamos atualizar o protocolo:
+Assinar a mensagem proporciona três propriedades: autenticidade, integridade e não repudiação. No entanto, se a mensagem for intercetada, os atacantes podem ler os seus conteúdos. Caso os dados que as mensagens transportam sejam confidenciais, isso é um problema.
+
+Vamos alterar o nosso programa para garantir, por mecanismos criptográficos, a confidencialidade das mensagens. Para tal, vamos cifrar a mensagem usando a chave pública do recetor.
+
+1. Os dados cifrados serão um conjunto de bytes, por isso vamos atualizar o protocolo:
 ```protobuf
 message EncryptedResponse {
 	bytes encriptedPayload = 1;
@@ -264,12 +289,12 @@ message EncryptedResponse {
 ...
   rpc listProducts(ProductsRequest) returns (EncryptedResponse);
 ```
-2. A criptografia assimétrica é muito pesada e por isso não é adecuada para encriptar grandes pacotes de dados. Nestes casos, usamos chaves simétricas. Com este comando poderá criar uma chave simétrica AES-128 de 16 bytes:
+2. A criptografia assimétrica é muito pesada e por isso não é adecuada para cifrar grandes pacotes de dados. Nestes casos, usamos chaves simétricas. Com este comando poderá criar uma chave simétrica AES-128 de 16 bytes:
 ```bash
 openssl rand -out secret.key 16
 ```
 Copie esta chave para a pasta ```src/main/resources``` do servidor e do cliente. Estamos a fazer esta distribuição manual das chaves simétricas para simplificar o exercício, mas normalmente usam-se algoritmos como Diffie-Helman ou PGP para acordar a chave a usar.
-1. Atualizar o servidor para encriptar a mensagem.
+1. Atualizar o servidor para cifrar a mensagem.
 Primeiro vamos importar a chave usando os métodos que criamos anteriormente:
 ```java
 import javax.crypto.spec.SecretKeySpec;
@@ -280,14 +305,14 @@ private SecretKeySpec aesKey;
 byte[] aesKeyBytes = readResource("secret.key");
 aesKey = new SecretKeySpec(aesKeyBytes, "AES");
 ```
-Agora vamos encriptar os dados:
+Agora vamos cifrar os dados:
 ```java
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); 
 			cipher.init(Cipher.ENCRYPT_MODE, aesKey);
 			byte[] encryptedPayload = cipher.doFinal(response.toByteArray());
 ```
 Resta enviar a ```EncryptedResponse``` correspondente. Não se esqueça de atualizar a função `listProducts`, uma vez que atualizamos o proto!
-1. Agora o cliente terá de receber a mensagem e desencriptá-la.
+1. Agora o cliente terá de receber a mensagem e decifrá-la.
 Devemos importar a chave simétrica que partilhamos com o servidor.
 ```java
 import javax.crypto.Cipher;
@@ -296,7 +321,7 @@ import javax.crypto.spec.SecretKeySpec;
 byte[] aesKeyBytes = readResource("secret.key");
 SecretKeySpec aesKey = new SecretKeySpec(aesKeyBytes, "AES");
 ```
-E desencriptar:
+E decifrar:
 ```java
 		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 		cipher.init(Cipher.DECRYPT_MODE, aesKey);
@@ -305,6 +330,5 @@ E desencriptar:
 ```
 Deste modo, os dados estão a transitar encriptados, e mesmo que sejam intercetados não poderão ser lidos sem a chave simétrica!
 
-## Aproveite o que construiu para aplicar no seu projeto
 
-Neste exercício explorou os mecanismos base de criptografia em Java — leitura de chaves, cálculo de resumos e assinaturas digitais — num contexto simples com gRPC. Estes mesmos conceitos devem agora ser aplicados no seu projeto de SD: os clientes passam a assinar transações, os nós validam essas assinaturas antes de aceitar pedidos, e os blocos produzidos pelo sequenciador são assinados e verificados antes de serem aplicados à blockchain.
+> O seu projeto de SD troca mensagens confidenciais? Este é um bom momento para pensar como pode aplicar no seu projeto o que aprendeu no exercício acima.

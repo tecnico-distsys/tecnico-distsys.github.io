@@ -22,7 +22,7 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 | mar   |	2 |	3 | 4 |	5 |	**P1** |	[gRPC: tratamento de erros e métodos remotos bloqueantes](./04-grpc-erros.md)  | [gRPC: multi-linguagem](./05-grpc-multilinguagem.md) |
 | mar   |	9 |	10 |	11 |	12 |	13 |	[gRPC: Invocações assíncronas](./06-grpc-assincronas.md) |	[gRPC: metadados](./07-grpc-metadata.md) |
 | mar   |	16 |	17 |	18 |	19 |	**P2** |	Apoio ao projeto |	Apoio ao projeto |
-| mar   |	23 |	24 |	25 |	26 |	27 |	Apoio ao projeto |	Apoio ao projeto |
+| mar   |	23 |	24 |	25 |	26 |	27 |	Apoio ao projeto |	[Criptografia](./08-criptografia.md) |
 | mar/abr |	30 |	31 |	1 |	**P3** |	 |	Apoio ao projeto | |
 
 ## Projeto 

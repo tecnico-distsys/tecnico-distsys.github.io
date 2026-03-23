@@ -168,7 +168,7 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
 <tr><td>mar</td><td>2</td><td>3</td><td>4</td><td>5</td><td><strong>P1</strong></td><td><a href="./04-grpc-erros.html">gRPC: tratamento de erros e métodos remotos bloqueantes</a></td><td><a href="./05-grpc-multilinguagem.html">gRPC: multi-linguagem</a></td></tr>
 <tr><td>mar</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td><a href="./06-grpc-assincronas.html">gRPC: Invocações assíncronas</a></td><td><a href="./07-grpc-metadata.html">gRPC: metadados</a></td></tr>
 <tr><td>mar</td><td>16</td><td>17</td><td>18</td><td>19</td><td><strong>P2</strong></td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
-<tr><td>mar</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
+<tr><td>mar</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>Apoio ao projeto</td><td><a href="./08-criptografia.html">Criptografia</a></td></tr>
 <tr><td>mar/abr</td><td>30</td><td>31</td><td>1</td><td><strong>P3</strong></td><td></td><td>Apoio ao projeto</td><td></td></tr>
 <tr><td>abr</td><td></td><td><strong>7</strong></td><td><strong>8</strong></td><td><strong>9</strong></td><td></td><td>Teste prático + discussão (individual)</td><td></td></tr>
 </tbody></table>
@@ -1030,12 +1030,12 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 </ul>
 <p>Nos passos seguintes, vamos compilar e executar o exemplo seguindo as instruções <code>README.md</code> de cada módulo.</p>
 <ul>
-<li>Comece pelo módulo contract, executando o comando: mvn install. Este comando vai passar pela etapa generate-sources, que vai invocar o protoc, o compilador de protocol buffers que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro .proto.</li>
+<li>Comece pelo módulo contract, executando o comando: <code>mvn install</code>. Este comando vai passar pela etapa <em>generate-sources</em>, que vai invocar o <em>protoc</em>, o compilador de <em>protocol buffers</em> que vai gerar código Java para lidar com os tipos de dados descritos no ficheiro .proto.</li>
 <li>Familiarize-se com o código e responda às seguintes questões:
 <ul>
 <li>Onde estão definidas as mensagens trocadas entre o cliente e o servidor?</li>
 <li>Onde estão definidos os procedimentos remotos no servidor?</li>
-<li>Onde estão os ficheiros gerados pelo compilador de Protocol Buffers?</li>
+<li>Onde estão os ficheiros gerados pelo compilador de <em>Protocol Buffers</em>?</li>
 <li>Onde são feitas as invocações remotas no cliente?</li>
 <li>As invocações remotas são síncronas (bloqueantes) ou assíncronas?</li>
 </ul>
@@ -1726,6 +1726,333 @@ No entanto, é também possível enviar metadados na resposta devolvida pelo ser
 <p>A documentação gRPC fornece <a href="https://github.com/grpc/grpc-java/tree/master/examples/src/main/java/io/grpc/examples/header">um outro exemplo de código</a> que explora essa e outras possibilidades.</p>
 <h2 id="passo-seguinte"><a class="header" href="#passo-seguinte">Passo seguinte</a></h2>
 <p>Aplicar esta tecnologia ao seu projeto!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="criptografia"><a class="header" href="#criptografia">Criptografia</a></h1>
+<h2 id="objectivos"><a class="header" href="#objectivos">Objectivos</a></h2>
+<ul>
+<li>Conhecer os mecanismos criptográficos da plataforma Java</li>
+<li>Gerar pares de chaves assimétricas usando <em>OpenSSL</em></li>
+<li>Concretizar um mecanismo de segurança, assinaturas digitais de chave pública, num projeto cliente-servidor baseado em gRPC</li>
+</ul>
+<hr />
+<h2 id="segurança-e-criptografia-em-java"><a class="header" href="#segurança-e-criptografia-em-java">Segurança e criptografia em Java</a></h2>
+<p>A plataforma Java disponibiliza um conjunto abrangente de classes que fornece os mecanismos criptográficos de base, incluindo cifras simétricas e assimétricas, geração e gestão de chaves, funções de resumo (hash) e assinaturas digitais.
+Essas funcionalidades encontram-se na Java Cryptography Architecture (JCA), uma das componentes do Java Development Kit (JDK).</p>
+<p>Este <a href="https://github.com/tecnico-distsys/example_crypto">pequeno exemplo</a> ilustra
+alguns mecanismos criptográficos da JCA.</p>
+<p>Neste guião, iremos aprender a gerar assinaturas digitais de chave pública usando o suporte do JCA.
+Aplicaremos esse suporte para garantir que, num projeto cliente-servidor em gRPC, o cliente possa verificar a integridade e autenticidade das respostas que recebe do servidor.
+Além disso, a assinatura garante também a não repudiação.</p>
+<p>Posteriormente, aprenderemos a cifrar mensagens confidenciais.</p>
+<p>Como o programa que iremos compor precisa de um par de chaves assimétricas do servidor,
+num passo prévio recorreremos à ferramenta <em>OpenSSL</em> gerar essas chaves.</p>
+<h2 id="exercício-1-assinar-mensagens-em-grpc"><a class="header" href="#exercício-1-assinar-mensagens-em-grpc">Exercício 1: Assinar mensagens em gRPC</a></h2>
+<h3 id="fornecedor-grpc--supplier"><a class="header" href="#fornecedor-grpc--supplier">Fornecedor gRPC / Supplier</a></h3>
+<p>O ponto de partida para o exercício é um serviço fornecedor de produtos para venda. O cliente contacta o servidor, chamando a operação remota <code>listProducts</code>, e o servidor responde com uma lista de produtos. Pode aceder à implementação base <a href="https://github.com/tecnico-distsys/exercise_supplier-grpc">aqui</a>.</p>
+<ol>
+<li>Faça Clone or Download do ponto de partida no repositório cliente-servidor que usa gRPC GitHub.</li>
+<li>Comecemos pela pasta <code>contract</code>, onde vamos executar o comando <code>mvn install</code>.</li>
+<li>De seguida, vá à pasta <code>server</code> e execute o comando <code>mvn compile exec:java -Ddebug</code>.</li>
+<li>Por fim, na pasta <code>client</code> execute o comando <code>mvn compile exec:java -Ddebug</code>.</li>
+<li>Verifique que o cliente recebe a lista de produtos do servidor.</li>
+</ol>
+<h3 id="criação-e-distribuição-de-chaves"><a class="header" href="#criação-e-distribuição-de-chaves">Criação e distribuição de chaves</a></h3>
+<p>Num mundo real, a lista devolvida pelo servidor ao cliente pode ser intercetada e modificada por um atacante. Para permitir que o cliente, ao receber a mensagem, possa verificar se esta é autêntica (foi enviada pelo seu suposto emissor) e íntegra (não foi modificada no caminho), o emissor deve acrescentar-lhe uma assinatura digital.</p>
+<p>Como iremos usar assinaturas digitais de chave pública, primeiro precisamos gerar um par de chaves assimétricas para o servidor e distribuir a sua chave pública ao cliente. O servidor utilizará a sua chave privada para assinar e o cliente verificará a assinatura com a chave pública do servidor.</p>
+<p>Vamos começar por criar um par de chaves RSA, que é um algoritmo de criptografia assimétrica amplamente utilizado para assinaturas digitais. Para tal vamos usar o <em>OpenSSL</em>, uma ferramenta de linha de comando que suporta uma vasta gama de operações criptográficas. Siga os passos 1,2,3 e 4 para criar as chaves. Caso tenha algum problema na criação, nós oferecemos um par de <a href="https://github.com/tecnico-distsys/tecnico-distsys.github.io/blob/crypto-lab-updated/src/resources/keys.zip">chaves de exemplo</a> e pode usá-las a partir do passo 5.</p>
+<ol>
+<li>Verifique que tem o <em>OpenSSL</em> instalado no seu sistema:</li>
+</ol>
+<pre><code class="language-bash">openssl version
+</code></pre>
+<ol start="2">
+<li>Idealmente, deverá ter uma versão recente do <em>OpenSSL</em>.</li>
+</ol>
+<pre><code class="language-bash">OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
+</code></pre>
+<ol start="3">
+<li>
+<p>Caso não o tenha, instale-o:</p>
+<p>3.1. No <em>Ubuntu</em>, use o seguinte comando:</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install openssl
+</code></pre>
+<p>3.2. No <em>Windows</em>, pode descarregar o <em>OpenSSL</em> a partir do site oficial: https://www.openssl.org/source/.</p>
+<p>3.3 No macOS, pode usar o <em>Homebrew</em> para instalar o <em>OpenSSL</em>:</p>
+<pre><code class="language-bash">brew install openssl
+</code></pre>
+</li>
+<li>
+<p>Gerar um par de chaves RSA no terminal é tão simples como:</p>
+</li>
+</ol>
+<pre><code class="language-bash">openssl genrsa -out priv.key 2048 # gera a chave privada
+openssl rsa -in priv.key -pubout -out pub.key # gera a chave pública a partir da chave privada
+</code></pre>
+<p>No entanto, como vamos usar Java neste exercício, vamos criar as chaves da seguinte maneira que as torna mais fáceis de importar no programa Java que comporemos em breve:</p>
+<pre><code class="language-bash">openssl genrsa -out private.pem 2048 # Gerar a chave privada RSA
+openssl pkcs8 -topk8 -inform PEM -outform DER -in private.pem -out private.der -nocrypt # Converter a privada para PKCS#8 DER (O formato que o Java lê nativamente)
+openssl rsa -in private.pem -pubout -outform DER -out public.der # Gerar a chave pública em formato X.509 DER
+</code></pre>
+<ol start="5">
+<li>Copie a chave privada (ficheiro <code>private.der</code>) para o servidor (pasta <code>server/src/main/resources</code>. Se a pasta <code>resources</code> não existir, ela deve ser criada no diretório <code>main</code>).</li>
+</ol>
+<blockquote>
+<p>Nota: Em sistemas reais, a chave pública é tipicamente distribuída através de uma infraestrutura de chave pública (PKI), num certificado digital de chave pública emitido por uma autoridade de certificação (CA). No entanto, por simplificação, neste exercício vamos entregar a chave pública manualmente ao cliente, copiando-a para a pasta do mesmo.</p>
+</blockquote>
+<ol start="6">
+<li>Copie a chave pública (ficheiro <code>public.der</code>) para o cliente (pasta <code>client/src/main/resources</code>. Se a pasta <code>resources</code> não existir, ela deve ser criada no diretório <code>main</code>).
+Deste modo criamos e distribuímos um par de chaves público-privadas usando o terminal. No entanto, também teria sido possível fazer isto com o Java, mediante a classe java.security.KeyPairGenerator.</li>
+</ol>
+<h3 id="acrescentar-assinatura-à-definição-da-operação"><a class="header" href="#acrescentar-assinatura-à-definição-da-operação">Acrescentar assinatura à definição da operação</a></h3>
+<p>Vamos agora acrescentar uma assinatura à definição da mensagem de resposta da operação <code>listProducts</code>..</p>
+<ol>
+<li>Aceda à definição <em>Protobuf</em> no <code>contract</code>.</li>
+<li>Acrescente a definição de uma nova estrutura de dados (<code>message</code>) para a assinatura, composta por identificador do assinante e o valor a calcular.</li>
+</ol>
+<pre><code class="language-protobuf">...
+message Signature {
+	string signerIdentifier = 1;
+	bytes signatureValue = 2;
+}
+...
+</code></pre>
+<ol start="3">
+<li>Acrescente a <code>message</code> com a assinatura digital à mensagem da resposta.</li>
+</ol>
+<pre><code class="language-protobuf">...
+message SignedResponse {
+  	ProductsResponse response = 1;
+  	Signature signature = 2;
+}
+...
+</code></pre>
+<ol start="4">
+<li>Modifique o tipo do resultado da operação RPC:</li>
+</ol>
+<pre><code class="language-protobuf">...
+rpc listProducts(ProductsRequest) returns (SignedResponse);
+...
+</code></pre>
+<ol start="5">
+<li>Re-execute nas pasta <code>contract</code> o comando <code>mvn install</code> para atualizar o código Java gerado.</li>
+<li>Efetue as alterações necessárias no código do servidor para refletir a modificação:</li>
+</ol>
+<pre><code class="language-java">...
+import pt.tecnico.supplier.grpc.SignedResponse;
+import pt.tecnico.supplier.grpc.Signature;
+...
+@Override
+public void listProducts(ProductsRequest request, StreamObserver&lt;SignedResponse&gt; responseObserver) { 
+		// atualize o resto da função
+...
+</code></pre>
+<ol start="7">
+<li>Atualize também a chamada do lado do cliente:</li>
+</ol>
+<pre><code class="language-java">...
+import pt.tecnico.supplier.grpc.SignedResponse;
+import pt.tecnico.supplier.grpc.Signature;
+...
+SignedResponse response = stub.listProducts(request);
+...
+</code></pre>
+<h3 id="assinar-a-resposta-a-enviar"><a class="header" href="#assinar-a-resposta-a-enviar">Assinar a resposta a enviar</a></h3>
+<p>A partir de agora, as mensagens enviadas pelo servidor serão assinadas. Note que muitas destas operações seguintes lançam exceções, que devem ser capturadas e tratadas adequadamente.</p>
+<ol>
+<li>Para tal, o servidor vai precisar da sua chave privada, que se encontra na pasta <code>src/main/resources</code>.</li>
+</ol>
+<pre><code class="language-java">import java.io.InputStream;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+...
+	private byte[] readResource(String path) throws Exception {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
+            if (is == null) {
+                throw new IllegalArgumentException("Ficheiro não encontrado: " + path);
+            }
+            return is.readAllBytes();
+        }
+    }
+	public static PrivateKey loadPrivateKey(String resourcePath) throws Exception {
+        byte[] keyBytes = readResource(resourcePath);
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePrivate(spec);
+    }
+</code></pre>
+<p>Desta maneira o servidor pode obter a sua chave privada com o método que criámos: <code>loadPrivateKey</code>. Podemos obtê-la no momento da criação do serviço, por exemplo, chamando o método no contrutor:</p>
+<pre><code class="language-java">	public SupplierServiceImpl() {
+		debug("Loading demo data...");
+		supplier.demoData();
+		try {
+            this.privateKey = loadPrivateKey("private.der");
+            System.out.println("Chave privada do servidor carregada com sucesso.");
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar a chave privada: " + e.getMessage());
+            e.printStackTrace();
+        }
+	}
+</code></pre>
+<ol start="2">
+<li>Para assinar vamos usar a classe <code>java.security.Signature</code>. Primeiro obtemos uma instância do algoritmo que quisermos usar:</li>
+</ol>
+<pre><code class="language-java">		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
+</code></pre>
+<ol start="3">
+<li>Esta instância pode desempenhar tanto a função de assinar como de verificar a assinatura. Como estamos no servidor, queremos que assine:</li>
+</ol>
+<pre><code class="language-java">		sig.initSign(this.privateKey);
+</code></pre>
+<ol start="4">
+<li>Carregamos todos os dados que quisermos assinar (pode ser chamado várias vezes), e assinamos, obtendo assim os bytes da assinatura.</li>
+</ol>
+<pre><code class="language-java">		sig.update(response.toByteArray());
+		byte[] signatureBytes = sig.sign();
+</code></pre>
+<ol start="5">
+<li>Por último, incluímos a assinatura na mensagem de resposta.</li>
+</ol>
+<pre><code class="language-java">import com.google.protobuf.ByteString;
+...
+		Signature signature = Signature.newBuilder()
+			.setSignerIdentifier(supplier.getId())
+			.setSignatureValue(ByteString.copyFrom(signatureBytes))
+			.build();
+		SignedResponse signedResponse = SignedResponse.newBuilder()
+			.setResponse(response)
+			.setSignature(signature)
+			.build();
+		responseObserver.onNext(signedResponse);
+</code></pre>
+<blockquote>
+<p>Nota: muitas vezes, o mais correto é enviar a assinatura como metadados gRPC.</p>
+</blockquote>
+<h3 id="verificar-a-assinatura-da-resposta-recebida"><a class="header" href="#verificar-a-assinatura-da-resposta-recebida">Verificar a assinatura da resposta recebida</a></h3>
+<p>O cliente quer certificar-se que as mensagens recebidas foram realmente enviadas pelo servidor, pelo que iremos verificar que a assinatura das mensagens é válida.</p>
+<ol>
+<li>Para tal, iremos precisar da chave pública do servidor:</li>
+</ol>
+<pre><code class="language-java">import java.io.InputStream;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
+...
+	private static PublicKey loadPublicKey(String resourcePath) throws Exception {
+        byte[] keyBytes = readResource(resourcePath);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePublic(spec);
+    }
+	private static byte[] readResource(String path) throws Exception {
+        try (InputStream is = SupplierClient.class.getClassLoader().getResourceAsStream(path)) {
+            if (is == null) {
+                throw new IllegalArgumentException("Ficheiro não encontrado nos resources: " + path);
+            }
+            return is.readAllBytes();
+        }
+    }
+
+
+</code></pre>
+<p>Tal como no servidor, estes são dois métodos auxiliares para importar a chave. Agora podemos obtê-la no inicio do <code>main()</code>, por exemplo:</p>
+<pre><code class="language-java">		PublicKey publicKey = null;
+        try {
+            publicKey = loadPublicKey("public.der");
+            System.out.println("Chave pública do servidor carregada com sucesso.");
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar a chave pública: " + e.getMessage());
+        }
+</code></pre>
+<ol start="2">
+<li>Vamos criar uma instância de <code>Signature</code> e inicializá-la com a chave pública:</li>
+</ol>
+<pre><code class="language-java">		java.security.Signature sig = java.security.Signature.getInstance("SHA256withRSA");
+		sig.initVerify(publicKey);
+</code></pre>
+<ol start="3">
+<li>Para validar a assinatura digital, carregamos os dados que foram assinados e depois verificamos se a assinatura recebida coincide:</li>
+</ol>
+<pre><code class="language-java">		SignedResponse signedResponse = stub.listProducts(request);
+		ProductsResponse response = signedResponse.getResponse();
+		Signature receivedSignature = signedResponse.getSignature();
+
+		sig.update(response.toByteArray());
+		boolean isValid = sig.verify(receivedSignature.getSignatureValue().toByteArray());
+</code></pre>
+<h3 id="verificar-eficácia-da-assinatura"><a class="header" href="#verificar-eficácia-da-assinatura">Verificar eficácia da assinatura</a></h3>
+<p>Vamos vestir a pele de um atacante e modificar o conteúdo da mensagem de resposta depois de assinada, para confirmar que o cliente é capaz de detetar a alteração.</p>
+<ol>
+<li>No servidor, após a realização da assinatura, modifique um dos campos de um dos produtos. Os objetos construídos para os pedidos e respostas são imutáveis, ou seja, não podem ser mudados depois de construídos. Para criar um objeto modificado a partir de um objeto existente pode-se usar o método <code>toBuilder()</code>, semelhante ao seguinte:</li>
+</ol>
+<pre><code class="language-java">...
+    response = response.toBuilder().setSupplierIdentifier("intruder").build();
+...
+</code></pre>
+<ol start="2">
+<li>Para testar, execute no <strong>server</strong> o comando <code>mvn compile exec:java -Ddebug</code>.</li>
+<li>De seguida, execute também no <strong>client</strong> o comando <code>mvn compile exec:java -Ddebug</code>.</li>
+</ol>
+<blockquote>
+<p>O seu projeto de SD precisa de assinaturas digitais? Este é um bom momento para pensar como pode aplicar no seu projeto o que aprendeu no exercício acima.</p>
+</blockquote>
+<h2 id="exercício-2-cifrar-mensagens-confidenciais"><a class="header" href="#exercício-2-cifrar-mensagens-confidenciais">Exercício 2: Cifrar mensagens confidenciais</a></h2>
+<p>Assinar a mensagem proporciona três propriedades: autenticidade, integridade e não repudiação. No entanto, se a mensagem for intercetada, os atacantes podem ler os seus conteúdos. Caso os dados que as mensagens transportam sejam confidenciais, isso é um problema.</p>
+<p>Vamos alterar o nosso programa para garantir, por mecanismos criptográficos, a confidencialidade das mensagens. Para tal, vamos cifrar a mensagem usando a chave pública do recetor.</p>
+<ol>
+<li>Os dados cifrados serão um conjunto de bytes, por isso vamos atualizar o protocolo:</li>
+</ol>
+<pre><code class="language-protobuf">message EncryptedResponse {
+	bytes encriptedPayload = 1;
+	Signature signature = 2;
+}
+...
+  rpc listProducts(ProductsRequest) returns (EncryptedResponse);
+</code></pre>
+<ol start="2">
+<li>A criptografia assimétrica é muito pesada e por isso não é adecuada para cifrar grandes pacotes de dados. Nestes casos, usamos chaves simétricas. Com este comando poderá criar uma chave simétrica AES-128 de 16 bytes:</li>
+</ol>
+<pre><code class="language-bash">openssl rand -out secret.key 16
+</code></pre>
+<p>Copie esta chave para a pasta <code>src/main/resources</code> do servidor e do cliente. Estamos a fazer esta distribuição manual das chaves simétricas para simplificar o exercício, mas normalmente usam-se algoritmos como Diffie-Helman ou PGP para acordar a chave a usar.</p>
+<ol>
+<li>Atualizar o servidor para cifrar a mensagem.
+Primeiro vamos importar a chave usando os métodos que criamos anteriormente:</li>
+</ol>
+<pre><code class="language-java">import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.Cipher;
+...
+private SecretKeySpec aesKey;
+...
+byte[] aesKeyBytes = readResource("secret.key");
+aesKey = new SecretKeySpec(aesKeyBytes, "AES");
+</code></pre>
+<p>Agora vamos cifrar os dados:</p>
+<pre><code class="language-java">			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); 
+			cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+			byte[] encryptedPayload = cipher.doFinal(response.toByteArray());
+</code></pre>
+<p>Resta enviar a <code>EncryptedResponse</code> correspondente. Não se esqueça de atualizar a função <code>listProducts</code>, uma vez que atualizamos o proto!</p>
+<ol>
+<li>Agora o cliente terá de receber a mensagem e decifrá-la.
+Devemos importar a chave simétrica que partilhamos com o servidor.</li>
+</ol>
+<pre><code class="language-java">import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+...
+byte[] aesKeyBytes = readResource("secret.key");
+SecretKeySpec aesKey = new SecretKeySpec(aesKeyBytes, "AES");
+</code></pre>
+<p>E decifrar:</p>
+<pre><code class="language-java">		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+		cipher.init(Cipher.DECRYPT_MODE, aesKey);
+		byte[] plainTextBytes = cipher.doFinal(cipherTextBytes);
+		ProductsResponse payload = ProductsResponse.parseFrom(plainTextBytes);	
+</code></pre>
+<p>Deste modo, os dados estão a transitar encriptados, e mesmo que sejam intercetados não poderão ser lidos sem a chave simétrica!</p>
+<blockquote>
+<p>O seu projeto de SD troca mensagens confidenciais? Este é um bom momento para pensar como pode aplicar no seu projeto o que aprendeu no exercício acima.</p>
+</blockquote>
 
                     </main>
 

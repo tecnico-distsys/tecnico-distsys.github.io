@@ -1,6 +1,6 @@
 # Summary
 
-[Laboratórios de Sistemas Distribuídos (edição 2025)](./index.md)
+[Laboratórios de Sistemas Distribuídos (edição 2026)](./index.md)
 
 --- 
 

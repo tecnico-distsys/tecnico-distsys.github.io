@@ -118,7 +118,7 @@ Atente-se que a descrição que se obtém ao invocar `status.getDescription()` �
 
 O ponto de partida será a solução construída pelo seu grupo na [aula anterior para o Jogo do Galo em gRPC](./03-grpc.md).
 
-O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.
+O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como implementar um método bloqueante.
 
 Vamos então começar!
 
@@ -130,11 +130,11 @@ Experimente as seguintes situações.
 
 2. Lançar o servidor; lançar o cliente; realizar uma jogada (com sucesso); desligar o servidor; tentar realizar nova jogada (agora sem sucesso).
 
-Em casa cenário acima, que exceções foram apanhadas pelo cliente?
+Em cada cenário acima, que exceções foram apanhadas pelo cliente?
 
 ### Enviar informação de erro do servidor para o cliente
 
-Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.
+Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, a coluna e a linha em que o mesmo pretende fazer uma     jogada.
 
 - Comece por ler os materiais sobre o [tratamento de erros com gRPC](https://grpc.github.io/grpc/core/md_doc_statuscodes.html).
 
@@ -167,6 +167,8 @@ Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido s
 - Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:
 
     ```java
+    import io.grpc.StatusRuntimeException;
+    ...
     play_res = null;
     ...
     try{
@@ -195,6 +197,6 @@ Vamos agora adicionar uma variante bloqueante da operação checkWinner.
 
 ## Já resolveram?
 
-Podem conferir a nossa proposta de resolução.
+Podem conferir a [nossa proposta de resolução](https://github.com/tecnico-distsys/exercise_ttt-grpc_solution).
 
-Nota: esta solução resolve o conjunto dos exercícios deste guião e do anterior.
+Nota: esta solução resolve o conjunto dos exercícios deste guião [e do anterior](https://tecnico-distsys.github.io/03-grpc.html).

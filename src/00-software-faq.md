@@ -252,7 +252,7 @@ E o comando sugerido não o resolva, deve experimentar o seguinte comando:
 
 ## <a name="grpc"></a> Perguntas sobre gRPC
 
-### Não consigo correr o `protoc`no meu portátil Mac. Como resolver?
+### Não consigo correr o `protoc` no meu portátil Mac. Como resolver?
 
 O compilador do gRPC (`protoc`) tem uma ["open issue" com os processadores M1 da Apple](https://github.com/grpc/grpc-java/issues/7690). Quando se tenta executar o `protoc` (por exemplo, fazendo `mvn install` num projeto contendo o contrato de um gRPC), ocorre um erro.
 

@@ -146,4 +146,4 @@ python -m grpc_tools.protoc -I<pasta-para-o-contrato> --python_out=<diretoria-ou
 
 ## Exercício
 
-Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.
+Aplique o que aprendeu acima para adicionar um cliente Python ao seu projeto.

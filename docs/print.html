@@ -170,14 +170,15 @@ do <a href="http://www.dei.tecnico.ulisboa.pt/">DEI</a>, <a href="http://www.tec
 <tr><td>mar</td><td>16</td><td>17</td><td>18</td><td>19</td><td><strong>P2</strong></td><td>Apoio ao projeto</td><td>Apoio ao projeto</td></tr>
 <tr><td>mar</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>Apoio ao projeto</td><td><a href="./08-criptografia.html">Criptografia</a></td></tr>
 <tr><td>mar/abr</td><td>30</td><td>31</td><td>1</td><td><strong>P3</strong></td><td></td><td>Apoio ao projeto</td><td></td></tr>
+<tr><td>abr</td><td></td><td><strong>7</strong></td><td><strong>8</strong></td><td><strong>9</strong></td><td></td><td>Teste prático + discussão (individual)</td><td></td></tr>
 </tbody></table>
 </div>
 <h2 id="projeto"><a class="header" href="#projeto">Projeto</a></h2>
 <p>Recursos do projeto (a disponibilizar quando o período letivo arrancar):</p>
 <ul>
-<li><a href="">Enunciado</a></li>
-<li><a href="">Código inicial</a></li>
-<li><a href="">Fórum de discussão para dúvidas (via Moodle)</a></li>
+<li><a href="https://github.com/tecnico-distsys/BlockchainIST-2026">Enunciado</a></li>
+<li><a href="https://github.com/tecnico-distsys/BlockchainIST-2026/tree/master/initial-code">Código inicial</a></li>
+<li><a href="https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026">Fórum de discussão para dúvidas (via Piazza)</a></li>
 </ul>
 <p>Datas das entregas (via fenix):</p>
 <ul>
@@ -299,7 +300,7 @@ Nota: só deverá ser necessário este passo em Windows.
 </li>
 </ul>
 <h2 id="dúvidas-ou-erros"><a class="header" href="#dúvidas-ou-erros">Dúvidas ou erros?</a></h2>
-<p>Se tiver dificuldades, pode pedir ajuda no Moodle mas, antes, consulte a <a href="./00-software-faq.html">lista de respostas a perguntas frequentes</a>.</p>
+<p>Se tiver dificuldades, pode pedir ajuda no Piazza mas, antes, consulte a <a href="./00-software-faq.html">lista de respostas a perguntas frequentes</a>.</p>
 <p>Se detetar algum erro nas instruções acima, avise-nos!</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="perguntas-frequentes-sobre-as-ferramentas"><a class="header" href="#perguntas-frequentes-sobre-as-ferramentas">Perguntas frequentes sobre as ferramentas</a></h1>
 <h3 id="Índice"><a class="header" href="#Índice">Índice:</a></h3>
@@ -454,7 +455,7 @@ Caso o erro se assemelhe ao apresentado em seguida:
 <p>E o comando sugerido não o resolva, deve experimentar o seguinte comando:
 <code>sudo apt install python3-venv</code></p>
 <h2 id="perguntas-sobre-grpc"><a class="header" href="#perguntas-sobre-grpc"><a name="grpc"></a> Perguntas sobre gRPC</a></h2>
-<h3 id="não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protocno-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code>no meu portátil Mac. Como resolver?</a></h3>
+<h3 id="não-consigo-correr-o-protoc-no-meu-portátil-mac-como-resolver"><a class="header" href="#não-consigo-correr-o-protoc-no-meu-portátil-mac-como-resolver">Não consigo correr o <code>protoc</code> no meu portátil Mac. Como resolver?</a></h3>
 <p>O compilador do gRPC (<code>protoc</code>) tem uma <a href="https://github.com/grpc/grpc-java/issues/7690">"open issue" com os processadores M1 da Apple</a>. Quando se tenta executar o <code>protoc</code> (por exemplo, fazendo <code>mvn install</code> num projeto contendo o contrato de um gRPC), ocorre um erro.</p>
 <p>Para contornar este problema, devem procurar estas duas <em>tags</em> <code>&lt;protocArtifact&gt;</code> no  POM:</p>
 <pre><code class="language-xml">&lt;protocArtifact&gt;com.google.protobuf:protoc:${version.protoc}:exe:${os.detected.classifier}&lt;/protocArtifact&gt;
@@ -475,7 +476,7 @@ Caso o erro se assemelhe ao apresentado em seguida:
 <hr />
 <h2 id="apoio-ao-trabalho-laboratorial-durante-o-período"><a class="header" href="#apoio-ao-trabalho-laboratorial-durante-o-período">Apoio ao trabalho laboratorial durante o período</a></h2>
 <p>O professor do laboratório vai acompanhar o vosso percurso ao longo de todo o semestre. É importante ficar a conhecê-lo desde já. :-)</p>
-<p>O apoio a dúvidas fora das aulas é feito através do <a href="https://moodle.dei.tecnico.ulisboa.pt/course/view.php?id=5941">Moodle de SD</a>, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Moodle, peça ajuda ao docente laboratorial.</p>
+<p>O apoio a dúvidas fora das aulas é feito através do <a href="https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026">Piazza de SD</a>, onde é possível colocar perguntas e receber respostas, quer de colegas, quer dos professores. Se não conseguir aceder ao Piazza, peça ajuda ao docente laboratorial.</p>
 <h2 id="inscrição-de-grupo"><a class="header" href="#inscrição-de-grupo">Inscrição de grupo</a></h2>
 <p>O trabalho de laboratório e no projeto é realizado em grupo, com 3 elementos. Os grupos terão de ser formados entre estudantes inscritos no mesmo turno de laboratório.</p>
 <p>Para fazer:</p>
@@ -491,13 +492,13 @@ Caso o erro se assemelhe ao apresentado em seguida:
 <p>Caso ainda não tenha grupo completo:</p>
 <ul>
 <li>Compareça no seu turno de laboratório e fale com colegas na mesma situação. Esta é a forma mais eficaz de formar grupo!</li>
-<li>Procure colegas no fórum no Moodle, onde os docentes criarão um tópico de discussão sobre este tema. Deixe lá a indicação de que procura elemento(s) para formar grupo ou respondendo a mensagens lá publicadas por colegas. Indique sempre o(s) turno(s) que pode frequentar e onde ainda há vagas.</li>
+<li>Procure colegas no Piazza, no <em>post 'Search for Teammates!'</em>. Deixe lá a indicação de que procura elemento(s) para formar grupo ou respondendo a mensagens lá publicadas por colegas. Indique sempre o(s) turno(s) que pode frequentar e onde ainda há vagas.</li>
 <li>Note bem: a formação do grupo é da responsabilidade dos estudantes; os professores apenas fazem o registo.</li>
 </ul>
 <hr />
 <h2 id="familiarização-com-as-ferramentas-de-desenvolvimento"><a class="header" href="#familiarização-com-as-ferramentas-de-desenvolvimento">Familiarização com as ferramentas de desenvolvimento</a></h2>
 <p>As ferramentas para o desenvolvimento do projeto são: Java (linguagem e plataforma), Maven (construção), e um  IDE (ambiente integrado de desenvolvimento) de Java.</p>
-<p>No resto desta aula estudremos cada uma das ferramentas.
+<p>No resto desta aula estudaremos cada uma das ferramentas.
 A tabela seguinte resume as utilizações mais comuns do JDK, Maven, e de um IDE (e.g., o Eclipse),
 que entenderemos melhor ao longo desta aula.</p>
 <p><img src="./images/java-tools-table.png" alt="Java tools reference card" /></p>
@@ -967,7 +968,7 @@ Pode consultar também a Secção 1.6 da bibliografia principal cadeira (Coulour
 <ul>
 <li>Qual foi a causa da exceção?</li>
 <li>Que exceção foi lançada?</li>
-<li>Em que linha do código do cliente é que foi lançada a exceção?
+<li>Em que linha do código do servidor é que foi lançada a exceção?
 <ul>
 <li>Será um problema na configuração dos argumentos?</li>
 </ul>
@@ -1010,7 +1011,7 @@ até ao próprio valor múltiplo de 3 ser alcançado. Para implementar esta lóg
 </ul>
 <hr />
 <h2 id="antes-de-começar-a-programar-com-grpc"><a class="header" href="#antes-de-começar-a-programar-com-grpc">Antes de começar a programar com gRPC</a></h2>
-<p>Comece por folhear os <a href="./resources/grpc-slides-labs.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou moodle).</p>
+<p>Comece por folhear os <a href="./resources/grpc-slides-labs.pdf">slides de introdução ao gRPC</a>. Como são sucintos, é natural que suscitem algumas dúvidas. O exercício seguinte ajudará a esclarecê-las, assim como os materiais de apoio listados acima. E, claro, pode sempre esclarecer qualquer questão contactando os docentes (em aula, horário de dúvidas, ou Piazza).</p>
 <h2 id="exercício-a-resolver-até-ao-fim-da-aula-1"><a class="header" href="#exercício-a-resolver-até-ao-fim-da-aula-1">Exercício a resolver até ao fim da aula</a></h2>
 <p>Neste exercício iremos transformar uma implementação do Jogo do Galo (Tic Tac Toe) numa aplicação distribuída utilizando o gRPC.</p>
 <p><img src="./images/ttt.png" alt="Tic Tac Toe" /></p>
@@ -1203,7 +1204,7 @@ que <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/
 <p>Atente-se que a descrição que se obtém ao invocar <code>status.getDescription()</code> é igual à descrição que foi passada no servidor em <code>Status.INVALID_ARGUMENT.withDescription(desc).asRuntimeException()</code>.</p>
 <h2 id="exercício"><a class="header" href="#exercício">Exercício</a></h2>
 <p>O ponto de partida será a solução construída pelo seu grupo na <a href="./03-grpc.html">aula anterior para o Jogo do Galo em gRPC</a>.</p>
-<p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como adicionar-lhe alguns testes unitários.</p>
+<p>O objetivo deste novo exercício é estender essa solução de modo a ser devolvido um erro caso um pedido de jogada leve argumentos inválidos, assim como implementar um método bloqueante.</p>
 <p>Vamos então começar!</p>
 <h3 id="apanhar-erros-simples-de-comunicação"><a class="header" href="#apanhar-erros-simples-de-comunicação">Apanhar erros simples de comunicação</a></h3>
 <p>Experimente as seguintes situações.</p>
@@ -1215,9 +1216,9 @@ que <a href="https://github.com/grpc/grpc-java/blob/master/api/src/main/java/io/
 <p>Lançar o servidor; lançar o cliente; realizar uma jogada (com sucesso); desligar o servidor; tentar realizar nova jogada (agora sem sucesso).</p>
 </li>
 </ol>
-<p>Em casa cenário acima, que exceções foram apanhadas pelo cliente?</p>
+<p>Em cada cenário acima, que exceções foram apanhadas pelo cliente?</p>
 <h3 id="enviar-informação-de-erro-do-servidor-para-o-cliente"><a class="header" href="#enviar-informação-de-erro-do-servidor-para-o-cliente">Enviar informação de erro do servidor para o cliente</a></h3>
-<p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, e a coluna e a linha em que o mesmo pretende fazer umas jogada.</p>
+<p>Vamos agora adicionar um retorno de erro ao servidor caso a mensagem do pedido seja com uma jogada fora do tabuleiro. Relembramos que a operação play recebe o nome do jogador, a coluna e a linha em que o mesmo pretende fazer uma     jogada.</p>
 <ul>
 <li>
 <p>Comece por ler os materiais sobre o <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html">tratamento de erros com gRPC</a>.</p>
@@ -1246,7 +1247,9 @@ else{
 </li>
 <li>
 <p>Do lado do cliente, deve apanhar uma exceção e imprimir a mensagem de erro:</p>
-<pre><code class="language-java">play_res = null;
+<pre><code class="language-java">import io.grpc.StatusRuntimeException;
+...
+play_res = null;
 ...
 try{
     play_res =  stub.play(PlayRequest.newBuilder().setRow(row).setColumn(column).setPlayer(player).build()).getPlay();
@@ -1273,8 +1276,8 @@ catch (StatusRuntimeException e) {
 <li>Experimente! Lance um cliente que fará as jogadas. Em paralelo, lance outro cliente que simplesmente invoca <code>waitForWinner</code>.</li>
 </ul>
 <h2 id="já-resolveram-1"><a class="header" href="#já-resolveram-1">Já resolveram?</a></h2>
-<p>Podem conferir a nossa proposta de resolução.</p>
-<p>Nota: esta solução resolve o conjunto dos exercícios deste guião e do anterior.</p>
+<p>Podem conferir a <a href="https://github.com/tecnico-distsys/exercise_ttt-grpc_solution">nossa proposta de resolução</a>.</p>
+<p>Nota: esta solução resolve o conjunto dos exercícios deste guião <a href="https://tecnico-distsys.github.io/03-grpc.html">e do anterior</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="5--grpc-multi-linguagem"><a class="header" href="#5--grpc-multi-linguagem">5.  gRPC: multi-linguagem</a></h1>
 <h2 id="objetivos-desta-aula-4"><a class="header" href="#objetivos-desta-aula-4">Objetivos desta aula:</a></h2>
 <ul>
@@ -1450,7 +1453,7 @@ HelloWorld.HelloResponse response = stub.greeting(request);
 <pre><code class="language-bash">python -m grpc_tools.protoc -I&lt;pasta-para-o-contrato&gt; --python_out=&lt;diretoria-output&gt; --grpc_python_out=&lt;diretoria-output&gt; &lt;protos-para-compilar&gt;
 </code></pre>
 <h2 id="exercício-1"><a class="header" href="#exercício-1">Exercício</a></h2>
-<p>Aplique o que aprendeu acima para resolver o requisito multi-linguagem do projeto.</p>
+<p>Aplique o que aprendeu acima para adicionar um cliente Python ao seu projeto.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="invocações-assíncronas-em-grpc"><a class="header" href="#invocações-assíncronas-em-grpc">Invocações assíncronas em gRPC</a></h1>
 <h2 id="objetivos-desta-aula-5"><a class="header" href="#objetivos-desta-aula-5">Objetivos desta aula:</a></h2>
 <ul>

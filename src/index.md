@@ -24,14 +24,15 @@ Começar por [instalar as ferramentas de desenvolvimento que serão usadas nas a
 | mar   |	16 |	17 |	18 |	19 |	**P2** |	Apoio ao projeto |	Apoio ao projeto |
 | mar   |	23 |	24 |	25 |	26 |	27 |	Apoio ao projeto |	[Criptografia](./08-criptografia.md) |
 | mar/abr |	30 |	31 |	1 |	**P3** |	 |	Apoio ao projeto | |
+| abr |	 |	**7** |	**8** |	**9** |	 |	Teste prático + discussão (individual) | |
 
 ## Projeto 
 
 Recursos do projeto (a disponibilizar quando o período letivo arrancar):
 
-- [Enunciado]()
-- [Código inicial]() 
-- [Fórum de discussão para dúvidas (via Moodle)]()
+- [Enunciado](https://github.com/tecnico-distsys/BlockchainIST-2026)
+- [Código inicial](https://github.com/tecnico-distsys/BlockchainIST-2026/tree/master/initial-code)
+- [Fórum de discussão para dúvidas (via Piazza)](https://piazza.com/tecnico.ulisboa.pt/spring2026/sd2026)
 
 Datas das entregas (via fenix):
 
